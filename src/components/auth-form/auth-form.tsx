@@ -1,5 +1,5 @@
 import { mdiEmailOutline, mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
-import { FormField } from "./login.content";
+import { FormField } from "./auth-form.content";
 import { useState } from "react";
 import {
   ContentBox,
@@ -9,10 +9,11 @@ import {
   SeparatorContainer,
   SeparatorLine,
   SwitchFormButton,
-} from "./login.styled";
+} from "./auth-form.styled";
 import { useTranslation } from "react-i18next";
+import { FormType } from "./auth-form.interface";
 
-export const LoginForm = () => {
+export const AuthForm = ({ formType }: Readonly<{ formType: FormType }>) => {
   const { t } = useTranslation();
 
   const [email, setEmail] = useState<string>("");

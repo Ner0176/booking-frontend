@@ -1,5 +1,5 @@
-import { LoginForm } from "../components/login";
+import { AuthForm } from "../components";
 
 export const SignUpPage = () => {
-  return <LoginForm />;
+  return <AuthForm formType="register" />;
 };

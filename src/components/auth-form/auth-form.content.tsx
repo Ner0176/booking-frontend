@@ -1,4 +1,4 @@
-import { FieldContainer, FieldIcon, StyledInput } from "./login.styled";
+import { FieldContainer, FieldIcon, StyledInput } from "./auth-form.styled";
 
 export const FormField = ({
   icon,
