@@ -32,7 +32,7 @@ export const FormField = ({
         <StyledInput
           value={value}
           placeholder={placeholder}
-          type={showPassword ? "password" : "text"}
+          type={showPassword ? "text" : "password"}
           onChange={(e) => onChange(e.target.value)}
         />
       </FieldContainer>
