@@ -1,0 +1,16 @@
+{
+  "SignUp": {
+    "Login": {
+      "Title": "Iniciar sesión",
+      "NoAccount": "¿Aún no tienes una cuenta?"
+    },
+    "Register": {
+      "Title": "Registrarse",
+      "NoAccount": "¿Ya tienes una cuenta?"
+    },
+    "Fields": {
+      "Email": "Correo electrónico",
+      "Password": "Contraseña"
+    }
+  }
+}
