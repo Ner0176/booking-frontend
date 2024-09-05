@@ -1,9 +1,16 @@
-import { FieldContainer, FieldIcon, StyledInput } from "./auth-form.styled";
+import {
+  ErrorMessage,
+  FieldContainer,
+  FieldIcon,
+  StyledInput,
+} from "./auth-form.styled";
 
 export const FormField = ({
   icon,
   title,
   value,
+  error,
+  onBlur,
   onChange,
   placeholder,
   showPassword,
@@ -12,6 +19,8 @@ export const FormField = ({
   icon: string;
   value: string;
   title: string;
+  error?: string;
+  onBlur: () => void;
   placeholder?: string;
   showPassword?: boolean;
   handlePrivacy?: () => void;
@@ -31,11 +40,13 @@ export const FormField = ({
         </FieldIcon>
         <StyledInput
           value={value}
+          onBlur={onBlur}
           placeholder={placeholder}
-          type={showPassword ? "text" : "password"}
+          type={showPassword === false ? "password" : "text"}
           onChange={(e) => onChange(e.target.value)}
         />
       </FieldContainer>
+      {!!error && <ErrorMessage>{error}</ErrorMessage>}
     </div>
   );
 };

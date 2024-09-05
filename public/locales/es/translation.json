@@ -13,6 +13,12 @@
       "Password": "Contraseña",
       "Name": "Nombre completo",
       "Email": "Correo electrónico"
+    },
+    "Errors": {
+      "Name": "Este campo es obligatorio",
+      "Email": "Introduzca un email válido",
+      "Phone": "Introduzca un número de teléfono válido",
+      "Password": "La contraseña debe tener mínimo 6 caracteres"
     }
   }
 }

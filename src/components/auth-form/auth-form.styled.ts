@@ -31,3 +31,6 @@ export const SwitchFormButton = styled(FormButton)`
 export const SignUpFieldsContainer = styled.div(
   tw`flex flex-row justify-between items-center gap-2`
 );
+export const ErrorMessage = styled.span(
+  tw`ml-3 -mt-1 text-xs text-red-500 font-semibold`
+);

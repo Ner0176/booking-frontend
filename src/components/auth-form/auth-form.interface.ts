@@ -7,9 +7,21 @@ export interface IAuthFields {
   password: string;
 }
 
+export interface IAuthErrors {
+  email: boolean;
+  phone?: boolean;
+  password: boolean;
+  username?: boolean;
+}
+
 export const emptyAuthFields: IAuthFields = {
   email: "",
   phone: "",
   username: "",
   password: "",
+};
+
+export const initAuthErrors: IAuthErrors = {
+  email: false,
+  password: false,
 };
