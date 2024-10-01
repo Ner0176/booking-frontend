@@ -19,6 +19,10 @@
       "Email": "Introduzca un email válido",
       "Phone": "Introduzca un número de teléfono válido",
       "Password": "La contraseña debe tener mínimo 6 caracteres"
+    },
+    "InvalidRoute": {
+      "Title": "Error 404",
+      "Description": "Página no encontrada"
     }
   }
 }

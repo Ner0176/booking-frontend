@@ -28,6 +28,8 @@ import {
 } from "./auth-form.interface";
 import { checkPhone } from "./auth-form.utils";
 
+const MIN_PSWD_LENGTH = 8;
+
 export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const { t } = useTranslation();
 
@@ -105,7 +107,9 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
             title={t("Auth.Fields.Password")}
             onBlur={() => {
               let showError = false;
-              if (authFields.password.length < 6) showError = true;
+              if (authFields.password.length < MIN_PSWD_LENGTH) {
+                showError = true;
+              }
               handleErrors("password", showError);
             }}
             placeholder={t("Auth.Fields.Password")}
