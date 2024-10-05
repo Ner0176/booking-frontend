@@ -8,8 +8,8 @@ export function useLogin() {
     onSuccess(data) {
       alert(data);
     },
-    onError(error) {
-      console.log(error);
+    onError() {
+      // showToast({ text: "Credenciales inválidas", type: "error" });
     },
   });
 }
