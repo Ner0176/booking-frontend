@@ -18,7 +18,7 @@
       "Name": "Este campo es obligatorio",
       "Email": "Introduzca un email válido",
       "Phone": "Introduzca un número de teléfono válido",
-      "Password": "La contraseña debe tener mínimo 6 caracteres"
+      "Password": "La contraseña debe tener mínimo {{value}} caracteres"
     },
     "InvalidRoute": {
       "Title": "Error 404",

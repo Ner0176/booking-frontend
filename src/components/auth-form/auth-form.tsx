@@ -27,6 +27,7 @@ import {
   initAuthErrors,
 } from "./auth-form.interface";
 import { checkPhone } from "./auth-form.utils";
+import { useLogin, useSignUp } from "../../api";
 
 const MIN_PSWD_LENGTH = 8;
 
@@ -37,6 +38,9 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [authErrors, setAuthErrors] = useState<IAuthErrors>(initAuthErrors);
   const [authFields, setAuthFields] = useState<IAuthFields>(emptyAuthFields);
+
+  const { mutate: login } = useLogin();
+  const { mutate: signUp } = useSignUp();
 
   const handleAuthFields = (field: string, value: string) => {
     setAuthFields((prev) => {
@@ -50,6 +54,14 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     });
   };
 
+  const handleSubmit = () => {
+    if (formType === "SignUp") {
+      signUp(authFields);
+    } else {
+      login({ email: authFields.email, password: authFields.password });
+    }
+  };
+
   return (
     <AuthContainer>
       <AuthWrapper>
@@ -60,27 +72,29 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
           {formType === "SignUp" && (
             <SignUpFieldsContainer>
               <FormField
+                value={authFields.name}
                 icon={mdiAccountOutline}
                 placeholder="María Marcos"
-                value={authFields.username}
                 title={t("Auth.Fields.Name")}
                 onBlur={() => {
                   let showError = false;
-                  if (!authFields.username.length) showError = true;
-                  handleErrors("username", showError);
+                  if (!authFields.name.length) showError = true;
+                  handleErrors("name", showError);
                 }}
-                onChange={(v) => handleAuthFields("username", v)}
-                error={authErrors.username ? t("Auth.Errors.Name") : undefined}
+                onChange={(v) => handleAuthFields("name", v)}
+                error={authErrors.name ? t("Auth.Errors.Name") : undefined}
               />
               <FormField
                 icon={mdiPhoneOutline}
-                value={authFields.phone}
                 placeholder="976 65 84 34"
+                value={authFields.phone}
                 title={t("Auth.Fields.Phone")}
                 onBlur={() => {
                   let showError = false;
                   const phone = authFields.phone;
-                  if (phone.length > 0 && !checkPhone(phone)) showError = true;
+                  if (phone.length > 0 && !checkPhone(phone)) {
+                    showError = true;
+                  }
                   handleErrors("phone", showError);
                 }}
                 onChange={(v) => handleAuthFields("phone", v)}
@@ -116,9 +130,20 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
             onChange={(v) => handleAuthFields("password", v)}
             icon={showPassword ? mdiEyeOutline : mdiEyeOffOutline}
             handlePrivacy={() => setShowPassword((prev) => !prev)}
-            error={authErrors.password ? t("Auth.Errors.Password") : undefined}
+            error={
+              authErrors.password
+                ? t("Auth.Errors.Password", { value: MIN_PSWD_LENGTH })
+                : undefined
+            }
           />
-          <FormButton>{t(`Auth.${formType}.Title`)}</FormButton>
+          <FormButton
+            onClick={() => {
+              const { email, phone, password, name } = authErrors;
+              if (!email && !phone && !password && !name) handleSubmit();
+            }}
+          >
+            {t(`Auth.${formType}.Title`)}
+          </FormButton>
           <div className="relative">
             <SeparatorContainer>
               <SeparatorLine />

@@ -12,8 +12,9 @@ export const FieldContainer = styled.div(
   tw`flex flex-row items-center gap-2 px-3 border border-neutral-200 rounded-2xl`
 );
 export const StyledInput = styled.input(
-  tw`w-full py-2 text-sm focus:outline-none focus:ring-0`
+  tw`w-full py-2 text-sm border-none !outline-none`
 );
+
 export const FieldIcon = styled.svg<{ showCursor: boolean }>`
   ${tw`w-5 h-5 text-neutral-500`}
   ${({ showCursor }) => showCursor && tw`cursor-pointer`}

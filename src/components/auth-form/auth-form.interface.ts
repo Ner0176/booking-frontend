@@ -1,23 +1,23 @@
 export type FormType = "Login" | "SignUp";
 
 export interface IAuthFields {
+  name: string;
   phone: string;
   email: string;
-  username: string;
   password: string;
 }
 
 export interface IAuthErrors {
   email: boolean;
+  name?: boolean;
   phone?: boolean;
   password: boolean;
-  username?: boolean;
 }
 
 export const emptyAuthFields: IAuthFields = {
+  name: "",
   email: "",
   phone: "",
-  username: "",
   password: "",
 };
 

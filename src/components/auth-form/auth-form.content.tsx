@@ -42,8 +42,8 @@ export const FormField = ({
           value={value}
           onBlur={onBlur}
           placeholder={placeholder}
-          type={showPassword === false ? "password" : "text"}
           onChange={(e) => onChange(e.target.value)}
+          type={showPassword === false ? "password" : "text"}
         />
       </FieldContainer>
       {!!error && <ErrorMessage>{error}</ErrorMessage>}
