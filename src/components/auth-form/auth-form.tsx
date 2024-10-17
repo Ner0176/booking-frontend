@@ -60,6 +60,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     } else {
       login({ email: authFields.email, password: authFields.password });
     }
+    setAuthFields(emptyAuthFields);
   };
 
   return (
@@ -87,11 +88,11 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
               <FormField
                 icon={mdiPhoneOutline}
                 placeholder="976 65 84 34"
-                value={authFields.phone}
+                value={authFields.phone || ""}
                 title={t("Auth.Fields.Phone")}
                 onBlur={() => {
                   let showError = false;
-                  const phone = authFields.phone;
+                  const phone = authFields.phone ?? "";
                   if (phone.length > 0 && !checkPhone(phone)) {
                     showError = true;
                   }

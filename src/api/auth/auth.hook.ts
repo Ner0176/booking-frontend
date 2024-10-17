@@ -1,24 +1,40 @@
 import { authApi } from "./auth.gateway";
 import { useMutation } from "@tanstack/react-query";
 import { SignUpPayload, LoginPayload, AuthResponse } from "./auth.interface";
+import { useNavigate } from "react-router-dom";
+import { showToast } from "../../components/base";
+import { useTranslation } from "react-i18next";
 
 export function useSignUp() {
-  return useMutation<AuthResponse, unknown, SignUpPayload>({
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  return useMutation<AuthResponse, any, SignUpPayload>({
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
-    onSuccess() {},
-    onError() {},
+    onSuccess(data) {
+      sessionStorage.setItem("token", data.token);
+      navigate("/");
+    },
+    onError(error) {
+      const status = error.response.data.statusCode;
+      showToast({ text: t(`Auth.SignUp.Error.${status}`), type: "error" });
+    },
   });
 }
 
 export function useLogin() {
-  return useMutation<AuthResponse, unknown, LoginPayload>({
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  return useMutation<AuthResponse, any, LoginPayload>({
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
-      alert(data);
+      sessionStorage.setItem("token", data.token);
+      navigate("/");
     },
     onError(error) {
-      alert(error);
-      // showToast({ text: "Credenciales inválidas", type: "error" });
+      const status = error.response.data.statusCode;
+      showToast({ text: t(`Auth.Login.Error.${status}`), type: "error" });
     },
   });
 }

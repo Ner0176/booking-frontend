@@ -11,7 +11,5 @@ export interface LoginPayload {
 }
 
 export interface AuthResponse {
-  sub: number;
-  email: string;
-  isAdmin?: boolean;
+  token: string;
 }

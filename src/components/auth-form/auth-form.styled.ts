@@ -15,10 +15,7 @@ export const StyledInput = styled.input(
   tw`w-full py-2 text-sm border-none !outline-none`
 );
 
-export const FieldIcon = styled.svg<{ showCursor: boolean }>`
-  ${tw`w-5 h-5 text-neutral-500`}
-  ${({ showCursor }) => showCursor && tw`cursor-pointer`}
-`;
+export const FieldIcon = styled.svg(tw`w-5 h-5 text-neutral-500`);
 export const FormButton = styled.div(
   tw`w-full mt-1 px-4 py-2 text-center text-white bg-blue-700 rounded-xl cursor-pointer`
 );

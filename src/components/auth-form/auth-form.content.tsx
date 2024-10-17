@@ -34,7 +34,7 @@ export const FormField = ({
           fill="currentColor"
           viewBox="0 0 24 24"
           onClick={handlePrivacy}
-          showCursor={!!handlePrivacy}
+          style={{ cursor: !!handlePrivacy ? "pointer" : "auto" }}
         >
           <path d={icon} />
         </FieldIcon>
