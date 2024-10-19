@@ -27,7 +27,7 @@ import {
 } from "./auth-form.interface";
 import { checkPhone } from "./auth-form.utils";
 import { useLogin, useSignUp } from "../../api";
-import { MainContainer } from "../base/container";
+import { MainContainer } from "../base";
 
 const MIN_PSWD_LENGTH = 8;
 

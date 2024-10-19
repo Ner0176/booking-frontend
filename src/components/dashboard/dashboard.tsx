@@ -1,3 +1,5 @@
+import { Sidebar } from "../base";
+
 export const Dashboard = () => {
-  return <div>Holaaaa</div>;
+  return <Sidebar></Sidebar>;
 };
