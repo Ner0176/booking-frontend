@@ -10,7 +10,6 @@ import { useState } from "react";
 import {
   ContentBox,
   FormButton,
-  AuthContainer,
   AuthWrapper,
   SeparatorContainer,
   SeparatorLine,
@@ -28,6 +27,7 @@ import {
 } from "./auth-form.interface";
 import { checkPhone } from "./auth-form.utils";
 import { useLogin, useSignUp } from "../../api";
+import { MainContainer } from "../base/container";
 
 const MIN_PSWD_LENGTH = 8;
 
@@ -63,8 +63,13 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     setAuthFields(emptyAuthFields);
   };
 
+  const handleResetFields = () => {
+    setAuthErrors(initAuthErrors);
+    setAuthFields(emptyAuthFields);
+  };
+
   return (
-    <AuthContainer>
+    <MainContainer>
       <AuthWrapper>
         <span className="font-bold text-3xl">
           {t(`Auth.${formType}.Title`)}
@@ -157,15 +162,16 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
           </div>
           <div className="flex items-center justify-center w-full">
             <SwitchFormButton
-              onClick={() =>
-                setFormType((prev) => (prev === "Login" ? "SignUp" : "Login"))
-              }
+              onClick={() => {
+                handleResetFields();
+                setFormType((prev) => (prev === "Login" ? "SignUp" : "Login"));
+              }}
             >
               {t(`Auth.${formType === "Login" ? "SignUp" : "Login"}.Title`)}
             </SwitchFormButton>
           </div>
         </ContentBox>
       </AuthWrapper>
-    </AuthContainer>
+    </MainContainer>
   );
 };
