@@ -1,5 +1,5 @@
 import { Sidebar } from "../base";
 
-export const Dashboard = () => {
+export const CalendarDashboard = () => {
   return <Sidebar></Sidebar>;
 };

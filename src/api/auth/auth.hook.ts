@@ -2,8 +2,8 @@ import { authApi } from "./auth.gateway";
 import { useMutation } from "@tanstack/react-query";
 import { SignUpPayload, LoginPayload, AuthResponse } from "./auth.interface";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "../../components/base";
 import { useTranslation } from "react-i18next";
+import { showToast } from "../../components";
 
 export function useSignUp() {
   const navigate = useNavigate();
