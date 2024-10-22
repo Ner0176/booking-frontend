@@ -34,6 +34,19 @@
       "Description": "Página no encontrada"
     }
   },
+  "Calendar": {
+    "Event": {
+      "NewEvent": "Crear nuevo evento",
+      "Recurrent": {
+        "Title": "Evento recurrente",
+        "Description": "El evento se repetirá hasta la fecha de fin introducida"
+      },
+      "OneTime": {
+        "Title": "Evento puntual",
+        "Description": "El evento se creará únicamente para la fecha seleccionada"
+      }
+    }
+  },
   "Sidebar": {
     "Options": {
       "Home": "Inicio",

@@ -1,5 +1,5 @@
-import { CalendarDashboard, HomeDashboard } from "../components";
-import { LoginPage, SignUpPage } from "../pages";
+import { HomeDashboard } from "../components";
+import { CalendarPage, LoginPage, SignUpPage } from "../pages";
 import { InvalidRoute, ProtectedRoute } from "./router.content";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -13,7 +13,7 @@ export const AppRouter = () => {
           <Route element={<HomeDashboard />} path="/" />
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="/calendar" element={<CalendarDashboard />} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Route>
         <Route path="*" element={<InvalidRoute />} />
       </Routes>
