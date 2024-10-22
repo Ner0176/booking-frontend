@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import { useTranslation } from "react-i18next";
-import { EventTypeContainer, EventTypeTitle } from "./calendar-event.styled";
+import { EventTypeContainer, EventTypeTitle } from "./new-event.styled";
 
 export const EventTypeBox = ({
   type,

@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { EventTypeBox } from "./calendar.content";
+import { EventTypeBox } from "./new-event.content";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
-import { EventContainer, EventTypesWrapper } from "./calendar-event.styled";
+import { EventContainer, EventTypesWrapper } from "./new-event.styled";
 
-export const CalendarEvent = () => {
+export const NewEvent = () => {
   const { t } = useTranslation();
   return (
     <EventContainer>

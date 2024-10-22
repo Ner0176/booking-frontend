@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CalendarEvent, Sidebar } from "../../components";
+import { NewEvent, Sidebar } from "../../components";
 import { CalendarContainer, NewEventButton } from "./calendar.styled";
 
 export const CalendarPage = () => {
@@ -16,7 +16,7 @@ export const CalendarPage = () => {
             {t("Calendar.Event.NewEvent")}
           </NewEventButton>
         ) : (
-          <CalendarEvent />
+          <NewEvent />
         )}
       </CalendarContainer>
     </Sidebar>
