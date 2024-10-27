@@ -1,6 +1,13 @@
 import Icon from "@mdi/react";
 import { useTranslation } from "react-i18next";
-import { EventTypeContainer, EventTypeTitle } from "./new-event.styled";
+import {
+  CustomInputField,
+  EventTypeContainer,
+  EventTypeTitle,
+  InputFieldContainer,
+  InputFieldTitle,
+} from "./new-event.styled";
+import { HTMLInputTypeAttribute } from "react";
 
 export const EventTypeBox = ({
   type,
@@ -20,5 +27,34 @@ export const EventTypeBox = ({
       </EventTypeTitle>
       <span className="text-sm">{t(`Calendar.Event.${type}.Description`)}</span>
     </EventTypeContainer>
+  );
+};
+
+export const EventInputField = <T extends string | number>({
+  type,
+  titleKey,
+  handleChange,
+  selectedValue,
+}: Readonly<{
+  titleKey: string;
+  selectedValue: T;
+  handleChange: (v: T) => void;
+  type: HTMLInputTypeAttribute;
+}>) => {
+  const { t } = useTranslation();
+  return (
+    <InputFieldContainer>
+      <InputFieldTitle>
+        {t(`Calendar.Event.Fields.${titleKey}`)}
+      </InputFieldTitle>
+      <CustomInputField
+        type={type}
+        value={selectedValue}
+        onChange={(e) => {
+          handleChange(e.target.value as T);
+        }}
+        className="focus:outline-none"
+      />
+    </InputFieldContainer>
   );
 };

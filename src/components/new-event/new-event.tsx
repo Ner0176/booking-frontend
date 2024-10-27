@@ -1,17 +1,29 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EventTypeBox } from "./new-event.content";
-import { EventContainer, EventTypesWrapper } from "./new-event.styled";
+import { EventInputField, EventTypeBox } from "./new-event.content";
+import {
+  EventContainer,
+  EventTypesWrapper,
+  InputFieldContainer,
+  InputFieldsContainer,
+  InputFieldsRow,
+  InputFieldTitle,
+} from "./new-event.styled";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
-import { EventType } from "./new-event.interface";
+import {
+  DayOfWeek,
+  emptyEventFields,
+  EventType,
+  IEventFields,
+} from "./new-event.interface";
 import "react-calendar/dist/Calendar.css";
-import { CustomCalendar } from "../base";
+import { CustomSelect } from "../base";
 
 export const NewEvent = () => {
   const { t } = useTranslation();
 
   const [selectedType, setSelectedType] = useState<EventType>();
-  const [initDate, setInitDate] = useState<Date>();
+  const [fields, setFields] = useState<IEventFields>(emptyEventFields);
 
   return (
     <EventContainer>
@@ -32,13 +44,88 @@ export const NewEvent = () => {
           />
         </EventTypesWrapper>
       ) : (
-        <div className="flex flex-row justify-between gap-4 w-full">
-          <div>AAA</div>
-          <CustomCalendar
-            value={initDate}
-            onClickDay={(date) => setInitDate(date)}
-          />
-        </div>
+        <InputFieldsContainer>
+          <InputFieldsRow>
+            <EventInputField<string>
+              type="date"
+              titleKey={"InitDate"}
+              selectedValue={fields.initDate}
+              handleChange={(v) => {
+                console.log(v);
+                setFields((prev) => {
+                  return { ...prev, initDate: v };
+                });
+              }}
+            />
+            <EventInputField<string>
+              type="date"
+              titleKey={"EndDate"}
+              selectedValue={fields.endDate}
+              handleChange={(v) =>
+                setFields((prev) => {
+                  return { ...prev, endDate: v };
+                })
+              }
+            />
+          </InputFieldsRow>
+          <InputFieldsRow>
+            <EventInputField<string>
+              type="time"
+              titleKey={"InitTime"}
+              selectedValue={fields.initTime}
+              handleChange={(v) =>
+                setFields((prev) => {
+                  return { ...prev, initTime: v };
+                })
+              }
+            />
+            <EventInputField<string>
+              type="time"
+              titleKey={"EndTime"}
+              selectedValue={fields.endTime}
+              handleChange={(v) =>
+                setFields((prev) => {
+                  return { ...prev, endTime: v };
+                })
+              }
+            />
+          </InputFieldsRow>
+          <InputFieldsRow>
+            <EventInputField<number>
+              type="number"
+              titleKey={"Capacity"}
+              selectedValue={fields.capacity}
+              handleChange={(v) =>
+                setFields((prev) => {
+                  return { ...prev, capacity: v };
+                })
+              }
+            />
+            <InputFieldContainer>
+              <InputFieldTitle>
+                {t("Calendar.Event.Fields.DayOfWeek")}
+              </InputFieldTitle>
+              <CustomSelect
+                selectedValue={`${fields?.weekDay}`}
+                handleChange={(v) =>
+                  setFields((prev) => {
+                    return { ...prev, weekDay: +v };
+                  })
+                }
+                options={Object.values(DayOfWeek)
+                  .filter((value) => typeof value === "number")
+                  .map((value) => ({
+                    key: `${value}`,
+                    text: t(
+                      `Calendar.Event.DayOfWeek.${
+                        DayOfWeek[value as DayOfWeek]
+                      }`
+                    ),
+                  }))}
+              />
+            </InputFieldContainer>
+          </InputFieldsRow>
+        </InputFieldsContainer>
       )}
     </EventContainer>
   );

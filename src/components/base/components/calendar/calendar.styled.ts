@@ -6,12 +6,12 @@ export const LabelContainer = styled.div(
   tw`flex items-center justify-center h-full w-full cursor-pointer bg-white`
 );
 export const StyledCalendar = styled(Calendar)`
-  ${tw`bg-white border !border-[#DEE1E580] rounded-lg p-4 shadow-lg`}
+  ${tw`bg-white border !border-neutral-200 rounded-lg p-4 shadow-lg`}
 
   .react-calendar__tile {
     border-radius: 8px;
     &:hover {
-      background-color: #f5f3ffff !important;
+      background-color: #7c3aedff !important;
     }
   }
 

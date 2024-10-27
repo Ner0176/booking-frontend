@@ -37,6 +37,23 @@
   "Calendar": {
     "Event": {
       "NewEvent": "Crear nuevo evento",
+      "DayOfWeek": {
+        "MONDAY": "Lunes",
+        "TUESDAY": "Martes",
+        "WEDNESDAY": "Miércoles",
+        "THURSDAY": "Jueves",
+        "FRIDAY": "Viernes",
+        "SATURDAY": "Sábado",
+        "SUNDAY": "Domingo"
+      },
+      "Fields": {
+        "InitDate": "Fecha de incio",
+        "EndDate": "Fecha de finalización",
+        "InitTime": "Hora de inicio",
+        "EndTime": "Hora de finalización",
+        "Capacity": "Aforo máximo",
+        "DayOfWeek": "Día de la semana"
+      },
       "Recurrent": {
         "Title": "Evento recurrente",
         "Description": "El evento se repetirá hasta la fecha de fin introducida"

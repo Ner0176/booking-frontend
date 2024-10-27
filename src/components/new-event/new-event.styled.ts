@@ -13,3 +13,16 @@ export const EventTypeContainer = styled.div`
 export const EventTypeTitle = styled.div(
   tw`flex flex-row items-center gap-1.5`
 );
+export const InputFieldsContainer = styled.div(
+  tw`flex flex-col gap-4 w-full pt-5`
+);
+export const InputFieldsRow = styled.div(
+  tw`flex flex-row items-center justify-center gap-10 w-full`
+);
+export const InputFieldContainer = styled.div(
+  tw`flex flex-col gap-1.5 w-full max-w-[250px]`
+);
+export const InputFieldTitle = styled.span(tw`text-xs font-semibold pl-1`);
+export const CustomInputField = styled.input(
+  tw`w-full px-4 py-2 rounded-xl border border-neutral-200 cursor-pointer`
+);
