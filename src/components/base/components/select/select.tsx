@@ -1,5 +1,7 @@
+import Icon from "@mdi/react";
 import { ISelectOptions } from "./select.interface";
-import { StyledSelect } from "./select.styled";
+import { SelectContainer, StyledSelect } from "./select.styled";
+import { mdiChevronDown } from "@mdi/js";
 
 export const CustomSelect = ({
   options,
@@ -11,15 +13,18 @@ export const CustomSelect = ({
   handleChange: (v: string) => void;
 }>) => {
   return (
-    <StyledSelect
-      value={selectedValue}
-      onChange={(e) => handleChange(e.target.value)}
-    >
-      {options.map(({ key, text }, idx) => (
-        <option key={idx} value={key}>
-          {text}
-        </option>
-      ))}
-    </StyledSelect>
+    <SelectContainer>
+      <StyledSelect
+        value={selectedValue}
+        onChange={(e) => handleChange(e.target.value)}
+      >
+        {options.map(({ key, text }, idx) => (
+          <option key={idx} value={key}>
+            {text}
+          </option>
+        ))}
+      </StyledSelect>
+      <Icon size="20px" className="mr-5" path={mdiChevronDown} />
+    </SelectContainer>
   );
 };

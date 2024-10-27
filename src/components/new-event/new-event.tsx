@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { EventInputField, EventTypeBox } from "./new-event.content";
 import {
+  ButtonsContainer,
   EventContainer,
   EventTypesWrapper,
   InputFieldContainer,
@@ -17,7 +18,7 @@ import {
   IEventFields,
 } from "./new-event.interface";
 import "react-calendar/dist/Calendar.css";
-import { CustomSelect } from "../base";
+import { CustomButton, CustomSelect } from "../base";
 
 export const NewEvent = () => {
   const { t } = useTranslation();
@@ -116,15 +117,17 @@ export const NewEvent = () => {
                   .filter((value) => typeof value === "number")
                   .map((value) => ({
                     key: `${value}`,
-                    text: t(
-                      `Calendar.Event.DayOfWeek.${
-                        DayOfWeek[value as DayOfWeek]
-                      }`
-                    ),
+                    text: t(`Base.DayOfWeek.${DayOfWeek[value as DayOfWeek]}`),
                   }))}
               />
             </InputFieldContainer>
           </InputFieldsRow>
+          <ButtonsContainer>
+            <CustomButton color="secondary">
+              {t("Base.Buttons.Cancel")}
+            </CustomButton>
+            <CustomButton>{t("Base.Buttons.CreateEvent")}</CustomButton>
+          </ButtonsContainer>
         </InputFieldsContainer>
       )}
     </EventContainer>

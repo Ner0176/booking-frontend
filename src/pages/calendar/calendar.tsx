@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NewEvent, Sidebar } from "../../components";
-import { CalendarContainer, NewEventButton } from "./calendar.styled";
+import { CustomButton, NewEvent, Sidebar } from "../../components";
+import { CalendarContainer } from "./calendar.styled";
 
 export const CalendarPage = () => {
   const { t } = useTranslation();
@@ -12,9 +12,9 @@ export const CalendarPage = () => {
     <Sidebar>
       <CalendarContainer>
         {!showNewEvent ? (
-          <NewEventButton onClick={() => setShowNewEvent(true)}>
+          <CustomButton onClick={() => setShowNewEvent(true)}>
             {t("Calendar.Event.NewEvent")}
-          </NewEventButton>
+          </CustomButton>
         ) : (
           <NewEvent />
         )}

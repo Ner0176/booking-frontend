@@ -1,4 +1,19 @@
 {
+  "Base": {
+    "Buttons": {
+      "Cancel": "Cancelar",
+      "CreateEvent": "Crear evento"
+    },
+    "DayOfWeek": {
+      "MONDAY": "Lunes",
+      "TUESDAY": "Martes",
+      "WEDNESDAY": "Miércoles",
+      "THURSDAY": "Jueves",
+      "FRIDAY": "Viernes",
+      "SATURDAY": "Sábado",
+      "SUNDAY": "Domingo"
+    }
+  },
   "Auth": {
     "Login": {
       "Title": "Iniciar sesión",
@@ -37,15 +52,6 @@
   "Calendar": {
     "Event": {
       "NewEvent": "Crear nuevo evento",
-      "DayOfWeek": {
-        "MONDAY": "Lunes",
-        "TUESDAY": "Martes",
-        "WEDNESDAY": "Miércoles",
-        "THURSDAY": "Jueves",
-        "FRIDAY": "Viernes",
-        "SATURDAY": "Sábado",
-        "SUNDAY": "Domingo"
-      },
       "Fields": {
         "InitDate": "Fecha de incio",
         "EndDate": "Fecha de finalización",

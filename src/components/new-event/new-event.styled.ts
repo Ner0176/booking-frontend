@@ -26,3 +26,6 @@ export const InputFieldTitle = styled.span(tw`text-xs font-semibold pl-1`);
 export const CustomInputField = styled.input(
   tw`w-full px-4 py-2 rounded-xl border border-neutral-200 cursor-pointer`
 );
+export const ButtonsContainer = styled.div(
+  tw`flex justify-end items-center gap-4 w-full`
+);
