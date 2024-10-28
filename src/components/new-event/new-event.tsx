@@ -1,31 +1,36 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { EventInputField, EventTypeBox } from "./new-event.content";
+import {
+  EventTypeBox,
+  OneTimeFields,
+  RecurrentFields,
+} from "./new-event.content";
 import {
   ButtonsContainer,
   EventContainer,
   EventTypesWrapper,
-  InputFieldContainer,
   InputFieldsContainer,
-  InputFieldsRow,
-  InputFieldTitle,
-  InputTitleContainer,
 } from "./new-event.styled";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
-import {
-  DayOfWeek,
-  emptyEventFields,
-  EventType,
-  IEventFields,
-} from "./new-event.interface";
-import "react-calendar/dist/Calendar.css";
-import { CustomButton, CustomSelect, InfoTooltip } from "../base";
+import { EventType } from "./new-event.interface";
+import { CustomButton } from "../base";
+import { useSearchParams } from "react-router-dom";
 
 export const NewEvent = () => {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [selectedType, setSelectedType] = useState<EventType>();
-  const [fields, setFields] = useState<IEventFields>(emptyEventFields);
+  const selectedType: EventType | null = useMemo(() => {
+    const type = searchParams.get("type");
+    return type ? (type as EventType) : null;
+  }, [searchParams]);
+
+  const handleSelectType = (newType?: EventType) => {
+    setSearchParams((sParams) => {
+      newType ? sParams.set("type", newType) : sParams.delete("type");
+      return sParams;
+    });
+  };
 
   return (
     <EventContainer>
@@ -37,110 +42,23 @@ export const NewEvent = () => {
           <EventTypeBox
             type="Recurrent"
             icon={mdiCalendarSyncOutline}
-            handleSelectType={() => setSelectedType("recurrent")}
+            handleSelectType={() => handleSelectType("recurrent")}
           />
           <EventTypeBox
             type="OneTime"
             icon={mdiCalendarBlankOutline}
-            handleSelectType={() => setSelectedType("oneTime")}
+            handleSelectType={() => handleSelectType("oneTime")}
           />
         </EventTypesWrapper>
       ) : (
         <InputFieldsContainer>
-          <InputFieldsRow>
-            <EventInputField<string>
-              type="date"
-              titleKey={"InitDate"}
-              selectedValue={fields.initDate}
-              handleChange={(v) => {
-                console.log(v);
-                setFields((prev) => {
-                  return { ...prev, initDate: v };
-                });
-              }}
-              tooltipContent={{
-                id: "tooltip-initDate",
-                text: t("Calendar.Event.Fields.Tooltip.initDate"),
-              }}
-            />
-            <EventInputField<string>
-              type="date"
-              titleKey={"EndDate"}
-              selectedValue={fields.endDate}
-              handleChange={(v) =>
-                setFields((prev) => {
-                  return { ...prev, endDate: v };
-                })
-              }
-              tooltipContent={{
-                id: "tooltip-endDate",
-                text: t("Calendar.Event.Fields.Tooltip.endDate"),
-              }}
-            />
-          </InputFieldsRow>
-          <InputFieldsRow>
-            <EventInputField<string>
-              type="time"
-              titleKey={"InitTime"}
-              selectedValue={fields.initTime}
-              handleChange={(v) =>
-                setFields((prev) => {
-                  return { ...prev, initTime: v };
-                })
-              }
-            />
-            <EventInputField<string>
-              type="time"
-              titleKey={"EndTime"}
-              selectedValue={fields.endTime}
-              handleChange={(v) =>
-                setFields((prev) => {
-                  return { ...prev, endTime: v };
-                })
-              }
-            />
-          </InputFieldsRow>
-          <InputFieldsRow>
-            <EventInputField<number>
-              type="number"
-              titleKey={"Capacity"}
-              selectedValue={fields.capacity}
-              handleChange={(v) =>
-                setFields((prev) => {
-                  return { ...prev, capacity: v };
-                })
-              }
-            />
-            <InputFieldContainer>
-              <InputTitleContainer>
-                <InputFieldTitle>
-                  {t("Calendar.Event.Fields.DayOfWeek")}
-                </InputFieldTitle>
-                <InfoTooltip
-                  content={{
-                    id: "tooltip-dayOfWeek",
-                    text: t("Calendar.Event.Fields.Tooltip.dayOfWeek"),
-                  }}
-                />
-              </InputTitleContainer>
-              <CustomSelect
-                selectedValue={`${fields?.weekDay}`}
-                handleChange={(v) =>
-                  setFields((prev) => {
-                    return { ...prev, weekDay: +v };
-                  })
-                }
-                options={Object.values(DayOfWeek)
-                  .filter((value) => typeof value === "number")
-                  .map((value) => ({
-                    key: `${value}`,
-                    text: t(`Base.DayOfWeek.${DayOfWeek[value as DayOfWeek]}`),
-                  }))}
-              />
-            </InputFieldContainer>
-          </InputFieldsRow>
+          {selectedType === "recurrent" ? (
+            <RecurrentFields />
+          ) : (
+            <OneTimeFields />
+          )}
           <ButtonsContainer>
-            <CustomButton color="secondary">
+            <CustomButton color="secondary" onClick={() => handleSelectType()}>
               {t("Base.Buttons.Cancel")}
             </CustomButton>
             <CustomButton>{t("Base.Buttons.CreateEvent")}</CustomButton>

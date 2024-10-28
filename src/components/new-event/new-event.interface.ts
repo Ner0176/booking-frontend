@@ -10,7 +10,7 @@ export enum DayOfWeek {
   SUNDAY = 6,
 }
 
-export interface IEventFields {
+export interface IRecurrentFields {
   initDate: string;
   endDate: string;
   initTime: string;
@@ -19,11 +19,25 @@ export interface IEventFields {
   weekDay: number;
 }
 
-export const emptyEventFields: IEventFields = {
+export const emptyRecurrentFields: IRecurrentFields = {
   initDate: "",
   endDate: "",
   initTime: "",
   endTime: "",
   capacity: 0,
   weekDay: 0,
+};
+
+export interface IOneTimeFields {
+  date: string;
+  capacity: number;
+  initTime: string;
+  endTime: string;
+}
+
+export const emptyOneTimeFields: IOneTimeFields = {
+  date: "",
+  initTime: "",
+  endTime: "",
+  capacity: 0,
 };

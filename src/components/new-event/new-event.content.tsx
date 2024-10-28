@@ -5,11 +5,19 @@ import {
   EventTypeContainer,
   EventTypeTitle,
   InputFieldContainer,
+  InputFieldsRow,
   InputFieldTitle,
   InputTitleContainer,
 } from "./new-event.styled";
-import { HTMLInputTypeAttribute } from "react";
-import { InfoTooltip, ITooltipContent } from "../base";
+import { Fragment, HTMLInputTypeAttribute, useState } from "react";
+import { CustomSelect, InfoTooltip, ITooltipContent } from "../base";
+import {
+  DayOfWeek,
+  emptyOneTimeFields,
+  emptyRecurrentFields,
+  IOneTimeFields,
+  IRecurrentFields,
+} from "./new-event.interface";
 
 export const EventTypeBox = ({
   type,
@@ -32,7 +40,7 @@ export const EventTypeBox = ({
   );
 };
 
-export const EventInputField = <T extends string | number>({
+const EventInputField = <T extends string | number>({
   type,
   titleKey,
   handleChange,
@@ -63,5 +71,162 @@ export const EventInputField = <T extends string | number>({
         className="focus:outline-none"
       />
     </InputFieldContainer>
+  );
+};
+
+export const RecurrentFields = () => {
+  const { t } = useTranslation();
+
+  const [fields, setFields] = useState<IRecurrentFields>(emptyRecurrentFields);
+
+  return (
+    <Fragment>
+      <InputFieldsRow>
+        <EventInputField<string>
+          type="date"
+          titleKey={"InitDate"}
+          selectedValue={fields.initDate}
+          handleChange={(v) => {
+            console.log(v);
+            setFields((prev) => {
+              return { ...prev, initDate: v };
+            });
+          }}
+          tooltipContent={{
+            id: "tooltip-initDate",
+            text: t("Calendar.Event.Fields.Tooltip.initDate"),
+          }}
+        />
+        <EventInputField<string>
+          type="date"
+          titleKey={"EndDate"}
+          selectedValue={fields.endDate}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, endDate: v };
+            })
+          }
+          tooltipContent={{
+            id: "tooltip-endDate",
+            text: t("Calendar.Event.Fields.Tooltip.endDate"),
+          }}
+        />
+      </InputFieldsRow>
+      <InputFieldsRow>
+        <EventInputField<string>
+          type="time"
+          titleKey={"InitTime"}
+          selectedValue={fields.initTime}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, initTime: v };
+            })
+          }
+        />
+        <EventInputField<string>
+          type="time"
+          titleKey={"EndTime"}
+          selectedValue={fields.endTime}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, endTime: v };
+            })
+          }
+        />
+      </InputFieldsRow>
+      <InputFieldsRow>
+        <EventInputField<number>
+          type="number"
+          titleKey={"Capacity"}
+          selectedValue={fields.capacity}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, capacity: v };
+            })
+          }
+        />
+        <InputFieldContainer>
+          <InputTitleContainer>
+            <InputFieldTitle>
+              {t("Calendar.Event.Fields.DayOfWeek")}
+            </InputFieldTitle>
+            <InfoTooltip
+              content={{
+                id: "tooltip-dayOfWeek",
+                text: t("Calendar.Event.Fields.Tooltip.dayOfWeek"),
+              }}
+            />
+          </InputTitleContainer>
+          <CustomSelect
+            selectedValue={`${fields?.weekDay}`}
+            handleChange={(v) =>
+              setFields((prev) => {
+                return { ...prev, weekDay: +v };
+              })
+            }
+            options={Object.values(DayOfWeek)
+              .filter((value) => typeof value === "number")
+              .map((value) => ({
+                key: `${value}`,
+                text: t(`Base.DayOfWeek.${DayOfWeek[value as DayOfWeek]}`),
+              }))}
+          />
+        </InputFieldContainer>
+      </InputFieldsRow>
+    </Fragment>
+  );
+};
+
+export const OneTimeFields = () => {
+  const [fields, setFields] = useState<IOneTimeFields>(emptyOneTimeFields);
+
+  return (
+    <Fragment>
+      <InputFieldsRow>
+        <EventInputField<string>
+          type="date"
+          titleKey={"Date"}
+          selectedValue={fields.date}
+          handleChange={(v) => {
+            console.log(v);
+            setFields((prev) => {
+              return { ...prev, date: v };
+            });
+          }}
+        />
+        <EventInputField<number>
+          type="number"
+          titleKey={"Capacity"}
+          selectedValue={fields.capacity}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, capacity: v };
+            })
+          }
+        />
+      </InputFieldsRow>
+      <InputFieldsRow>
+        <EventInputField<string>
+          type="time"
+          titleKey={"InitTime"}
+          selectedValue={fields.initTime}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, initTime: v };
+            })
+          }
+        />
+        <EventInputField<string>
+          type="time"
+          titleKey={"EndTime"}
+          selectedValue={fields.endTime}
+          handleChange={(v) =>
+            setFields((prev) => {
+              return { ...prev, endTime: v };
+            })
+          }
+        />
+      </InputFieldsRow>
+    </Fragment>
   );
 };

@@ -53,6 +53,7 @@
     "Event": {
       "NewEvent": "Crear nuevo evento",
       "Fields": {
+        "Date": "Fecha del evento",
         "InitDate": "Fecha de incio",
         "EndDate": "Fecha de finalización",
         "InitTime": "Hora de inicio",
