@@ -6,8 +6,10 @@ import {
   EventTypeTitle,
   InputFieldContainer,
   InputFieldTitle,
+  InputTitleContainer,
 } from "./new-event.styled";
 import { HTMLInputTypeAttribute } from "react";
+import { InfoTooltip, ITooltipContent } from "../base";
 
 export const EventTypeBox = ({
   type,
@@ -35,18 +37,23 @@ export const EventInputField = <T extends string | number>({
   titleKey,
   handleChange,
   selectedValue,
+  tooltipContent,
 }: Readonly<{
   titleKey: string;
   selectedValue: T;
   handleChange: (v: T) => void;
   type: HTMLInputTypeAttribute;
+  tooltipContent?: ITooltipContent;
 }>) => {
   const { t } = useTranslation();
   return (
     <InputFieldContainer>
-      <InputFieldTitle>
-        {t(`Calendar.Event.Fields.${titleKey}`)}
-      </InputFieldTitle>
+      <InputTitleContainer>
+        <InputFieldTitle>
+          {t(`Calendar.Event.Fields.${titleKey}`)}
+        </InputFieldTitle>
+        {tooltipContent && <InfoTooltip content={tooltipContent} />}
+      </InputTitleContainer>
       <CustomInputField
         type={type}
         value={selectedValue}

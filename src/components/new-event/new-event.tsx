@@ -9,6 +9,7 @@ import {
   InputFieldsContainer,
   InputFieldsRow,
   InputFieldTitle,
+  InputTitleContainer,
 } from "./new-event.styled";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
 import {
@@ -18,7 +19,7 @@ import {
   IEventFields,
 } from "./new-event.interface";
 import "react-calendar/dist/Calendar.css";
-import { CustomButton, CustomSelect } from "../base";
+import { CustomButton, CustomSelect, InfoTooltip } from "../base";
 
 export const NewEvent = () => {
   const { t } = useTranslation();
@@ -57,6 +58,10 @@ export const NewEvent = () => {
                   return { ...prev, initDate: v };
                 });
               }}
+              tooltipContent={{
+                id: "tooltip-initDate",
+                text: t("Calendar.Event.Fields.Tooltip.initDate"),
+              }}
             />
             <EventInputField<string>
               type="date"
@@ -67,6 +72,10 @@ export const NewEvent = () => {
                   return { ...prev, endDate: v };
                 })
               }
+              tooltipContent={{
+                id: "tooltip-endDate",
+                text: t("Calendar.Event.Fields.Tooltip.endDate"),
+              }}
             />
           </InputFieldsRow>
           <InputFieldsRow>
@@ -103,9 +112,17 @@ export const NewEvent = () => {
               }
             />
             <InputFieldContainer>
-              <InputFieldTitle>
-                {t("Calendar.Event.Fields.DayOfWeek")}
-              </InputFieldTitle>
+              <InputTitleContainer>
+                <InputFieldTitle>
+                  {t("Calendar.Event.Fields.DayOfWeek")}
+                </InputFieldTitle>
+                <InfoTooltip
+                  content={{
+                    id: "tooltip-dayOfWeek",
+                    text: t("Calendar.Event.Fields.Tooltip.dayOfWeek"),
+                  }}
+                />
+              </InputTitleContainer>
               <CustomSelect
                 selectedValue={`${fields?.weekDay}`}
                 handleChange={(v) =>
