@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import tw from "twin.macro";
 
 export const EventContainer = styled.div(
-  tw`flex flex-col w-1/2 h-2/3 py-10 px-16 border border-neutral-200 bg-white rounded-2xl`
+  tw`flex flex-col w-1/2 h-2/3 pt-10 px-16 border border-neutral-200 bg-white rounded-2xl`
 );
 export const EventTypesWrapper = styled.div(
   tw`flex flex-row gap-4 items-center justify-between h-full`
@@ -13,11 +13,14 @@ export const EventTypeContainer = styled.div`
 export const EventTypeTitle = styled.div(
   tw`flex flex-row items-center gap-1.5`
 );
+export const EventFormWrapper = styled.div(
+  tw`flex flex-col justify-between gap-4 h-full py-10`
+);
 export const InputTitleContainer = styled.div(
-  tw`flex flex-row items-center gap-2`
+  tw`flex flex-row items-center gap-1.5`
 );
 export const InputFieldsContainer = styled.div(
-  tw`flex flex-col justify-center gap-6 w-full h-full pt-5`
+  tw`flex flex-col gap-6 w-full h-full`
 );
 export const InputFieldsRow = styled.div(
   tw`flex flex-row items-center justify-center gap-10 w-full`
@@ -30,5 +33,5 @@ export const CustomInputField = styled.input(
   tw`w-full px-4 py-2 rounded-xl border border-neutral-200 cursor-pointer`
 );
 export const ButtonsContainer = styled.div(
-  tw`flex justify-end items-center gap-4 w-full mt-2`
+  tw`flex flex-row justify-end items-center gap-4 w-full`
 );

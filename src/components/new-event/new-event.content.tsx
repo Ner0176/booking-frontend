@@ -9,12 +9,15 @@ import {
   InputFieldTitle,
   InputTitleContainer,
 } from "./new-event.styled";
-import { Fragment, HTMLInputTypeAttribute, useState } from "react";
+import {
+  Dispatch,
+  Fragment,
+  HTMLInputTypeAttribute,
+  SetStateAction,
+} from "react";
 import { CustomSelect, InfoTooltip, ITooltipContent } from "../base";
 import {
   DayOfWeek,
-  emptyOneTimeFields,
-  emptyRecurrentFields,
   IOneTimeFields,
   IRecurrentFields,
 } from "./new-event.interface";
@@ -74,22 +77,25 @@ const EventInputField = <T extends string | number>({
   );
 };
 
-export const RecurrentFields = () => {
+export const RecurrentFields = ({
+  fields,
+  setFields,
+}: Readonly<{
+  fields: IRecurrentFields;
+  setFields: Dispatch<SetStateAction<IRecurrentFields>>;
+}>) => {
   const { t } = useTranslation();
-
-  const [fields, setFields] = useState<IRecurrentFields>(emptyRecurrentFields);
-
   return (
     <Fragment>
       <InputFieldsRow>
         <EventInputField<string>
           type="date"
           titleKey={"InitDate"}
-          selectedValue={fields.initDate}
+          selectedValue={fields.startDate}
           handleChange={(v) => {
             console.log(v);
             setFields((prev) => {
-              return { ...prev, initDate: v };
+              return { ...prev, startDate: v };
             });
           }}
           tooltipContent={{
@@ -116,10 +122,10 @@ export const RecurrentFields = () => {
         <EventInputField<string>
           type="time"
           titleKey={"InitTime"}
-          selectedValue={fields.initTime}
+          selectedValue={fields.startTime}
           handleChange={(v) =>
             setFields((prev) => {
-              return { ...prev, initTime: v };
+              return { ...prev, startTime: v };
             })
           }
         />
@@ -177,9 +183,13 @@ export const RecurrentFields = () => {
   );
 };
 
-export const OneTimeFields = () => {
-  const [fields, setFields] = useState<IOneTimeFields>(emptyOneTimeFields);
-
+export const OneTimeFields = ({
+  fields,
+  setFields,
+}: Readonly<{
+  fields: IOneTimeFields;
+  setFields: Dispatch<SetStateAction<IOneTimeFields>>;
+}>) => {
   return (
     <Fragment>
       <InputFieldsRow>
@@ -209,10 +219,10 @@ export const OneTimeFields = () => {
         <EventInputField<string>
           type="time"
           titleKey={"InitTime"}
-          selectedValue={fields.initTime}
+          selectedValue={fields.startTime}
           handleChange={(v) =>
             setFields((prev) => {
-              return { ...prev, initTime: v };
+              return { ...prev, startTime: v };
             })
           }
         />

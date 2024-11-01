@@ -1,6 +1,6 @@
 import { authApi } from "./auth.gateway";
 import { useMutation } from "@tanstack/react-query";
-import { SignUpPayload, LoginPayload, AuthResponse } from "./auth.interface";
+import { SignUpPayload, LoginPayload } from "./auth.interface";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { showToast } from "../../components";
@@ -9,10 +9,10 @@ export function useSignUp() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  return useMutation<AuthResponse, any, SignUpPayload>({
+  return useMutation<string, any, SignUpPayload>({
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
     onSuccess(data) {
-      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data);
       navigate("/");
     },
     onError(error) {
@@ -26,10 +26,10 @@ export function useLogin() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  return useMutation<AuthResponse, any, LoginPayload>({
+  return useMutation<string, any, LoginPayload>({
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
-      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data);
       navigate("/");
     },
     onError(error) {
