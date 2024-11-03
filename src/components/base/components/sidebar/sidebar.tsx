@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { MainContainer } from "../container";
+import { MainContainer } from "../styled-components";
 import { MainWrapper, SidebarButton, SidebarContainer } from "./sidebar.styled";
 import {
   mdiAccountGroupOutline,

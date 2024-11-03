@@ -14,11 +14,9 @@ import {
 } from "./new-event.styled";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
 import {
-  emptyOneTimeFields,
-  emptyRecurrentFields,
+  emptyEventFields,
   EventType,
-  IOneTimeFields,
-  IRecurrentFields,
+  IEventFields,
 } from "./new-event.interface";
 import { CustomButton } from "../base";
 import { useSearchParams } from "react-router-dom";
@@ -28,10 +26,7 @@ export const NewEvent = () => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [recurrentFields, setRecurrentFields] =
-    useState<IRecurrentFields>(emptyRecurrentFields);
-  const [oneTimeFields, setOneTimeFields] =
-    useState<IOneTimeFields>(emptyOneTimeFields);
+  const [fields, setFields] = useState<IEventFields>(emptyEventFields);
 
   const { mutate, isPending: isLoading } = useCreateClass();
 
@@ -45,14 +40,6 @@ export const NewEvent = () => {
       newType ? sParams.set("type", newType) : sParams.delete("type");
       return sParams;
     });
-  };
-
-  const handleSubmit = () => {
-    if (selectedType === "oneTime") {
-      mutate(oneTimeFields);
-    } else {
-      mutate(recurrentFields);
-    }
   };
 
   return (
@@ -77,15 +64,9 @@ export const NewEvent = () => {
         <EventFormWrapper>
           <InputFieldsContainer>
             {selectedType === "recurrent" ? (
-              <RecurrentFields
-                fields={recurrentFields}
-                setFields={setRecurrentFields}
-              />
+              <RecurrentFields fields={fields} setFields={setFields} />
             ) : (
-              <OneTimeFields
-                fields={oneTimeFields}
-                setFields={setOneTimeFields}
-              />
+              <OneTimeFields fields={fields} setFields={setFields} />
             )}
           </InputFieldsContainer>
           <ButtonsContainer>
@@ -95,7 +76,7 @@ export const NewEvent = () => {
             <CustomButton
               isLoading={isLoading}
               onClick={() => {
-                if (!isLoading) handleSubmit();
+                // if (!isLoading) mutate(fields);
               }}
             >
               {t("Base.Buttons.CreateEvent")}

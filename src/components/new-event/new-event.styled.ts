@@ -23,7 +23,7 @@ export const InputFieldsContainer = styled.div(
   tw`flex flex-col gap-6 w-full h-full`
 );
 export const InputFieldsRow = styled.div(
-  tw`flex flex-row items-center justify-center gap-10 w-full`
+  tw`flex flex-row items-start justify-center gap-10 w-full`
 );
 export const InputFieldContainer = styled.div(
   tw`flex flex-col gap-1.5 w-full max-w-[250px]`

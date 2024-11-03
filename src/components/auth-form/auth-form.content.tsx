@@ -1,9 +1,5 @@
-import {
-  ErrorMessage,
-  FieldContainer,
-  FieldIcon,
-  StyledInput,
-} from "./auth-form.styled";
+import { ErrorMessage } from "../base";
+import { FieldContainer, FieldIcon, StyledInput } from "./auth-form.styled";
 
 export const FormField = ({
   icon,
