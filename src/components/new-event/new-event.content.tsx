@@ -96,7 +96,7 @@ const FieldRows = ({
             />
             {!!fieldError && (
               <ErrorMessage>
-                {t(`Calendar.Event.Errors.${fieldError}`)}
+                {t(`Calendar.Event.Fields.Errors.${fieldError}`)}
               </ErrorMessage>
             )}
           </InputFieldContainer>

@@ -42,6 +42,22 @@ export const NewEvent = () => {
     });
   };
 
+  const handleSubmit = () => {
+    for (const item of Object.values(fields)) {
+      if (!!item["error"]) return;
+    }
+
+    mutate({
+      date: fields.date.value,
+      weekDay: fields.weekDay.value,
+      endTime: fields.endTime.value,
+      endDate: fields.endDate.value,
+      capacity: fields.capacity.value,
+      startDate: fields.startDate.value,
+      startTime: fields.startTime.value,
+    });
+  };
+
   return (
     <EventContainer>
       <span className="text-center text-2xl font-bold">
@@ -76,7 +92,7 @@ export const NewEvent = () => {
             <CustomButton
               isLoading={isLoading}
               onClick={() => {
-                // if (!isLoading) mutate(fields);
+                if (!isLoading) handleSubmit();
               }}
             >
               {t("Base.Buttons.CreateEvent")}

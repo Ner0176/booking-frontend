@@ -64,15 +64,15 @@
           "startDate": "El evento se creara a partir del día seleccionado",
           "endDate": "El evento se repetirá hasta la fecha límite seleccionada",
           "dayOfWeek": "El evento se repetirá cada día de la semana seleccionado"
+        },
+        "Errors": {
+          "startDate": "La fecha de inicio debe ser anterior a la de finalización",
+          "endDate": "La fecha de finalización debe ser posterior a la de inicio",
+          "startTime": "La hora de inicio debe ser anterior a la de finalización",
+          "endTime": "La hora de finalización debe ser posterior a la de inicio",
+          "capacity": "La capacidad debe ser superior o igual a 1",
+          "emptyField": "Este campo es obligatorio"
         }
-      },
-      "Errors": {
-        "startDate": "La fecha de inicio debe ser anterior a la de finalización",
-        "endDate": "La fecha de finalización debe ser posterior a la de inicio",
-        "startTime": "La hora de inicio debe ser anterior a la de finalización",
-        "endTime": "La hora de finalización debe ser posterior a la de inicio",
-        "capacity": "La capacidad debe ser superior o igual a 1",
-        "emptyField": "Este campo es obligatorio"
       },
       "Recurrent": {
         "Title": "Evento recurrente",
@@ -81,7 +81,8 @@
       "OneTime": {
         "Title": "Evento puntual",
         "Description": "El evento se creará únicamente para la fecha seleccionada"
-      }
+      },
+      "Error": "Ha ocurrido un error al intentar crear la clase"
     }
   },
   "Sidebar": {
