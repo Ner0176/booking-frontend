@@ -13,8 +13,9 @@ export interface CreateClassPayload {
 export interface IClass {
   id: string;
   date: Date;
-  start: string;
-  end: string;
-  capacity: number;
+  endTime: string;
+  startTime: string;
+  maxAmount: number;
   currentCount: number;
+  recurrentId: string | null;
 }

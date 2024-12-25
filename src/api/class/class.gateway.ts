@@ -3,7 +3,7 @@ import { CreateClassPayload } from "./class.interface";
 
 export const classApi = {
   getAllClasses: async () => {
-    const response = await axiosInstance.get("/class/listAll");
+    const response = await axiosInstance.get("/class/all");
     return response.data;
   },
   createClass: async (payload: CreateClassPayload) => {

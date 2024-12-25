@@ -29,7 +29,7 @@ export const CalendarPage = () => {
           </span>
         </div>
       </div>
-      <div className="flex flex-col gap-4 px-8 py-10">
+      <div className="flex flex-wrap justify-around gap-4 px-8 py-10">
         {isLoading
           ? [...Array(6)].map((key) => (
               <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />

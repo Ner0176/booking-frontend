@@ -1,7 +1,9 @@
 import Icon from "@mdi/react";
 import { IClass } from "../../api";
 import {
+  mdiAccountGroupOutline,
   mdiCalendarOutline,
+  mdiClockOutline,
   mdiPencilOutline,
   mdiTrashCanOutline,
 } from "@mdi/js";
@@ -9,20 +11,20 @@ import { formatDate } from "../../components";
 import { useState } from "react";
 
 export const ClassItem = ({ data }: Readonly<{ data: IClass }>) => {
-  const { end, start, date, capacity, currentCount } = data;
+  const { endTime, startTime, date, maxAmount, currentCount } = data;
 
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <div
-      className="flex flex-col gap-2 border border-neutral-200 rounded-xl px-6 py-4"
+      className="flex flex-col gap-2 border border-neutral-200 rounded-xl px-6 py-4 min-w-[300px]"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       <div className="flex flex-row items-center justify-between">
-        <div className="flex flex-row items-center gap-1">
-          <Icon size="18px" path={mdiCalendarOutline} />
-          <span>{formatDate(date)}</span>
+        <div className="flex flex-row items-center gap-1.5">
+          <Icon size="20px" className="mt-1" path={mdiAccountGroupOutline} />
+          {currentCount + " / " + maxAmount + " asistentes"}
         </div>
         {isHover && (
           <div className="flex flex-row gap-3">
@@ -39,8 +41,14 @@ export const ClassItem = ({ data }: Readonly<{ data: IClass }>) => {
           </div>
         )}
       </div>
-      <div>{currentCount + " / " + capacity + " asistentes"}</div>
-      <div>{"De " + start.slice(0, 5) + " a " + end.slice(0, 5)}</div>
+      <div className="flex flex-row items-center gap-1.5">
+        <Icon size="20px" className="mt-1" path={mdiClockOutline} />
+        {startTime.slice(0, 5) + "h - " + endTime.slice(0, 5) + "h"}
+      </div>
+      <div className="flex flex-row items-center gap-1.5">
+        <Icon size="20px" className="mt-1" path={mdiCalendarOutline} />
+        <span>{formatDate(date)}</span>
+      </div>
     </div>
   );
 };
