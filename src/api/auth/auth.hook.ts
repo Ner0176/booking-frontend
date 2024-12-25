@@ -11,8 +11,7 @@ export function useSignUp() {
 
   return useMutation<string, any, SignUpPayload>({
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
-    onSuccess(data) {
-      sessionStorage.setItem("token", data);
+    onSuccess() {
       navigate("/");
     },
     onError(error) {
@@ -29,7 +28,6 @@ export function useLogin() {
   return useMutation<string, any, LoginPayload>({
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
-      sessionStorage.setItem("token", data);
       navigate("/");
     },
     onError(error) {

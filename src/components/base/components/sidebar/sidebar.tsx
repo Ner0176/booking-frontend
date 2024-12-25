@@ -46,7 +46,6 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
                 text: "signOut",
                 icon: mdiExitToApp,
                 onClick: () => {
-                  sessionStorage.removeItem("token");
                   navigate("/login");
                 },
               },
