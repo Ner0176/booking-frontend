@@ -27,7 +27,7 @@ export function useLogin() {
 
   return useMutation<string, any, LoginPayload>({
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
-    onSuccess(data) {
+    onSuccess() {
       navigate("/");
     },
     onError(error) {

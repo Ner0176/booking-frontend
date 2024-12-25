@@ -7,7 +7,7 @@ export const authApi = {
     return response.data;
   },
   signUp: async (payload: SignUpPayload) => {
-    const response = await axiosInstance.post("/auth/signUp", payload);
+    const response = await axiosInstance.post("/auth/signup", payload);
     return response.data;
   },
 };
