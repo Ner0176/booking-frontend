@@ -9,3 +9,12 @@ export interface CreateClassPayload {
   startTime: string;
   endTime: string;
 }
+
+export interface IClass {
+  id: string;
+  date: Date;
+  start: string;
+  end: string;
+  capacity: number;
+  currentCount: number;
+}

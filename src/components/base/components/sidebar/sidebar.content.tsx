@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import { capitalize } from "../../utils";
-import { SidebarBox } from "./sidebar.styled";
+import { SidebarBox, SidebarItemBox } from "./sidebar.styled";
 import { ISidebarItem } from "./sidebar.interface";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,8 +14,8 @@ export const SidebarOptions = ({
   const navigate = useNavigate();
 
   return (
-    <>
-      {items.map(({ icon, text }, idx) => {
+    <SidebarItemBox isExpanded={isExpanded}>
+      {items.map(({ icon, text, onClick }, idx) => {
         const path = text === "home" ? "/" : `/${text}`;
         const isSelected = location.pathname === path;
 
@@ -24,7 +24,7 @@ export const SidebarOptions = ({
             key={idx}
             isSelected={isSelected}
             isExpanded={isExpanded}
-            onClick={() => navigate(path)}
+            onClick={() => (!onClick ? navigate(path) : onClick())}
           >
             <Icon size="24px" path={icon} />
             {isExpanded && (
@@ -33,6 +33,6 @@ export const SidebarOptions = ({
           </SidebarBox>
         );
       })}
-    </>
+    </SidebarItemBox>
   );
 };

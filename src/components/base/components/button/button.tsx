@@ -8,9 +8,11 @@ export const CustomButton = ({
   onClick,
   children,
   isLoading,
+  size = 16,
   color = "primary",
 }: Readonly<
   PropsWithChildren<{
+    size?: number;
     color?: ColorType;
     isLoading?: boolean;
     onClick?: () => void;
@@ -18,7 +20,11 @@ export const CustomButton = ({
   }>
 >) => {
   return (
-    <StyledButton style={styles} color={color} onClick={onClick}>
+    <StyledButton
+      color={color}
+      onClick={onClick}
+      style={{ fontSize: size, ...styles }}
+    >
       {!!isLoading ? (
         <ClipLoader
           size={20}

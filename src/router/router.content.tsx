@@ -1,10 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { InvalidRouteContainer } from "./router.styled";
 import { useTranslation } from "react-i18next";
+import { Sidebar } from "../components";
 
 export const ProtectedRoute = () => {
   const token = sessionStorage.getItem("token");
-  return !token ? <Navigate to={"/login"} /> : <Outlet />;
+  return !token ? (
+    <Navigate to={"/login"} />
+  ) : (
+    <Sidebar>
+      <Outlet />
+    </Sidebar>
+  );
 };
 
 export const InvalidRoute = () => {

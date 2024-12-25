@@ -6,12 +6,16 @@ import {
   mdiCalendar,
   mdiChevronDoubleLeft,
   mdiChevronDoubleRight,
+  mdiExitToApp,
   mdiHomeOutline,
 } from "@mdi/js";
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -32,6 +36,19 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
               {
                 text: "customers",
                 icon: mdiAccountGroupOutline,
+              },
+            ]}
+          />
+          <SidebarOptions
+            isExpanded={isOpen}
+            items={[
+              {
+                text: "signOut",
+                icon: mdiExitToApp,
+                onClick: () => {
+                  sessionStorage.removeItem("token");
+                  navigate("/login");
+                },
               },
             ]}
           />

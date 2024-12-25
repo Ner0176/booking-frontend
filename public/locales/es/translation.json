@@ -89,7 +89,8 @@
     "Options": {
       "Home": "Inicio",
       "Calendar": "Calendario",
-      "Customers": "Clientes"
+      "Customers": "Clientes",
+      "SignOut": "Cerrar sesión"
     }
   }
 }
