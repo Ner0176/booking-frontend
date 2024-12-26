@@ -5,13 +5,16 @@ export function useClickOutside(handleClose: () => void) {
 
   useEffect(() => {
     const onClickListener = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) handleClose();
+      const current = ref.current;
+      if (current && !current.contains(e.target as Node)) {
+        handleClose();
+      }
     };
 
-    document.addEventListener("click", onClickListener);
+    document.addEventListener("mousedown", onClickListener);
 
     return () => {
-      document.removeEventListener("click", onClickListener);
+      document.removeEventListener("mousedown", onClickListener);
     };
   }, [handleClose]);
 
