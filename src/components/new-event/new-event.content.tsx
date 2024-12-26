@@ -10,8 +10,8 @@ import {
   InputTitleContainer,
 } from "./new-event.styled";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { CustomSelect, ErrorMessage, InfoTooltip } from "../base";
-import { DayOfWeek, IEventFields, IRowConfig } from "./new-event.interface";
+import { ErrorMessage, InfoTooltip } from "../base";
+import { IEventFields, IRowConfig } from "./new-event.interface";
 import { handleCheckField } from "./new-event.utils";
 
 export const EventTypeBox = ({
@@ -120,12 +120,12 @@ export const RecurrentFields = ({
     {
       type: "date",
       hasTooltip: true,
-      accessor: "startDate",
+      accessor: "date",
     },
     {
       type: "date",
       hasTooltip: true,
-      accessor: "endDate",
+      accessor: "recurrencyLimit",
     },
     {
       type: "time",
@@ -137,7 +137,7 @@ export const RecurrentFields = ({
     },
     {
       type: "number",
-      accessor: "capacity",
+      accessor: "maxAmount",
     },
   ];
 
@@ -170,20 +170,6 @@ export const RecurrentFields = ({
               }}
             />
           </InputTitleContainer>
-          <CustomSelect
-            selectedValue={`${fields?.weekDay}`}
-            handleChange={(v) =>
-              setFields((prev) => {
-                return { ...prev, weekDay: { ...prev.weekDay, value: +v } };
-              })
-            }
-            options={Object.values(DayOfWeek)
-              .filter((value) => typeof value === "number")
-              .map((value) => ({
-                key: `${value}`,
-                text: t(`Base.DayOfWeek.${DayOfWeek[value as DayOfWeek]}`),
-              }))}
-          />
         </InputFieldContainer>
       </FieldRows>
     </Fragment>
@@ -205,7 +191,7 @@ export const OneTimeFields = ({
     },
     {
       type: "number",
-      accessor: "capacity",
+      accessor: "maxAmount",
     },
     {
       type: "time",

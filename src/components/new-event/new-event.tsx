@@ -18,9 +18,10 @@ import {
   EventType,
   IEventFields,
 } from "./new-event.interface";
-import { CustomButton } from "../base";
+import { CustomButton, Modal } from "../base";
 import { useSearchParams } from "react-router-dom";
 import { useCreateClass } from "../../api";
+import { useClickOutside } from "../../hooks";
 
 export const NewEvent = () => {
   const { t } = useTranslation();
@@ -29,6 +30,16 @@ export const NewEvent = () => {
   const [fields, setFields] = useState<IEventFields>(emptyEventFields);
 
   const { mutate, isPending: isLoading } = useCreateClass();
+
+  const handleCloseModal = () => {
+    setSearchParams((sParams) => {
+      sParams.delete("type");
+      sParams.delete("action");
+      return sParams;
+    });
+  };
+
+  const ref = useClickOutside(handleCloseModal);
 
   const selectedType: EventType | null = useMemo(() => {
     const type = searchParams.get("type");
@@ -47,59 +58,63 @@ export const NewEvent = () => {
       if (!!item["error"]) return;
     }
 
+    const recurrencyDate = fields.recurrencyLimit.value;
     mutate({
-      date: fields.date.value,
-      weekDay: fields.weekDay.value,
-      endTime: fields.endTime.value,
-      endDate: fields.endDate.value,
-      capacity: fields.capacity.value,
-      startDate: fields.startDate.value,
-      startTime: fields.startTime.value,
+      end: fields.endTime.value,
+      start: fields.startTime.value,
+      date: new Date(fields.date.value),
+      maxAmount: fields.maxAmount.value,
+      recurrencyLimit: recurrencyDate ? new Date(recurrencyDate) : undefined,
     });
   };
 
   return (
-    <EventContainer>
-      <span className="text-center text-2xl font-bold">
-        {t("Calendar.Event.NewEvent")}
-      </span>
-      {!selectedType ? (
-        <EventTypesWrapper>
-          <EventTypeBox
-            type="Recurrent"
-            icon={mdiCalendarSyncOutline}
-            handleSelectType={() => handleSelectType("recurrent")}
-          />
-          <EventTypeBox
-            type="OneTime"
-            icon={mdiCalendarBlankOutline}
-            handleSelectType={() => handleSelectType("oneTime")}
-          />
-        </EventTypesWrapper>
-      ) : (
-        <EventFormWrapper>
-          <InputFieldsContainer>
-            {selectedType === "recurrent" ? (
-              <RecurrentFields fields={fields} setFields={setFields} />
-            ) : (
-              <OneTimeFields fields={fields} setFields={setFields} />
-            )}
-          </InputFieldsContainer>
-          <ButtonsContainer>
-            <CustomButton color="secondary" onClick={() => handleSelectType()}>
-              {t("Base.Buttons.Cancel")}
-            </CustomButton>
-            <CustomButton
-              isLoading={isLoading}
-              onClick={() => {
-                if (!isLoading) handleSubmit();
-              }}
-            >
-              {t("Base.Buttons.CreateEvent")}
-            </CustomButton>
-          </ButtonsContainer>
-        </EventFormWrapper>
-      )}
-    </EventContainer>
+    <Modal>
+      <EventContainer ref={ref}>
+        <span className="text-center text-2xl font-bold">
+          {t("Calendar.Event.NewEvent")}
+        </span>
+        {!selectedType ? (
+          <EventTypesWrapper>
+            <EventTypeBox
+              type="Recurrent"
+              icon={mdiCalendarSyncOutline}
+              handleSelectType={() => handleSelectType("recurrent")}
+            />
+            <EventTypeBox
+              type="OneTime"
+              icon={mdiCalendarBlankOutline}
+              handleSelectType={() => handleSelectType("oneTime")}
+            />
+          </EventTypesWrapper>
+        ) : (
+          <EventFormWrapper>
+            <InputFieldsContainer>
+              {selectedType === "recurrent" ? (
+                <RecurrentFields fields={fields} setFields={setFields} />
+              ) : (
+                <OneTimeFields fields={fields} setFields={setFields} />
+              )}
+            </InputFieldsContainer>
+            <ButtonsContainer>
+              <CustomButton
+                color="secondary"
+                onClick={() => handleSelectType()}
+              >
+                {t("Base.Buttons.Cancel")}
+              </CustomButton>
+              <CustomButton
+                isLoading={isLoading}
+                onClick={() => {
+                  if (!isLoading) handleSubmit();
+                }}
+              >
+                {t("Base.Buttons.CreateEvent")}
+              </CustomButton>
+            </ButtonsContainer>
+          </EventFormWrapper>
+        )}
+      </EventContainer>
+    </Modal>
   );
 };

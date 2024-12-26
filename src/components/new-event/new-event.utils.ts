@@ -25,13 +25,14 @@ export function handleCheckField(
 ) {
   if (!value) return "emptyField";
 
-  const { startTime, endTime, startDate, endDate } = fields;
+  const { endTime, date, startTime, recurrencyLimit } = fields;
   switch (accessor) {
-    case "startDate":
-      if (detectOrderError(false, value, endDate.value)) return accessor;
+    case "date":
+      if (detectOrderError(false, value, recurrencyLimit.value))
+        return accessor;
       break;
-    case "endDate":
-      if (detectOrderError(false, startDate.value, value)) return accessor;
+    case "recurrencyLimit":
+      if (detectOrderError(false, date.value, value)) return accessor;
       break;
     case "startTime":
       if (detectOrderError(true, value, endTime.value)) return accessor;
@@ -39,7 +40,7 @@ export function handleCheckField(
     case "endTime":
       if (detectOrderError(true, startTime.value, value)) return accessor;
       break;
-    case "capacity":
+    case "maxAmount":
       if (+value < 1) return accessor;
       break;
   }
