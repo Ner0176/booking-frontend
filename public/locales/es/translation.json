@@ -50,6 +50,7 @@
     }
   },
   "Calendar": {
+    "Title": "Calendario",
     "Event": {
       "NewEvent": "Crear nuevo evento",
       "Fields": {
@@ -58,7 +59,7 @@
         "endDate": "Fecha de finalización",
         "startTime": "Hora de inicio",
         "endTime": "Hora de finalización",
-        "capacity": "Aforo máximo",
+        "maxAmount": "Aforo máximo",
         "dayOfWeek": "Día de la semana",
         "Tooltip": {
           "startDate": "El evento se creara a partir del día seleccionado",
