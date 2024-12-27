@@ -1,4 +1,5 @@
 export * from "./base";
 export * from "./home";
+export * from "./calendar";
 export * from "./auth-form";
-export * from "./new-event";
+export * from "./create-class";

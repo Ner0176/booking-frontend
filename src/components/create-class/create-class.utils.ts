@@ -1,5 +1,5 @@
 import { isAfter, isEqual, parse } from "date-fns";
-import { IEventFields } from "./new-event.interface";
+import { IEventFields } from "./create-class.interface";
 
 function detectOrderError(
   isTime: boolean,

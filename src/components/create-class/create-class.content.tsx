@@ -1,21 +1,21 @@
 import Icon from "@mdi/react";
 import { useTranslation } from "react-i18next";
 import {
+  ClassTypeContainer,
+  ClassTypeTitle,
   CustomInputField,
-  EventTypeContainer,
-  EventTypeTitle,
   InputFieldContainer,
   InputFieldsRow,
   InputFieldTitle,
   InputTitleContainer,
   WeekdayContainer,
-} from "./new-event.styled";
+} from "./create-class.styled";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { ErrorMessage, getWeekday, InfoTooltip } from "../base";
-import { IEventFields, IRowConfig } from "./new-event.interface";
-import { handleCheckField } from "./new-event.utils";
+import { IEventFields, IRowConfig } from "./create-class.interface";
+import { handleCheckField } from "./create-class.utils";
 
-export const EventTypeBox = ({
+export const ClassTypeBox = ({
   type,
   icon,
   handleSelectType,
@@ -27,13 +27,13 @@ export const EventTypeBox = ({
   const { t } = useTranslation();
   const basePath = `Calendar.Event.${type}`;
   return (
-    <EventTypeContainer className="hover:shadow-lg" onClick={handleSelectType}>
-      <EventTypeTitle>
+    <ClassTypeContainer className="hover:shadow-lg" onClick={handleSelectType}>
+      <ClassTypeTitle>
         <Icon size="16px" style={{ marginTop: 4 }} path={icon} />
         <span className="text-center">{t(`${basePath}.Title`)}</span>
-      </EventTypeTitle>
+      </ClassTypeTitle>
       <span className="text-sm">{t(`${basePath}.Description`)}</span>
-    </EventTypeContainer>
+    </ClassTypeContainer>
   );
 };
 

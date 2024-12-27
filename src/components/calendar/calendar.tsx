@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { NewEvent } from "../../components";
+import { CreateClassModal } from "../../components";
 import {
   CalendarBody,
   CalendarContainer,
@@ -14,7 +14,7 @@ import { ClassDetails, ClassItem } from "./calendar.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 
-export const CalendarPage = () => {
+export const CalendarDashboard = () => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["event", "action"]);
 
@@ -47,7 +47,7 @@ export const CalendarPage = () => {
           data && data.map((item, idx) => <ClassItem key={idx} data={item} />)
         )}
       </CalendarBody>
-      {!!params.get("action") && <NewEvent />}
+      {!!params.get("action") && <CreateClassModal />}
     </CalendarContainer>
   );
 };

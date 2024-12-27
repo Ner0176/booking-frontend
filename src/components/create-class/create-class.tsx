@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  EventTypeBox,
+  ClassTypeBox,
   OneTimeFields,
   RecurrentFields,
-} from "./new-event.content";
+} from "./create-class.content";
 import {
   ButtonsContainer,
-  EventContainer,
-  EventFormWrapper,
-  EventTypesWrapper,
+  ClassContainer,
+  ClassFormWrapper,
+  ClassTypesWrapper,
   InputFieldsContainer,
-} from "./new-event.styled";
+} from "./create-class.styled";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
 import {
   emptyEventFields,
   EventType,
   IEventFields,
-} from "./new-event.interface";
+} from "./create-class.interface";
 import { useCreateClass } from "../../api";
 import { useClickOutside, useSearchParamsManager } from "../../hooks";
 import { CustomButton, Modal } from "../base";
 
-export const NewEvent = () => {
+export const CreateClassModal = () => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["type"]);
 
@@ -57,25 +57,25 @@ export const NewEvent = () => {
 
   return (
     <Modal>
-      <EventContainer ref={ref}>
+      <ClassContainer ref={ref}>
         <span className="text-center text-2xl font-bold">
           {t("Calendar.Event.NewEvent")}
         </span>
         {!params.get("type") ? (
-          <EventTypesWrapper>
-            <EventTypeBox
+          <ClassTypesWrapper>
+            <ClassTypeBox
               type="Recurrent"
               icon={mdiCalendarSyncOutline}
               handleSelectType={() => handleSelectType("recurrent")}
             />
-            <EventTypeBox
+            <ClassTypeBox
               type="OneTime"
               icon={mdiCalendarBlankOutline}
               handleSelectType={() => handleSelectType("oneTime")}
             />
-          </EventTypesWrapper>
+          </ClassTypesWrapper>
         ) : (
-          <EventFormWrapper>
+          <ClassFormWrapper>
             <InputFieldsContainer>
               {params.get("type") === "recurrent" ? (
                 <RecurrentFields fields={fields} setFields={setFields} />
@@ -99,9 +99,9 @@ export const NewEvent = () => {
                 {t("Base.Buttons.CreateEvent")}
               </CustomButton>
             </ButtonsContainer>
-          </EventFormWrapper>
+          </ClassFormWrapper>
         )}
-      </EventContainer>
+      </ClassContainer>
     </Modal>
   );
 };
