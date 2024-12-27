@@ -7,7 +7,7 @@ export interface CreateClassPayload {
 }
 
 export interface IClass {
-  id: string;
+  id: number;
   date: Date;
   endTime: string;
   startTime: string;
