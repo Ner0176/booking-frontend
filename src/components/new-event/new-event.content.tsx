@@ -8,9 +8,10 @@ import {
   InputFieldsRow,
   InputFieldTitle,
   InputTitleContainer,
+  WeekdayContainer,
 } from "./new-event.styled";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { ErrorMessage, InfoTooltip } from "../base";
+import { ErrorMessage, getWeekday, InfoTooltip } from "../base";
 import { IEventFields, IRowConfig } from "./new-event.interface";
 import { handleCheckField } from "./new-event.utils";
 
@@ -128,16 +129,16 @@ export const RecurrentFields = ({
       accessor: "recurrencyLimit",
     },
     {
+      type: "number",
+      accessor: "maxAmount",
+    },
+    {
       type: "time",
       accessor: "startTime",
     },
     {
       type: "time",
       accessor: "endTime",
-    },
-    {
-      type: "number",
-      accessor: "maxAmount",
     },
   ];
 
@@ -146,17 +147,7 @@ export const RecurrentFields = ({
       <FieldRows
         fields={fields}
         setFields={setFields}
-        configs={configs.slice(0, 2)}
-      />
-      <FieldRows
-        fields={fields}
-        setFields={setFields}
-        configs={configs.slice(2, 4)}
-      />
-      <FieldRows
-        fields={fields}
-        setFields={setFields}
-        configs={configs.slice(4)}
+        configs={configs.slice(0, 1)}
       >
         <InputFieldContainer>
           <InputTitleContainer>
@@ -170,8 +161,21 @@ export const RecurrentFields = ({
               }}
             />
           </InputTitleContainer>
+          <WeekdayContainer>
+            {fields.date.value ? getWeekday(fields.date.value) : "-"}
+          </WeekdayContainer>
         </InputFieldContainer>
       </FieldRows>
+      <FieldRows
+        fields={fields}
+        setFields={setFields}
+        configs={configs.slice(1, 3)}
+      />
+      <FieldRows
+        fields={fields}
+        setFields={setFields}
+        configs={configs.slice(3, 5)}
+      />
     </Fragment>
   );
 };

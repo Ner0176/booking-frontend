@@ -56,22 +56,22 @@
       "Fields": {
         "date": "Fecha del evento",
         "startDate": "Fecha de incio",
-        "endDate": "Fecha de finalización",
+        "recurrencyLimit": "Fecha límite",
         "startTime": "Hora de inicio",
         "endTime": "Hora de finalización",
         "maxAmount": "Aforo máximo",
         "dayOfWeek": "Día de la semana",
         "Tooltip": {
           "startDate": "El evento se creara a partir del día seleccionado",
-          "endDate": "El evento se repetirá hasta la fecha límite seleccionada",
+          "recurrencyLimit": "El evento se repetirá hasta la fecha límite seleccionada",
           "dayOfWeek": "El evento se repetirá cada día de la semana seleccionado"
         },
         "Errors": {
           "startDate": "La fecha de inicio debe ser anterior a la de finalización",
-          "endDate": "La fecha de finalización debe ser posterior a la de inicio",
+          "recurrencyLimit": "La fecha límite debe ser posterior a la de inicio",
           "startTime": "La hora de inicio debe ser anterior a la de finalización",
           "endTime": "La hora de finalización debe ser posterior a la de inicio",
-          "capacity": "La capacidad debe ser superior o igual a 1",
+          "maxAmount": "La capacidad debe ser superior o igual a 1",
           "emptyField": "Este campo es obligatorio"
         }
       },
