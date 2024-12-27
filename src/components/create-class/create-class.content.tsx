@@ -11,9 +11,10 @@ import {
   WeekdayContainer,
 } from "./create-class.styled";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { ErrorMessage, getWeekday, InfoTooltip } from "../base";
+import { ErrorMessage, InfoTooltip } from "../base";
 import { IEventFields, IRowConfig } from "./create-class.interface";
 import { handleCheckField } from "./create-class.utils";
+import { getWeekday } from "../../utils";
 
 export const ClassTypeBox = ({
   type,

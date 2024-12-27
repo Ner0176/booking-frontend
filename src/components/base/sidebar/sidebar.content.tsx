@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { capitalize } from "../../utils";
+import { capitalize } from "../../../utils";
 import { SidebarBox, SidebarItemBox } from "./sidebar.styled";
 import { ISidebarItem } from "./sidebar.interface";
 import { useTranslation } from "react-i18next";
