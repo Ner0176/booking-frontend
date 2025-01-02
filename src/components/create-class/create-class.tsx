@@ -50,7 +50,7 @@ export const CreateClassModal = () => {
       end: fields.endTime.value,
       start: fields.startTime.value,
       date: new Date(fields.date.value),
-      maxAmount: fields.maxAmount.value,
+      maxAmount: +fields.maxAmount.value,
       recurrencyLimit: recurrencyDate ? new Date(recurrencyDate) : undefined,
     });
   };
