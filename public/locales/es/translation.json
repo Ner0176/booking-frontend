@@ -51,6 +51,19 @@
   },
   "Calendar": {
     "Title": "Calendario",
+    "ClassDetails": {
+      "Date": "Fecha",
+      "Schedule": "Horario",
+      "Edit": "Editar clase",
+      "Delete": "Eliminar clase",
+      "MaxAmount": "Capacidad máxima",
+      "Details": "Detalles de la clase",
+      "Title": "Calendario - Clase {{date}}",
+      "AssistantsList": {
+        "Title": "Lista de asistentes",
+        "Empty": "Aún no hay participantes"
+      }
+    },
     "Event": {
       "NewEvent": "Crear nuevo evento",
       "Fields": {
