@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { IClass } from "../../api";
+import { IClass, useDeleteClass } from "../../api";
 import {
   mdiAccountGroupOutline,
   mdiCalendarOutline,
@@ -81,12 +81,16 @@ export const ClassItem = ({ data }: Readonly<{ data: IClass }>) => {
 };
 
 const DeleteClassModal = ({
+  id,
   dateTime,
   recurrentId,
   handleClose,
+  refetchClasses,
 }: Readonly<{
+  id: number;
   dateTime: string;
   handleClose(): void;
+  refetchClasses(): void;
   recurrentId: string | null;
 }>) => {
   const { t } = useTranslation();
@@ -96,6 +100,11 @@ const DeleteClassModal = ({
 
   const [selectedOption, setSelectedOption] = useState<RecurrentOptionType>();
 
+  const { mutate: deleteClass } = useDeleteClass(
+    refetchClasses,
+    selectedOption === "recurrent"
+  );
+
   return (
     <Modal>
       <DeleteClassWrapper ref={ref} isRecurrent={!!recurrentId}>
@@ -103,7 +112,7 @@ const DeleteClassModal = ({
           <DeleteClassTitle>
             {t(`${tPath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
           </DeleteClassTitle>
-          {recurrentId && (
+          {!!recurrentId && (
             <>
               <span>
                 <Trans
@@ -149,7 +158,18 @@ const DeleteClassModal = ({
           <CustomButton type="error" color="secondary" onClick={handleClose}>
             {t("Base.Buttons.Cancel")}
           </CustomButton>
-          <CustomButton type="error" color="primary">
+          <CustomButton
+            type="error"
+            color="primary"
+            onClick={() => {
+              const isRecurrent =
+                !!recurrentId && selectedOption === "recurrent";
+              deleteClass({
+                isRecurrent,
+                id: isRecurrent ? recurrentId : id.toString(),
+              });
+            }}
+          >
             {t("Base.Buttons.Delete")}
           </CustomButton>
         </DeleteClassButtonsWrapper>
@@ -159,8 +179,9 @@ const DeleteClassModal = ({
 };
 
 export const ClassDetails = ({
+  refetchClasses,
   classData,
-}: Readonly<{ classData: IClass }>) => {
+}: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
   const { t } = useTranslation();
   const tPath = "Calendar.ClassDetails";
 
@@ -196,7 +217,9 @@ export const ClassDetails = ({
       </div>
       {showDeleteModal && (
         <DeleteClassModal
+          id={id}
           recurrentId={recurrentId}
+          refetchClasses={refetchClasses}
           handleClose={() => setParams([{ key: "action" }])}
           dateTime={`${getWeekday(date)}  ${startTime}h - ${endTime}h`}
         />

@@ -67,7 +67,12 @@
             "Recurrent": "Eliminar todas las clases de <NewLine /> {{dateTime}}"
           },
           "Description": "Esta clase forma parte del grupo de clases recurrentes <strong>{{dateTime}}</strong>. Puedes elegir si deseas eliminar el grupo completo de clases recurrentes al que pertenece o solo esta clase en particular."
-        }
+        },
+        "Success": {
+          "Specific": "La clase ha sido eliminada correctamente",
+          "Recurrent": "Las clases recurrentes han sido eliminadas correctamente"
+        },
+        "Error": "Ha ocurrido un error al intentar eliminar la clase"
       },
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",

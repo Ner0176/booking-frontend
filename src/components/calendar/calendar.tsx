@@ -24,7 +24,7 @@ export const CalendarDashboard = () => {
   const { params } = useSearchParamsManager(["event", "action"]);
   const eventId = params.get("event");
 
-  const { data, isLoading } = useGetAllClasses();
+  const { data, refetch, isLoading } = useGetAllClasses();
 
   const selectedEvent = useMemo(() => {
     if (eventId && data) {
@@ -83,7 +83,7 @@ export const CalendarDashboard = () => {
       <CalendarBody>
         {data &&
           (!!eventId && selectedEvent ? (
-            <ClassDetails classData={selectedEvent} />
+            <ClassDetails classData={selectedEvent} refetchClasses={refetch} />
           ) : isLoading ? (
             [...Array(6)].map((key) => (
               <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
@@ -92,7 +92,9 @@ export const CalendarDashboard = () => {
             data.map((item, idx) => <ClassItem key={idx} data={item} />)
           ))}
       </CalendarBody>
-      {params.get("action") === "create-event" && <CreateClassModal />}
+      {params.get("action") === "create-event" && (
+        <CreateClassModal refetchClasses={refetch} />
+      )}
     </CalendarContainer>
   );
 };

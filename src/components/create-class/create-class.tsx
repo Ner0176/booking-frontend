@@ -22,7 +22,9 @@ import { useCreateClass } from "../../api";
 import { useClickOutside, useSearchParamsManager } from "../../hooks";
 import { CustomButton, Modal } from "../base";
 
-export const CreateClassModal = () => {
+export const CreateClassModal = ({
+  refetchClasses,
+}: Readonly<{ refetchClasses(): void }>) => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["type"]);
 
@@ -32,7 +34,10 @@ export const CreateClassModal = () => {
     setParams([{ key: "type" }, { key: "action" }]);
   };
 
-  const { mutate, isPending: isLoading } = useCreateClass(handleCloseModal);
+  const { mutate: createClass, isPending: isLoading } = useCreateClass(
+    refetchClasses,
+    handleCloseModal
+  );
 
   const ref = useClickOutside(handleCloseModal);
 
@@ -46,7 +51,7 @@ export const CreateClassModal = () => {
     }
 
     const recurrencyDate = fields.recurrencyLimit.value;
-    mutate({
+    createClass({
       end: fields.endTime.value,
       start: fields.startTime.value,
       date: new Date(fields.date.value),
