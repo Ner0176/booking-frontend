@@ -25,8 +25,10 @@ export const CustomButton = ({
     <StyledButton
       type={type}
       color={color}
-      onClick={onClick}
       style={{ fontSize: size, ...styles }}
+      onClick={() => {
+        if (!isLoading && onClick) onClick();
+      }}
     >
       {!!isLoading ? (
         <ClipLoader

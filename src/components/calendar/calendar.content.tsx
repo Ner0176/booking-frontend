@@ -100,7 +100,7 @@ const DeleteClassModal = ({
 
   const [selectedOption, setSelectedOption] = useState<RecurrentOptionType>();
 
-  const { mutate: deleteClass } = useDeleteClass(
+  const { mutate: deleteClass, isPending: isLoading } = useDeleteClass(
     refetchClasses,
     selectedOption === "recurrent"
   );
@@ -161,6 +161,7 @@ const DeleteClassModal = ({
           <CustomButton
             type="error"
             color="primary"
+            isLoading={isLoading}
             onClick={() => {
               const isRecurrent =
                 !!recurrentId && selectedOption === "recurrent";
