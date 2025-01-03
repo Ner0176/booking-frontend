@@ -12,7 +12,12 @@ import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo } from "react";
 import { format } from "date-fns";
-import { mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import {
+  mdiArrowLeft,
+  mdiPencilOutline,
+  mdiPlus,
+  mdiTrashCanOutline,
+} from "@mdi/js";
 
 export const CalendarDashboard = () => {
   const { t } = useTranslation();
@@ -31,30 +36,37 @@ export const CalendarDashboard = () => {
     <CalendarContainer>
       <CalendarHeader>
         <HeaderTitle>
-          {!eventId
-            ? t("Calendar.Title")
-            : t("Calendar.ClassDetails.Title", {
+          {!!eventId && selectedEvent?.date
+            ? t("Calendar.ClassDetails.Title", {
                 date: format(
                   new Date(selectedEvent?.date as Date),
                   "dd/MM/yyyy"
                 ),
-              })}
+              })
+            : t("Calendar.Title")}
         </HeaderTitle>
         {!eventId ? (
           <HeaderButton
             props={{
               icon: mdiPlus,
               action: "create-event",
-              tPath: "Event.NewEvent",
+              tPath: "Calendar.Event.NewEvent",
             }}
           />
         ) : (
           <div className="flex flex-row items-center gap-4">
             <HeaderButton
               props={{
+                icon: mdiArrowLeft,
+                action: "close-event",
+                tPath: "Base.Buttons.Back",
+              }}
+            />
+            <HeaderButton
+              props={{
                 action: "edit-event",
                 icon: mdiPencilOutline,
-                tPath: "ClassDetails.Edit",
+                tPath: "Calendar.ClassDetails.Edit",
               }}
             />
             <HeaderButton
@@ -62,7 +74,7 @@ export const CalendarDashboard = () => {
                 color: "#DC2626FF",
                 action: "delete-event",
                 icon: mdiTrashCanOutline,
-                tPath: "ClassDetails.Delete",
+                tPath: "Calendar.ClassDetails.Delete.Title",
               }}
             />
           </div>

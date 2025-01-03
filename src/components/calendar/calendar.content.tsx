@@ -5,16 +5,22 @@ import {
   mdiCalendarOutline,
   mdiClockOutline,
 } from "@mdi/js";
-import { PropsWithChildren } from "react";
-import { useSearchParamsManager } from "../../hooks";
+import { PropsWithChildren, useState } from "react";
+import { useClickOutside, useSearchParamsManager } from "../../hooks";
 import {
   CalendarItemContainer,
+  DeleteClassButtonsWrapper,
+  DeleteClassTitle,
+  DeleteClassWrapper,
+  DeleteRecurrentOption,
+  DeleteRecurrentWrapper,
   HeaderButtonContainer,
 } from "./calendar.styled";
-import { formatDate } from "../../utils";
+import { formatDate, getWeekday } from "../../utils";
 import { useGetBookings } from "../../api/booking";
-import { IButtonHeaderProps } from "./calendar.interface";
-import { useTranslation } from "react-i18next";
+import { IButtonHeaderProps, RecurrentOptionType } from "./calendar.interface";
+import { Trans, useTranslation } from "react-i18next";
+import { CustomButton, Modal } from "../base";
 
 const ItemInfoRow = ({
   icon,
@@ -40,11 +46,13 @@ export const HeaderButton = ({
       style={{ color, borderColor: color }}
       onClick={(e) => {
         e.stopPropagation();
-        setParams([{ key: "action", value: action }]);
+        if (action === "close-event") {
+          setParams([{ key: "event" }]);
+        } else setParams([{ key: "action", value: action }]);
       }}
     >
       <Icon size="14px" className="mt-0.5" path={icon} />
-      <span className="text-sm font-semibold">{t(`Calendar.${tPath}`)}</span>
+      <span className="text-sm font-semibold">{t(tPath)}</span>
     </HeaderButtonContainer>
   );
 };
@@ -72,35 +80,127 @@ export const ClassItem = ({ data }: Readonly<{ data: IClass }>) => {
   );
 };
 
+const DeleteClassModal = ({
+  dateTime,
+  recurrentId,
+  handleClose,
+}: Readonly<{
+  dateTime: string;
+  handleClose(): void;
+  recurrentId: string | null;
+}>) => {
+  const { t } = useTranslation();
+  const tPath = "Calendar.ClassDetails.Delete";
+
+  const ref = useClickOutside(handleClose);
+
+  const [selectedOption, setSelectedOption] = useState<RecurrentOptionType>();
+
+  return (
+    <Modal>
+      <DeleteClassWrapper ref={ref} isRecurrent={!!recurrentId}>
+        <div className="flex flex-col gap-3">
+          <DeleteClassTitle>
+            {t(`${tPath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
+          </DeleteClassTitle>
+          {recurrentId && (
+            <>
+              <span>
+                <Trans
+                  values={{ dateTime }}
+                  i18nKey={`${tPath}.Recurrent.Description`}
+                  components={{
+                    strong: <span className="font-bold text-red-500" />,
+                  }}
+                />
+              </span>
+              <DeleteRecurrentWrapper>
+                <DeleteRecurrentOption
+                  className="hover:bg-neutral-50"
+                  isSelected={selectedOption === "specific"}
+                  onClick={() => setSelectedOption("specific")}
+                >
+                  {t(`${tPath}.Recurrent.Options.Specific`)}
+                </DeleteRecurrentOption>
+                <DeleteRecurrentOption
+                  className="hover:bg-neutral-50"
+                  isSelected={selectedOption === "recurrent"}
+                  onClick={() => setSelectedOption("recurrent")}
+                >
+                  <Trans
+                    values={{ dateTime }}
+                    components={{ NewLine: <br /> }}
+                    i18nKey={`${tPath}.Recurrent.Options.Recurrent`}
+                  />
+                </DeleteRecurrentOption>
+              </DeleteRecurrentWrapper>
+            </>
+          )}
+          <span>
+            <Trans
+              i18nKey={`${tPath}.Description`}
+              components={{
+                strong: <span className="font-bold text-red-500" />,
+              }}
+            />
+          </span>
+        </div>
+        <DeleteClassButtonsWrapper>
+          <CustomButton type="error" color="secondary" onClick={handleClose}>
+            {t("Base.Buttons.Cancel")}
+          </CustomButton>
+          <CustomButton type="error" color="primary">
+            {t("Base.Buttons.Delete")}
+          </CustomButton>
+        </DeleteClassButtonsWrapper>
+      </DeleteClassWrapper>
+    </Modal>
+  );
+};
+
 export const ClassDetails = ({
   classData,
 }: Readonly<{ classData: IClass }>) => {
   const { t } = useTranslation();
   const tPath = "Calendar.ClassDetails";
-  const { id, date, endTime, startTime, maxAmount } = classData;
+
+  const { params, setParams } = useSearchParamsManager(["action"]);
+  // const editClassInfo = params.get("action") === "edit-event";
+  const showDeleteModal = params.get("action") === "delete-event";
+
+  const { id, date, endTime, startTime, maxAmount, recurrentId } = classData;
 
   const { data } = useGetBookings({ classId: id });
 
   return (
-    <div className="grid grid-cols-3 w-full">
-      <div className="flex flex-col gap-3">
-        <span className="font-bold text-xl underline underline-offset-2">
-          {t(`${tPath}.Details`)}
-        </span>
-        <span>{`${t(`${tPath}.Date`)}: ${formatDate(date)}`}</span>
-        <span>{`${t(`${tPath}.Schedule`)}: ${startTime} - ${endTime}`}</span>
-        <span>{`${t(`${tPath}.MaxAmount`)}: ${maxAmount}`}</span>
+    <>
+      <div className="grid grid-cols-3 w-full">
+        <div className="flex flex-col gap-3">
+          <span className="font-bold text-xl underline underline-offset-2">
+            {t(`${tPath}.Details`)}
+          </span>
+          <span>{`${t(`${tPath}.Date`)}: ${formatDate(date)}`}</span>
+          <span>{`${t(`${tPath}.Schedule`)}: ${startTime} - ${endTime}`}</span>
+          <span>{`${t(`${tPath}.MaxAmount`)}: ${maxAmount}`}</span>
+        </div>
+        <div className="flex flex-col gap-3">
+          <span className="font-bold text-xl underline underline-offset-2">
+            {t(`${tPath}.AssistantsList.Title`)}
+          </span>
+          {data && data.length ? (
+            data.map((item) => <div>{item.user.name}</div>)
+          ) : (
+            <span> {t(`${tPath}.AssistantsList.Empty`)}</span>
+          )}
+        </div>
       </div>
-      <div className="flex flex-col gap-3">
-        <span className="font-bold text-xl underline underline-offset-2">
-          {t(`${tPath}.AssistantsList.Title`)}
-        </span>
-        {data && data.length ? (
-          data.map((item) => <div>{item.user.name}</div>)
-        ) : (
-          <span> {t(`${tPath}.AssistantsList.Empty`)}</span>
-        )}
-      </div>
-    </div>
+      {showDeleteModal && (
+        <DeleteClassModal
+          recurrentId={recurrentId}
+          handleClose={() => setParams([{ key: "action" }])}
+          dateTime={`${getWeekday(date)}  ${startTime}h - ${endTime}h`}
+        />
+      )}
+    </>
   );
 };

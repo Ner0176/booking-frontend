@@ -2,6 +2,8 @@
   "Base": {
     "Buttons": {
       "Cancel": "Cancelar",
+      "Delete": "Eliminar",
+      "Back": "Volver atrás",
       "CreateEvent": "Crear evento"
     },
     "DayOfWeek": {
@@ -55,10 +57,21 @@
       "Date": "Fecha",
       "Schedule": "Horario",
       "Edit": "Editar clase",
-      "Delete": "Eliminar clase",
+      "Delete": {
+        "Title": "Eliminar clase",
+        "Description": "Ten en cuenta que al eliminar una clase, <strong>todas las reservas asociadas</strong> a la misma también serán eliminadas.",
+        "Recurrent": {
+          "Title": "Eliminar clase recurrente",
+          "Options": {
+            "Specific": "Eliminar esta clase",
+            "Recurrent": "Eliminar todas las clases de <NewLine /> {{dateTime}}"
+          },
+          "Description": "Esta clase forma parte del grupo de clases recurrentes <strong>{{dateTime}}</strong>. Puedes elegir si deseas eliminar el grupo completo de clases recurrentes al que pertenece o solo esta clase en particular."
+        }
+      },
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",
-      "Title": "Calendario - Clase {{date}}",
+      "Title": "Clase {{date}}",
       "AssistantsList": {
         "Title": "Lista de asistentes",
         "Empty": "Aún no hay participantes"

@@ -12,7 +12,7 @@ export const SidebarItemBox = styled.div<{ isExpanded?: boolean }>`
   ${({ isExpanded }) => isExpanded && tw`px-4`}
 `;
 export const SidebarButton = styled.div(
-  tw`absolute z-10 top-1/2 -right-4 p-2 rounded-full border border-neutral-200 bg-neutral-50 cursor-pointer`
+  tw`absolute z-50 top-1/2 -right-4 p-2 rounded-full border border-neutral-200 bg-neutral-50 cursor-pointer`
 );
 export const SidebarBox = styled.div<{
   isSelected?: boolean;

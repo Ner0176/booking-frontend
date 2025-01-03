@@ -1,6 +1,6 @@
 import { CSSProperties, PropsWithChildren } from "react";
 import { StyledButton } from "./button.styled";
-import { ColorType } from "./button.interface";
+import { ButtonType, ColorType } from "./button.interface";
 import { ClipLoader } from "react-spinners";
 
 export const CustomButton = ({
@@ -9,10 +9,12 @@ export const CustomButton = ({
   children,
   isLoading,
   size = 16,
+  type = "default",
   color = "primary",
 }: Readonly<
   PropsWithChildren<{
     size?: number;
+    type?: ButtonType;
     color?: ColorType;
     isLoading?: boolean;
     onClick?: () => void;
@@ -21,6 +23,7 @@ export const CustomButton = ({
 >) => {
   return (
     <StyledButton
+      type={type}
       color={color}
       onClick={onClick}
       style={{ fontSize: size, ...styles }}
