@@ -6,7 +6,7 @@ import {
   HeaderTitle,
 } from "./calendar.styled";
 import { useGetAllClasses } from "../../api";
-import { ClassDetails, ClassItem, HeaderButton } from "./calendar.content";
+import { ClassCard, HeaderButton } from "./calendar.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo } from "react";
@@ -18,6 +18,7 @@ import {
   mdiTrashCanOutline,
 } from "@mdi/js";
 import { CreateClassModal } from "./create-class";
+import { ClassDetails } from "./class-details";
 
 export const CalendarDashboard = () => {
   const { t } = useTranslation();
@@ -89,7 +90,7 @@ export const CalendarDashboard = () => {
               <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
             ))
           ) : (
-            data.map((item, idx) => <ClassItem key={idx} data={item} />)
+            data.map((item, idx) => <ClassCard key={idx} data={item} />)
           ))}
       </CalendarBody>
       {params.get("action") === "create-event" && (
