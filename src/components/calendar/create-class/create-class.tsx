@@ -18,9 +18,9 @@ import {
   EventType,
   IEventFields,
 } from "./create-class.interface";
-import { useCreateClass } from "../../api";
-import { useClickOutside, useSearchParamsManager } from "../../hooks";
-import { CustomButton, Modal } from "../base";
+import { useCreateClass } from "../../../api";
+import { useClickOutside, useSearchParamsManager } from "../../../hooks";
+import { CustomButton, Modal } from "../../base";
 
 export const CreateClassModal = ({
   refetchClasses,

@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { CreateClassModal } from "../../components";
 import {
   CalendarBody,
   CalendarContainer,
@@ -18,6 +17,7 @@ import {
   mdiPlus,
   mdiTrashCanOutline,
 } from "@mdi/js";
+import { CreateClassModal } from "./create-class";
 
 export const CalendarDashboard = () => {
   const { t } = useTranslation();
