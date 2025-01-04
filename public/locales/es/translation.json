@@ -4,6 +4,8 @@
       "Cancel": "Cancelar",
       "Delete": "Eliminar",
       "Back": "Volver atrás",
+      "Discard": "Descartar",
+      "Save": "Guardar cambios",
       "CreateEvent": "Crear evento"
     },
     "DayOfWeek": {
