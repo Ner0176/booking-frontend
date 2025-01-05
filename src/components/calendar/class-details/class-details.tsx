@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { formatDate, getWeekday } from "../../../utils";
 import { CustomButton } from "../../base";
 import { DeleteClassModal, SwitchList } from "./class-details.content";
+import { FooterButtonsWrapper } from "./class-details.styled";
 
 export const ClassDetails = ({
   refetchClasses,
@@ -71,14 +72,20 @@ export const ClassDetails = ({
                 setAssistantsList={setAssistantsList}
               />
             ) : assistantsList.length ? (
-              assistantsList.map(({ name }) => <div>{name}</div>)
+              <div className="flex flex-wrap gap-3">
+                {assistantsList.map(({ name }) => (
+                  <div className="border border-neutral-200 rounded-xl px-3 py-2 max-w-[150px] w-full whitespace-nowrap text-center">
+                    {name}
+                  </div>
+                ))}
+              </div>
             ) : (
               <span> {t(`${tPath}.AssistantsList.Empty`)}</span>
             )}
           </div>
         </div>
         {showEditView && (
-          <div className="flex flex-row items-center justify-end gap-3 w-full">
+          <FooterButtonsWrapper>
             <CustomButton
               color="secondary"
               onClick={() => setParams([{ key: "action" }])}
@@ -86,7 +93,7 @@ export const ClassDetails = ({
               {t("Base.Buttons.Discard")}
             </CustomButton>
             <CustomButton>{t("Base.Buttons.Save")}</CustomButton>
-          </div>
+          </FooterButtonsWrapper>
         )}
       </div>
       {showDeleteModal && (

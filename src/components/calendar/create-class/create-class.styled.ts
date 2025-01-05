@@ -16,21 +16,11 @@ export const ClassTypeTitle = styled.div(
 export const ClassFormWrapper = styled.div(
   tw`flex flex-col justify-between gap-4 h-full py-10`
 );
-export const InputTitleContainer = styled.div(
-  tw`flex flex-row items-center gap-1.5`
-);
 export const InputFieldsContainer = styled.div(
   tw`flex flex-col gap-6 w-full h-full`
 );
 export const InputFieldsRow = styled.div(
   tw`flex flex-row items-start justify-center gap-10 w-full`
-);
-export const InputFieldContainer = styled.div(
-  tw`flex flex-col gap-1.5 w-full max-w-[250px]`
-);
-export const InputFieldTitle = styled.span(tw`text-xs font-semibold pl-1`);
-export const CustomInputField = styled.input(
-  tw`w-full px-4 py-2 rounded-xl border border-neutral-200 cursor-pointer`
 );
 export const WeekdayContainer = styled.div(
   tw`w-full px-4 py-2 rounded-xl border border-neutral-200 text-neutral-500 bg-neutral-50 cursor-default`

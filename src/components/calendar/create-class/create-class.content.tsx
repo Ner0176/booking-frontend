@@ -3,15 +3,11 @@ import { useTranslation } from "react-i18next";
 import {
   ClassTypeContainer,
   ClassTypeTitle,
-  CustomInputField,
-  InputFieldContainer,
   InputFieldsRow,
-  InputFieldTitle,
-  InputTitleContainer,
   WeekdayContainer,
 } from "./create-class.styled";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { ErrorMessage, InfoTooltip } from "../../base";
+import { CustomInputField, ErrorMessage } from "../../base";
 import { IEventFields, IRowConfig } from "./create-class.interface";
 import { handleCheckField } from "./create-class.utils";
 import { getWeekday } from "../../../utils";
@@ -55,39 +51,28 @@ const FieldRows = ({
     <InputFieldsRow>
       {configs.map(({ type, accessor, hasTooltip }, idx) => {
         const fieldError = fields[accessor].error;
+        const tooltipInfo = {
+          id: `tooltip-${accessor}`,
+          text: t(`Calendar.Event.Fields.Tooltip.${accessor}`),
+        };
         return (
-          <InputFieldContainer key={idx}>
-            <InputTitleContainer>
-              <InputFieldTitle>
-                {t(`Calendar.Event.Fields.${accessor}`)}
-              </InputFieldTitle>
-              {hasTooltip && (
-                <InfoTooltip
-                  content={{
-                    id: `tooltip-${accessor}`,
-                    text: t(`Calendar.Event.Fields.Tooltip.${accessor}`),
-                  }}
-                />
-              )}
-            </InputTitleContainer>
+          <div className="flex flex-col gap-2 w-full">
             <CustomInputField
+              key={idx}
               type={type}
-              className="focus:outline-none"
               value={fields[accessor].value as string}
-              onChange={(e) => {
+              title={t(`Calendar.Event.Fields.${accessor}`)}
+              tooltip={hasTooltip ? tooltipInfo : undefined}
+              handleChange={(value) => {
                 setFields((prev) => {
                   return {
                     ...prev,
-                    [accessor]: { ...prev[accessor], value: e.target.value },
+                    [accessor]: { ...prev[accessor], value },
                   };
                 });
               }}
-              onBlur={(e) => {
-                const errorKey = handleCheckField(
-                  e.target.value,
-                  fields,
-                  accessor
-                );
+              handleBlur={(value) => {
+                const errorKey = handleCheckField(value, fields, accessor);
                 setFields((prev) => {
                   return {
                     ...prev,
@@ -101,7 +86,7 @@ const FieldRows = ({
                 {t(`Calendar.Event.Fields.Errors.${fieldError}`)}
               </ErrorMessage>
             )}
-          </InputFieldContainer>
+          </div>
         );
       })}
       {!!children && children}
@@ -150,22 +135,17 @@ export const RecurrentFields = ({
         setFields={setFields}
         configs={configs.slice(0, 1)}
       >
-        <InputFieldContainer>
-          <InputTitleContainer>
-            <InputFieldTitle>
-              {t("Calendar.Event.Fields.dayOfWeek")}
-            </InputFieldTitle>
-            <InfoTooltip
-              content={{
-                id: "tooltip-dayOfWeek",
-                text: t("Calendar.Event.Fields.Tooltip.dayOfWeek"),
-              }}
-            />
-          </InputTitleContainer>
+        <CustomInputField
+          title={t("Calendar.Event.Fields.dayOfWeek")}
+          tooltip={{
+            id: "tooltip-dayOfWeek",
+            text: t("Calendar.Event.Fields.Tooltip.dayOfWeek"),
+          }}
+        >
           <WeekdayContainer>
             {fields.date.value ? getWeekday(fields.date.value) : "-"}
           </WeekdayContainer>
-        </InputFieldContainer>
+        </CustomInputField>
       </FieldRows>
       <FieldRows
         fields={fields}
