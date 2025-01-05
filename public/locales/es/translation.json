@@ -95,7 +95,7 @@
         "maxAmount": "Aforo máximo",
         "dayOfWeek": "Día de la semana",
         "Tooltip": {
-          "startDate": "El evento se creara a partir del día seleccionado",
+          "date": "El evento se creara a partir del día seleccionado",
           "recurrencyLimit": "El evento se repetirá hasta la fecha límite seleccionada",
           "dayOfWeek": "El evento se repetirá cada día de la semana seleccionado"
         },

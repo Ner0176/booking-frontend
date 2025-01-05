@@ -125,8 +125,8 @@ export const SwitchList = ({
   setAssistantsList: Dispatch<SetStateAction<IUser[]>>;
 }>) => {
   return (
-    <div className="flex flex-row items-center gap-3 rounded-2xl border boder-neutral-200 p-3 overflow-y-auto h-max-[400px]">
-      <div className="flex flex-1 flex-col gap-3">
+    <div className="flex flex-row items-center gap-3 rounded-2xl border boder-neutral-200 p-3 ">
+      <div className="flex flex-1 flex-col gap-3 px-2 max-h-[300px] overflow-y-auto">
         {usersList.map((user) => (
           <div
             onClick={() => {
@@ -148,7 +148,7 @@ export const SwitchList = ({
           className="text-neutral-400"
         />
       </div>
-      <div className="flex flex-1 flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-3 px-2 max-h-[300px overflow-y-auto">
         {assistantsList.map((item) => (
           <div
             onClick={() => {

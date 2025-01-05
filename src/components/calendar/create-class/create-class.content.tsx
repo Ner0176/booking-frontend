@@ -38,10 +38,12 @@ const FieldRows = ({
   configs,
   children,
   setFields,
+  disableFields,
 }: Readonly<{
   fields: IEventFields;
   configs: IRowConfig[];
   children?: JSX.Element;
+  disableFields?: boolean;
   setFields: Dispatch<SetStateAction<IEventFields>>;
 }>) => {
   const { t } = useTranslation();
@@ -56,10 +58,10 @@ const FieldRows = ({
           text: t(`${basePath}.Tooltip.${accessor}`),
         };
         return (
-          <div className="flex flex-col gap-2 w-full">
+          <div key={idx} className="flex flex-col gap-2 w-full">
             <CustomInputField
-              key={idx}
               type={type}
+              isBlocked={disableFields}
               value={fields[accessor].value as string}
               title={t(`Calendar.Event.Fields.${accessor}`)}
               tooltip={hasTooltip ? tooltipInfo : undefined}
@@ -163,8 +165,10 @@ export const RecurrentFields = ({
 export const OneTimeFields = ({
   fields,
   setFields,
+  disableFields,
 }: Readonly<{
   fields: IEventFields;
+  disableFields?: boolean;
   setFields: Dispatch<SetStateAction<IEventFields>>;
 }>) => {
   const configs: IRowConfig[] = [
@@ -192,11 +196,13 @@ export const OneTimeFields = ({
       <FieldRows
         fields={fields}
         setFields={setFields}
+        disableFields={disableFields}
         configs={configs.slice(0, 2)}
       />
       <FieldRows
         fields={fields}
         setFields={setFields}
+        disableFields={disableFields}
         configs={configs.slice(2, 4)}
       />
     </Fragment>
