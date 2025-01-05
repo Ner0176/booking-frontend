@@ -12,7 +12,7 @@ export const ClassDetails = ({
   classData,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
   const { t } = useTranslation();
-  const tPath = "Calendar.ClassDetails";
+  const basePath = "Calendar.ClassDetails";
 
   const { params, setParams } = useSearchParamsManager(["action"]);
   const showEditView = params.get("action") === "edit-event";
@@ -45,23 +45,23 @@ export const ClassDetails = ({
         <div className="grid grid-cols-2 w-full h-full">
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
-              {t(`${tPath}.Details`)}
+              {t(`${basePath}.Details`)}
             </span>
-            <span>{`${t(`${tPath}.Date`)}: ${formatDate(date)}`}</span>
+            <span>{`${t(`${basePath}.Date`)}: ${formatDate(date)}`}</span>
             <span>{`${t(
-              `${tPath}.Schedule`
+              `${basePath}.Schedule`
             )}: ${startTime} - ${endTime}`}</span>
-            <span>{`${t(`${tPath}.MaxAmount`)}: ${maxAmount}`}</span>
+            <span>{`${t(`${basePath}.MaxAmount`)}: ${maxAmount}`}</span>
           </div>
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
               {showEditView ? (
                 <div className="flex flex-row items-center justify-between gap-2">
                   <span>{"Lista usuarios"}</span>
-                  <span>{t(`${tPath}.AssistantsList.Title`)}</span>
+                  <span>{t(`${basePath}.AssistantsList.Title`)}</span>
                 </div>
               ) : (
-                t(`${tPath}.AssistantsList.Title`)
+                t(`${basePath}.AssistantsList.Title`)
               )}
             </span>
             {showEditView ? (
@@ -80,7 +80,7 @@ export const ClassDetails = ({
                 ))}
               </div>
             ) : (
-              <span> {t(`${tPath}.AssistantsList.Empty`)}</span>
+              <span> {t(`${basePath}.AssistantsList.Empty`)}</span>
             )}
           </div>
         </div>

@@ -4,7 +4,6 @@ import {
   ClassTypeContainer,
   ClassTypeTitle,
   InputFieldsRow,
-  WeekdayContainer,
 } from "./create-class.styled";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { CustomInputField, ErrorMessage } from "../../base";
@@ -46,6 +45,7 @@ const FieldRows = ({
   setFields: Dispatch<SetStateAction<IEventFields>>;
 }>) => {
   const { t } = useTranslation();
+  const basePath = "Calendar.Event.Fields";
 
   return (
     <InputFieldsRow>
@@ -53,7 +53,7 @@ const FieldRows = ({
         const fieldError = fields[accessor].error;
         const tooltipInfo = {
           id: `tooltip-${accessor}`,
-          text: t(`Calendar.Event.Fields.Tooltip.${accessor}`),
+          text: t(`${basePath}.Tooltip.${accessor}`),
         };
         return (
           <div className="flex flex-col gap-2 w-full">
@@ -83,7 +83,7 @@ const FieldRows = ({
             />
             {!!fieldError && (
               <ErrorMessage>
-                {t(`Calendar.Event.Fields.Errors.${fieldError}`)}
+                {t(`${basePath}.Errors.${fieldError}`)}
               </ErrorMessage>
             )}
           </div>
@@ -102,6 +102,7 @@ export const RecurrentFields = ({
   setFields: Dispatch<SetStateAction<IEventFields>>;
 }>) => {
   const { t } = useTranslation();
+  const basePath = "Calendar.Event.Fields";
 
   const configs: IRowConfig[] = [
     {
@@ -136,16 +137,14 @@ export const RecurrentFields = ({
         configs={configs.slice(0, 1)}
       >
         <CustomInputField
-          title={t("Calendar.Event.Fields.dayOfWeek")}
+          isBlocked
+          title={t(`${basePath}.dayOfWeek`)}
           tooltip={{
             id: "tooltip-dayOfWeek",
-            text: t("Calendar.Event.Fields.Tooltip.dayOfWeek"),
+            text: t(`${basePath}.Tooltip.dayOfWeek`),
           }}
-        >
-          <WeekdayContainer>
-            {fields.date.value ? getWeekday(fields.date.value) : "-"}
-          </WeekdayContainer>
-        </CustomInputField>
+          value={fields.date.value ? getWeekday(fields.date.value) : "-"}
+        />
       </FieldRows>
       <FieldRows
         fields={fields}

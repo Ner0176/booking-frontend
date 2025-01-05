@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, PropsWithChildren } from "react";
+import { HTMLInputTypeAttribute } from "react";
 import { InfoTooltip, ITooltipContent } from "../info-tooltip";
 import {
   CustomInput,
@@ -12,45 +12,37 @@ export const CustomInputField = ({
   value,
   title,
   tooltip,
-  children,
+  isBlocked,
   handleBlur,
   handleChange,
-}: Readonly<
-  PropsWithChildren<{
-    title: string;
-    value?: string;
-    tooltip?: ITooltipContent;
-    type?: HTMLInputTypeAttribute;
-    handleBlur?: (value: string) => void;
-    handleChange?: (value: string) => void;
-  }>
->) => {
+}: Readonly<{
+  title: string;
+  value: string;
+  isBlocked?: boolean;
+  tooltip?: ITooltipContent;
+  type?: HTMLInputTypeAttribute;
+  handleBlur?: (value: string) => void;
+  handleChange?: (value: string) => void;
+}>) => {
   return (
     <InputFieldContainer>
       <InputTitleContainer>
         <InputFieldTitle>{title}</InputFieldTitle>
-        {!!tooltip && (
-          <InfoTooltip
-            content={{
-              id: tooltip.id,
-              text: tooltip.text,
-            }}
-          />
-        )}
+        {!!tooltip && <InfoTooltip content={tooltip} />}
       </InputTitleContainer>
-      {!!handleChange ? (
-        <CustomInput
-          type={type}
-          value={value}
-          className="focus:outline-none"
-          onBlur={(e) => {
-            if (handleBlur) handleBlur(e.target.value);
-          }}
-          onChange={(e) => handleChange(e.target.value)}
-        />
-      ) : (
-        children
-      )}
+      <CustomInput
+        type={type}
+        value={value}
+        disabled={isBlocked}
+        isBlocked={isBlocked}
+        className="focus:outline-none"
+        onBlur={(e) => {
+          if (handleBlur) handleBlur(e.target.value);
+        }}
+        onChange={(e) => {
+          if (handleChange) handleChange(e.target.value);
+        }}
+      />
     </InputFieldContainer>
   );
 };

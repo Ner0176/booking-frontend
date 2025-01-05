@@ -39,7 +39,7 @@ export function useDeleteClass(
   isRecurrent: boolean
 ) {
   const { t } = useTranslation();
-  const tPath = "Calendar.ClassDetails.Delete";
+  const basePath = "Calendar.ClassDetails.Delete";
   const { setParams } = useSearchParamsManager([]);
 
   return useMutation({
@@ -47,7 +47,9 @@ export function useDeleteClass(
     onSuccess() {
       showToast({
         type: "success",
-        text: t(`${tPath}.Success.${isRecurrent ? "Recurrent" : "Specific"}`),
+        text: t(
+          `${basePath}.Success.${isRecurrent ? "Recurrent" : "Specific"}`
+        ),
       });
       setParams([{ key: "event" }, { key: "action" }]);
       refetchClasses();
@@ -55,7 +57,7 @@ export function useDeleteClass(
     onError() {
       showToast({
         type: "error",
-        text: t(`${tPath}.Error`),
+        text: t(`${basePath}.Error`),
       });
     },
   });

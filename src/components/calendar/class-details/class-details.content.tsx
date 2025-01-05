@@ -28,7 +28,7 @@ export const DeleteClassModal = ({
   recurrentId: string | null;
 }>) => {
   const { t } = useTranslation();
-  const tPath = "Calendar.ClassDetails.Delete";
+  const basePath = "Calendar.ClassDetails.Delete";
 
   const ref = useClickOutside(handleClose);
 
@@ -44,14 +44,14 @@ export const DeleteClassModal = ({
       <DeleteClassWrapper ref={ref} isRecurrent={!!recurrentId}>
         <div className="flex flex-col gap-3">
           <DeleteClassTitle>
-            {t(`${tPath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
+            {t(`${basePath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
           </DeleteClassTitle>
           {!!recurrentId && (
             <>
               <span>
                 <Trans
                   values={{ dateTime }}
-                  i18nKey={`${tPath}.Recurrent.Description`}
+                  i18nKey={`${basePath}.Recurrent.Description`}
                   components={{
                     strong: <span className="font-bold text-red-500" />,
                   }}
@@ -63,7 +63,7 @@ export const DeleteClassModal = ({
                   isSelected={selectedOption === "specific"}
                   onClick={() => setSelectedOption("specific")}
                 >
-                  {t(`${tPath}.Recurrent.Options.Specific`)}
+                  {t(`${basePath}.Recurrent.Options.Specific`)}
                 </DeleteRecurrentOption>
                 <DeleteRecurrentOption
                   className="hover:bg-neutral-50"
@@ -73,7 +73,7 @@ export const DeleteClassModal = ({
                   <Trans
                     values={{ dateTime }}
                     components={{ NewLine: <br /> }}
-                    i18nKey={`${tPath}.Recurrent.Options.Recurrent`}
+                    i18nKey={`${basePath}.Recurrent.Options.Recurrent`}
                   />
                 </DeleteRecurrentOption>
               </DeleteRecurrentWrapper>
@@ -81,7 +81,7 @@ export const DeleteClassModal = ({
           )}
           <span>
             <Trans
-              i18nKey={`${tPath}.Description`}
+              i18nKey={`${basePath}.Description`}
               components={{
                 strong: <span className="font-bold text-red-500" />,
               }}

@@ -22,9 +22,6 @@ export const InputFieldsContainer = styled.div(
 export const InputFieldsRow = styled.div(
   tw`flex flex-row items-start justify-center gap-10 w-full`
 );
-export const WeekdayContainer = styled.div(
-  tw`w-full px-4 py-2 rounded-xl border border-neutral-200 text-neutral-500 bg-neutral-50 cursor-default`
-);
 export const ButtonsContainer = styled.div(
   tw`flex flex-row justify-end items-center gap-4 w-full`
 );
