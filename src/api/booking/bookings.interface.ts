@@ -1,6 +1,11 @@
-export interface BookingPayload {
+export interface GetBookingPayload {
   userId?: number;
   classId?: number;
+}
+
+export interface CreateBookingPayload {
+  classId: number;
+  userIds: number[];
 }
 
 export interface IBooking {

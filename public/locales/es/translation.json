@@ -76,12 +76,16 @@
         },
         "Error": "Ha ocurrido un error al intentar eliminar la clase"
       },
+
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",
       "Title": "Clase {{date}}",
       "AssistantsList": {
         "Title": "Lista de asistentes",
-        "Empty": "Aún no hay participantes"
+        "Empty": "Aún no hay participantes",
+        "Success": "La lista de asistentes ha sido editada correctamente",
+        "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
+        "MaxAmountError": "El número de participantes excede la capacidad máxima"
       }
     },
     "Event": {

@@ -1,17 +1,23 @@
 import { useTranslation } from "react-i18next";
-import { IClass, IUser, useGetAllUsers, useGetBookings } from "../../../api";
+import {
+  IClass,
+  IUser,
+  useEditBookings,
+  useGetAllUsers,
+  useGetBookings,
+} from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
-import { CustomButton } from "../../base";
+import { CustomButton, showToast } from "../../base";
 import { DeleteClassModal, SwitchList } from "./class-details.content";
 import { FooterButtonsWrapper } from "./class-details.styled";
 import { emptyEventFields, IEventFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
 
 export const ClassDetails = ({
-  refetchClasses,
   classData,
+  refetchClasses,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
   const { t } = useTranslation();
   const basePath = "Calendar.ClassDetails";
@@ -27,7 +33,14 @@ export const ClassDetails = ({
   const [fields, setFields] = useState<IEventFields>(emptyEventFields);
 
   const { data: users } = useGetAllUsers();
-  const { data: bookings } = useGetBookings({ classId: id });
+  const { data: bookings, refetch: refetchBookings } = useGetBookings({
+    classId: id,
+  });
+
+  const { mutate: editBookings, isPending: isLoading } = useEditBookings(() => {
+    refetchClasses();
+    refetchBookings();
+  });
 
   const { initUsersList, initAssistantsList } = useMemo(() => {
     let filteredUsers: IUser[] = [];
@@ -50,6 +63,20 @@ export const ClassDetails = ({
       initAssistantsList: bookingsUsers,
     };
   }, [users, bookings]);
+
+  const handleEditBooking = () => {
+    if (assistantsList.length > maxAmount) {
+      showToast({
+        type: "error",
+        text: t(`${basePath}.AssistantsList.MaxAmountError`),
+      });
+      return;
+    }
+    editBookings({
+      classId: id,
+      userIds: assistantsList.map(({ id }) => id),
+    });
+  };
 
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
@@ -88,8 +115,10 @@ export const ClassDetails = ({
             <span className="font-bold text-xl underline underline-offset-2">
               {showEditView ? (
                 <div className="flex flex-row items-center justify-between gap-2">
-                  <span>{"Lista usuarios"}</span>
-                  <span>{t(`${basePath}.AssistantsList.Title`)}</span>
+                  <span>{`Lista usuarios (${usersList.length})`}</span>
+                  <span>{`${t(`${basePath}.AssistantsList.Title`)} (${
+                    assistantsList.length
+                  }/${maxAmount})`}</span>
                 </div>
               ) : (
                 t(`${basePath}.AssistantsList.Title`)
@@ -129,7 +158,9 @@ export const ClassDetails = ({
             >
               {t("Base.Buttons.Discard")}
             </CustomButton>
-            <CustomButton>{t("Base.Buttons.Save")}</CustomButton>
+            <CustomButton isLoading={isLoading} onClick={handleEditBooking}>
+              {t("Base.Buttons.Save")}
+            </CustomButton>
           </FooterButtonsWrapper>
         )}
       </div>
