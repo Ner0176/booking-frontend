@@ -10,6 +10,11 @@ import {
   DeleteClassWrapper,
   DeleteRecurrentOption,
   DeleteRecurrentWrapper,
+  ListItemContainer,
+  SwIconContainer,
+  SwListContainer,
+  SwListTitle,
+  SwListWrapper,
 } from "./class-details.styled";
 import Icon from "@mdi/react";
 import { mdiArrowLeftRight } from "@mdi/js";
@@ -114,55 +119,71 @@ export const DeleteClassModal = ({
 };
 
 export const SwitchList = ({
+  maxAmount,
   usersList,
   setUsersList,
   assistantsList,
   setAssistantsList,
 }: Readonly<{
+  maxAmount: number;
   usersList: IUser[];
   assistantsList: IUser[];
   setUsersList: Dispatch<SetStateAction<IUser[]>>;
   setAssistantsList: Dispatch<SetStateAction<IUser[]>>;
 }>) => {
+  const { t } = useTranslation();
+  const basePath = "Calendar.ClassDetails.AssistantsList";
+
   return (
-    <div className="flex flex-row items-center gap-3 rounded-2xl border boder-neutral-200 p-3 ">
-      <div className="flex flex-1 flex-col gap-3 px-2 max-h-[300px] overflow-y-auto">
-        {usersList.map((user) => (
-          <div
-            onClick={() => {
-              setUsersList((prev) => {
-                return prev.filter(({ id }) => user.id !== id);
-              });
-              setAssistantsList((prev) => [...prev, user]);
-            }}
-            className="cursor-pointer rounded-lg border border-neutral-200 px-4 py-2 text-center"
-          >
-            {user.name}
-          </div>
-        ))}
-      </div>
-      <div className="border border-neutral-200 bg-neutral-50 rounded-full p-2.5 h-min">
+    <div className="flex flex-row items-center gap-3">
+      <SwListContainer>
+        <SwListTitle>
+          {t(`${basePath}.UsersTitle`, { value: usersList.length })}
+        </SwListTitle>
+        <SwListWrapper>
+          {usersList.map((user) => (
+            <ListItemContainer
+              onClick={() => {
+                setUsersList((prev) => {
+                  return prev.filter(({ id }) => user.id !== id);
+                });
+                setAssistantsList((prev) => [...prev, user]);
+              }}
+            >
+              {user.name}
+            </ListItemContainer>
+          ))}
+        </SwListWrapper>
+      </SwListContainer>
+      <SwIconContainer>
         <Icon
           size="16px"
           path={mdiArrowLeftRight}
           className="text-neutral-400"
         />
-      </div>
-      <div className="flex flex-1 flex-col gap-3 px-2 max-h-[300px overflow-y-auto">
-        {assistantsList.map((item) => (
-          <div
-            onClick={() => {
-              setAssistantsList((prev) => {
-                return prev.filter(({ id }) => item.id !== id);
-              });
-              setUsersList((prev) => [...prev, item]);
-            }}
-            className="cursor-pointer rounded-lg border border-neutral-200 px-4 py-2 text-center"
-          >
-            {item.name}
-          </div>
-        ))}
-      </div>
+      </SwIconContainer>
+      <SwListContainer>
+        <SwListTitle>
+          {t(`${basePath}.LongTitle`, {
+            maxAmount,
+            currentCount: assistantsList.length,
+          })}
+        </SwListTitle>
+        <SwListWrapper>
+          {assistantsList.map((item) => (
+            <ListItemContainer
+              onClick={() => {
+                setAssistantsList((prev) => {
+                  return prev.filter(({ id }) => item.id !== id);
+                });
+                setUsersList((prev) => [...prev, item]);
+              }}
+            >
+              {item.name}
+            </ListItemContainer>
+          ))}
+        </SwListWrapper>
+      </SwListContainer>
     </div>
   );
 };

@@ -113,19 +113,11 @@ export const ClassDetails = ({
           </div>
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
-              {showEditView ? (
-                <div className="flex flex-row items-center justify-between gap-2">
-                  <span>{`Lista usuarios (${usersList.length})`}</span>
-                  <span>{`${t(`${basePath}.AssistantsList.Title`)} (${
-                    assistantsList.length
-                  }/${maxAmount})`}</span>
-                </div>
-              ) : (
-                t(`${basePath}.AssistantsList.Title`)
-              )}
+              {!showEditView && t(`${basePath}.AssistantsList.Title`)}
             </span>
             {showEditView ? (
               <SwitchList
+                maxAmount={maxAmount}
                 usersList={usersList}
                 setUsersList={setUsersList}
                 assistantsList={assistantsList}
