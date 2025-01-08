@@ -59,6 +59,8 @@
       "Date": "Fecha",
       "Schedule": "Horario",
       "Edit": "Editar clase",
+      "Title": "Clase {{date}}",
+      "RecurrentTitle": "Clase recurrente {{date}}",
       "Delete": {
         "Title": "Eliminar clase",
         "Description": "Ten en cuenta que al eliminar una clase, <strong>todas las reservas asociadas</strong> a la misma también serán eliminadas.",
@@ -76,10 +78,8 @@
         },
         "Error": "Ha ocurrido un error al intentar eliminar la clase"
       },
-
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",
-      "Title": "Clase {{date}}",
       "AssistantsList": {
         "Title": "Lista de asistentes",
         "Empty": "Aún no hay participantes",

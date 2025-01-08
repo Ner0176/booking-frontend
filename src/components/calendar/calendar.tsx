@@ -33,19 +33,24 @@ export const CalendarDashboard = () => {
     }
   }, [data, eventId]);
 
+  const getTitle = () => {
+    let title = t("Calendar.Title");
+
+    if (!!eventId && selectedEvent?.date) {
+      const titleType = !selectedEvent.recurrentId ? "Title" : "RecurrentTitle";
+
+      title = t(`Calendar.ClassDetails.${titleType}`, {
+        date: format(new Date(selectedEvent?.date as Date), "dd/MM/yyyy"),
+      });
+    }
+
+    return title;
+  };
+
   return (
     <CalendarContainer>
       <CalendarHeader>
-        <HeaderTitle>
-          {!!eventId && selectedEvent?.date
-            ? t("Calendar.ClassDetails.Title", {
-                date: format(
-                  new Date(selectedEvent?.date as Date),
-                  "dd/MM/yyyy"
-                ),
-              })
-            : t("Calendar.Title")}
-        </HeaderTitle>
+        <HeaderTitle>{getTitle()}</HeaderTitle>
         {!eventId ? (
           <HeaderButton
             props={{
