@@ -28,3 +28,8 @@ export interface IRowConfig {
   type: HTMLInputTypeAttribute;
   accessor: keyof IEventFields;
 }
+
+export interface IClassIds {
+  id: string;
+  recurrentId: string;
+}

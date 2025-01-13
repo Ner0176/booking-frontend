@@ -4,8 +4,9 @@ export interface GetBookingPayload {
 }
 
 export interface CreateBookingPayload {
-  classId: number;
+  classId: string;
   userIds: number[];
+  isRecurrent: boolean;
 }
 
 export interface IBooking {

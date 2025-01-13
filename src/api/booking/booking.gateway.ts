@@ -11,8 +11,10 @@ export const bookingApi = {
     const response = await axiosInstance.get(`/booking/find`, { params });
     return response.data;
   },
+  createBookings: async (payload: CreateBookingPayload) => {
+    await axiosInstance.post("/booking/create", payload);
+  },
   editBookings: async (payload: CreateBookingPayload) => {
-    const response = await axiosInstance.patch("/booking/edit", payload);
-    return response.data;
+    await axiosInstance.patch("/booking/edit", payload);
   },
 };

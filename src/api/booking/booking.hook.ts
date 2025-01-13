@@ -16,15 +16,32 @@ export function useGetBookings(payload: GetBookingPayload) {
   });
 }
 
+export function useCreateBookings(handleSuccess: () => void) {
+  const { t } = useTranslation();
+  const basePath = "Calendar.Event.CreateBookings";
+
+  return useMutation({
+    mutationFn: (payload: CreateBookingPayload) =>
+      bookingApi.createBookings(payload),
+    onSuccess() {
+      handleSuccess();
+      showToast({ text: t(`${basePath}.Success`), type: "success" });
+    },
+    onError() {
+      showToast({ text: t(`${basePath}.Error`), type: "error" });
+    },
+  });
+}
+
 export function useEditBookings(refetch: () => void) {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.AssistantsList";
+  const basePath = "Calendar.ClassDetails.AttendeesList";
   const { setParams } = useSearchParamsManager([]);
 
   return useMutation({
     mutationFn: (payload: CreateBookingPayload) =>
       bookingApi.editBookings(payload),
-    onSuccess: () => {
+    onSuccess() {
       refetch();
       setParams([{ key: "action" }]);
       showToast({
@@ -32,7 +49,7 @@ export function useEditBookings(refetch: () => void) {
         text: t(`${basePath}.Success`),
       });
     },
-    onError: () => {
+    onError() {
       showToast({
         type: "error",
         text: t(`${basePath}.Error`),

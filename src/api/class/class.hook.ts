@@ -5,7 +5,7 @@ import {
   DeleteClassPayload,
   IClass,
 } from "./class.interface";
-import { showToast } from "../../components";
+import { IClassIds, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
 
@@ -16,17 +16,26 @@ export function useGetAllClasses() {
   });
 }
 
-export function useCreateClass(
-  refetchClasses: () => void,
-  handleClose: () => void
-) {
+export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
   const { t } = useTranslation();
 
-  return useMutation<any, Error, CreateClassPayload>({
+  return useMutation<IClass[], Error, CreateClassPayload>({
     mutationFn: (payload: CreateClassPayload) => classApi.createClass(payload),
-    onSuccess() {
-      handleClose();
-      refetchClasses();
+    onSuccess(data) {
+      let classIds = {
+        id: "",
+        recurrentId: "",
+      };
+
+      if (!!data.length) {
+        classIds = {
+          id: `${data[0].id}`,
+          recurrentId: data[0].recurrentId || "",
+        };
+      }
+
+      handleSuccess(classIds);
+      showToast({ text: t("Calendar.Event.Success"), type: "success" });
     },
     onError() {
       showToast({ text: t("Calendar.Event.Error"), type: "error" });

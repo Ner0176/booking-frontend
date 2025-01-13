@@ -29,7 +29,7 @@ export const ClassDetails = ({
   const { id, date, endTime, startTime, maxAmount, recurrentId } = classData;
 
   const [usersList, setUsersList] = useState<IUser[]>([]);
-  const [assistantsList, setAssistantsList] = useState<IUser[]>([]);
+  const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [fields, setFields] = useState<IEventFields>(emptyEventFields);
 
   const { data: users } = useGetAllUsers();
@@ -42,7 +42,7 @@ export const ClassDetails = ({
     refetchBookings();
   });
 
-  const { initUsersList, initAssistantsList } = useMemo(() => {
+  const { initUsersList, initAttendeesList } = useMemo(() => {
     let filteredUsers: IUser[] = [];
     let bookingsUsers: IUser[] = [];
 
@@ -60,27 +60,28 @@ export const ClassDetails = ({
 
     return {
       initUsersList: filteredUsers,
-      initAssistantsList: bookingsUsers,
+      initAttendeesList: bookingsUsers,
     };
   }, [users, bookings]);
 
   const handleEditBooking = () => {
-    if (assistantsList.length > maxAmount) {
+    if (attendeesList.length > maxAmount) {
       showToast({
         type: "error",
-        text: t(`${basePath}.AssistantsList.MaxAmountError`),
+        text: t(`${basePath}.AttendeesList.MaxAmountError`),
       });
       return;
     }
     editBookings({
-      classId: id,
-      userIds: assistantsList.map(({ id }) => id),
+      isRecurrent: false,
+      classId: id.toString(),
+      userIds: attendeesList.map(({ id }) => id),
     });
   };
 
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
-    setAssistantsList(initAssistantsList);
+    setAttendeesList(initAttendeesList);
     setFields({
       endTime: { value: endTime },
       recurrencyLimit: { value: "" },
@@ -89,7 +90,7 @@ export const ClassDetails = ({
       date: { value: format(new Date(date), "yyyy-MM-dd") },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initUsersList, initAssistantsList, classData]);
+  }, [initUsersList, initAttendeesList, classData]);
 
   useEffect(() => {
     initializeState();
@@ -113,19 +114,19 @@ export const ClassDetails = ({
           </div>
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
-              {!showEditView && t(`${basePath}.AssistantsList.Title`)}
+              {!showEditView && t(`${basePath}.AttendeesList.Title`)}
             </span>
             {showEditView ? (
               <SwitchList
                 maxAmount={maxAmount}
                 usersList={usersList}
                 setUsersList={setUsersList}
-                assistantsList={assistantsList}
-                setAssistantsList={setAssistantsList}
+                attendeesList={attendeesList}
+                setAttendeesList={setAttendeesList}
               />
-            ) : assistantsList.length ? (
+            ) : attendeesList.length ? (
               <div className="flex flex-wrap gap-3">
-                {assistantsList.map(({ name }, idx) => (
+                {attendeesList.map(({ name }, idx) => (
                   <div
                     key={idx}
                     className="border border-neutral-200 rounded-xl px-3 py-2 max-w-[150px] w-full whitespace-nowrap text-center"
@@ -135,7 +136,7 @@ export const ClassDetails = ({
                 ))}
               </div>
             ) : (
-              <span> {t(`${basePath}.AssistantsList.Empty`)}</span>
+              <span> {t(`${basePath}.AttendeesList.Empty`)}</span>
             )}
           </div>
         </div>

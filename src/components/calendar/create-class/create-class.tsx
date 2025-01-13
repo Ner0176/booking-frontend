@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ClassTypeBox,
@@ -16,30 +16,53 @@ import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
 import {
   emptyEventFields,
   EventType,
+  IClassIds,
   IEventFields,
 } from "./create-class.interface";
-import { useCreateClass } from "../../../api";
+import {
+  IUser,
+  useCreateBookings,
+  useCreateClass,
+  useGetAllUsers,
+} from "../../../api";
 import { useClickOutside, useSearchParamsManager } from "../../../hooks";
-import { CustomButton, Modal } from "../../base";
+import { CustomButton, Modal, showToast } from "../../base";
+import { SwitchList } from "../class-details";
 
 export const CreateClassModal = ({
   refetchClasses,
 }: Readonly<{ refetchClasses(): void }>) => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["type"]);
+  const isRecurrent = params.get("type") === "recurrent";
 
+  const [classId, setClassId] = useState<string>("");
+  const [usersList, setUsersList] = useState<IUser[]>([]);
+  const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
+  const [showAddUsers, setShowAddUsers] = useState<boolean>(false);
   const [fields, setFields] = useState<IEventFields>(emptyEventFields);
 
   const handleCloseModal = () => {
+    refetchClasses();
     setParams([{ key: "type" }, { key: "action" }]);
   };
 
-  const { mutate: createClass, isPending: isLoading } = useCreateClass(
-    refetchClasses,
-    handleCloseModal
-  );
+  const handleClassSuccess = ({ id, recurrentId }: IClassIds) => {
+    setShowAddUsers(true);
+    setClassId(isRecurrent ? recurrentId : id);
+  };
+
+  const { data: users } = useGetAllUsers();
+  const { mutate: createClass, isPending: isCreatingClass } =
+    useCreateClass(handleClassSuccess);
+  const { mutate: createBookings, isPending: isCreatingBookings } =
+    useCreateBookings(handleCloseModal);
 
   const ref = useClickOutside(handleCloseModal);
+
+  useEffect(() => {
+    if (users) setUsersList(users);
+  }, [users]);
 
   const handleSelectType = (newType?: EventType) => {
     setParams([{ key: "type", value: newType }]);
@@ -60,11 +83,27 @@ export const CreateClassModal = ({
     });
   };
 
+  const handleAddAttendees = () => {
+    if (attendeesList.length > fields.maxAmount.value) {
+      showToast({
+        type: "error",
+        text: t(`Calendar.ClassDetails.AttendeesList.MaxAmountError`),
+      });
+      return;
+    }
+
+    createBookings({
+      classId,
+      isRecurrent,
+      userIds: attendeesList.map(({ id }) => id),
+    });
+  };
+
   return (
     <Modal>
       <ClassContainer ref={ref}>
         <span className="text-center text-2xl font-bold">
-          {t("Calendar.Event.NewEvent")}
+          {t(`Calendar.Event.${showAddUsers ? "AddAttendees" : "NewEvent"}`)}
         </span>
         {!params.get("type") ? (
           <ClassTypesWrapper>
@@ -82,27 +121,50 @@ export const CreateClassModal = ({
         ) : (
           <ClassFormWrapper>
             <InputFieldsContainer>
-              {params.get("type") === "recurrent" ? (
+              {!!showAddUsers ? (
+                <SwitchList
+                  listMaxHeight={225}
+                  usersList={usersList}
+                  setUsersList={setUsersList}
+                  attendeesList={attendeesList}
+                  maxAmount={fields.maxAmount.value}
+                  setAttendeesList={setAttendeesList}
+                />
+              ) : isRecurrent ? (
                 <RecurrentFields fields={fields} setFields={setFields} />
               ) : (
                 <OneTimeFields fields={fields} setFields={setFields} />
               )}
             </InputFieldsContainer>
             <ButtonsContainer>
-              <CustomButton
-                color="secondary"
-                onClick={() => handleSelectType()}
-              >
-                {t("Base.Buttons.Cancel")}
-              </CustomButton>
-              <CustomButton
-                isLoading={isLoading}
-                onClick={() => {
-                  if (!isLoading) handleSubmit();
-                }}
-              >
-                {t("Base.Buttons.CreateEvent")}
-              </CustomButton>
+              {!!showAddUsers ? (
+                <>
+                  <CustomButton color="secondary" onClick={handleCloseModal}>
+                    <div>{t("Base.Buttons.Skip")}</div>
+                  </CustomButton>
+                  <CustomButton
+                    onClick={handleAddAttendees}
+                    isLoading={isCreatingBookings}
+                  >
+                    {t("Base.Buttons.Save")}
+                  </CustomButton>
+                </>
+              ) : (
+                <>
+                  <CustomButton
+                    color="secondary"
+                    onClick={() => handleSelectType()}
+                  >
+                    {t("Base.Buttons.Cancel")}
+                  </CustomButton>
+                  <CustomButton
+                    onClick={handleSubmit}
+                    isLoading={isCreatingClass}
+                  >
+                    {t("Base.Buttons.CreateEvent")}
+                  </CustomButton>
+                </>
+              )}
             </ButtonsContainer>
           </ClassFormWrapper>
         )}

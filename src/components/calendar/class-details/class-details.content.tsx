@@ -122,17 +122,19 @@ export const SwitchList = ({
   maxAmount,
   usersList,
   setUsersList,
-  assistantsList,
-  setAssistantsList,
+  attendeesList,
+  listMaxHeight,
+  setAttendeesList,
 }: Readonly<{
   maxAmount: number;
   usersList: IUser[];
-  assistantsList: IUser[];
+  attendeesList: IUser[];
+  listMaxHeight?: number;
   setUsersList: Dispatch<SetStateAction<IUser[]>>;
-  setAssistantsList: Dispatch<SetStateAction<IUser[]>>;
+  setAttendeesList: Dispatch<SetStateAction<IUser[]>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.AssistantsList";
+  const basePath = "Calendar.ClassDetails.AttendeesList";
 
   return (
     <div className="flex flex-row items-center gap-3">
@@ -140,14 +142,14 @@ export const SwitchList = ({
         <SwListTitle>
           {t(`${basePath}.UsersTitle`, { value: usersList.length })}
         </SwListTitle>
-        <SwListWrapper>
+        <SwListWrapper style={{ maxHeight: listMaxHeight }}>
           {usersList.map((user) => (
             <ListItemContainer
               onClick={() => {
                 setUsersList((prev) => {
                   return prev.filter(({ id }) => user.id !== id);
                 });
-                setAssistantsList((prev) => [...prev, user]);
+                setAttendeesList((prev) => [...prev, user]);
               }}
             >
               {user.name}
@@ -166,14 +168,14 @@ export const SwitchList = ({
         <SwListTitle>
           {t(`${basePath}.LongTitle`, {
             maxAmount,
-            currentCount: assistantsList.length,
+            currentCount: attendeesList.length,
           })}
         </SwListTitle>
         <SwListWrapper>
-          {assistantsList.map((item) => (
+          {attendeesList.map((item) => (
             <ListItemContainer
               onClick={() => {
-                setAssistantsList((prev) => {
+                setAttendeesList((prev) => {
                   return prev.filter(({ id }) => item.id !== id);
                 });
                 setUsersList((prev) => [...prev, item]);

@@ -1,6 +1,7 @@
 {
   "Base": {
     "Buttons": {
+      "Skip": "Saltar paso",
       "Cancel": "Cancelar",
       "Delete": "Eliminar",
       "Back": "Volver atrás",
@@ -80,7 +81,7 @@
       },
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",
-      "AssistantsList": {
+      "AttendeesList": {
         "Title": "Lista de asistentes",
         "Empty": "Aún no hay participantes",
         "UsersTitle": "Lista de usuarios ({{value}})",
@@ -92,6 +93,7 @@
     },
     "Event": {
       "NewEvent": "Crear nuevo evento",
+      "AddAttendees": "Añadir participantes",
       "Fields": {
         "date": "Fecha del evento",
         "startDate": "Fecha de incio",
@@ -122,7 +124,12 @@
         "Title": "Evento puntual",
         "Description": "El evento se creará únicamente para la fecha seleccionada"
       },
-      "Error": "Ha ocurrido un error al intentar crear la clase"
+      "Success": "La clase ha sido creada correctamente",
+      "Error": "Ha ocurrido un error al intentar crear la clase",
+      "CreateBookings": {
+        "Success": "Los usuarios han sido añadidos a la clase correctamente",
+        "Error": "Ha ocurrido un error al intentar añadir los usuarios a la clase"
+      }
     }
   },
   "Sidebar": {
