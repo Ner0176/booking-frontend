@@ -1,11 +1,13 @@
 import Icon from "@mdi/react";
-import { IClass } from "../../api";
+import { IClass, useEditClassStatus } from "../../api";
 import {
   mdiAccountGroupOutline,
   mdiCalendarOutline,
+  mdiCancel,
+  mdiCheck,
   mdiClockOutline,
 } from "@mdi/js";
-import { PropsWithChildren } from "react";
+import { Fragment, PropsWithChildren } from "react";
 import { useSearchParamsManager } from "../../hooks";
 import {
   CalendarItemContainer,
@@ -14,6 +16,7 @@ import {
 import { formatDate } from "../../utils";
 import { IButtonHeaderProps } from "./calendar.interface";
 import { useTranslation } from "react-i18next";
+import { ClipLoader } from "react-spinners";
 
 const ItemInfoRow = ({
   icon,
@@ -27,22 +30,79 @@ const ItemInfoRow = ({
   );
 };
 
+export const ClassStatusButton = ({
+  classId,
+  refetch,
+  isCancelled,
+}: Readonly<{ classId: string; refetch(): void; isCancelled: boolean }>) => {
+  const { t } = useTranslation();
+
+  const { mutate, isPending: isLoading } = useEditClassStatus(refetch);
+
+  return (
+    <HeaderButtonContainer
+      className="flex justify-center min-w-[100px]"
+      color={isCancelled ? "primary" : "secondary"}
+      onClick={() => {
+        if (!!classId && !isLoading)
+          mutate({ id: classId, cancel: !isCancelled });
+      }}
+    >
+      {isLoading ? (
+        <ClipLoader
+          size={20}
+          color="gray"
+          loading={true}
+          data-testid="loader"
+          aria-label="Loading Spinner"
+        />
+      ) : (
+        <Fragment>
+          <Icon
+            size="14px"
+            className="mt-0.5"
+            path={!isCancelled ? mdiCancel : mdiCheck}
+          />
+          <span className="text-sm font-semibold">
+            {t(
+              `Calendar.ClassDetails.Status.${
+                !isCancelled ? "Cancel" : "Enable"
+              }`
+            )}
+          </span>
+        </Fragment>
+      )}
+    </HeaderButtonContainer>
+  );
+};
+
 export const HeaderButton = ({
   props,
-}: Readonly<{ props: IButtonHeaderProps }>) => {
+}: Readonly<{
+  props: IButtonHeaderProps;
+}>) => {
   const { t } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
   const { icon, tPath, color, action } = props;
 
+  const getAction = () => {
+    switch (action) {
+      case "close-event":
+        setParams([{ key: "event" }, { key: "action" }]);
+        break;
+      default:
+        setParams([{ key: "action", value: action }]);
+        break;
+    }
+  };
+
   return (
     <HeaderButtonContainer
-      style={{ color, borderColor: color }}
       onClick={(e) => {
         e.stopPropagation();
-        if (action === "close-event") {
-          setParams([{ key: "event" }, { key: "action" }]);
-        } else setParams([{ key: "action", value: action }]);
+        getAction();
       }}
+      color={color ?? "primary"}
     >
       <Icon size="14px" className="mt-0.5" path={icon} />
       <span className="text-sm font-semibold">{t(tPath)}</span>

@@ -79,6 +79,12 @@
         },
         "Error": "Ha ocurrido un error al intentar eliminar la clase"
       },
+      "Status": {
+        "Cancel": "Cancelar clase",
+        "Enable": "Activar clase",
+        "Success": "El estado de la clase ha sido actualizado correctamente",
+        "Error": "Ha ocurrido un errlr al intentar actualizar el estado de la clase"
+      },
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",
       "AttendeesList": {

@@ -6,6 +6,11 @@ export interface CreateClassPayload {
   recurrencyLimit?: Date;
 }
 
+export interface EditStatusPayload {
+  id: string;
+  cancel: boolean;
+}
+
 export interface DeleteClassPayload {
   id: string;
   isRecurrent: boolean;
@@ -17,6 +22,7 @@ export interface IClass {
   endTime: string;
   startTime: string;
   maxAmount: number;
+  cancelled: boolean;
   currentCount: number;
   recurrentId: string | null;
 }

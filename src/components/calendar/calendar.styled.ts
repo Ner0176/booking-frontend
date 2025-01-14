@@ -8,9 +8,15 @@ export const CalendarHeader = styled.div(
   tw`flex flex-row items-center justify-between pb-4 border-b`
 );
 export const HeaderTitle = styled.span(tw`font-bold text-3xl`);
-export const HeaderButtonContainer = styled.div(
-  tw`flex flex-row items-center gap-0.5 cursor-pointer text-violet-600 border border-violet-600 rounded-full px-2 py-1`
-);
+export const HeaderButtonContainer = styled.div<{
+  color: "primary" | "secondary";
+}>`
+  ${tw`flex flex-row items-center gap-0.5 cursor-pointer border rounded-full px-2 py-1`}
+  ${({ color }) =>
+    color === "primary"
+      ? tw`text-violet-600 border-violet-600`
+      : tw`text-red-600 border-red-600`}
+`;
 export const CalendarBody = styled.div(
   tw`flex flex-wrap justify-around gap-4 px-8 py-10 h-full`
 );

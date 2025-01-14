@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateClassPayload,
   DeleteClassPayload,
+  EditStatusPayload,
   IClass,
 } from "./class.interface";
 import { IClassIds, showToast } from "../../components";
@@ -39,6 +40,29 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
     },
     onError() {
       showToast({ text: t("Calendar.Event.Error"), type: "error" });
+    },
+  });
+}
+
+export function useEditClassStatus(handleSuccess: () => void) {
+  const { t } = useTranslation();
+  const basePath = "Calendar.ClassDetails.Status";
+
+  return useMutation({
+    mutationFn: (payload: EditStatusPayload) =>
+      classApi.editClassStatus(payload),
+    onSuccess() {
+      handleSuccess();
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
+    },
+    onError() {
+      showToast({
+        type: "error",
+        text: t(`${basePath}.Error`),
+      });
     },
   });
 }

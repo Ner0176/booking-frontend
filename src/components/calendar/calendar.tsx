@@ -6,7 +6,7 @@ import {
   HeaderTitle,
 } from "./calendar.styled";
 import { useGetAllClasses } from "../../api";
-import { ClassCard, HeaderButton } from "./calendar.content";
+import { ClassCard, ClassStatusButton, HeaderButton } from "./calendar.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo } from "react";
@@ -26,6 +26,8 @@ export const CalendarDashboard = () => {
   const eventId = params.get("event");
 
   const { data, refetch, isLoading } = useGetAllClasses();
+
+  console.log(data);
 
   const selectedEvent = useMemo(() => {
     if (eventId && data) {
@@ -51,7 +53,7 @@ export const CalendarDashboard = () => {
     <CalendarContainer>
       <CalendarHeader>
         <HeaderTitle>{getTitle()}</HeaderTitle>
-        {!eventId ? (
+        {!selectedEvent ? (
           <HeaderButton
             props={{
               icon: mdiPlus,
@@ -75,9 +77,14 @@ export const CalendarDashboard = () => {
                 tPath: "Calendar.ClassDetails.Edit",
               }}
             />
+            <ClassStatusButton
+              refetch={refetch}
+              classId={eventId ?? ""}
+              isCancelled={selectedEvent.cancelled}
+            />
             <HeaderButton
               props={{
-                color: "#DC2626FF",
+                color: "secondary",
                 action: "delete-event",
                 icon: mdiTrashCanOutline,
                 tPath: "Calendar.ClassDetails.Delete.Title",
