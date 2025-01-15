@@ -100,6 +100,12 @@
     "Event": {
       "NewEvent": "Crear nuevo evento",
       "AddAttendees": "Añadir participantes",
+      "Attendees": "{{currentCount}} / {{maxAmount}} asistentes",
+      "Status": {
+        "cancelled": "Cancelada",
+        "pending": "Pendiente",
+        "done": "Realizada"
+      },
       "Fields": {
         "date": "Fecha del evento",
         "startDate": "Fecha de incio",

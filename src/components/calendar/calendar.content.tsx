@@ -6,27 +6,31 @@ import {
   mdiCancel,
   mdiCheck,
   mdiClockOutline,
+  mdiTimerSand,
 } from "@mdi/js";
 import { Fragment, PropsWithChildren } from "react";
 import { useSearchParamsManager } from "../../hooks";
 import {
   CalendarItemContainer,
+  ClassInfoRowContainer,
   HeaderButtonContainer,
 } from "./calendar.styled";
 import { formatDate } from "../../utils";
-import { IButtonHeaderProps } from "./calendar.interface";
+import { ClassStatusType, IButtonHeaderProps } from "./calendar.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
+import { isBefore } from "date-fns";
 
 const ItemInfoRow = ({
   icon,
+  status,
   children,
-}: Readonly<PropsWithChildren<{ icon: string }>>) => {
+}: Readonly<PropsWithChildren<{ icon: string; status?: ClassStatusType }>>) => {
   return (
-    <div className="flex flex-row items-center gap-1.5">
+    <ClassInfoRowContainer status={status}>
       <Icon size="20px" className="mt-1" path={icon} />
       {children}
-    </div>
+    </ClassInfoRowContainer>
   );
 };
 
@@ -111,24 +115,38 @@ export const HeaderButton = ({
 };
 
 export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
+  const { t } = useTranslation();
+  const basePath = "Calendar.Event";
+
   const { setParams } = useSearchParamsManager([]);
 
-  const { id, endTime, startTime, date, maxAmount, currentCount } = data;
+  const { id, endTime, startTime, date, maxAmount, cancelled, currentCount } =
+    data;
+
+  const { status, statusIcon } = (() => {
+    if (cancelled) return { status: "cancelled", statusIcon: mdiCancel };
+
+    const today = new Date();
+    return isBefore(today, date)
+      ? { status: "pending", statusIcon: mdiTimerSand }
+      : { status: "done", statusIcon: mdiCheck };
+  })();
 
   return (
     <CalendarItemContainer
       className="hover:shadow-lg"
       onClick={() => setParams([{ key: "event", value: `${id}` }])}
     >
+      <ItemInfoRow icon={statusIcon} status={status as ClassStatusType}>
+        {t(`${basePath}.Status.${status}`)}
+      </ItemInfoRow>
       <ItemInfoRow icon={mdiAccountGroupOutline}>
-        {currentCount + " / " + maxAmount + " asistentes"}
+        {t(`${basePath}.Attendees`, { currentCount, maxAmount })}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiClockOutline}>
         {startTime.slice(0, 5) + "h - " + endTime.slice(0, 5) + "h"}
       </ItemInfoRow>
-      <ItemInfoRow icon={mdiCalendarOutline}>
-        <span>{formatDate(date)}</span>
-      </ItemInfoRow>
+      <ItemInfoRow icon={mdiCalendarOutline}>{formatDate(date)}</ItemInfoRow>
     </CalendarItemContainer>
   );
 };

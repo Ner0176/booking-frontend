@@ -10,7 +10,7 @@ import { ClassCard, ClassStatusButton, HeaderButton } from "./calendar.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo } from "react";
-import { format } from "date-fns";
+import { format, isBefore } from "date-fns";
 import {
   mdiArrowLeft,
   mdiPencilOutline,
@@ -70,26 +70,30 @@ export const CalendarDashboard = () => {
                 tPath: "Base.Buttons.Back",
               }}
             />
-            <HeaderButton
-              props={{
-                action: "edit-event",
-                icon: mdiPencilOutline,
-                tPath: "Calendar.ClassDetails.Edit",
-              }}
-            />
-            <ClassStatusButton
-              refetch={refetch}
-              classId={eventId ?? ""}
-              isCancelled={selectedEvent.cancelled}
-            />
-            <HeaderButton
-              props={{
-                color: "secondary",
-                action: "delete-event",
-                icon: mdiTrashCanOutline,
-                tPath: "Calendar.ClassDetails.Delete.Title",
-              }}
-            />
+            {isBefore(new Date(), selectedEvent.date) && (
+              <>
+                <HeaderButton
+                  props={{
+                    action: "edit-event",
+                    icon: mdiPencilOutline,
+                    tPath: "Calendar.ClassDetails.Edit",
+                  }}
+                />
+                <ClassStatusButton
+                  refetch={refetch}
+                  classId={eventId ?? ""}
+                  isCancelled={selectedEvent.cancelled}
+                />
+                <HeaderButton
+                  props={{
+                    color: "secondary",
+                    action: "delete-event",
+                    icon: mdiTrashCanOutline,
+                    tPath: "Calendar.ClassDetails.Delete.Title",
+                  }}
+                />
+              </>
+            )}
           </div>
         )}
       </CalendarHeader>

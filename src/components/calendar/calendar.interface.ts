@@ -4,3 +4,5 @@ export interface IButtonHeaderProps {
   action: string;
   color?: "primary" | "secondary";
 }
+
+export type ClassStatusType = "cancelled" | "pending" | "done";
