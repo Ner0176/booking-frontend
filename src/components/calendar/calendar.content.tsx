@@ -8,23 +8,43 @@ import {
   mdiClockOutline,
   mdiTimerSand,
 } from "@mdi/js";
-import { Dispatch, Fragment, PropsWithChildren, SetStateAction } from "react";
+import {
+  Dispatch,
+  Fragment,
+  PropsWithChildren,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useSearchParamsManager } from "../../hooks";
 import {
+  CalendarFilterContainer,
+  CalendarFiltersWrapper,
+  CalendarFilterTitle,
   CalendarItemContainer,
   ClassInfoRowContainer,
   HeaderButtonContainer,
 } from "./calendar.styled";
 import { capitalize, formatToLongDate } from "../../utils";
 import {
+  CLASS_STATUS,
+  CLASS_TIME_FILTERS,
   ClassDatesFilter,
   ClassStatusType,
+  ClassTimeFilterType,
   IButtonHeaderProps,
 } from "./calendar.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
-import { CustomInputField, getInputDate } from "../base";
+import { CustomInputField, CustomSelect, getInputDate } from "../base";
+import { getDatesFromTimeFilter } from "./calendar.utils";
+import {
+  mdiArrowLeft,
+  mdiPencilOutline,
+  mdiPlus,
+  mdiTrashCanOutline,
+} from "@mdi/js";
 
 const ItemInfoRow = ({
   icon,
@@ -85,42 +105,6 @@ export const ClassStatusButton = ({
   );
 };
 
-export const HeaderButton = ({
-  props,
-}: Readonly<{
-  props: IButtonHeaderProps;
-}>) => {
-  const { t } = useTranslation();
-  const { setParams } = useSearchParamsManager([]);
-  const { icon, tPath, color, action } = props;
-
-  const getAction = () => {
-    switch (action) {
-      case "close-event":
-        setParams([{ key: "event" }, { key: "action" }]);
-        break;
-      default:
-        setParams([{ key: "action", value: action }]);
-        break;
-    }
-  };
-
-  return (
-    <HeaderButtonContainer
-      onClick={(e) => {
-        e.stopPropagation();
-        getAction();
-      }}
-      color={color ?? "primary"}
-    >
-      <Icon size="14px" className="mt-0.5" path={icon} />
-      <span className="text-sm font-semibold whitespace-nowrap">
-        {t(tPath)}
-      </span>
-    </HeaderButtonContainer>
-  );
-};
-
 export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
   const { t } = useTranslation();
   const basePath = "Calendar.Event";
@@ -160,7 +144,93 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
   );
 };
 
-export const DateRangeInput = ({
+const HeaderButton = ({
+  props,
+}: Readonly<{
+  props: IButtonHeaderProps;
+}>) => {
+  const { t } = useTranslation();
+  const { setParams } = useSearchParamsManager([]);
+  const { icon, tPath, color, action } = props;
+
+  const getAction = () => {
+    switch (action) {
+      case "close-event":
+        setParams([{ key: "event" }, { key: "action" }]);
+        break;
+      default:
+        setParams([{ key: "action", value: action }]);
+        break;
+    }
+  };
+
+  return (
+    <HeaderButtonContainer
+      onClick={(e) => {
+        e.stopPropagation();
+        getAction();
+      }}
+      color={color ?? "primary"}
+    >
+      <Icon size="14px" className="mt-0.5" path={icon} />
+      <span className="text-sm font-semibold whitespace-nowrap">
+        {t(tPath)}
+      </span>
+    </HeaderButtonContainer>
+  );
+};
+
+export const CalendarHeaderButtons = ({
+  eventId,
+  refetch,
+  selectedEvent,
+}: Readonly<{ refetch(): void; eventId: string; selectedEvent?: IClass }>) => {
+  return !selectedEvent ? (
+    <HeaderButton
+      props={{
+        icon: mdiPlus,
+        action: "create-event",
+        tPath: "Calendar.Event.NewEvent",
+      }}
+    />
+  ) : (
+    <div className="flex flex-row items-center justify-end gap-4 w-full">
+      <HeaderButton
+        props={{
+          icon: mdiArrowLeft,
+          action: "close-event",
+          tPath: "Base.Buttons.Back",
+        }}
+      />
+      {isBefore(new Date(), selectedEvent.date) && (
+        <>
+          <HeaderButton
+            props={{
+              action: "edit-event",
+              icon: mdiPencilOutline,
+              tPath: "Calendar.ClassDetails.Edit",
+            }}
+          />
+          <ClassStatusButton
+            refetch={refetch}
+            classId={eventId ?? ""}
+            isCancelled={selectedEvent.cancelled}
+          />
+          <HeaderButton
+            props={{
+              color: "secondary",
+              action: "delete-event",
+              icon: mdiTrashCanOutline,
+              tPath: "Calendar.ClassDetails.Delete.Title",
+            }}
+          />
+        </>
+      )}
+    </div>
+  );
+};
+
+const DateRangeInput = ({
   type,
   dateValue,
   setDateValue,
@@ -184,5 +254,72 @@ export const DateRangeInput = ({
         })
       }
     />
+  );
+};
+
+export const CalendarFilters = ({
+  datesFilter,
+  statusFilter,
+  setDatesFilter,
+  setStatusFilter,
+}: Readonly<{
+  datesFilter: ClassDatesFilter;
+  statusFilter: ClassStatusType;
+  setDatesFilter: Dispatch<SetStateAction<ClassDatesFilter>>;
+  setStatusFilter: Dispatch<SetStateAction<ClassStatusType>>;
+}>) => {
+  const { t } = useTranslation();
+  const basePath = "Calendar.Filters";
+
+  const [timeFilter, setTimeFilter] = useState<ClassTimeFilterType>("week");
+
+  useEffect(() => {
+    const addFilter = timeFilter !== "custom" && timeFilter !== "all";
+    setDatesFilter(addFilter ? getDatesFromTimeFilter(timeFilter) : {});
+  }, [timeFilter, setDatesFilter]);
+
+  const getSelectOptions = (type: "Status" | "Time") => {
+    const optionsList = type === "Time" ? CLASS_TIME_FILTERS : CLASS_STATUS;
+    return optionsList.map((option) => ({
+      key: option,
+      text: t(`Calendar.Filters.${type}.Options.${option}`),
+    }));
+  };
+
+  return (
+    <CalendarFiltersWrapper>
+      <CalendarFilterContainer>
+        <CalendarFilterTitle>
+          {t(`${basePath}.Status.Title`)}
+        </CalendarFilterTitle>
+        <CustomSelect
+          selectedValue={statusFilter}
+          options={getSelectOptions("Status")}
+          handleChange={(v) => setStatusFilter(v as ClassStatusType)}
+        />
+      </CalendarFilterContainer>
+      <CalendarFilterContainer>
+        <CalendarFilterTitle>{t(`${basePath}.Time.Title`)}</CalendarFilterTitle>
+        <CustomSelect
+          selectedValue={timeFilter}
+          options={getSelectOptions("Time")}
+          handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
+        />
+      </CalendarFilterContainer>
+      {timeFilter === "custom" && (
+        <div className="flex flex-row items-center gap-3">
+          <DateRangeInput
+            type="startDate"
+            setDateValue={setDatesFilter}
+            dateValue={datesFilter.startDate}
+          />
+          <DateRangeInput
+            type="endDate"
+            setDateValue={setDatesFilter}
+            dateValue={datesFilter.endDate}
+          />
+        </div>
+      )}
+    </CalendarFiltersWrapper>
   );
 };
