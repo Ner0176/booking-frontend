@@ -1,12 +1,9 @@
 import { useTranslation } from "react-i18next";
 import {
   CalendarBody,
-  CalendarContainer,
   CalendarFilterContainer,
   CalendarFiltersWrapper,
   CalendarFilterTitle,
-  CalendarHeader,
-  HeaderTitle,
 } from "./calendar.styled";
 import { useGetAllClasses } from "../../api";
 import {
@@ -17,7 +14,7 @@ import {
 } from "./calendar.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { format, isBefore } from "date-fns";
 import {
   mdiArrowLeft,
@@ -27,7 +24,7 @@ import {
 } from "@mdi/js";
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
-import { CustomSelect } from "../base";
+import { CustomSelect, DashboardSkeleton } from "../base";
 import {
   CLASS_STATUS,
   CLASS_TIME_FILTERS,
@@ -84,112 +81,105 @@ export const CalendarDashboard = () => {
     }));
   };
 
-  return (
-    <CalendarContainer>
-      <CalendarHeader>
-        <HeaderTitle>{getTitle()}</HeaderTitle>
-        {!selectedEvent ? (
+  const RightHeaderButtons = !selectedEvent ? (
+    <HeaderButton
+      props={{
+        icon: mdiPlus,
+        action: "create-event",
+        tPath: "Calendar.Event.NewEvent",
+      }}
+    />
+  ) : (
+    <div className="flex flex-row items-center justify-end gap-4 w-full">
+      <HeaderButton
+        props={{
+          icon: mdiArrowLeft,
+          action: "close-event",
+          tPath: "Base.Buttons.Back",
+        }}
+      />
+      {isBefore(new Date(), selectedEvent.date) && (
+        <>
           <HeaderButton
             props={{
-              icon: mdiPlus,
-              action: "create-event",
-              tPath: "Calendar.Event.NewEvent",
+              action: "edit-event",
+              icon: mdiPencilOutline,
+              tPath: "Calendar.ClassDetails.Edit",
             }}
           />
-        ) : (
-          <div className="flex flex-row items-center justify-end gap-4 w-full">
-            <HeaderButton
-              props={{
-                icon: mdiArrowLeft,
-                action: "close-event",
-                tPath: "Base.Buttons.Back",
-              }}
+          <ClassStatusButton
+            refetch={refetch}
+            classId={eventId ?? ""}
+            isCancelled={selectedEvent.cancelled}
+          />
+          <HeaderButton
+            props={{
+              color: "secondary",
+              action: "delete-event",
+              icon: mdiTrashCanOutline,
+              tPath: "Calendar.ClassDetails.Delete.Title",
+            }}
+          />
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <DashboardSkeleton title={getTitle()} rightHeader={RightHeaderButtons}>
+      {!eventId && (
+        <CalendarFiltersWrapper>
+          <CalendarFilterContainer>
+            <CalendarFilterTitle>
+              {t("Calendar.Filters.Status.Title")}
+            </CalendarFilterTitle>
+            <CustomSelect
+              selectedValue={statusFilter}
+              options={getSelectOptions("Status")}
+              handleChange={(v) => setStatusFilter(v as ClassStatusType)}
             />
-            {isBefore(new Date(), selectedEvent.date) && (
-              <>
-                <HeaderButton
-                  props={{
-                    action: "edit-event",
-                    icon: mdiPencilOutline,
-                    tPath: "Calendar.ClassDetails.Edit",
-                  }}
-                />
-                <ClassStatusButton
-                  refetch={refetch}
-                  classId={eventId ?? ""}
-                  isCancelled={selectedEvent.cancelled}
-                />
-                <HeaderButton
-                  props={{
-                    color: "secondary",
-                    action: "delete-event",
-                    icon: mdiTrashCanOutline,
-                    tPath: "Calendar.ClassDetails.Delete.Title",
-                  }}
-                />
-              </>
-            )}
-          </div>
-        )}
-      </CalendarHeader>
-      <div className="flex flex-col gap-5 mt-4">
-        {!eventId && (
-          <CalendarFiltersWrapper>
-            <CalendarFilterContainer>
-              <CalendarFilterTitle>
-                {t("Calendar.Filters.Status.Title")}
-              </CalendarFilterTitle>
-              <CustomSelect
-                selectedValue={statusFilter}
-                options={getSelectOptions("Status")}
-                handleChange={(v) => setStatusFilter(v as ClassStatusType)}
+          </CalendarFilterContainer>
+          <CalendarFilterContainer>
+            <CalendarFilterTitle>
+              {t("Calendar.Filters.Time.Title")}
+            </CalendarFilterTitle>
+            <CustomSelect
+              selectedValue={timeFilter}
+              options={getSelectOptions("Time")}
+              handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
+            />
+          </CalendarFilterContainer>
+          {timeFilter === "custom" && (
+            <div className="flex flex-row items-center gap-3">
+              <DateRangeInput
+                type="startDate"
+                setDateValue={setDatesFilter}
+                dateValue={datesFilter.startDate}
               />
-            </CalendarFilterContainer>
-            <CalendarFilterContainer>
-              <CalendarFilterTitle>
-                {t("Calendar.Filters.Time.Title")}
-              </CalendarFilterTitle>
-              <CustomSelect
-                selectedValue={timeFilter}
-                options={getSelectOptions("Time")}
-                handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
+              <DateRangeInput
+                type="endDate"
+                setDateValue={setDatesFilter}
+                dateValue={datesFilter.endDate}
               />
-            </CalendarFilterContainer>
-            {timeFilter === "custom" && (
-              <div className="flex flex-row items-center gap-3">
-                <DateRangeInput
-                  type="startDate"
-                  setDateValue={setDatesFilter}
-                  dateValue={datesFilter.startDate}
-                />
-                <DateRangeInput
-                  type="endDate"
-                  setDateValue={setDatesFilter}
-                  dateValue={datesFilter.endDate}
-                />
-              </div>
-            )}
-          </CalendarFiltersWrapper>
-        )}
-        <CalendarBody>
-          {data &&
-            (!!eventId && selectedEvent ? (
-              <ClassDetails
-                classData={selectedEvent}
-                refetchClasses={refetch}
-              />
-            ) : isLoading ? (
-              [...Array(6)].map((key) => (
-                <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
-              ))
-            ) : (
-              data.map((item, idx) => <ClassCard key={idx} data={item} />)
-            ))}
-        </CalendarBody>
-      </div>
+            </div>
+          )}
+        </CalendarFiltersWrapper>
+      )}
+      <CalendarBody>
+        {data &&
+          (!!eventId && selectedEvent ? (
+            <ClassDetails classData={selectedEvent} refetchClasses={refetch} />
+          ) : isLoading ? (
+            [...Array(6)].map((key) => (
+              <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
+            ))
+          ) : (
+            data.map((item, idx) => <ClassCard key={idx} data={item} />)
+          ))}
+      </CalendarBody>
       {params.get("action") === "create-event" && (
         <CreateClassModal refetchClasses={refetch} />
       )}
-    </CalendarContainer>
+    </DashboardSkeleton>
   );
 };

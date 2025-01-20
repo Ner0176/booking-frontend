@@ -2,15 +2,6 @@ import { styled } from "styled-components";
 import tw from "twin.macro";
 import { ClassStatusType } from "./calendar.interface";
 
-export const CalendarContainer = styled.div(
-  tw`relative flex flex-col h-full py-8 px-14`
-);
-export const CalendarHeader = styled.div(
-  tw`flex flex-row items-center justify-between pb-4 border-b`
-);
-export const HeaderTitle = styled.span(
-  tw`font-bold text-3xl whitespace-nowrap`
-);
 export const HeaderButtonContainer = styled.div<{
   color: "primary" | "secondary";
 }>`
