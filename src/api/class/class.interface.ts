@@ -1,3 +1,10 @@
+import { ClassDatesFilter, ClassStatusType } from "../../components";
+
+export interface GetClassesPayload {
+  statusFilter?: ClassStatusType;
+  timeFilter?: ClassDatesFilter;
+}
+
 export interface CreateClassPayload {
   date: Date;
   end: string;

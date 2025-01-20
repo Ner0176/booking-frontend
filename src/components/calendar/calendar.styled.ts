@@ -8,7 +8,9 @@ export const CalendarContainer = styled.div(
 export const CalendarHeader = styled.div(
   tw`flex flex-row items-center justify-between pb-4 border-b`
 );
-export const HeaderTitle = styled.span(tw`font-bold text-3xl`);
+export const HeaderTitle = styled.span(
+  tw`font-bold text-3xl whitespace-nowrap`
+);
 export const HeaderButtonContainer = styled.div<{
   color: "primary" | "secondary";
 }>`
@@ -39,3 +41,10 @@ export const ClassInfoRowContainer = styled.div<{
     }
   }}
 `;
+export const CalendarFilterContainer = styled.div(
+  tw`flex flex-col gap-1 w-fit`
+);
+export const CalendarFilterTitle = styled.span(tw`font-semibold text-xs`);
+export const CalendarFiltersWrapper = styled.div(
+  tw`flex flex-row items-center gap-3 justify-end w-full`
+);

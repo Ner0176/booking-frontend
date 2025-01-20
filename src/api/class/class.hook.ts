@@ -4,16 +4,20 @@ import {
   CreateClassPayload,
   DeleteClassPayload,
   EditStatusPayload,
+  GetClassesPayload,
   IClass,
 } from "./class.interface";
 import { IClassIds, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
 
-export function useGetAllClasses() {
+export function useGetAllClasses({
+  statusFilter,
+  timeFilter,
+}: GetClassesPayload) {
   return useQuery<IClass[], Error>({
-    queryKey: ["getAllClasses"],
-    queryFn: () => classApi.getAllClasses(),
+    queryKey: ["getAllClasses", statusFilter, timeFilter],
+    queryFn: () => classApi.getAllClasses({ statusFilter, timeFilter }),
   });
 }
 

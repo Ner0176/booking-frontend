@@ -1,5 +1,7 @@
 {
   "Base": {
+    "StartDate": "Fecha de inicio",
+    "EndDate": "Fecha de fin",
     "Buttons": {
       "Skip": "Saltar paso",
       "Cancel": "Cancelar",
@@ -56,6 +58,29 @@
   },
   "Calendar": {
     "Title": "Calendario",
+    "Filters": {
+      "Status": {
+        "Title": "Estado",
+        "Options": {
+          "all": "Todos",
+          "done": "Realizada",
+          "pending": "Pendiente",
+          "cancelled": "Cancelada"
+        }
+      },
+      "Time": {
+        "Title": "Tiempo",
+        "Options": {
+          "all": "Todos los tiempos",
+          "today": "Hoy",
+          "week": "Esta semana",
+          "month": "Este mes",
+          "last3Months": "Últimos 3 meses",
+          "last6Months": "Últimos 6 meses",
+          "custom": "Personalizado"
+        }
+      }
+    },
     "ClassDetails": {
       "Date": "Fecha",
       "Schedule": "Horario",

@@ -8,18 +8,23 @@ import {
   mdiClockOutline,
   mdiTimerSand,
 } from "@mdi/js";
-import { Fragment, PropsWithChildren } from "react";
+import { Dispatch, Fragment, PropsWithChildren, SetStateAction } from "react";
 import { useSearchParamsManager } from "../../hooks";
 import {
   CalendarItemContainer,
   ClassInfoRowContainer,
   HeaderButtonContainer,
 } from "./calendar.styled";
-import { formatDate } from "../../utils";
-import { ClassStatusType, IButtonHeaderProps } from "./calendar.interface";
+import { capitalize, formatToLongDate } from "../../utils";
+import {
+  ClassDatesFilter,
+  ClassStatusType,
+  IButtonHeaderProps,
+} from "./calendar.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
+import { CustomInputField, getInputDate } from "../base";
 
 const ItemInfoRow = ({
   icon,
@@ -109,7 +114,9 @@ export const HeaderButton = ({
       color={color ?? "primary"}
     >
       <Icon size="14px" className="mt-0.5" path={icon} />
-      <span className="text-sm font-semibold">{t(tPath)}</span>
+      <span className="text-sm font-semibold whitespace-nowrap">
+        {t(tPath)}
+      </span>
     </HeaderButtonContainer>
   );
 };
@@ -146,7 +153,36 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
       <ItemInfoRow icon={mdiClockOutline}>
         {startTime.slice(0, 5) + "h - " + endTime.slice(0, 5) + "h"}
       </ItemInfoRow>
-      <ItemInfoRow icon={mdiCalendarOutline}>{formatDate(date)}</ItemInfoRow>
+      <ItemInfoRow icon={mdiCalendarOutline}>
+        {formatToLongDate(date)}
+      </ItemInfoRow>
     </CalendarItemContainer>
+  );
+};
+
+export const DateRangeInput = ({
+  type,
+  dateValue,
+  setDateValue,
+}: Readonly<{
+  dateValue?: Date;
+  type: "endDate" | "startDate";
+  setDateValue: Dispatch<SetStateAction<ClassDatesFilter>>;
+}>) => {
+  const { t } = useTranslation();
+  return (
+    <CustomInputField
+      type="date"
+      value={getInputDate(dateValue)}
+      title={t(`Base.${capitalize(type)}`)}
+      handleChange={(date) =>
+        setDateValue((prev) => {
+          return {
+            ...prev,
+            [type]: !!date ? new Date(date) : undefined,
+          };
+        })
+      }
+    />
   );
 };

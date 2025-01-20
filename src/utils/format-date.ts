@@ -1,6 +1,6 @@
 import { capitalize } from "./capitalize";
 
-export function formatDate(date: Date) {
+export function formatToLongDate(date: Date) {
   return capitalize(
     Intl.DateTimeFormat("es-ES", {
       weekday: "long",

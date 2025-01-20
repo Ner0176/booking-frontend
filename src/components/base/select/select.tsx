@@ -24,7 +24,7 @@ export const CustomSelect = ({
           </option>
         ))}
       </StyledSelect>
-      <Icon size="20px" className="mr-5" path={mdiChevronDown} />
+      <Icon size="20px" className="mr-2" path={mdiChevronDown} />
     </SelectContainer>
   );
 };

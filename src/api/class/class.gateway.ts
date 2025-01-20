@@ -3,11 +3,26 @@ import {
   CreateClassPayload,
   DeleteClassPayload,
   EditStatusPayload,
+  GetClassesPayload,
 } from "./class.interface";
 
 export const classApi = {
-  getAllClasses: async () => {
-    const response = await axiosInstance.get("/class/all");
+  getAllClasses: async ({ statusFilter, timeFilter }: GetClassesPayload) => {
+    const params = new URLSearchParams();
+
+    if (!!statusFilter) {
+      params.append("status", statusFilter);
+    }
+
+    if (!!timeFilter) {
+      const { endDate, startDate } = timeFilter;
+      if (!!endDate && !!startDate) {
+        params.append("startDate", startDate.toDateString());
+        params.append("endDate", endDate.toDateString());
+      }
+    }
+
+    const response = await axiosInstance.get("/class/all", { params });
     return response.data;
   },
   createClass: async (payload: CreateClassPayload) => {
