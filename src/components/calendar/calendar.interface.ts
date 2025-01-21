@@ -1,10 +1,3 @@
-export interface IButtonHeaderProps {
-  icon: string;
-  tPath: string;
-  action: string;
-  color?: "primary" | "secondary";
-}
-
 export const CLASS_STATUS = ["all", "done", "pending", "cancelled"] as const;
 export type ClassStatusType = (typeof CLASS_STATUS)[number];
 

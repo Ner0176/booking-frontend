@@ -2,15 +2,6 @@ import { styled } from "styled-components";
 import tw from "twin.macro";
 import { ClassStatusType } from "./calendar.interface";
 
-export const HeaderButtonContainer = styled.div<{
-  color: "primary" | "secondary";
-}>`
-  ${tw`flex flex-row items-center gap-0.5 cursor-pointer border rounded-full px-2 py-1`}
-  ${({ color }) =>
-    color === "primary"
-      ? tw`text-violet-600 border-violet-600`
-      : tw`text-red-600 border-red-600`}
-`;
 export const CalendarBody = styled.div(
   tw`flex flex-wrap justify-around gap-4 px-8 py-10 h-full`
 );

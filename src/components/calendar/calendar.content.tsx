@@ -23,7 +23,6 @@ import {
   CalendarFilterTitle,
   CalendarItemContainer,
   ClassInfoRowContainer,
-  HeaderButtonContainer,
 } from "./calendar.styled";
 import { capitalize, formatToLongDate } from "../../utils";
 import {
@@ -32,12 +31,17 @@ import {
   ClassDatesFilter,
   ClassStatusType,
   ClassTimeFilterType,
-  IButtonHeaderProps,
 } from "./calendar.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
-import { CustomInputField, CustomSelect, getInputDate } from "../base";
+import {
+  CustomInputField,
+  CustomSelect,
+  DashboardHeaderButton,
+  getInputDate,
+  HeaderButton,
+} from "../base";
 import { getDatesFromTimeFilter } from "./calendar.utils";
 import {
   mdiArrowLeft,
@@ -69,7 +73,7 @@ export const ClassStatusButton = ({
   const { mutate, isPending: isLoading } = useEditClassStatus(refetch);
 
   return (
-    <HeaderButtonContainer
+    <DashboardHeaderButton
       className="flex justify-center min-w-[100px]"
       color={isCancelled ? "primary" : "secondary"}
       onClick={() => {
@@ -101,7 +105,7 @@ export const ClassStatusButton = ({
           </span>
         </Fragment>
       )}
-    </HeaderButtonContainer>
+    </DashboardHeaderButton>
   );
 };
 
@@ -144,53 +148,19 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
   );
 };
 
-const HeaderButton = ({
-  props,
-}: Readonly<{
-  props: IButtonHeaderProps;
-}>) => {
-  const { t } = useTranslation();
-  const { setParams } = useSearchParamsManager([]);
-  const { icon, tPath, color, action } = props;
-
-  const getAction = () => {
-    switch (action) {
-      case "close-event":
-        setParams([{ key: "event" }, { key: "action" }]);
-        break;
-      default:
-        setParams([{ key: "action", value: action }]);
-        break;
-    }
-  };
-
-  return (
-    <HeaderButtonContainer
-      onClick={(e) => {
-        e.stopPropagation();
-        getAction();
-      }}
-      color={color ?? "primary"}
-    >
-      <Icon size="14px" className="mt-0.5" path={icon} />
-      <span className="text-sm font-semibold whitespace-nowrap">
-        {t(tPath)}
-      </span>
-    </HeaderButtonContainer>
-  );
-};
-
 export const CalendarHeaderButtons = ({
   eventId,
   refetch,
   selectedEvent,
 }: Readonly<{ refetch(): void; eventId: string; selectedEvent?: IClass }>) => {
+  const { setParams } = useSearchParamsManager([]);
+
   return !selectedEvent ? (
     <HeaderButton
       props={{
         icon: mdiPlus,
-        action: "create-event",
         tPath: "Calendar.Event.NewEvent",
+        onClick: () => setParams([{ key: "action", value: "create-event" }]),
       }}
     />
   ) : (
@@ -198,17 +168,18 @@ export const CalendarHeaderButtons = ({
       <HeaderButton
         props={{
           icon: mdiArrowLeft,
-          action: "close-event",
           tPath: "Base.Buttons.Back",
+          onClick: () => setParams([{ key: "event" }, { key: "action" }]),
         }}
       />
       {isBefore(new Date(), selectedEvent.date) && (
         <>
           <HeaderButton
             props={{
-              action: "edit-event",
               icon: mdiPencilOutline,
               tPath: "Calendar.ClassDetails.Edit",
+              onClick: () =>
+                setParams([{ key: "action", value: "edit-event" }]),
             }}
           />
           <ClassStatusButton
@@ -219,9 +190,10 @@ export const CalendarHeaderButtons = ({
           <HeaderButton
             props={{
               color: "secondary",
-              action: "delete-event",
               icon: mdiTrashCanOutline,
               tPath: "Calendar.ClassDetails.Delete.Title",
+              onClick: () =>
+                setParams([{ key: "action", value: "delete-event" }]),
             }}
           />
         </>

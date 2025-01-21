@@ -34,7 +34,7 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
                 icon: mdiCalendar,
               },
               {
-                text: "customers",
+                text: "users",
                 icon: mdiAccountGroupOutline,
               },
             ]}

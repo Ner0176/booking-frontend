@@ -169,6 +169,13 @@
       }
     }
   },
+  "Users": {
+    "Title": "Usuarios",
+    "UserDetails": {
+      "Title": "Detalles de usuario",
+      "Delete": "Eliminar usuario"
+    }
+  },
   "Sidebar": {
     "Options": {
       "Home": "Inicio",
