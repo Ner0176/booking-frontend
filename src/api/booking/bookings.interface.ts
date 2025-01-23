@@ -1,3 +1,6 @@
+import { IClass } from "../class";
+import { IUser } from "../user";
+
 export interface GetBookingPayload {
   userId?: number;
   classId?: number;
@@ -9,9 +12,21 @@ export interface CreateBookingPayload {
   isRecurrent: boolean;
 }
 
+export type BookingType = "pending" | "cancelled" | "completed";
 export interface IBooking {
   id: number;
+  user: IUser;
   classId: number;
-  user: { id: number; name: string };
-  status: "pending" | "canceled" | "completed";
+  status: BookingType;
+}
+
+interface BookingClasses {
+  id: number;
+  class: IClass;
+  status: BookingType;
+}
+export interface IBookingClasses {
+  pending: BookingClasses[];
+  completed: BookingClasses[];
+  cancelled: BookingClasses[];
 }

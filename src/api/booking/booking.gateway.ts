@@ -11,6 +11,10 @@ export const bookingApi = {
     const response = await axiosInstance.get(`/booking/find`, { params });
     return response.data;
   },
+  getBookingsByUserId: async (userId: number) => {
+    const response = await axiosInstance.get(`/booking/user/${userId}`);
+    return response.data;
+  },
   createBookings: async (payload: CreateBookingPayload) => {
     await axiosInstance.post("/booking/create", payload);
   },

@@ -4,6 +4,7 @@ import {
   CreateBookingPayload,
   GetBookingPayload,
   IBooking,
+  IBookingClasses,
 } from "./bookings.interface";
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
@@ -13,6 +14,13 @@ export function useGetBookings(payload: GetBookingPayload) {
   return useQuery<IBooking[]>({
     queryKey: ["getBookings", payload],
     queryFn: () => bookingApi.getBookings(payload),
+  });
+}
+
+export function useGetBookingsFromUser(userId: number) {
+  return useQuery<IBookingClasses>({
+    queryKey: ["getBookingsByUserId", userId],
+    queryFn: () => bookingApi.getBookingsByUserId(userId),
   });
 }
 
