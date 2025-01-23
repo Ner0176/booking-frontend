@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute } from "react";
+import { CSSProperties, HTMLInputTypeAttribute } from "react";
 import { InfoTooltip, ITooltipContent } from "../info-tooltip";
 import {
   CustomInput,
@@ -12,14 +12,16 @@ export const CustomInputField = ({
   value,
   title,
   tooltip,
-  isBlocked,
+  isDisabled,
   handleBlur,
   handleChange,
+  customStyles,
 }: Readonly<{
   title: string;
   value: string;
-  isBlocked?: boolean;
+  isDisabled?: boolean;
   tooltip?: ITooltipContent;
+  customStyles?: CSSProperties;
   type?: HTMLInputTypeAttribute;
   handleBlur?: (value: string) => void;
   handleChange?: (value: string) => void;
@@ -33,8 +35,9 @@ export const CustomInputField = ({
       <CustomInput
         type={type}
         value={value}
-        disabled={isBlocked}
-        isBlocked={isBlocked}
+        style={customStyles}
+        disabled={isDisabled}
+        isBlocked={isDisabled}
         className="focus:outline-none"
         onBlur={(e) => {
           if (handleBlur) handleBlur(e.target.value);

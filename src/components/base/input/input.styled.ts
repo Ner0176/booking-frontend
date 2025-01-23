@@ -8,5 +8,6 @@ export const InputTitleContainer = styled.div(
 export const InputFieldTitle = styled.span(tw`text-xs font-semibold pl-1`);
 export const CustomInput = styled.input<{ isBlocked?: boolean }>`
   ${tw`w-full px-4 py-2 rounded-xl border border-neutral-200 cursor-pointer`}
-  ${({ isBlocked }) => isBlocked && tw`cursor-default bg-neutral-50`}
+  ${({ isBlocked }) =>
+    isBlocked && tw`cursor-default bg-neutral-50 select-none`}
 `;
