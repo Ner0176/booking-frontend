@@ -3,23 +3,30 @@ import { DashboardSkeleton } from "../base";
 import { useGetAllUsers } from "../../api";
 import { useSearchParamsManager } from "../../hooks";
 import { UserDetails } from "./user-details.tsx";
-import { UserHeaderButtons } from "./users.content";
+import { UserCard, UserHeaderButtons } from "./users.content";
 import Skeleton from "react-loading-skeleton";
+import { useMemo } from "react";
 
 export const UsersDashboard = () => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["userId"]);
-  const showUserDetails = params.get("userId");
+  const userId = params.get("userId");
 
   const { data: usersList, isLoading } = useGetAllUsers();
 
+  const selectedUser = useMemo(() => {
+    if (userId && usersList) {
+      return usersList.find((user) => `${user.id}` === userId);
+    }
+  }, [userId, usersList]);
+
   return (
     <DashboardSkeleton
-      title={t(`Users.${showUserDetails ? "UserDetails." : ""}Title`)}
-      rightHeader={showUserDetails ? <UserHeaderButtons /> : undefined}
+      title={t(`Users.${!!userId ? "Details." : ""}Title`)}
+      rightHeader={!!userId ? <UserHeaderButtons /> : undefined}
     >
-      {showUserDetails ? (
-        <UserDetails />
+      {!!selectedUser ? (
+        <UserDetails user={selectedUser} />
       ) : (
         <div className="flex flex-wrap w-full gap-4">
           {isLoading
@@ -29,18 +36,14 @@ export const UsersDashboard = () => {
                   className="w-[300px] h-[150px] rounded-2xl"
                 />
               ))
-            : usersList?.map((item) => (
-                <div
-                  onClick={() =>
+            : usersList?.map((item, idx) => (
+                <UserCard
+                  key={idx}
+                  user={item}
+                  handleClick={() =>
                     setParams([{ key: "userId", value: `${item.id}` }])
                   }
-                  className="flex flex-col gap-1 px-4 py-3 border border-neutral-200 rounded-2xl bg-white w-[300px] cursor-pointer"
-                >
-                  <span className="text-sm">{item.name}</span>
-                  <div className="flex flex-row items-center gap-3">
-                    <span className="text-xs">{`${item.email} | ${item.phone}`}</span>
-                  </div>
-                </div>
+                />
               ))}
         </div>
       )}

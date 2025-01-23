@@ -61,7 +61,7 @@ const FieldRows = ({
           <div key={idx} className="flex flex-col gap-2 w-full">
             <CustomInputField
               type={type}
-              isBlocked={disableFields}
+              isDisabled={disableFields}
               value={fields[accessor].value as string}
               title={t(`Calendar.Event.Fields.${accessor}`)}
               tooltip={hasTooltip ? tooltipInfo : undefined}
@@ -139,7 +139,7 @@ export const RecurrentFields = ({
         configs={configs.slice(0, 1)}
       >
         <CustomInputField
-          isBlocked
+          isDisabled
           title={t(`${basePath}.dayOfWeek`)}
           tooltip={{
             id: "tooltip-dayOfWeek",

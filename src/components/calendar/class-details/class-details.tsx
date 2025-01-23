@@ -14,11 +14,14 @@ import { DeleteClassModal, SwitchList } from "./class-details.content";
 import { FooterButtonsWrapper } from "./class-details.styled";
 import { emptyEventFields, IEventFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { UserCard } from "../../users";
 
 export const ClassDetails = ({
   classData,
   refetchClasses,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const basePath = "Calendar.ClassDetails";
 
@@ -47,13 +50,7 @@ export const ClassDetails = ({
     let bookingsUsers: IUser[] = [];
 
     if (users && bookings) {
-      bookingsUsers = bookings.map(({ user }) => ({
-        phone: "",
-        email: "",
-        id: user.id,
-        name: user.name,
-      }));
-
+      bookingsUsers = bookings.map(({ user }) => user);
       const bookingsUserIds = new Set(bookings.map(({ user }) => user.id));
       filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
     }
@@ -126,13 +123,12 @@ export const ClassDetails = ({
               />
             ) : attendeesList.length ? (
               <div className="flex flex-wrap gap-3">
-                {attendeesList.map(({ name }, idx) => (
-                  <div
+                {attendeesList.map((attendee, idx) => (
+                  <UserCard
                     key={idx}
-                    className="border border-neutral-200 rounded-xl px-3 py-2 max-w-[150px] w-full whitespace-nowrap text-center"
-                  >
-                    {name}
-                  </div>
+                    user={attendee}
+                    handleClick={() => navigate(`/users?userId=${id}`)}
+                  />
                 ))}
               </div>
             ) : (

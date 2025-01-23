@@ -24,7 +24,7 @@ import {
   CalendarItemContainer,
   ClassInfoRowContainer,
 } from "./calendar.styled";
-import { capitalize, formatToLongDate } from "../../utils";
+import { capitalize, formatTime, formatToLongDate } from "../../utils";
 import {
   CLASS_STATUS,
   CLASS_TIME_FILTERS,
@@ -111,7 +111,6 @@ export const ClassStatusButton = ({
 
 export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.Event";
 
   const { setParams } = useSearchParamsManager([]);
 
@@ -133,13 +132,13 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
       onClick={() => setParams([{ key: "event", value: `${id}` }])}
     >
       <ItemInfoRow icon={statusIcon} status={status as ClassStatusType}>
-        {t(`${basePath}.Status.${status}`)}
+        {t(`Calendar.Filters.Status.Options.${status}`)}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiAccountGroupOutline}>
-        {t(`${basePath}.Attendees`, { currentCount, maxAmount })}
+        {t(`Calendar.Event.Attendees`, { currentCount, maxAmount })}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiClockOutline}>
-        {startTime.slice(0, 5) + "h - " + endTime.slice(0, 5) + "h"}
+        {formatTime(startTime, endTime)}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiCalendarOutline}>
         {formatToLongDate(date)}

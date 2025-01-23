@@ -108,7 +108,7 @@
         "Cancel": "Cancelar clase",
         "Enable": "Activar clase",
         "Success": "El estado de la clase ha sido actualizado correctamente",
-        "Error": "Ha ocurrido un errlr al intentar actualizar el estado de la clase"
+        "Error": "Ha ocurrido un error al intentar actualizar el estado de la clase"
       },
       "MaxAmount": "Capacidad máxima",
       "Details": "Detalles de la clase",
@@ -126,11 +126,6 @@
       "NewEvent": "Crear nuevo evento",
       "AddAttendees": "Añadir participantes",
       "Attendees": "{{currentCount}} / {{maxAmount}} asistentes",
-      "Status": {
-        "cancelled": "Cancelada",
-        "pending": "Pendiente",
-        "done": "Realizada"
-      },
       "Fields": {
         "date": "Fecha del evento",
         "startDate": "Fecha de incio",
@@ -171,16 +166,28 @@
   },
   "Users": {
     "Title": "Usuarios",
-    "UserDetails": {
+    "Details": {
       "Title": "Detalles de usuario",
-      "Delete": "Eliminar usuario"
+      "Delete": "Eliminar usuario",
+      "SwitchOptions": {
+        "pending": "Pendientes",
+        "cancelled": "Canceladas",
+        "completed": "Realizadas"
+      },
+      "Stats": {
+        "Title": "Estadísticas",
+        "Attendance": "Clases asistidas",
+        "Cancelled": "Clases canceladas",
+        "Pending": "Clases pendientes",
+        "First": "Primera clase realizada"
+      }
     }
   },
   "Sidebar": {
     "Options": {
       "Home": "Inicio",
       "Calendar": "Calendario",
-      "Customers": "Clientes",
+      "Users": "Usuarios",
       "SignOut": "Cerrar sesión"
     }
   }
