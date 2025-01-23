@@ -6,5 +6,6 @@ export * from "./select";
 export * from "./sidebar";
 export * from "./calendar";
 export * from "./info-tooltip";
+export * from "./switch-selector";
 export * from "./styled-components";
 export * from "./dashboard-skeleton";
