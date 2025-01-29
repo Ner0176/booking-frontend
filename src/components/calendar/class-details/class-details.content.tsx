@@ -1,13 +1,9 @@
 import { Trans, useTranslation } from "react-i18next";
-import { useClickOutside } from "../../../hooks";
 import { Dispatch, SetStateAction, useState } from "react";
 import { RecurrentOptionType } from "./class-details.interface";
 import { IUser, useDeleteClass } from "../../../api";
-import { CustomButton, Modal } from "../../base";
+import { DeleteModal, ErrorStrongContainer, showToast } from "../../base";
 import {
-  DeleteClassButtonsWrapper,
-  DeleteClassTitle,
-  DeleteClassWrapper,
   DeleteRecurrentOption,
   DeleteRecurrentWrapper,
   ListItemContainer,
@@ -35,8 +31,6 @@ export const DeleteClassModal = ({
   const { t } = useTranslation();
   const basePath = "Calendar.ClassDetails.Delete";
 
-  const ref = useClickOutside(handleClose);
-
   const [selectedOption, setSelectedOption] = useState<RecurrentOptionType>();
 
   const { mutate: deleteClass, isPending: isLoading } = useDeleteClass(
@@ -44,77 +38,75 @@ export const DeleteClassModal = ({
     selectedOption === "recurrent"
   );
 
+  const handleDelete = () => {
+    const isRecurrent = !!recurrentId && selectedOption === "recurrent";
+    deleteClass({
+      isRecurrent,
+      id: isRecurrent ? recurrentId : id.toString(),
+    });
+  };
+
+  const handleCheckValidations = () => {
+    if (!selectedOption) {
+      showToast({
+        type: "error",
+        text: t("Calendar.ClassDetails.Delete.Validation"),
+      });
+    }
+    return !!selectedOption;
+  };
+
   return (
-    <Modal>
-      <DeleteClassWrapper ref={ref} isRecurrent={!!recurrentId}>
-        <div className="flex flex-col gap-3">
-          <DeleteClassTitle>
-            {t(`${basePath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
-          </DeleteClassTitle>
-          {!!recurrentId && (
-            <>
-              <span>
-                <Trans
-                  values={{ dateTime }}
-                  i18nKey={`${basePath}.Recurrent.Description`}
-                  components={{
-                    strong: <span className="font-bold text-red-500" />,
-                  }}
-                />
-              </span>
-              <DeleteRecurrentWrapper>
-                <DeleteRecurrentOption
-                  className="hover:bg-neutral-50"
-                  isSelected={selectedOption === "specific"}
-                  onClick={() => setSelectedOption("specific")}
-                >
-                  {t(`${basePath}.Recurrent.Options.Specific`)}
-                </DeleteRecurrentOption>
-                <DeleteRecurrentOption
-                  className="hover:bg-neutral-50"
-                  isSelected={selectedOption === "recurrent"}
-                  onClick={() => setSelectedOption("recurrent")}
-                >
-                  <Trans
-                    values={{ dateTime }}
-                    components={{ NewLine: <br /> }}
-                    i18nKey={`${basePath}.Recurrent.Options.Recurrent`}
-                  />
-                </DeleteRecurrentOption>
-              </DeleteRecurrentWrapper>
-            </>
-          )}
+    <DeleteModal
+      isDeleting={isLoading}
+      handleClose={handleClose}
+      handleDelete={handleDelete}
+      width={!!recurrentId ? "50%" : "40%"}
+      checkValidations={handleCheckValidations}
+      title={t(`${basePath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
+    >
+      {!!recurrentId && (
+        <>
           <span>
             <Trans
-              i18nKey={`${basePath}.Description`}
+              values={{ dateTime }}
+              i18nKey={`${basePath}.Recurrent.Description`}
               components={{
-                strong: <span className="font-bold text-red-500" />,
+                strong: <ErrorStrongContainer />,
               }}
             />
           </span>
-        </div>
-        <DeleteClassButtonsWrapper>
-          <CustomButton type="error" color="secondary" onClick={handleClose}>
-            {t("Base.Buttons.Cancel")}
-          </CustomButton>
-          <CustomButton
-            type="error"
-            color="primary"
-            isLoading={isLoading}
-            onClick={() => {
-              const isRecurrent =
-                !!recurrentId && selectedOption === "recurrent";
-              deleteClass({
-                isRecurrent,
-                id: isRecurrent ? recurrentId : id.toString(),
-              });
-            }}
-          >
-            {t("Base.Buttons.Delete")}
-          </CustomButton>
-        </DeleteClassButtonsWrapper>
-      </DeleteClassWrapper>
-    </Modal>
+          <DeleteRecurrentWrapper>
+            <DeleteRecurrentOption
+              className="hover:bg-neutral-50"
+              isSelected={selectedOption === "specific"}
+              onClick={() => setSelectedOption("specific")}
+            >
+              {t(`${basePath}.Recurrent.Options.Specific`)}
+            </DeleteRecurrentOption>
+            <DeleteRecurrentOption
+              className="hover:bg-neutral-50"
+              isSelected={selectedOption === "recurrent"}
+              onClick={() => setSelectedOption("recurrent")}
+            >
+              <Trans
+                values={{ dateTime }}
+                components={{ NewLine: <br /> }}
+                i18nKey={`${basePath}.Recurrent.Options.Recurrent`}
+              />
+            </DeleteRecurrentOption>
+          </DeleteRecurrentWrapper>
+        </>
+      )}
+      <span>
+        <Trans
+          i18nKey={`${basePath}.Description`}
+          components={{
+            strong: <ErrorStrongContainer />,
+          }}
+        />
+      </span>
+    </DeleteModal>
   );
 };
 

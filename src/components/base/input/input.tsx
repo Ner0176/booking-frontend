@@ -14,11 +14,13 @@ export const CustomInputField = ({
   tooltip,
   isDisabled,
   handleBlur,
+  placeholder,
   handleChange,
   customStyles,
 }: Readonly<{
   title: string;
   value: string;
+  placeholder?: string;
   isDisabled?: boolean;
   tooltip?: ITooltipContent;
   customStyles?: CSSProperties;
@@ -38,6 +40,7 @@ export const CustomInputField = ({
         style={customStyles}
         disabled={isDisabled}
         isBlocked={isDisabled}
+        placeholder={placeholder}
         className="focus:outline-none"
         onBlur={(e) => {
           if (handleBlur) handleBlur(e.target.value);

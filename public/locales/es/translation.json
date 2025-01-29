@@ -1,7 +1,11 @@
 {
   "Base": {
-    "StartDate": "Fecha de inicio",
     "EndDate": "Fecha de fin",
+    "StartDate": "Fecha de inicio",
+    "DeleteConfirmation": {
+      "Key": "Confirmar acción",
+      "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto."
+    },
     "Buttons": {
       "Skip": "Saltar paso",
       "Cancel": "Cancelar",
@@ -90,6 +94,7 @@
       "Delete": {
         "Title": "Eliminar clase",
         "Description": "Ten en cuenta que al eliminar una clase, <strong>todas las reservas asociadas</strong> a la misma también serán eliminadas.",
+        "Validation": "Debes elegir una opción",
         "Recurrent": {
           "Title": "Eliminar clase recurrente",
           "Options": {

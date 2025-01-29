@@ -5,6 +5,7 @@ export * from "./button";
 export * from "./select";
 export * from "./sidebar";
 export * from "./calendar";
+export * from "./delete-modal";
 export * from "./info-tooltip";
 export * from "./switch-selector";
 export * from "./styled-components";
