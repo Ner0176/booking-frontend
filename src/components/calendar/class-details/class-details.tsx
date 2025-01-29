@@ -127,7 +127,7 @@ export const ClassDetails = ({
                   <UserCard
                     key={idx}
                     user={attendee}
-                    handleClick={() => navigate(`/users?userId=${id}`)}
+                    handleClick={() => navigate(`/users?userId=${attendee.id}`)}
                   />
                 ))}
               </div>

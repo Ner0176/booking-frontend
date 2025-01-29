@@ -169,6 +169,7 @@
     "Details": {
       "Title": "Detalles de usuario",
       "Delete": "Eliminar usuario",
+      "Information": "Información del usuario",
       "SwitchOptions": {
         "pending": "Pendientes",
         "cancelled": "Canceladas",
@@ -176,10 +177,10 @@
       },
       "Stats": {
         "Title": "Estadísticas",
-        "Attendance": "Clases asistidas",
-        "Cancelled": "Clases canceladas",
-        "Pending": "Clases pendientes",
-        "First": "Primera clase realizada"
+        "completed": "Clases realizadas: {{amount}}",
+        "cancelled": "Clases canceladas: {{amount}}",
+        "pending": "Clases pendientes: {{amount}}",
+        "firstClass": "Primera clase realizada: {{amount}}"
       }
     }
   },
