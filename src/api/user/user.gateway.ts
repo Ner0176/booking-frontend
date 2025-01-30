@@ -5,4 +5,7 @@ export const userApi = {
     const response = await axiosInstance.get("user/all");
     return response.data;
   },
+  deleteUser: async (id: number) => {
+    await axiosInstance.delete(`user/${id}`);
+  },
 };

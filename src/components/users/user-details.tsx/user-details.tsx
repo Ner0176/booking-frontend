@@ -6,16 +6,28 @@ import {
   useGetBookingsFromUser,
 } from "../../../api";
 import { SwitchSelector } from "../../base";
-import { UserClassItem, UserInfoField } from "./user-details.content";
+import {
+  DeleteUserModal,
+  UserClassItem,
+  UserInfoField,
+} from "./user-details.content";
 import { useSearchParamsManager } from "../../../hooks";
 import { format } from "date-fns";
 import { useEffect } from "react";
 
 const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
-export const UserDetails = ({ user }: Readonly<{ user: IUser }>) => {
+
+export const UserDetails = ({
+  user,
+  refetch,
+}: Readonly<{ user: IUser; refetch(): void }>) => {
   const { t } = useTranslation();
-  const { params, setParams } = useSearchParamsManager([CLASS_KEY_PARAM]);
+  const { params, setParams } = useSearchParamsManager([
+    CLASS_KEY_PARAM,
+    "action",
+  ]);
+  const actionType = params.get("action");
   const selectedOption = params.get(CLASS_KEY_PARAM);
 
   const { id, name, phone, email } = user;
@@ -61,42 +73,53 @@ export const UserDetails = ({ user }: Readonly<{ user: IUser }>) => {
   };
 
   return (
-    <div className="grid grid-cols-3 justify-items-center gap-10 w-full">
-      <div className="flex flex-col gap-3 w-full">
-        <span className="text-2xl font-bold underline underline-offset-2">
-          {t("Users.Details.Information")}
-        </span>
-        <div className="flex flex-col gap-4">
-          <UserInfoField textKey="Name" value={name} />
-          <UserInfoField textKey="Email" value={email} />
-          <UserInfoField textKey="Phone" value={phone ?? ""} />
-        </div>
-      </div>
-      <div className="flex flex-col w-full">
-        <SwitchSelector
-          keyParam={CLASS_KEY_PARAM}
-          options={getSelectorOptions()}
-        />
-        {data && (
-          <div className="flex flex-col">
-            {data[selectedOption as keyof IBookingClasses].map((item, idx) => (
-              <UserClassItem key={idx} classInstance={item.class} />
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="flex flex-col gap-3 w-full">
-        <div className="flex flex-col gap-3">
+    <>
+      <div className="grid grid-cols-3 justify-items-center gap-10 w-full">
+        <div className="flex flex-col gap-3 w-full">
           <span className="text-2xl font-bold underline underline-offset-2">
-            {t("Users.Details.Stats.Title")}
+            {t("Users.Details.Information")}
           </span>
           <div className="flex flex-col gap-4">
-            {getStats().map((item, idx) => (
-              <span key={idx}>{item}</span>
-            ))}
+            <UserInfoField textKey="Name" value={name} />
+            <UserInfoField textKey="Email" value={email} />
+            <UserInfoField textKey="Phone" value={phone ?? ""} />
+          </div>
+        </div>
+        <div className="flex flex-col w-full">
+          <SwitchSelector
+            keyParam={CLASS_KEY_PARAM}
+            options={getSelectorOptions()}
+          />
+          {data && (
+            <div className="flex flex-col">
+              {data[selectedOption as keyof IBookingClasses].map(
+                (item, idx) => (
+                  <UserClassItem key={idx} classInstance={item.class} />
+                )
+              )}
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col gap-3 w-full">
+          <div className="flex flex-col gap-3">
+            <span className="text-2xl font-bold underline underline-offset-2">
+              {t("Users.Details.Stats.Title")}
+            </span>
+            <div className="flex flex-col gap-4">
+              {getStats().map((item, idx) => (
+                <span key={idx}>{item}</span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {actionType === "delete-event" && (
+        <DeleteUserModal
+          user={user}
+          refetch={refetch}
+          handleClose={() => setParams([{ key: "action" }])}
+        />
+      )}
+    </>
   );
 };

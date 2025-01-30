@@ -12,7 +12,7 @@ export const UsersDashboard = () => {
   const { params, setParams } = useSearchParamsManager(["userId"]);
   const userId = params.get("userId");
 
-  const { data: usersList, isLoading } = useGetAllUsers();
+  const { data: usersList, isLoading, refetch } = useGetAllUsers();
 
   const selectedUser = useMemo(() => {
     if (userId && usersList) {
@@ -26,7 +26,7 @@ export const UsersDashboard = () => {
       rightHeader={!!userId ? <UserHeaderButtons /> : undefined}
     >
       {!!selectedUser ? (
-        <UserDetails user={selectedUser} />
+        <UserDetails user={selectedUser} refetch={refetch} />
       ) : (
         <div className="flex flex-wrap w-full gap-4">
           {isLoading

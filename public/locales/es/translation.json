@@ -173,7 +173,12 @@
     "Title": "Usuarios",
     "Details": {
       "Title": "Detalles de usuario",
-      "Delete": "Eliminar usuario",
+      "Delete": {
+        "Title": "Eliminar usuario",
+        "Success": "Usuario eliminado correctamente",
+        "Error": "Ha ocurrido un error al intentar eliminar al usuario",
+        "Description": "Esta acción <strong>eliminará</strong> al usuario <strong>{{name}}</strong> de la plataforma. Todos sus datos, incluidas sus reservas, serán eliminados de forma <strong>definitiva.</strong>"
+      },
       "Information": "Información del usuario",
       "SwitchOptions": {
         "pending": "Pendientes",

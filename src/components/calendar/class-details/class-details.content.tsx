@@ -47,6 +47,8 @@ export const DeleteClassModal = ({
   };
 
   const handleCheckValidations = () => {
+    if (!recurrentId) return true;
+
     if (!selectedOption) {
       showToast({
         type: "error",
