@@ -2,6 +2,7 @@ import Icon from "@mdi/react";
 import { MainContainer } from "../styled-components";
 import { MainWrapper, SidebarButton, SidebarContainer } from "./sidebar.styled";
 import {
+  mdiAccountCircleOutline,
   mdiAccountGroupOutline,
   mdiCalendar,
   mdiChevronDoubleLeft,
@@ -42,6 +43,7 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
           <SidebarOptions
             isExpanded={isOpen}
             items={[
+              { text: "profile", icon: mdiAccountCircleOutline },
               {
                 text: "signOut",
                 icon: mdiExitToApp,
