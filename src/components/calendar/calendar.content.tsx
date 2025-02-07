@@ -24,7 +24,12 @@ import {
   CalendarItemContainer,
   ClassInfoRowContainer,
 } from "./calendar.styled";
-import { capitalize, formatTime, formatToLongDate } from "../../utils";
+import {
+  capitalize,
+  formatTime,
+  formatToLongDate,
+  mergeDateTime,
+} from "../../utils";
 import {
   CLASS_STATUS,
   CLASS_TIME_FILTERS,
@@ -120,8 +125,10 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
   const { status, statusIcon } = (() => {
     if (cancelled) return { status: "cancelled", statusIcon: mdiCancel };
 
-    const today = new Date();
-    return isBefore(today, date)
+    const now = new Date();
+    const formattedDate = mergeDateTime(date, endTime);
+
+    return isBefore(now, formattedDate)
       ? { status: "pending", statusIcon: mdiTimerSand }
       : { status: "done", statusIcon: mdiCheck };
   })();
@@ -154,6 +161,18 @@ export const CalendarHeaderButtons = ({
 }: Readonly<{ refetch(): void; eventId: string; selectedEvent?: IClass }>) => {
   const { setParams } = useSearchParamsManager([]);
 
+  const showButtons = () => {
+    if (selectedEvent) {
+      const now = new Date();
+      const formattedDate = mergeDateTime(
+        selectedEvent.date,
+        selectedEvent.endTime
+      );
+      return isBefore(now, formattedDate);
+    }
+    return false;
+  };
+
   return !selectedEvent ? (
     <HeaderButton
       props={{
@@ -171,7 +190,7 @@ export const CalendarHeaderButtons = ({
           onClick: () => setParams([{ key: "event" }, { key: "action" }]),
         }}
       />
-      {isBefore(new Date(), selectedEvent.date) && (
+      {showButtons() && (
         <>
           <HeaderButton
             props={{

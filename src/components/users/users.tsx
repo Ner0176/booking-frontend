@@ -45,12 +45,11 @@ export const UsersDashboard = () => {
               />
             ))
           ) : (
-            <div className="flex items-center justify-center w-full pt-20">
-              <NoDataComponent
-                image={noDataLoading}
-                title={t("Users.NoData")}
-              />
-            </div>
+            <NoDataComponent
+              image={noDataLoading}
+              title={t("Users.NoData")}
+              customStyles={{ paddingTop: 80 }}
+            />
           )}
         </div>
       )}

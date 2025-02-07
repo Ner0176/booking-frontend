@@ -1,16 +1,23 @@
+import { CSSProperties } from "react";
+
 export const NoDataComponent = ({
   image,
   title,
   textSize,
   imageSize,
+  customStyles,
 }: Readonly<{
   image: string;
   title: string;
   textSize?: number;
   imageSize?: number;
+  customStyles?: CSSProperties;
 }>) => {
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div
+      style={customStyles}
+      className="flex flex-col gap-3 items-center justify-center w-full"
+    >
       <img
         src={image}
         draggable={false}
