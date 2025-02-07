@@ -13,8 +13,9 @@ import { format } from "date-fns";
 
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
-import { DashboardSkeleton } from "../base";
+import { DashboardSkeleton, NoDataComponent } from "../base";
 import { ClassDatesFilter, ClassStatusType } from "./calendar.interface";
+import noDataLoading from "../../assets/images/noData/reload.svg";
 
 export const CalendarDashboard = () => {
   const { t } = useTranslation();
@@ -68,16 +69,17 @@ export const CalendarDashboard = () => {
         />
       )}
       <CalendarBody>
-        {data &&
-          (!!eventId && selectedEvent ? (
-            <ClassDetails classData={selectedEvent} refetchClasses={refetch} />
-          ) : isLoading ? (
-            [...Array(6)].map((key) => (
-              <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
-            ))
-          ) : (
-            data.map((item, idx) => <ClassCard key={idx} data={item} />)
-          ))}
+        {!!eventId && selectedEvent ? (
+          <ClassDetails classData={selectedEvent} refetchClasses={refetch} />
+        ) : isLoading ? (
+          [...Array(6)].map((key) => (
+            <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
+          ))
+        ) : !!data && data.length > 0 ? (
+          data.map((item, idx) => <ClassCard key={idx} data={item} />)
+        ) : (
+          <NoDataComponent image={noDataLoading} title={t("Calendar.NoData")} />
+        )}
       </CalendarBody>
       {params.get("action") === "create-event" && (
         <CreateClassModal refetchClasses={refetch} />

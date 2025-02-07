@@ -62,6 +62,7 @@
   },
   "Calendar": {
     "Title": "Calendario",
+    "NoData": "No hay clases disponibles con los filtros seleccionados",
     "Filters": {
       "Status": {
         "Title": "Estado",
@@ -171,6 +172,7 @@
   },
   "Users": {
     "Title": "Usuarios",
+    "NoData": "Aún no hay usuarios registrados en la plataforma",
     "Details": {
       "Title": "Detalles de usuario",
       "Delete": {

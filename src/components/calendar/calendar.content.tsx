@@ -242,7 +242,7 @@ export const CalendarFilters = ({
   const { t } = useTranslation();
   const basePath = "Calendar.Filters";
 
-  const [timeFilter, setTimeFilter] = useState<ClassTimeFilterType>("week");
+  const [timeFilter, setTimeFilter] = useState<ClassTimeFilterType>("all");
 
   useEffect(() => {
     const addFilter = timeFilter !== "custom" && timeFilter !== "all";
