@@ -36,3 +36,14 @@ export function useLogin() {
     },
   });
 }
+
+export function useLogout() {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: () => authApi.logout(),
+    onSuccess() {
+      navigate("/login");
+    },
+  });
+}

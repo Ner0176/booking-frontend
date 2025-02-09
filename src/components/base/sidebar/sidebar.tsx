@@ -12,12 +12,12 @@ import {
 } from "@mdi/js";
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
-import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../../api";
 
 export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
-  const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { mutate: logout } = useLogout();
 
   return (
     <MainContainer>
@@ -46,10 +46,8 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
               { text: "profile", icon: mdiAccountCircleOutline },
               {
                 text: "signOut",
+                onClick: logout,
                 icon: mdiExitToApp,
-                onClick: () => {
-                  navigate("/login");
-                },
               },
             ]}
           />
