@@ -4,6 +4,13 @@ import { IUser } from "./user.interface";
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 
+export function useFindMe() {
+  return useQuery<IUser>({
+    queryKey: ["findMe"],
+    queryFn: () => userApi.findMe(),
+  });
+}
+
 export function useGetAllUsers() {
   return useQuery<IUser[]>({
     queryKey: ["getAllUsers"],
