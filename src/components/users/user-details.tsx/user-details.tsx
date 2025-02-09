@@ -110,7 +110,7 @@ export const UserDetails = ({
             keyParam={CLASS_KEY_PARAM}
             options={getSelectorOptions()}
           />
-          {data && (
+          {!!data && !!selectedOption && (
             <div className="flex flex-col">
               {data[selectedOption as keyof IBookingClasses].map(
                 (item, idx) => (
