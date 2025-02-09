@@ -1,0 +1,217 @@
+{
+  "Base": {
+    "EndDate": "Data de fi",
+    "StartDate": "Data d'inici",
+    "DeleteConfirmation": {
+      "Key": "Confirmar acció",
+      "Description": "<strong>Avís:</strong> aquesta acció és <strong>irreversible</strong>. Si vols continuar, escriu <strong>Confirmar acció</strong> en el següent camp de text."
+    },
+    "Buttons": {
+      "Skip": "Saltar pas",
+      "Cancel": "Cancel·lar",
+      "Delete": "Eliminar",
+      "Back": "Tornar enrere",
+      "Discard": "Descartar",
+      "Save": "Desar canvis",
+      "CreateEvent": "Crear esdeveniment"
+    },
+    "DayOfWeek": {
+      "MONDAY": "Dilluns",
+      "TUESDAY": "Dimarts",
+      "WEDNESDAY": "Dimecres",
+      "THURSDAY": "Dijous",
+      "FRIDAY": "Divendres",
+      "SATURDAY": "Dissabte",
+      "SUNDAY": "Diumenge"
+    },
+    "Language": {
+      "Title": "Idioma",
+      "es": "Castellà",
+      "ca": "Català"
+    }
+  },
+  "Auth": {
+    "Login": {
+      "Title": "Iniciar sessió",
+      "NoAccount": "Encara no tens un compte?",
+      "Error": {
+        "401": "Contrasenya incorrecta. Torna-ho a provar",
+        "404": "No existeix cap usuari amb aquest correu electrònic",
+        "500": "Hi ha hagut un error en intentar iniciar sessió"
+      }
+    },
+    "SignUp": {
+      "Title": "Registrar-se",
+      "NoAccount": "Ja tens un compte?",
+      "Error": {
+        "409": "Ja existeix un usuari amb aquest correu electrònic",
+        "500": "Hi ha hagut un error en intentar realitzar el registre"
+      }
+    },
+    "Fields": {
+      "Phone": "Telèfon (opcional)",
+      "Password": "Contrasenya",
+      "Name": "Nom complet",
+      "Email": "Correu electrònic"
+    },
+    "Errors": {
+      "Name": "Aquest camp és obligatori",
+      "Email": "Introdueix un correu electrònic vàlid",
+      "Phone": "Introdueix un número de telèfon vàlid",
+      "Password": "La contrasenya ha de tenir un mínim de {{value}} caràcters"
+    },
+    "InvalidRoute": {
+      "Title": "Error 404",
+      "Description": "Pàgina no trobada"
+    }
+  },
+  "Calendar": {
+    "Title": "Calendari",
+    "NoData": "No hi ha classes disponibles amb els filtres seleccionats",
+    "Filters": {
+      "Status": {
+        "Title": "Estat",
+        "Options": {
+          "all": "Tots",
+          "done": "Realitzada",
+          "pending": "Pendent",
+          "cancelled": "Cancel·lada"
+        }
+      },
+      "Time": {
+        "Title": "Temps",
+        "Options": {
+          "all": "Tots els temps",
+          "today": "Avui",
+          "week": "Aquesta setmana",
+          "month": "Aquest mes",
+          "last3Months": "Darrers 3 mesos",
+          "last6Months": "Darrers 6 mesos",
+          "custom": "Personalitzat"
+        }
+      }
+    },
+    "ClassDetails": {
+      "Date": "Data",
+      "Schedule": "Horari",
+      "Edit": "Editar classe",
+      "Title": "Classe {{date}}",
+      "RecurrentTitle": "Classe recurrent {{date}}",
+      "Delete": {
+        "Title": "Eliminar classe",
+        "Description": "Tingues en compte que en eliminar una classe, <strong>totes les reserves associades</strong> a aquesta també seran eliminades.",
+        "Validation": "Has de triar una opció",
+        "Recurrent": {
+          "Title": "Eliminar classe recurrent",
+          "Options": {
+            "Specific": "Eliminar aquesta classe",
+            "Recurrent": "Eliminar totes les classes de <NewLine /> {{dateTime}}"
+          },
+          "Description": "Aquesta classe forma part d'un grup de classes recurrents <strong>{{dateTime}}</strong>. Pots elegir si vols eliminar tot el grup de classes recurrents o només aquesta en particular."
+        },
+        "Success": {
+          "Specific": "La classe ha estat eliminada correctament",
+          "Recurrent": "Les classes recurrents han estat eliminades correctament"
+        },
+        "Error": "Hi ha hagut un error en intentar eliminar la classe"
+      },
+      "Status": {
+        "Cancel": "Cancel·lar classe",
+        "Enable": "Activar classe",
+        "Success": "L'estat de la classe ha estat actualitzat correctament",
+        "Error": "Hi ha hagut un error en intentar actualitzar l'estat de la classe"
+      },
+      "MaxAmount": "Capacitat màxima",
+      "Details": "Detalls de la classe",
+      "AttendeesList": {
+        "Title": "Llista d'assistents",
+        "Empty": "Encara no hi ha participants",
+        "UsersTitle": "Llista d'usuaris ({{value}})",
+        "LongTitle": "Llista d'assistents ({{currentCount}}/{{maxAmount}})",
+        "Success": "La llista d'assistents ha estat editada correctament",
+        "Error": "Hi ha hagut un error en intentar editar la llista d'assistents",
+        "MaxAmountError": "El nombre de participants supera la capacitat màxima"
+      }
+    },
+    "Event": {
+      "NewEvent": "Crear nou esdeveniment",
+      "AddAttendees": "Afegir participants",
+      "Attendees": "{{currentCount}} / {{maxAmount}} assistents",
+      "Fields": {
+        "date": "Data de l'esdeveniment",
+        "startDate": "Data d'inici",
+        "recurrencyLimit": "Data límit",
+        "startTime": "Hora d'inici",
+        "endTime": "Hora de finalització",
+        "maxAmount": "Aforament màxim",
+        "dayOfWeek": "Dia de la setmana",
+        "Tooltip": {
+          "date": "L'esdeveniment es crearà a partir del dia seleccionat",
+          "recurrencyLimit": "L'esdeveniment es repetirà fins a la data límit seleccionada",
+          "dayOfWeek": "L'esdeveniment es repetirà cada dia de la setmana seleccionat"
+        },
+        "Errors": {
+          "startDate": "La data d'inici ha de ser anterior a la de finalització",
+          "recurrencyLimit": "La data límit ha de ser posterior a la d'inici",
+          "startTime": "L'hora d'inici ha de ser anterior a la de finalització",
+          "endTime": "L'hora de finalització ha de ser posterior a la d'inici",
+          "maxAmount": "La capacitat ha de ser superior o igual a 1",
+          "emptyField": "Aquest camp és obligatori"
+        }
+      },
+      "Recurrent": {
+        "Title": "Esdeveniment recurrent",
+        "Description": "L'esdeveniment es repetirà fins a la data de fi introduïda"
+      },
+      "OneTime": {
+        "Title": "Esdeveniment puntual",
+        "Description": "L'esdeveniment es crearà únicament per a la data seleccionada"
+      },
+      "Success": "La classe ha estat creada correctament",
+      "Error": "Hi ha hagut un error en intentar crear la classe",
+      "CreateBookings": {
+        "Success": "Els usuaris han estat afegits a la classe correctament",
+        "Error": "Hi ha hagut un error en intentar afegir els usuaris a la classe"
+      }
+    }
+  },
+  "Users": {
+    "Title": "Usuaris",
+    "NoData": "Encara no hi ha usuaris registrats a la plataforma",
+    "Details": {
+      "Title": "Detalls de l'usuari",
+      "Delete": {
+        "Title": "Eliminar usuari",
+        "Success": "Usuari eliminat correctament",
+        "Error": "Hi ha hagut un error en intentar eliminar l'usuari",
+        "Description": "Aquesta acció <strong>eliminarà</strong> l'usuari <strong>{{name}}</strong> de la plataforma. Totes les seves dades, incloses les seves reserves, seran eliminades de manera <strong>definitiva.</strong>"
+      },
+      "Information": "Informació de l'usuari",
+      "SwitchOptions": {
+        "pending": "Pendents",
+        "cancelled": "Cancel·lades",
+        "completed": "Realitzades"
+      },
+      "Stats": {
+        "Title": "Estadístiques",
+        "completed": "Classes realitzades: {{amount}}",
+        "cancelled": "Classes cancel·lades: {{amount}}",
+        "pending": "Classes pendents: {{amount}}",
+        "firstClass": "Primera classe realitzada: {{amount}}"
+      }
+    }
+  },
+  "Profile": {
+    "Title": "El meu perfil",
+    "NoData": "No s'han trobat dades associades al teu perfil"
+  },
+  "Sidebar": {
+    "Options": {
+      "Home": "Inici",
+      "Calendar": "Calendari",
+      "Users": "Usuaris",
+      "Profile": "El meu perfil",
+      "SignOut": "Tancar sessió"
+    }
+  }
+}

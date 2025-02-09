@@ -55,7 +55,10 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
 
   const handleSubmit = () => {
     if (formType === "SignUp") {
-      signUp(authFields);
+      signUp({
+        ...authFields,
+        language: localStorage.getItem("language") || "es",
+      });
     } else {
       login({ email: authFields.email, password: authFields.password });
     }
@@ -90,7 +93,6 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
                 error={authErrors.name ? t("Auth.Errors.Name") : undefined}
               />
               <SignUpFieldsContainer>
-                <LanguageSelector />
                 <CustomInputField
                   placeholder="976 65 84 34"
                   value={authFields.phone || ""}
@@ -107,6 +109,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
                   handleChange={(v) => handleAuthFields("phone", v)}
                   error={authErrors.phone ? t("Auth.Errors.Phone") : undefined}
                 />
+                <LanguageSelector />
               </SignUpFieldsContainer>
             </Fragment>
           )}

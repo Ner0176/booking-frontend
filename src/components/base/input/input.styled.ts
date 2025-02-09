@@ -10,12 +10,12 @@ export const CustomInputContainer = styled.div<{
   hasIcon: boolean;
   isBlocked?: boolean;
 }>`
-  ${tw`flex flex-row items-center gap-2 border border-neutral-200 rounded-2xl overflow-hidden`}
+  ${tw`flex flex-row items-center gap-2 border border-neutral-200 rounded-xl overflow-hidden`}
   ${({ hasIcon }) => hasIcon && tw`px-3`}
   ${({ isBlocked }) =>
     isBlocked && tw`cursor-default bg-neutral-50 select-none`}
 `;
 export const CustomInput = styled.input<{ hasIcon: boolean }>`
   ${tw`text-sm w-full py-2 !outline-none`}
-  ${({ hasIcon }) => !hasIcon && tw`px-4`}
+  ${({ hasIcon }) => !hasIcon && tw`px-3`}
 `;

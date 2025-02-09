@@ -15,7 +15,7 @@ export const ProfileDashboard = () => {
       {isLoading ? (
         <ProfileLoadingSkeleton isLoading={isLoading} />
       ) : user ? (
-        <UserDetails user={user} refetch={() => {}} />
+        <UserDetails isCurrentUser user={user} refetch={() => {}} />
       ) : (
         <NoDataComponent
           image={noDataVoid}

@@ -23,6 +23,11 @@
       "FRIDAY": "Viernes",
       "SATURDAY": "Sábado",
       "SUNDAY": "Domingo"
+    },
+    "Language": {
+      "Title": "Idioma",
+      "es": "Castellano",
+      "ca": "Catalán"
     }
   },
   "Auth": {

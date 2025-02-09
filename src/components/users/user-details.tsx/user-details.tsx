@@ -5,7 +5,7 @@ import {
   IUser,
   useGetBookingsFromUser,
 } from "../../../api";
-import { SwitchSelector } from "../../base";
+import { LanguageSelector, SwitchSelector } from "../../base";
 import {
   DeleteUserModal,
   UserClassItem,
@@ -21,7 +21,8 @@ const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
 export const UserDetails = ({
   user,
   refetch,
-}: Readonly<{ user: IUser; refetch(): void }>) => {
+  isCurrentUser = false,
+}: Readonly<{ user: IUser; refetch(): void; isCurrentUser?: boolean }>) => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager([
     CLASS_KEY_PARAM,
@@ -83,6 +84,7 @@ export const UserDetails = ({
             <UserInfoField textKey="Name" value={name} />
             <UserInfoField textKey="Email" value={email} />
             <UserInfoField textKey="Phone" value={phone ?? ""} />
+            {isCurrentUser && <LanguageSelector />}
           </div>
         </div>
         <div className="flex flex-col w-full">

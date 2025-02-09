@@ -23,10 +23,3 @@ export const ClassInfoRowContainer = styled.div<{
     }
   }}
 `;
-export const CalendarFilterContainer = styled.div(
-  tw`flex flex-col gap-1 w-fit`
-);
-export const CalendarFilterTitle = styled.span(tw`font-semibold text-xs`);
-export const CalendarFiltersWrapper = styled.div(
-  tw`flex flex-row items-center gap-3 justify-end w-full`
-);

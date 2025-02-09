@@ -18,9 +18,6 @@ import {
 } from "react";
 import { useSearchParamsManager } from "../../hooks";
 import {
-  CalendarFilterContainer,
-  CalendarFiltersWrapper,
-  CalendarFilterTitle,
   CalendarItemContainer,
   ClassInfoRowContainer,
 } from "./calendar.styled";
@@ -277,39 +274,35 @@ export const CalendarFilters = ({
   };
 
   return (
-    <CalendarFiltersWrapper>
-      <CalendarFilterContainer>
-        <CalendarFilterTitle>
-          {t(`${basePath}.Status.Title`)}
-        </CalendarFilterTitle>
+    <div className="flex justify-end w-full">
+      <div className="flex flex-row items-center gap-3">
         <CustomSelect
           selectedValue={statusFilter}
           options={getSelectOptions("Status")}
+          title={t(`${basePath}.Status.Title`)}
           handleChange={(v) => setStatusFilter(v as ClassStatusType)}
         />
-      </CalendarFilterContainer>
-      <CalendarFilterContainer>
-        <CalendarFilterTitle>{t(`${basePath}.Time.Title`)}</CalendarFilterTitle>
         <CustomSelect
           selectedValue={timeFilter}
           options={getSelectOptions("Time")}
+          title={t(`${basePath}.Time.Title`)}
           handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
         />
-      </CalendarFilterContainer>
-      {timeFilter === "custom" && (
-        <div className="flex flex-row items-center gap-3">
-          <DateRangeInput
-            type="startDate"
-            setDateValue={setDatesFilter}
-            dateValue={datesFilter.startDate}
-          />
-          <DateRangeInput
-            type="endDate"
-            setDateValue={setDatesFilter}
-            dateValue={datesFilter.endDate}
-          />
-        </div>
-      )}
-    </CalendarFiltersWrapper>
+        {timeFilter === "custom" && (
+          <div className="flex flex-row items-center gap-3">
+            <DateRangeInput
+              type="startDate"
+              setDateValue={setDatesFilter}
+              dateValue={datesFilter.startDate}
+            />
+            <DateRangeInput
+              type="endDate"
+              setDateValue={setDatesFilter}
+              dateValue={datesFilter.endDate}
+            />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };

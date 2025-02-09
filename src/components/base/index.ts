@@ -10,4 +10,5 @@ export * from "./delete-modal";
 export * from "./info-tooltip";
 export * from "./switch-selector";
 export * from "./styled-components";
+export * from "./language-selector";
 export * from "./dashboard-skeleton";
