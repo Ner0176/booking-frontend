@@ -5,8 +5,7 @@ import {
   mdiEyeOutline,
   mdiPhoneOutline,
 } from "@mdi/js";
-import { FormField } from "./auth-form.content";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   ContentBox,
   FormButton,
@@ -27,7 +26,7 @@ import {
 } from "./auth-form.interface";
 import { checkPhone } from "./auth-form.utils";
 import { useLogin, useSignUp } from "../../api";
-import { MainContainer } from "../base";
+import { CustomInputField, LanguageSelector, MainContainer } from "../base";
 
 const MIN_PSWD_LENGTH = 8;
 
@@ -76,66 +75,71 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         </span>
         <ContentBox>
           {formType === "SignUp" && (
-            <SignUpFieldsContainer>
-              <FormField
+            <Fragment>
+              <CustomInputField
                 value={authFields.name}
-                icon={mdiAccountOutline}
                 placeholder="María Marcos"
                 title={t("Auth.Fields.Name")}
-                onBlur={() => {
+                icon={{ name: mdiAccountOutline }}
+                handleBlur={() => {
                   let showError = false;
                   if (!authFields.name.length) showError = true;
                   handleErrors("name", showError);
                 }}
-                onChange={(v) => handleAuthFields("name", v)}
+                handleChange={(v) => handleAuthFields("name", v)}
                 error={authErrors.name ? t("Auth.Errors.Name") : undefined}
               />
-              <FormField
-                icon={mdiPhoneOutline}
-                placeholder="976 65 84 34"
-                value={authFields.phone || ""}
-                title={t("Auth.Fields.Phone")}
-                onBlur={() => {
-                  let showError = false;
-                  const phone = authFields.phone ?? "";
-                  if (phone.length > 0 && !checkPhone(phone)) {
-                    showError = true;
-                  }
-                  handleErrors("phone", showError);
-                }}
-                onChange={(v) => handleAuthFields("phone", v)}
-                error={authErrors.phone ? t("Auth.Errors.Phone") : undefined}
-              />
-            </SignUpFieldsContainer>
+              <SignUpFieldsContainer>
+                <LanguageSelector />
+                <CustomInputField
+                  placeholder="976 65 84 34"
+                  value={authFields.phone || ""}
+                  title={t("Auth.Fields.Phone")}
+                  icon={{ name: mdiPhoneOutline }}
+                  handleBlur={() => {
+                    let showError = false;
+                    const phone = authFields.phone ?? "";
+                    if (phone.length > 0 && !checkPhone(phone)) {
+                      showError = true;
+                    }
+                    handleErrors("phone", showError);
+                  }}
+                  handleChange={(v) => handleAuthFields("phone", v)}
+                  error={authErrors.phone ? t("Auth.Errors.Phone") : undefined}
+                />
+              </SignUpFieldsContainer>
+            </Fragment>
           )}
-          <FormField
-            icon={mdiEmailOutline}
+          <CustomInputField
             value={authFields.email}
             title={t("Auth.Fields.Email")}
             placeholder="nombre@ejemplo.com"
-            onChange={(v) => handleAuthFields("email", v)}
-            onBlur={() => {
+            icon={{ name: mdiEmailOutline }}
+            handleChange={(v) => handleAuthFields("email", v)}
+            error={authErrors.email ? t("Auth.Errors.Email") : undefined}
+            handleBlur={() => {
               let showError = false;
               if (!EmailValidator.validate(authFields.email)) showError = true;
               handleErrors("email", showError);
             }}
-            error={authErrors.email ? t("Auth.Errors.Email") : undefined}
           />
-          <FormField
+          <CustomInputField
             value={authFields.password}
-            showPassword={showPassword}
             title={t("Auth.Fields.Password")}
-            onBlur={() => {
+            placeholder={t("Auth.Fields.Password")}
+            type={showPassword === false ? "password" : "text"}
+            handleChange={(v) => handleAuthFields("password", v)}
+            handleBlur={() => {
               let showError = false;
               if (authFields.password.length < MIN_PSWD_LENGTH) {
                 showError = true;
               }
               handleErrors("password", showError);
             }}
-            placeholder={t("Auth.Fields.Password")}
-            onChange={(v) => handleAuthFields("password", v)}
-            icon={showPassword ? mdiEyeOutline : mdiEyeOffOutline}
-            handlePrivacy={() => setShowPassword((prev) => !prev)}
+            icon={{
+              name: showPassword ? mdiEyeOutline : mdiEyeOffOutline,
+              handleClick: () => setShowPassword((prev) => !prev),
+            }}
             error={
               authErrors.password
                 ? t("Auth.Errors.Password", { value: MIN_PSWD_LENGTH })

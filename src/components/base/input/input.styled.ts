@@ -6,8 +6,16 @@ export const InputTitleContainer = styled.div(
   tw`flex flex-row items-center gap-1.5`
 );
 export const InputFieldTitle = styled.span(tw`text-xs font-semibold pl-1`);
-export const CustomInput = styled.input<{ isBlocked?: boolean }>`
-  ${tw`w-full px-4 py-2 rounded-xl border border-neutral-200 cursor-pointer`}
+export const CustomInputContainer = styled.div<{
+  hasIcon: boolean;
+  isBlocked?: boolean;
+}>`
+  ${tw`flex flex-row items-center gap-2 border border-neutral-200 rounded-2xl overflow-hidden`}
+  ${({ hasIcon }) => hasIcon && tw`px-3`}
   ${({ isBlocked }) =>
     isBlocked && tw`cursor-default bg-neutral-50 select-none`}
+`;
+export const CustomInput = styled.input<{ hasIcon: boolean }>`
+  ${tw`text-sm w-full py-2 !outline-none`}
+  ${({ hasIcon }) => !hasIcon && tw`px-4`}
 `;
