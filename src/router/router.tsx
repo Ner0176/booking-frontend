@@ -6,7 +6,7 @@ import {
   Sidebar,
   UsersDashboard,
 } from "../components";
-import { InvalidRoute } from "./router.content";
+import { InvalidRoute, ProtectedRoute } from "./router.content";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
 export const AppRouter = () => {
@@ -24,7 +24,9 @@ export const AppRouter = () => {
         >
           <Route path="/" element={<HomeDashboard />} />
           <Route path="/calendar" element={<CalendarDashboard />} />
-          <Route path="/users" element={<UsersDashboard />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/users" element={<UsersDashboard />} />
+          </Route>
           <Route path="/profile" element={<ProfileDashboard />} />
         </Route>
         <Route path="*" element={<InvalidRoute />} />

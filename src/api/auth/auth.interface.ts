@@ -14,4 +14,5 @@ export interface LoginPayload {
 export interface IAccount {
   id: string;
   language: string;
+  isAdmin: boolean;
 }

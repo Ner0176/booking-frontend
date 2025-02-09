@@ -1,3 +1,4 @@
+import { Navigate, Outlet } from "react-router-dom";
 import { InvalidRouteContainer } from "./router.styled";
 import { useTranslation } from "react-i18next";
 
@@ -9,4 +10,9 @@ export const InvalidRoute = () => {
       <div className="text-2xl">{t("Auth.InvalidRoute.Description")}</div>
     </InvalidRouteContainer>
   );
+};
+
+export const ProtectedRoute = () => {
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+  return isAdmin ? <Outlet /> : <Navigate to="/" replace />;
 };

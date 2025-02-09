@@ -11,7 +11,8 @@ export function useSignUp() {
 
   return useMutation<IAccount, any, SignUpPayload>({
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
-    onSuccess() {
+    onSuccess(data) {
+      localStorage.setItem("isAdmin", `${data.isAdmin}`);
       navigate("/");
     },
     onError(error) {
@@ -29,6 +30,7 @@ export function useLogin() {
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
       localStorage.setItem("language", data.language);
+      localStorage.setItem("isAdmin", `${data.isAdmin}`);
       navigate("/");
     },
     onError(error) {
