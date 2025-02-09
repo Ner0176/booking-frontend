@@ -41,7 +41,7 @@ export const CustomInputField = ({
         <InputFieldTitle>{title}</InputFieldTitle>
         {!!tooltip && <InfoTooltip content={tooltip} />}
       </InputTitleContainer>
-      <CustomInputContainer hasIcon={!!icon} isBlocked={isDisabled}>
+      <CustomInputContainer hasIcon={!!icon} isBlocked={!!isDisabled}>
         {!!icon && (
           <svg
             viewBox="0 0 24 24"
@@ -59,6 +59,7 @@ export const CustomInputField = ({
           hasIcon={!!icon}
           style={customStyles}
           disabled={isDisabled}
+          isBlocked={!!isDisabled}
           placeholder={placeholder}
           onBlur={(e) => {
             if (handleBlur) handleBlur(e.target.value);

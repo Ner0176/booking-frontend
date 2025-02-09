@@ -5,7 +5,7 @@ import {
   ClassTypeTitle,
   InputFieldsRow,
 } from "./create-class.styled";
-import { Dispatch, Fragment, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { CustomInputField, ErrorMessage } from "../../base";
 import { IEventFields, IRowConfig } from "./create-class.interface";
 import { handleCheckField } from "./create-class.utils";
@@ -132,7 +132,7 @@ export const RecurrentFields = ({
   ];
 
   return (
-    <Fragment>
+    <>
       <FieldRows
         fields={fields}
         setFields={setFields}
@@ -158,7 +158,7 @@ export const RecurrentFields = ({
         setFields={setFields}
         configs={configs.slice(3, 5)}
       />
-    </Fragment>
+    </>
   );
 };
 
@@ -192,7 +192,7 @@ export const OneTimeFields = ({
   ];
 
   return (
-    <Fragment>
+    <>
       <FieldRows
         fields={fields}
         setFields={setFields}
@@ -205,6 +205,6 @@ export const OneTimeFields = ({
         disableFields={disableFields}
         configs={configs.slice(2, 4)}
       />
-    </Fragment>
+    </>
   );
 };

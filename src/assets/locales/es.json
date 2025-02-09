@@ -24,8 +24,7 @@
       "SATURDAY": "Sábado",
       "SUNDAY": "Domingo"
     },
-    "Language": {
-      "Title": "Idioma",
+    "Languages": {
       "es": "Castellano",
       "ca": "Catalán"
     }
@@ -52,7 +51,8 @@
       "Phone": "Teléfono (opcional)",
       "Password": "Contraseña",
       "Name": "Nombre completo",
-      "Email": "Correo electrónico"
+      "Email": "Correo electrónico",
+      "Language": "Idioma"
     },
     "Errors": {
       "Name": "Este campo es obligatorio",
@@ -203,6 +203,11 @@
   },
   "Profile": {
     "Title": "Mi perfil",
+    "Edit": {
+      "Button": "Editar perfil",
+      "Success": "Tu perfil ha sido editado correctamente",
+      "Error": "Ha ocurrido un error al intentar editar los datos de tu perfil"
+    },
     "NoData": "No se han encontrado datos asociados a tu perfil"
   },
   "Sidebar": {

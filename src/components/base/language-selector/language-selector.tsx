@@ -7,10 +7,10 @@ export const LanguageSelector = () => {
   return (
     <CustomSelect
       selectedValue={i18n.language}
-      title={t("Base.Language.Title")}
+      title={t("Auth.Fields.Language")}
       options={[
-        { key: "es", text: t("Base.Language.es") },
-        { key: "ca", text: t("Base.Language.ca") },
+        { key: "es", text: t("Base.Languages.es") },
+        { key: "ca", text: t("Base.Languages.ca") },
       ]}
       handleChange={(newLanguage) => {
         i18n.changeLanguage(newLanguage);

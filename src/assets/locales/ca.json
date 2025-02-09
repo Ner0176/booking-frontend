@@ -24,8 +24,7 @@
       "SATURDAY": "Dissabte",
       "SUNDAY": "Diumenge"
     },
-    "Language": {
-      "Title": "Idioma",
+    "Languages": {
       "es": "Castellà",
       "ca": "Català"
     }
@@ -52,7 +51,8 @@
       "Phone": "Telèfon (opcional)",
       "Password": "Contrasenya",
       "Name": "Nom complet",
-      "Email": "Correu electrònic"
+      "Email": "Correu electrònic",
+      "Language": "Idioma"
     },
     "Errors": {
       "Name": "Aquest camp és obligatori",
@@ -203,6 +203,11 @@
   },
   "Profile": {
     "Title": "El meu perfil",
+    "Edit": {
+      "Button": "Editar perfil",
+      "Success": "El teu perfil s'ha editat correctament",
+      "Error": "Ha ocorregut un error a l'intentar editar les dades del teu perfil"
+    },
     "NoData": "No s'han trobat dades associades al teu perfil"
   },
   "Sidebar": {

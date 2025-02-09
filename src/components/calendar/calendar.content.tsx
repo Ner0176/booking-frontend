@@ -10,7 +10,6 @@ import {
 } from "@mdi/js";
 import {
   Dispatch,
-  Fragment,
   PropsWithChildren,
   SetStateAction,
   useEffect,
@@ -92,7 +91,7 @@ export const ClassStatusButton = ({
           aria-label="Loading Spinner"
         />
       ) : (
-        <Fragment>
+        <>
           <Icon
             size="14px"
             className="mt-0.5"
@@ -105,7 +104,7 @@ export const ClassStatusButton = ({
               }`
             )}
           </span>
-        </Fragment>
+        </>
       )}
     </DashboardHeaderButton>
   );

@@ -5,9 +5,10 @@ import {
   IUser,
   useGetBookingsFromUser,
 } from "../../../api";
-import { LanguageSelector, SwitchSelector } from "../../base";
+import { SwitchSelector } from "../../base";
 import {
   DeleteUserModal,
+  EditUserInformation,
   UserClassItem,
   UserInfoField,
 } from "./user-details.content";
@@ -23,7 +24,7 @@ export const UserDetails = ({
   refetch,
   isCurrentUser = false,
 }: Readonly<{ user: IUser; refetch(): void; isCurrentUser?: boolean }>) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { params, setParams } = useSearchParamsManager([
     CLASS_KEY_PARAM,
     "action",
@@ -31,9 +32,9 @@ export const UserDetails = ({
   const actionType = params.get("action");
   const selectedOption = params.get(CLASS_KEY_PARAM);
 
-  const { id, name, phone, email } = user;
+  const { name, phone, email } = user;
 
-  const { data } = useGetBookingsFromUser(id);
+  const { data } = useGetBookingsFromUser(user.id);
 
   useEffect(() => {
     if (!selectedOption) {
@@ -81,10 +82,27 @@ export const UserDetails = ({
             {t("Users.Details.Information")}
           </span>
           <div className="flex flex-col gap-4">
-            <UserInfoField textKey="Name" value={name} />
-            <UserInfoField textKey="Email" value={email} />
-            <UserInfoField textKey="Phone" value={phone ?? ""} />
-            {isCurrentUser && <LanguageSelector />}
+            {isCurrentUser && actionType === "edit-user" ? (
+              <EditUserInformation
+                user={user}
+                handleSuccess={() => {
+                  setParams([{ key: "action" }]);
+                  refetch();
+                }}
+              />
+            ) : (
+              <>
+                <UserInfoField textKey="Name" value={name} />
+                <UserInfoField textKey="Email" value={email} />
+                <UserInfoField textKey="Phone" value={phone ? phone : "-"} />
+                {isCurrentUser && (
+                  <UserInfoField
+                    textKey="Language"
+                    value={t(`Base.Languages.${i18n.language}`)}
+                  />
+                )}
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col w-full">
@@ -115,7 +133,7 @@ export const UserDetails = ({
           </div>
         </div>
       </div>
-      {actionType === "delete-event" && (
+      {actionType === "delete-event" && !isCurrentUser && (
         <DeleteUserModal
           user={user}
           refetch={refetch}

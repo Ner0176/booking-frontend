@@ -1,7 +1,6 @@
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { PlacesType, Tooltip } from "react-tooltip";
-import { Fragment } from "react/jsx-runtime";
 import { ITooltipContent } from "./info-tooltip.interface";
 
 export const InfoTooltip = ({
@@ -15,7 +14,7 @@ export const InfoTooltip = ({
 }>) => {
   const { id, text } = content;
   return (
-    <Fragment>
+    <>
       <Icon
         size={`${size}px`}
         data-tooltip-id={id}
@@ -23,6 +22,6 @@ export const InfoTooltip = ({
         className="cursor-pointer outline-none"
       />
       <Tooltip id={id} content={text} place={place} />
-    </Fragment>
+    </>
   );
 };

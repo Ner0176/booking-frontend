@@ -5,7 +5,7 @@ import {
   mdiEyeOutline,
   mdiPhoneOutline,
 } from "@mdi/js";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import {
   ContentBox,
   FormButton,
@@ -24,9 +24,9 @@ import {
   IAuthFields,
   initAuthErrors,
 } from "./auth-form.interface";
-import { checkPhone } from "./auth-form.utils";
 import { useLogin, useSignUp } from "../../api";
 import { CustomInputField, LanguageSelector, MainContainer } from "../base";
+import { checkPhone } from "../../utils";
 
 const MIN_PSWD_LENGTH = 8;
 
@@ -78,7 +78,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         </span>
         <ContentBox>
           {formType === "SignUp" && (
-            <Fragment>
+            <>
               <CustomInputField
                 value={authFields.name}
                 placeholder="María Marcos"
@@ -111,7 +111,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
                 />
                 <LanguageSelector />
               </SignUpFieldsContainer>
-            </Fragment>
+            </>
           )}
           <CustomInputField
             value={authFields.email}
