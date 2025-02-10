@@ -26,7 +26,7 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
       icon: mdiHomeOutline,
     },
     {
-      text: "calendar",
+      text: "classes",
       icon: mdiCalendar,
     },
     ...(isAdmin

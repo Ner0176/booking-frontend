@@ -10,7 +10,7 @@ import { IClass, IUser, useDeleteUser, useUpdateUser } from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { checkPhone, formatTime, formatToLongDate } from "../../../utils";
 import { useSearchParamsManager } from "../../../hooks";
-import { mdiAccountOutline, mdiPhoneOutline } from "@mdi/js";
+import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 import { useEffect, useState } from "react";
 import {
   initUserFieldErrors,
@@ -20,16 +20,17 @@ import {
 import i18n from "../../../i18n";
 
 export const UserInfoField = ({
+  icon,
   value,
   textKey,
-}: Readonly<{ textKey: string; value: string }>) => {
+}: Readonly<{ icon: string; textKey: string; value: string }>) => {
   const { t } = useTranslation();
 
   return (
     <CustomInputField
       isDisabled
       value={value}
-      icon={{ name: mdiAccountOutline }}
+      icon={{ name: icon }}
       title={t(`Auth.Fields.${textKey}`)}
       customStyles={{ backgroundColor: "white" }}
     />
@@ -92,7 +93,7 @@ export const EditUserInformation = ({
         handleChange={(v) => handleFields("name", v)}
         error={errors.name ? t("Auth.Errors.Name") : undefined}
       />
-      <UserInfoField textKey="Email" value={email} />
+      <UserInfoField icon={mdiEmailOutline} textKey="Email" value={email} />
       <CustomInputField
         placeholder="976 65 84 34"
         value={fields.phone || ""}

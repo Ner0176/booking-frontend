@@ -17,7 +17,7 @@ import { DashboardSkeleton, NoDataComponent } from "../base";
 import { ClassDatesFilter, ClassStatusType } from "./classes.interface";
 import noDataLoading from "../../assets/images/noData/reload.svg";
 
-export const CalendarDashboard = () => {
+export const ClassesDashboard = () => {
   const { t } = useTranslation();
   const { params } = useSearchParamsManager(["event", "action"]);
   const eventId = params.get("event");

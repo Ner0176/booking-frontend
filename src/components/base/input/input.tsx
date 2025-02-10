@@ -45,9 +45,9 @@ export const CustomInputField = ({
         {!!icon && (
           <svg
             viewBox="0 0 24 24"
-            onClick={icon.handleClick}
             fill="currentColor"
-            className="size-5 text-neutral-500"
+            onClick={icon.handleClick}
+            className="size-5 mt-0.5 text-neutral-500"
             style={{ cursor: !!icon.handleClick ? "pointer" : "auto" }}
           >
             <path d={icon.name} />

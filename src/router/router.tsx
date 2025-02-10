@@ -1,7 +1,7 @@
 import {
   AuthForm,
   CalendarDashboard,
-  HomeDashboard,
+  ClassesDashboard,
   ProfileDashboard,
   Sidebar,
   UsersDashboard,
@@ -22,8 +22,8 @@ export const AppRouter = () => {
             </Sidebar>
           }
         >
-          <Route path="/" element={<HomeDashboard />} />
-          <Route path="/calendar" element={<CalendarDashboard />} />
+          <Route path="/" element={<CalendarDashboard />} />
+          <Route path="/classes" element={<ClassesDashboard />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/users" element={<UsersDashboard />} />
           </Route>

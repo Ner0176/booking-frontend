@@ -15,6 +15,12 @@ import {
 import { useSearchParamsManager } from "../../../hooks";
 import { format } from "date-fns";
 import { useEffect } from "react";
+import {
+  mdiAccountOutline,
+  mdiEarth,
+  mdiEmailOutline,
+  mdiPhoneOutline,
+} from "@mdi/js";
 
 const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
@@ -92,11 +98,24 @@ export const UserDetails = ({
               />
             ) : (
               <>
-                <UserInfoField textKey="Name" value={name} />
-                <UserInfoField textKey="Email" value={email} />
-                <UserInfoField textKey="Phone" value={phone ? phone : "-"} />
+                <UserInfoField
+                  value={name}
+                  textKey="Name"
+                  icon={mdiAccountOutline}
+                />
+                <UserInfoField
+                  value={email}
+                  textKey="Email"
+                  icon={mdiEmailOutline}
+                />
+                <UserInfoField
+                  textKey="Phone"
+                  icon={mdiPhoneOutline}
+                  value={phone ? phone : "-"}
+                />
                 {isCurrentUser && (
                   <UserInfoField
+                    icon={mdiEarth}
                     textKey="Language"
                     value={t(`Base.Languages.${i18n.language}`)}
                   />
