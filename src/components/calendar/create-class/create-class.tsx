@@ -87,7 +87,7 @@ export const CreateClassModal = ({
     if (attendeesList.length > fields.maxAmount.value) {
       showToast({
         type: "error",
-        text: t(`Calendar.ClassDetails.AttendeesList.MaxAmountError`),
+        text: t(`Classes.ClassDetails.AttendeesList.MaxAmountError`),
       });
       return;
     }
@@ -103,7 +103,7 @@ export const CreateClassModal = ({
     <Modal>
       <ClassContainer ref={ref}>
         <span className="text-center text-2xl font-bold">
-          {t(`Calendar.Event.${showAddUsers ? "AddAttendees" : "NewEvent"}`)}
+          {t(`Classes.Event.${showAddUsers ? "AddAttendees" : "NewEvent"}`)}
         </span>
         {!params.get("type") ? (
           <ClassTypesWrapper>

@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { CalendarBody } from "./calendar.styled";
+import { CalendarBody } from "./classes.styled";
 import { useGetAllClasses } from "../../api";
 import {
   CalendarFilters,
   CalendarHeaderButtons,
   ClassCard,
-} from "./calendar.content";
+} from "./classes.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo, useState } from "react";
@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
 import { DashboardSkeleton, NoDataComponent } from "../base";
-import { ClassDatesFilter, ClassStatusType } from "./calendar.interface";
+import { ClassDatesFilter, ClassStatusType } from "./classes.interface";
 import noDataLoading from "../../assets/images/noData/reload.svg";
 
 export const CalendarDashboard = () => {
@@ -37,11 +37,11 @@ export const CalendarDashboard = () => {
   }, [data, eventId]);
 
   const getTitle = () => {
-    let title = t("Calendar.Title");
+    let title = t("Classes.Title");
 
     if (!!eventId && selectedEvent?.date) {
       const titleType = !selectedEvent.recurrentId ? "Title" : "RecurrentTitle";
-      title = t(`Calendar.ClassDetails.${titleType}`, {
+      title = t(`Classes.ClassDetails.${titleType}`, {
         date: format(new Date(selectedEvent?.date as Date), "dd/MM/yyyy"),
       });
     }
@@ -78,7 +78,7 @@ export const CalendarDashboard = () => {
         ) : !!data && data.length > 0 ? (
           data.map((item, idx) => <ClassCard key={idx} data={item} />)
         ) : (
-          <NoDataComponent image={noDataLoading} title={t("Calendar.NoData")} />
+          <NoDataComponent image={noDataLoading} title={t("Classes.NoData")} />
         )}
       </CalendarBody>
       {params.get("action") === "create-event" && (

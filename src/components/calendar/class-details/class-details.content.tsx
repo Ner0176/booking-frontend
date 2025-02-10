@@ -29,7 +29,7 @@ export const DeleteClassModal = ({
   recurrentId: string | null;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.Delete";
+  const basePath = "Classes.ClassDetails.Delete";
 
   const [selectedOption, setSelectedOption] = useState<RecurrentOptionType>();
 
@@ -52,7 +52,7 @@ export const DeleteClassModal = ({
     if (!selectedOption) {
       showToast({
         type: "error",
-        text: t("Calendar.ClassDetails.Delete.Validation"),
+        text: t("Classes.ClassDetails.Delete.Validation"),
       });
     }
     return !!selectedOption;
@@ -128,7 +128,7 @@ export const SwitchList = ({
   setAttendeesList: Dispatch<SetStateAction<IUser[]>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.AttendeesList";
+  const basePath = "Classes.ClassDetails.AttendeesList";
 
   return (
     <div className="flex flex-row items-center gap-3">

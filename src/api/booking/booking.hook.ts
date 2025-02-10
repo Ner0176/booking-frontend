@@ -26,7 +26,7 @@ export function useGetBookingsFromUser(userId: number) {
 
 export function useCreateBookings(handleSuccess: () => void) {
   const { t } = useTranslation();
-  const basePath = "Calendar.Event.CreateBookings";
+  const basePath = "Classes.Event.CreateBookings";
 
   return useMutation({
     mutationFn: (payload: CreateBookingPayload) =>
@@ -43,7 +43,7 @@ export function useCreateBookings(handleSuccess: () => void) {
 
 export function useEditBookings(refetch: () => void) {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.AttendeesList";
+  const basePath = "Classes.ClassDetails.AttendeesList";
   const { setParams } = useSearchParamsManager([]);
 
   return useMutation({

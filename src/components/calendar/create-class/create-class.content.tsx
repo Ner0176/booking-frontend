@@ -21,7 +21,7 @@ export const ClassTypeBox = ({
   handleSelectType: () => void;
 }>) => {
   const { t } = useTranslation();
-  const basePath = `Calendar.Event.${type}`;
+  const basePath = `Classes.Event.${type}`;
   return (
     <ClassTypeContainer className="hover:shadow-lg" onClick={handleSelectType}>
       <ClassTypeTitle>
@@ -47,7 +47,7 @@ const FieldRows = ({
   setFields: Dispatch<SetStateAction<IEventFields>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.Event.Fields";
+  const basePath = "Classes.Event.Fields";
 
   return (
     <InputFieldsRow>
@@ -63,7 +63,7 @@ const FieldRows = ({
               type={type}
               isDisabled={disableFields}
               value={fields[accessor].value as string}
-              title={t(`Calendar.Event.Fields.${accessor}`)}
+              title={t(`Classes.Event.Fields.${accessor}`)}
               tooltip={hasTooltip ? tooltipInfo : undefined}
               handleChange={(value) => {
                 setFields((prev) => {
@@ -104,7 +104,7 @@ export const RecurrentFields = ({
   setFields: Dispatch<SetStateAction<IEventFields>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.Event.Fields";
+  const basePath = "Classes.Event.Fields";
 
   const configs: IRowConfig[] = [
     {

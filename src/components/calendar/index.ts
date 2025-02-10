@@ -1,3 +1,3 @@
-export * from "./calendar";
+export * from "./classes";
 export * from "./create-class";
-export * from "./calendar.interface";
+export * from "./classes.interface";

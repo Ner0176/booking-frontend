@@ -23,7 +23,7 @@ export const ClassDetails = ({
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails";
+  const basePath = "Classes.ClassDetails";
 
   const { params, setParams } = useSearchParamsManager(["action"]);
   const showEditView = params.get("action") === "edit-event";

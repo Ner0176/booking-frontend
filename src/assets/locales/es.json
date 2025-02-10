@@ -66,7 +66,10 @@
     }
   },
   "Calendar": {
-    "Title": "Calendario",
+    "Title": "Mi calendario"
+  },
+  "Classes": {
+    "Title": "Clases",
     "NoData": "No hay clases disponibles con los filtros seleccionados",
     "Filters": {
       "Status": {

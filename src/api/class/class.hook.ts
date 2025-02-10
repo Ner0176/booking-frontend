@@ -40,17 +40,17 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
       }
 
       handleSuccess(classIds);
-      showToast({ text: t("Calendar.Event.Success"), type: "success" });
+      showToast({ text: t("Classes.Event.Success"), type: "success" });
     },
     onError() {
-      showToast({ text: t("Calendar.Event.Error"), type: "error" });
+      showToast({ text: t("Classes.Event.Error"), type: "error" });
     },
   });
 }
 
 export function useEditClassStatus(handleSuccess: () => void) {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.Status";
+  const basePath = "Classes.ClassDetails.Status";
 
   return useMutation({
     mutationFn: (payload: EditStatusPayload) =>
@@ -76,7 +76,7 @@ export function useDeleteClass(
   isRecurrent: boolean
 ) {
   const { t } = useTranslation();
-  const basePath = "Calendar.ClassDetails.Delete";
+  const basePath = "Classes.ClassDetails.Delete";
   const { setParams } = useSearchParamsManager([]);
 
   return useMutation({

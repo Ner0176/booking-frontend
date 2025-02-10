@@ -16,10 +16,7 @@ import {
   useState,
 } from "react";
 import { useSearchParamsManager } from "../../hooks";
-import {
-  CalendarItemContainer,
-  ClassInfoRowContainer,
-} from "./calendar.styled";
+import { CalendarItemContainer, ClassInfoRowContainer } from "./classes.styled";
 import {
   capitalize,
   formatTime,
@@ -32,7 +29,7 @@ import {
   ClassDatesFilter,
   ClassStatusType,
   ClassTimeFilterType,
-} from "./calendar.interface";
+} from "./classes.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
@@ -43,7 +40,7 @@ import {
   getInputDate,
   HeaderButton,
 } from "../base";
-import { getDatesFromTimeFilter } from "./calendar.utils";
+import { getDatesFromTimeFilter } from "./classes.utils";
 import {
   mdiArrowLeft,
   mdiPencilOutline,
@@ -99,7 +96,7 @@ export const ClassStatusButton = ({
           />
           <span className="text-sm font-semibold">
             {t(
-              `Calendar.ClassDetails.Status.${
+              `Classes.ClassDetails.Status.${
                 !isCancelled ? "Cancel" : "Enable"
               }`
             )}
@@ -135,10 +132,10 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
       onClick={() => setParams([{ key: "event", value: `${id}` }])}
     >
       <ItemInfoRow icon={statusIcon} status={status as ClassStatusType}>
-        {t(`Calendar.Filters.Status.Options.${status}`)}
+        {t(`Classes.Filters.Status.Options.${status}`)}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiAccountGroupOutline}>
-        {t(`Calendar.Event.Attendees`, { currentCount, maxAmount })}
+        {t(`Classes.Event.Attendees`, { currentCount, maxAmount })}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiClockOutline}>
         {formatTime(startTime, endTime)}
@@ -173,7 +170,7 @@ export const CalendarHeaderButtons = ({
     <HeaderButton
       props={{
         icon: mdiPlus,
-        tPath: "Calendar.Event.NewEvent",
+        tPath: "Classes.Event.NewEvent",
         onClick: () => setParams([{ key: "action", value: "create-event" }]),
       }}
     />
@@ -191,7 +188,7 @@ export const CalendarHeaderButtons = ({
           <HeaderButton
             props={{
               icon: mdiPencilOutline,
-              tPath: "Calendar.ClassDetails.Edit",
+              tPath: "Classes.ClassDetails.Edit",
               onClick: () =>
                 setParams([{ key: "action", value: "edit-event" }]),
             }}
@@ -205,7 +202,7 @@ export const CalendarHeaderButtons = ({
             props={{
               color: "secondary",
               icon: mdiTrashCanOutline,
-              tPath: "Calendar.ClassDetails.Delete.Title",
+              tPath: "Classes.ClassDetails.Delete.Title",
               onClick: () =>
                 setParams([{ key: "action", value: "delete-event" }]),
             }}
@@ -255,7 +252,7 @@ export const CalendarFilters = ({
   setStatusFilter: Dispatch<SetStateAction<ClassStatusType>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Calendar.Filters";
+  const basePath = "Classes.Filters";
 
   const [timeFilter, setTimeFilter] = useState<ClassTimeFilterType>("all");
 
@@ -268,7 +265,7 @@ export const CalendarFilters = ({
     const optionsList = type === "Time" ? CLASS_TIME_FILTERS : CLASS_STATUS;
     return optionsList.map((option) => ({
       key: option,
-      text: t(`Calendar.Filters.${type}.Options.${option}`),
+      text: t(`Classes.Filters.${type}.Options.${option}`),
     }));
   };
 
