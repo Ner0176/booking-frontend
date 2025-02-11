@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { InvalidRouteContainer } from "./router.styled";
 import { useTranslation } from "react-i18next";
+import { useUser } from "../hooks";
 
 export const InvalidRoute = () => {
   const { t } = useTranslation();
@@ -13,6 +14,6 @@ export const InvalidRoute = () => {
 };
 
 export const ProtectedRoute = () => {
-  const isAdmin = localStorage.getItem("isAdmin") === "true";
+  const { isAdmin } = useUser();
   return isAdmin ? <Outlet /> : <Navigate to="/" replace />;
 };

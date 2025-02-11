@@ -27,10 +27,12 @@ import {
 import { useLogin, useSignUp } from "../../api";
 import { CustomInputField, LanguageSelector, MainContainer } from "../base";
 import { checkPhone } from "../../utils";
+import { useUser } from "../../hooks";
 
 const MIN_PSWD_LENGTH = 8;
 
 export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
+  const { user } = useUser();
   const { t } = useTranslation();
 
   const [formType, setFormType] = useState<FormType>(type);
@@ -57,7 +59,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     if (formType === "SignUp") {
       signUp({
         ...authFields,
-        language: localStorage.getItem("language") || "es",
+        language: user?.language || "es",
       });
     } else {
       login({ email: authFields.email, password: authFields.password });

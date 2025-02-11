@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { CustomSelect } from "../select";
+import { useUser } from "../../../hooks";
 
 export const LanguageSelector = () => {
+  const { updateUser } = useUser();
   const { t, i18n } = useTranslation();
 
   return (
@@ -14,7 +16,7 @@ export const LanguageSelector = () => {
       ]}
       handleChange={(newLanguage) => {
         i18n.changeLanguage(newLanguage);
-        localStorage.setItem("language", newLanguage);
+        updateUser("language", newLanguage);
       }}
     />
   );

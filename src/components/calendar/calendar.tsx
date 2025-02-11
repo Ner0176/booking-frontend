@@ -79,6 +79,15 @@ export const CalendarDashboard = () => {
   minTime.setHours(8);
   minTime.setMinutes(0);
 
+  // const dayPropGetter = (date: Date) => {
+  //   const today = new Date();
+  //   const isCurrentMonth = date.getMonth() === today.getMonth();
+  //   const styles: CSSProperties = {
+  //     backgroundColor: "#FAFAFBFF",
+  //   };
+  //   return isCurrentMonth ? {} : { style: styles };
+  // };
+
   return (
     <DashboardSkeleton title={t("Calendar.Title")}>
       <div className="h-[600px] overflow-y-auto">
@@ -90,6 +99,7 @@ export const CalendarDashboard = () => {
           defaultView="week"
           startAccessor="start"
           localizer={localizer}
+          // dayPropGetter={dayPropGetter}
           components={{
             toolbar: CustomToolbar,
           }}

@@ -13,13 +13,15 @@ import {
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
 import { useLogout } from "../../../api";
+import { useUser } from "../../../hooks";
 
 export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
+  const { isAdmin } = useUser();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate: logout } = useLogout();
 
-  const isAdmin = localStorage.getItem("isAdmin") === "true";
   const primaryItems = [
     {
       text: "home",

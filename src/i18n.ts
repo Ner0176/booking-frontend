@@ -3,7 +3,8 @@ import es from "../src/assets/locales/es.json";
 import ca from "../src/assets/locales/ca.json";
 import { initReactI18next } from "react-i18next";
 
-const savedLanguage = localStorage.getItem("language") || "es";
+const user = localStorage.getItem("user");
+const savedLanguage = user ? JSON.parse(user).language : "es";
 
 i18n.use(initReactI18next).init({
   lng: savedLanguage,

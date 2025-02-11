@@ -4,15 +4,17 @@ import { SignUpPayload, LoginPayload, IAccount } from "./auth.interface";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { showToast } from "../../components";
+import { useUser } from "../../hooks";
 
 export function useSignUp() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { handleSetUser } = useUser();
 
   return useMutation<IAccount, any, SignUpPayload>({
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
     onSuccess(data) {
-      localStorage.setItem("isAdmin", `${data.isAdmin}`);
+      handleSetUser(data);
       navigate("/");
     },
     onError(error) {
@@ -25,12 +27,12 @@ export function useSignUp() {
 export function useLogin() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { handleSetUser } = useUser();
 
   return useMutation<IAccount, any, LoginPayload>({
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
-      localStorage.setItem("language", data.language);
-      localStorage.setItem("isAdmin", `${data.isAdmin}`);
+      handleSetUser(data);
       navigate("/");
     },
     onError(error) {
