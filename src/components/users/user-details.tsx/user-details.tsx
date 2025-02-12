@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import {
   BookingType,
-  IBookingClasses,
+  IUserBookings,
   IUser,
   useGetBookingsFromUser,
 } from "../../../api";
@@ -131,11 +131,9 @@ export const UserDetails = ({
           />
           {!!data && !!selectedOption && (
             <div className="flex flex-col">
-              {data[selectedOption as keyof IBookingClasses].map(
-                (item, idx) => (
-                  <UserClassItem key={idx} classInstance={item.class} />
-                )
-              )}
+              {data[selectedOption as keyof IUserBookings].map((item, idx) => (
+                <UserClassItem key={idx} classInstance={item.class} />
+              ))}
             </div>
           )}
         </div>

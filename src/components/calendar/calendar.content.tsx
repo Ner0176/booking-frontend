@@ -1,8 +1,9 @@
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
-import { ToolbarProps, View } from "react-big-calendar";
+import { EventProps, ToolbarProps, View } from "react-big-calendar";
 import { useTranslation } from "react-i18next";
 import {
+  EventContainer,
   TodayButton,
   ToolbarArrowButton,
   ToolbarBoxButton,
@@ -49,5 +50,18 @@ export const CustomToolbar = (props: ToolbarProps) => {
         </ToolbarButtonsBox>
       </div>
     </div>
+  );
+};
+
+export const CustomEvent = ({
+  view,
+  props,
+}: Readonly<{ props: EventProps; view: View }>) => {
+  const { title, event } = props;
+
+  return (
+    <EventContainer view={view} isBooking={event.resource.isBooking}>
+      {title}
+    </EventContainer>
   );
 };
