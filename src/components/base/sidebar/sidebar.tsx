@@ -64,7 +64,7 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
             />
           </SidebarButton>
         </SidebarContainer>
-        <div className="w-full">{children}</div>
+        <div className="w-full h-full">{children}</div>
       </MainWrapper>
     </MainContainer>
   );

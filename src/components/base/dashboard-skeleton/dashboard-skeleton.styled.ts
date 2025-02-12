@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import tw from "twin.macro";
 
 export const DashboardContainer = styled.div(
-  tw`relative flex flex-col h-full py-8 px-14`
+  tw`relative flex flex-col h-full pt-8 px-14`
 );
 export const DashboardHeader = styled.div(
   tw`flex flex-row items-center justify-between pb-4 border-b`
@@ -10,7 +10,9 @@ export const DashboardHeader = styled.div(
 export const DashboardTitle = styled.span(
   tw`font-bold text-3xl whitespace-nowrap`
 );
-export const DashboardBody = styled.div(tw`flex flex-col gap-5 mt-4`);
+export const DashboardBody = styled.div(
+  tw`flex flex-col gap-5 mt-4 h-full overflow-y-auto`
+);
 export const DashboardHeaderButton = styled.div<{
   color: "primary" | "secondary";
 }>`

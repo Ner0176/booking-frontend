@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import { ClassStatusType } from "./classes.interface";
 
 export const CalendarBody = styled.div(
-  tw`flex flex-wrap justify-between gap-4 px-8 py-10 h-full`
+  tw`flex flex-wrap justify-between gap-4 px-8 h-full overflow-y-auto`
 );
 export const CalendarItemContainer = styled.div`
   ${tw`flex flex-col gap-2 border rounded-xl px-6 py-4 min-w-[350px] h-min cursor-pointer`}

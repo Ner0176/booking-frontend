@@ -128,7 +128,7 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
 
   return (
     <CalendarItemContainer
-      className="hover:shadow-lg"
+      className="last:mb-6 hover:shadow-lg"
       onClick={() => setParams([{ key: "event", value: `${id}` }])}
     >
       <ItemInfoRow icon={statusIcon} status={status as ClassStatusType}>
