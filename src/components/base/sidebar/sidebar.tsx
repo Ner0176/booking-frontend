@@ -7,8 +7,10 @@ import {
   mdiCalendar,
   mdiChevronDoubleLeft,
   mdiChevronDoubleRight,
+  mdiCogOutline,
   mdiExitToApp,
   mdiHomeOutline,
+  mdiInformationOutline,
 } from "@mdi/js";
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
@@ -49,6 +51,9 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
           <SidebarOptions
             isExpanded={isOpen}
             items={[
+              isAdmin
+                ? { text: "settings", icon: mdiCogOutline }
+                : { text: "policies", icon: mdiInformationOutline },
               { text: "profile", icon: mdiAccountCircleOutline },
               {
                 text: "signOut",

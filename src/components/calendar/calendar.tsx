@@ -113,7 +113,11 @@ export const CalendarDashboard = () => {
           onView={(view) => setCurrentView(view)}
           onNavigate={(date) => setCurrentDate(date)}
           onSelectEvent={({ resource }) =>
-            navigate(`/classes?event=${resource.id}`)
+            navigate(
+              `/classes?event=${resource.id}${
+                resource.isBooking ? "&booking=true" : ""
+              }`
+            )
           }
           components={{
             toolbar: CustomToolbar,

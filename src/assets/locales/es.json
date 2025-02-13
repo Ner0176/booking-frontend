@@ -89,7 +89,7 @@
     }
   },
   "Classes": {
-    "Title": "Clases",
+    "Title": "Gestión de clases",
     "NoData": "No hay clases disponibles con los filtros seleccionados",
     "Filters": {
       "Status": {
@@ -233,13 +233,35 @@
     },
     "NoData": "No se han encontrado datos asociados a tu perfil"
   },
+  "Policies": {
+    "Title": "Políticas de cancelación",
+    "Error": "Ha ocurrido un error al intentar obtener las políticas de cancelación",
+    "maxCancellationPerMonth": {
+      "Title": "🛑 Límite de cancelaciones mensuales",
+      "Text": "El usuario podrá cancelar <strong>hasta {{total}} clases al mes</strong>. Una vez superado este límite, cualquier cancelación adicional se considerará <strongRed>NO</strongRed> reembolsable ni recuperable."
+    },
+    "minHoursBeforeCancellation": {
+      "Title": "⏳ Tiempo límite para cancelar",
+      "Text": "El usuario tendrá la opción de cancelar una reserva <strong>hasta {{total}}h antes del inicio de la clase</strong>. Si la cancelación se realiza fuera de este plazo, se contará como una cancelación tardía y se aplicarán las condiciones de <strongRed>NO</strongRed> reembolso ni recuperación."
+    },
+    "maxRecoveryDays": {
+      "Title": "🔄 Recuperación de clases",
+      "Text": "Una clase cancelada dentro del plazo establecido podrá ser reprogramada o recuperada <strong>dentro de un período máximo de {{total}} días</strong>. Si el usuario no utiliza dicha clase dentro de este plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de reembolso ni recuperación posterior."
+    },
+    "specific": {
+      "Title": "📌 Casos específicos",
+      "Text": "Para situaciones especiales o excepcionales, se recomienda contactar directamente a la profesora para evaluar posibles soluciones o alternativas de recuperación que se ajusten a cada caso."
+    }
+  },
   "Sidebar": {
     "Options": {
       "Home": "Inicio",
       "Calendar": "Calendario",
       "Users": "Usuarios",
       "Profile": "Mi perfil",
-      "SignOut": "Cerrar sesión"
+      "SignOut": "Cerrar sesión",
+      "Settings": "Ajustes",
+      "Policies": "Políticas"
     }
   }
 }

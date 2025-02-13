@@ -3,4 +3,5 @@ export * from "./users";
 export * from "./profile";
 export * from "./classes";
 export * from "./calendar";
+export * from "./policies";
 export * from "./auth-form";
