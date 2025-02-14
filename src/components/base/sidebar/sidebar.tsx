@@ -15,46 +15,43 @@ import {
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
 import { useLogout } from "../../../api";
-import { useUser } from "../../../hooks";
+
+const TOP_SIDEBAR_ITEMS = [
+  {
+    text: "home",
+    icon: mdiHomeOutline,
+  },
+  {
+    text: "classes",
+    icon: mdiCalendar,
+  },
+  {
+    text: "users",
+    adminView: true,
+    icon: mdiAccountGroupOutline,
+  },
+];
+
+const BOTTOM_SIDEBAR_ITEMS = [
+  { text: "policies", icon: mdiInformationOutline },
+  { text: "settings", icon: mdiCogOutline, adminView: true },
+  { text: "profile", icon: mdiAccountCircleOutline },
+];
 
 export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
-  const { isAdmin } = useUser();
-
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate: logout } = useLogout();
-
-  const primaryItems = [
-    {
-      text: "home",
-      icon: mdiHomeOutline,
-    },
-    {
-      text: "classes",
-      icon: mdiCalendar,
-    },
-    ...(isAdmin
-      ? [
-          {
-            text: "users",
-            icon: mdiAccountGroupOutline,
-          },
-        ]
-      : []),
-  ];
 
   return (
     <MainContainer>
       <MainWrapper>
         <SidebarContainer isExpanded={isOpen}>
-          <SidebarOptions isExpanded={isOpen} items={primaryItems} />
+          <SidebarOptions isExpanded={isOpen} items={TOP_SIDEBAR_ITEMS} />
           <SidebarOptions
             isExpanded={isOpen}
             items={[
-              isAdmin
-                ? { text: "settings", icon: mdiCogOutline }
-                : { text: "policies", icon: mdiInformationOutline },
-              { text: "profile", icon: mdiAccountCircleOutline },
+              ...BOTTOM_SIDEBAR_ITEMS,
               {
                 text: "signOut",
                 onClick: logout,

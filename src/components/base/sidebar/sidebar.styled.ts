@@ -15,10 +15,12 @@ export const SidebarButton = styled.div(
   tw`absolute z-50 top-1/2 -right-4 p-2 rounded-full border border-neutral-200 bg-neutral-50 cursor-pointer`
 );
 export const SidebarBox = styled.div<{
+  hide?: boolean;
   isSelected?: boolean;
   isExpanded?: boolean;
 }>`
   ${tw`flex flex-row items-center gap-3 p-2.5 rounded-xl cursor-pointer`}
+  ${({ hide }) => hide && tw`hidden`}
   ${({ isExpanded }) => isExpanded && tw`w-full`}
   ${({ isSelected }) => isSelected && tw`text-violet-600 bg-violet-50`}
 `;
