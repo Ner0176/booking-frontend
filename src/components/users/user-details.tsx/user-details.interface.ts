@@ -1,6 +1,7 @@
 export interface IUpdateUserFields {
   name: string;
   phone?: string;
+  language: string;
 }
 
 export interface IUserFieldErrors {

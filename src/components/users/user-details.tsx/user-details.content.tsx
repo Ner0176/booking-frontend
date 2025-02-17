@@ -9,7 +9,7 @@ import {
 import { IClass, IUser, useDeleteUser, useUpdateUser } from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { checkPhone, formatTime, formatToLongDate } from "../../../utils";
-import { useSearchParamsManager } from "../../../hooks";
+import { useSearchParamsManager, useUser } from "../../../hooks";
 import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 import { useEffect, useState } from "react";
 import {
@@ -17,7 +17,6 @@ import {
   IUpdateUserFields,
   IUserFieldErrors,
 } from "./user-details.interface";
-import i18n from "../../../i18n";
 
 export const UserInfoField = ({
   icon,
@@ -39,24 +38,35 @@ export const UserInfoField = ({
 
 export const EditUserInformation = ({
   user,
-  handleSuccess,
-}: Readonly<{ user: IUser; handleSuccess(): void }>) => {
-  const { t } = useTranslation();
+  refetch,
+}: Readonly<{ user: IUser; refetch(): void }>) => {
+  const { updateUser: updateUserLocally } = useUser();
+  const { t, i18n } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
 
-  const { name, email, phone } = user;
+  const { name, email, phone, language } = user;
 
-  const [fields, setFields] = useState<IUpdateUserFields>({ name: "" });
+  const [fields, setFields] = useState<IUpdateUserFields>({
+    name,
+    language,
+  });
   const [errors, setErrors] = useState<IUserFieldErrors>(initUserFieldErrors);
+
+  const handleSuccess = () => {
+    refetch();
+    setParams([{ key: "action" }]);
+    i18n.changeLanguage(fields.language);
+    updateUserLocally("language", fields.language);
+  };
 
   const { mutate: updateUser, isPending: isLoading } =
     useUpdateUser(handleSuccess);
 
   useEffect(() => {
-    setFields({ name, phone: phone ?? "" });
-  }, [name, phone]);
+    setFields({ name, language, phone: phone ?? "" });
+  }, [name, phone, language]);
 
-  const handleFields = (field: string, value: string) => {
+  const handleUpdateField = (field: string, value: string) => {
     setFields((prev) => {
       return { ...prev, [field]: value };
     });
@@ -73,7 +83,7 @@ export const EditUserInformation = ({
       updateUser({
         name: fields.name,
         phone: fields.phone,
-        language: i18n.language,
+        language: fields.language,
       });
     }
   };
@@ -90,7 +100,7 @@ export const EditUserInformation = ({
           if (!fields.name.length) showError = true;
           handleErrors("name", showError);
         }}
-        handleChange={(v) => handleFields("name", v)}
+        handleChange={(v) => handleUpdateField("name", v)}
         error={errors.name ? t("Auth.Errors.Name") : undefined}
       />
       <UserInfoField icon={mdiEmailOutline} textKey="Email" value={email} />
@@ -107,10 +117,15 @@ export const EditUserInformation = ({
           }
           handleErrors("phone", showError);
         }}
-        handleChange={(v) => handleFields("phone", v)}
+        handleChange={(v) => handleUpdateField("phone", v)}
         error={errors.phone ? t("Auth.Errors.Phone") : undefined}
       />
-      <LanguageSelector />
+      <LanguageSelector
+        selectedValue={fields.language}
+        handleChange={(newLanguage) =>
+          handleUpdateField("language", newLanguage)
+        }
+      />
       <div className="flex flex-row items-center justify-end gap-3">
         <CustomButton
           color="secondary"

@@ -30,7 +30,7 @@ export const UserDetails = ({
   refetch,
   isCurrentUser = false,
 }: Readonly<{ user: IUser; refetch(): void; isCurrentUser?: boolean }>) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager([
     CLASS_KEY_PARAM,
     "action",
@@ -38,7 +38,7 @@ export const UserDetails = ({
   const actionType = params.get("action");
   const selectedOption = params.get(CLASS_KEY_PARAM);
 
-  const { name, phone, email } = user;
+  const { name, phone, email, language } = user;
 
   const { data } = useGetBookingsFromUser(user.id);
 
@@ -89,13 +89,7 @@ export const UserDetails = ({
           </span>
           <div className="flex flex-col gap-4">
             {isCurrentUser && actionType === "edit-user" ? (
-              <EditUserInformation
-                user={user}
-                handleSuccess={() => {
-                  setParams([{ key: "action" }]);
-                  refetch();
-                }}
-              />
+              <EditUserInformation user={user} refetch={refetch} />
             ) : (
               <>
                 <UserInfoField
@@ -117,7 +111,7 @@ export const UserDetails = ({
                   <UserInfoField
                     icon={mdiEarth}
                     textKey="Language"
-                    value={t(`Base.Languages.${i18n.language}`)}
+                    value={t(`Base.Languages.${language}`)}
                   />
                 )}
               </>
