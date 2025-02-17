@@ -14,14 +14,19 @@ export const useGetClassConfigs = () => {
   });
 };
 
-export const useUpdateClassConfigs = () => {
+export const useUpdateClassConfigs = (handleOnSuccess: () => void) => {
   const { t } = useTranslation();
+  const basePath = "Settings.Cancelation";
 
   return useMutation({
     mutationFn: async (payload: EditClassConfigsPayload) =>
       classConfigsApi.updateClassConfigs(payload),
+    onSuccess() {
+      handleOnSuccess();
+      showToast({ type: "success", text: t(`${basePath}.Success`) });
+    },
     onError() {
-      showToast({ type: "error", text: t("Policies.Error") });
+      showToast({ type: "error", text: t(`${basePath}.Error`) });
     },
   });
 };

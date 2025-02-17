@@ -7,6 +7,7 @@
       "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto."
     },
     "Buttons": {
+      "Edit": "Editar",
       "Skip": "Saltar paso",
       "Cancel": "Cancelar",
       "Delete": "Eliminar",
@@ -251,6 +252,17 @@
     "specific": {
       "Title": "📌 Casos específicos",
       "Text": "Para situaciones especiales o excepcionales, se recomienda contactar directamente a la profesora para evaluar posibles soluciones o alternativas de recuperación que se ajusten a cada caso."
+    }
+  },
+  "Settings": {
+    "Title": "Ajustes generales",
+    "Cancelation": {
+      "Title": "Cancelación de clases",
+      "MaxCancelations": "Cancelaciones máximas (mensual)",
+      "Anticipation": "Antelación mínima (horas)",
+      "MaxRecovery": "Periodo máximo recuperación (días)",
+      "Success": "Configuraciones de cancelación actualizadas correctamente",
+      "Error": "Ha ocurrido un error al intentar actualizar las configuraciones de cancelación"
     }
   },
   "Sidebar": {

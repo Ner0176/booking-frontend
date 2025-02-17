@@ -7,6 +7,7 @@
       "Description": "<strong>Avís:</strong> aquesta acció és <strong>irreversible</strong>. Si vols continuar, escriu <strong>Confirmar acció</strong> en el següent camp de text."
     },
     "Buttons": {
+      "Edit": "Editar",
       "Skip": "Saltar pas",
       "Cancel": "Cancel·lar",
       "Delete": "Eliminar",
@@ -251,6 +252,17 @@
     "specific": {
       "Title": "📌 Casos específics",
       "Text": "Per a situacions especials o excepcionals, es recomana contactar directament a la professora per avaluar possibles solucions o alternatives de recuperació que s'ajustin a cada cas."
+    }
+  },
+  "Settings": {
+    "Title": "Configuració general",
+    "Cancelation": {
+      "Title": "Cancel·lació de classes",
+      "MaxCancelations": "Cancel·lacions màximes (mensual)",
+      "Anticipation": "Antel·lació mínima (hores)",
+      "MaxRecovery": "Període màxim recuperació (dies)",
+      "Success": "Configuracions de cancel·lació actualitzades satisfactòriament",
+      "Error": "Hi ha hagut un error en intentar actualizar les configuracions de cancel·lació"
     }
   },
   "Sidebar": {

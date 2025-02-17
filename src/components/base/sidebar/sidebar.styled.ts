@@ -8,7 +8,7 @@ export const SidebarContainer = styled.div<{ isExpanded: boolean }>`
   transition: width 0.3s ease-in-out;
 `;
 export const SidebarItemBox = styled.div<{ isExpanded?: boolean }>`
-  ${tw`flex flex-col items-center gap-6 w-full`}
+  ${tw`flex flex-col items-center gap-4 w-full`}
   ${({ isExpanded }) => isExpanded && tw`px-4`}
 `;
 export const SidebarButton = styled.div(

@@ -2,21 +2,35 @@ import { useTranslation } from "react-i18next";
 import { CustomSelect } from "../select";
 import { useUser } from "../../../hooks";
 
-export const LanguageSelector = () => {
+const CURRENT_LANGUAGES = ["es", "ca"];
+export const LanguageSelector = ({
+  handleChange,
+  selectedValue,
+}: Readonly<{
+  selectedValue?: string;
+  handleChange?: (newLanguage: string) => void;
+}>) => {
   const { updateUser } = useUser();
   const { t, i18n } = useTranslation();
 
+  const getOptions = () => {
+    return CURRENT_LANGUAGES.map((lang) => ({
+      key: lang,
+      text: t(`Base.Languages.${lang}`),
+    }));
+  };
+
   return (
     <CustomSelect
-      selectedValue={i18n.language}
+      options={getOptions()}
       title={t("Auth.Fields.Language")}
-      options={[
-        { key: "es", text: t("Base.Languages.es") },
-        { key: "ca", text: t("Base.Languages.ca") },
-      ]}
+      selectedValue={selectedValue ?? i18n.language}
       handleChange={(newLanguage) => {
-        i18n.changeLanguage(newLanguage);
-        updateUser("language", newLanguage);
+        if (!!handleChange) handleChange(newLanguage);
+        else {
+          i18n.changeLanguage(newLanguage);
+          updateUser("language", newLanguage);
+        }
       }}
     />
   );
