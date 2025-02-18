@@ -9,8 +9,8 @@ import {
   mdiChevronDoubleRight,
   mdiCogOutline,
   mdiExitToApp,
-  mdiHomeOutline,
   mdiInformationOutline,
+  mdiTableCog,
 } from "@mdi/js";
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
@@ -19,15 +19,19 @@ import { ISidebarItem } from "./sidebar.interface";
 
 const TOP_SIDEBAR_ITEMS: ISidebarItem[] = [
   {
-    text: "home",
-    icon: mdiHomeOutline,
+    text: "calendar",
+    icon: mdiCalendar,
   },
   {
     view: "admin",
-    text: "classes",
-    icon: mdiCalendar,
+    icon: mdiTableCog,
+    text: "management",
   },
-  { text: "myClasses", view: "user", icon: mdiCalendar },
+  {
+    view: "user",
+    icon: mdiCalendar,
+    text: "my-classes",
+  },
   {
     text: "users",
     view: "admin",

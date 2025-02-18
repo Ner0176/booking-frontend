@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { CalendarBody } from "./classes.styled";
+import { CalendarBody } from "./class-management.styled";
 import { useGetAllClasses } from "../../api";
 import {
   CalendarFilters,
   CalendarHeaderButtons,
   ClassCard,
-} from "./classes.content";
+} from "./class-management.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo, useState } from "react";
@@ -14,10 +14,13 @@ import { format } from "date-fns";
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
 import { DashboardSkeleton, NoDataComponent } from "../base";
-import { ClassDatesFilter, ClassStatusType } from "./classes.interface";
+import {
+  ClassDatesFilter,
+  ClassStatusType,
+} from "./class-management.interface";
 import noDataLoading from "../../assets/images/noData/reload.svg";
 
-export const ClassesDashboard = () => {
+export const ClassesManagementDashboard = () => {
   const { t } = useTranslation();
   const { params } = useSearchParamsManager(["event", "action"]);
   const eventId = params.get("event");

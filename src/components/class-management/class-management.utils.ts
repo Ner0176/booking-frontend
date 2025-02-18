@@ -7,7 +7,10 @@ import {
   startOfWeek,
   subMonths,
 } from "date-fns";
-import { ClassDatesFilter, ClassTimeFilterType } from "./classes.interface";
+import {
+  ClassDatesFilter,
+  ClassTimeFilterType,
+} from "./class-management.interface";
 
 function getLastXMonths(date: Date, total: number) {
   return {

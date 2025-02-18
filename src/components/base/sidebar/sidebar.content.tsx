@@ -19,7 +19,7 @@ export const SidebarOptions = ({
   return (
     <SidebarItemBox isExpanded={isExpanded}>
       {items.map(({ icon, text, view, onClick }, idx) => {
-        const path = text === "home" ? "/" : `/${text}`;
+        const path = text === "calendar" ? "/" : `/${text}`;
         const isSelected = location.pathname === path;
 
         const hideOption =

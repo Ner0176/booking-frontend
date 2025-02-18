@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import tw from "twin.macro";
-import { ClassStatusType } from "./classes.interface";
+import { ClassStatusType } from "./class-management.interface";
 
 export const CalendarBody = styled.div(
   tw`flex flex-wrap justify-between gap-4 px-8 h-full overflow-y-auto`

@@ -267,8 +267,8 @@
   },
   "Sidebar": {
     "Options": {
-      "Home": "Inicio",
       "Calendar": "Calendario",
+      "Management": "Gestión de clases",
       "Users": "Usuarios",
       "Profile": "Mi perfil",
       "SignOut": "Cerrar sesión",

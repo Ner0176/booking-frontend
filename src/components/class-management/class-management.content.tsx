@@ -16,7 +16,10 @@ import {
   useState,
 } from "react";
 import { useSearchParamsManager } from "../../hooks";
-import { CalendarItemContainer, ClassInfoRowContainer } from "./classes.styled";
+import {
+  CalendarItemContainer,
+  ClassInfoRowContainer,
+} from "./class-management.styled";
 import {
   capitalize,
   formatTime,
@@ -29,7 +32,7 @@ import {
   ClassDatesFilter,
   ClassStatusType,
   ClassTimeFilterType,
-} from "./classes.interface";
+} from "./class-management.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
@@ -40,7 +43,7 @@ import {
   getInputDate,
   HeaderButton,
 } from "../base";
-import { getDatesFromTimeFilter } from "./classes.utils";
+import { getDatesFromTimeFilter } from "./class-management.utils";
 import {
   mdiArrowLeft,
   mdiPencilOutline,
@@ -48,7 +51,7 @@ import {
   mdiTrashCanOutline,
 } from "@mdi/js";
 
-const ItemInfoRow = ({
+export const ItemInfoRow = ({
   icon,
   status,
   children,

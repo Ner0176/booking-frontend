@@ -1,13 +1,14 @@
 import {
   AuthForm,
   CalendarDashboard,
-  ClassesDashboard,
+  ClassesManagementDashboard,
   PoliciesDashboard,
   ProfileDashboard,
+  SettingsDashboard,
   Sidebar,
+  UserBookingsDashboard,
   UsersDashboard,
 } from "../components";
-import { SettingsDashboard } from "../components/settings";
 import { InvalidRoute, ProtectedRoute } from "./router.content";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
@@ -27,9 +28,13 @@ export const AppRouter = () => {
           <Route path="/" element={<CalendarDashboard />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/users" element={<UsersDashboard />} />
-            <Route path="/classes" element={<ClassesDashboard />} />
+            <Route
+              path="/management"
+              element={<ClassesManagementDashboard />}
+            />
             <Route path="/settings" element={<SettingsDashboard />} />
           </Route>
+          <Route path="/my-classes" element={<UserBookingsDashboard />} />
           <Route path="/profile" element={<ProfileDashboard />} />
           <Route path="/policies" element={<PoliciesDashboard />} />
         </Route>
