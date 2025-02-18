@@ -4,6 +4,7 @@ import { MainWrapper, SidebarButton, SidebarContainer } from "./sidebar.styled";
 import {
   mdiAccountCircleOutline,
   mdiAccountGroupOutline,
+  mdiBookmarkOutline,
   mdiCalendar,
   mdiChevronDoubleLeft,
   mdiChevronDoubleRight,
@@ -29,8 +30,8 @@ const TOP_SIDEBAR_ITEMS: ISidebarItem[] = [
   },
   {
     view: "user",
-    icon: mdiCalendar,
-    text: "my-classes",
+    text: "bookings",
+    icon: mdiBookmarkOutline,
   },
   {
     text: "users",

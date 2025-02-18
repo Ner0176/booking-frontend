@@ -269,6 +269,7 @@
     "Options": {
       "Calendar": "Calendario",
       "Management": "Gestión de clases",
+      "Bookings": "Reservas",
       "Users": "Usuarios",
       "Profile": "Mi perfil",
       "SignOut": "Cerrar sesión",

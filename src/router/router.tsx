@@ -26,7 +26,10 @@ export const AppRouter = () => {
           }
         >
           <Route path="/" element={<CalendarDashboard />} />
-          <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<ProfileDashboard />} />
+          <Route path="/policies" element={<PoliciesDashboard />} />
+
+          <Route element={<ProtectedRoute allowViewTo="admin" />}>
             <Route path="/users" element={<UsersDashboard />} />
             <Route
               path="/management"
@@ -34,9 +37,10 @@ export const AppRouter = () => {
             />
             <Route path="/settings" element={<SettingsDashboard />} />
           </Route>
-          <Route path="/my-classes" element={<UserBookingsDashboard />} />
-          <Route path="/profile" element={<ProfileDashboard />} />
-          <Route path="/policies" element={<PoliciesDashboard />} />
+
+          <Route element={<ProtectedRoute allowViewTo="user" />}>
+            <Route path="/bookings" element={<UserBookingsDashboard />} />
+          </Route>
         </Route>
         <Route path="*" element={<InvalidRoute />} />
       </Routes>

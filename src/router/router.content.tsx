@@ -13,7 +13,14 @@ export const InvalidRoute = () => {
   );
 };
 
-export const ProtectedRoute = () => {
+export const ProtectedRoute = ({
+  allowViewTo,
+}: Readonly<{ allowViewTo: "user" | "admin" }>) => {
   const { isAdmin } = useUser();
-  return isAdmin ? <Outlet /> : <Navigate to="/" replace />;
+
+  const allowance =
+    (allowViewTo === "user" && !isAdmin) ||
+    (allowViewTo === "admin" && isAdmin);
+
+  return allowance ? <Outlet /> : <Navigate to="/" replace />;
 };
