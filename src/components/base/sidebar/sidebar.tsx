@@ -15,26 +15,29 @@ import {
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
 import { useLogout } from "../../../api";
+import { ISidebarItem } from "./sidebar.interface";
 
-const TOP_SIDEBAR_ITEMS = [
+const TOP_SIDEBAR_ITEMS: ISidebarItem[] = [
   {
     text: "home",
     icon: mdiHomeOutline,
   },
   {
+    view: "admin",
     text: "classes",
     icon: mdiCalendar,
   },
+  { text: "myClasses", view: "user", icon: mdiCalendar },
   {
     text: "users",
-    adminView: true,
+    view: "admin",
     icon: mdiAccountGroupOutline,
   },
 ];
 
-const BOTTOM_SIDEBAR_ITEMS = [
+const BOTTOM_SIDEBAR_ITEMS: ISidebarItem[] = [
   { text: "policies", icon: mdiInformationOutline },
-  { text: "settings", icon: mdiCogOutline, adminView: true },
+  { text: "settings", view: "admin", icon: mdiCogOutline },
   { text: "profile", icon: mdiAccountCircleOutline },
 ];
 

@@ -25,9 +25,9 @@ export const AppRouter = () => {
           }
         >
           <Route path="/" element={<CalendarDashboard />} />
-          <Route path="/classes" element={<ClassesDashboard />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/users" element={<UsersDashboard />} />
+            <Route path="/classes" element={<ClassesDashboard />} />
             <Route path="/settings" element={<SettingsDashboard />} />
           </Route>
           <Route path="/profile" element={<ProfileDashboard />} />

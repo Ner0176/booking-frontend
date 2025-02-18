@@ -4,7 +4,7 @@ import {
   CreateBookingPayload,
   GetBookingPayload,
   IBooking,
-  IUserBookings,
+  IUserBooking,
 } from "./bookings.interface";
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
@@ -18,7 +18,7 @@ export function useGetBookings(payload: GetBookingPayload) {
 }
 
 export function useGetBookingsFromUser(userId: number, enabled?: boolean) {
-  return useQuery<IUserBookings>({
+  return useQuery<IUserBooking[]>({
     queryKey: ["getBookingsByUserId", userId],
     enabled: enabled === undefined ? true : enabled,
     queryFn: () => bookingApi.getBookingsByUserId(userId),

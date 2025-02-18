@@ -1,26 +1,14 @@
 import { useTranslation } from "react-i18next";
-import {
-  BookingType,
-  IUserBookings,
-  IUser,
-  useGetBookingsFromUser,
-} from "../../../api";
+import { IUser, useGetBookingsFromUser } from "../../../api";
 import { SwitchSelector } from "../../base";
 import {
   DeleteUserModal,
-  EditUserInformation,
   UserClassItem,
   UserInfoField,
 } from "./user-details.content";
 import { useSearchParamsManager } from "../../../hooks";
-import { format } from "date-fns";
 import { useEffect } from "react";
-import {
-  mdiAccountOutline,
-  mdiEarth,
-  mdiEmailOutline,
-  mdiPhoneOutline,
-} from "@mdi/js";
+import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 
 const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
@@ -28,8 +16,7 @@ const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
 export const UserDetails = ({
   user,
   refetch,
-  isCurrentUser = false,
-}: Readonly<{ user: IUser; refetch(): void; isCurrentUser?: boolean }>) => {
+}: Readonly<{ user: IUser; refetch(): void }>) => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager([
     CLASS_KEY_PARAM,
@@ -38,7 +25,7 @@ export const UserDetails = ({
   const actionType = params.get("action");
   const selectedOption = params.get(CLASS_KEY_PARAM);
 
-  const { name, phone, email, language } = user;
+  const { name, phone, email } = user;
 
   const { data } = useGetBookingsFromUser(user.id);
 
@@ -55,30 +42,30 @@ export const UserDetails = ({
     }));
   };
 
-  const getStats = () => {
-    let stats: string[] = [];
-    const basePath = "Users.Details.Stats";
+  // const getStats = () => {
+  //   let stats: string[] = [];
+  //   const basePath = "Users.Details.Stats";
 
-    if (data) {
-      stats = CLASS_OPTIONS.map((option) =>
-        t(`${basePath}.${option}`, {
-          amount: data[option as BookingType].length,
-        })
-      );
+  //   if (data) {
+  //     stats = CLASS_OPTIONS.map((option) =>
+  //       t(`${basePath}.${option}`, {
+  //         amount: data[option as BookingType].length,
+  //       })
+  //     );
 
-      let date: Date | undefined;
-      if (data.completed.length > 0) {
-        date = new Date(data.completed[0].class.date);
-      }
-      stats.push(
-        t(`${basePath}.firstClass`, {
-          amount: date ? format(date, "dd/MM/yyyy") : "-",
-        })
-      );
-    }
+  //     let date: Date | undefined;
+  //     if (data.completed.length > 0) {
+  //       date = new Date(data.completed[0].class.date);
+  //     }
+  //     stats.push(
+  //       t(`${basePath}.firstClass`, {
+  //         amount: date ? format(date, "dd/MM/yyyy") : "-",
+  //       })
+  //     );
+  //   }
 
-    return stats;
-  };
+  //   return stats;
+  // };
 
   return (
     <>
@@ -88,34 +75,21 @@ export const UserDetails = ({
             {t("Users.Details.Information")}
           </span>
           <div className="flex flex-col gap-4">
-            {isCurrentUser && actionType === "edit-user" ? (
-              <EditUserInformation user={user} refetch={refetch} />
-            ) : (
-              <>
-                <UserInfoField
-                  value={name}
-                  textKey="Name"
-                  icon={mdiAccountOutline}
-                />
-                <UserInfoField
-                  value={email}
-                  textKey="Email"
-                  icon={mdiEmailOutline}
-                />
-                <UserInfoField
-                  textKey="Phone"
-                  icon={mdiPhoneOutline}
-                  value={phone ? phone : "-"}
-                />
-                {isCurrentUser && (
-                  <UserInfoField
-                    icon={mdiEarth}
-                    textKey="Language"
-                    value={t(`Base.Languages.${language}`)}
-                  />
-                )}
-              </>
-            )}
+            <UserInfoField
+              value={name}
+              textKey="Name"
+              icon={mdiAccountOutline}
+            />
+            <UserInfoField
+              value={email}
+              textKey="Email"
+              icon={mdiEmailOutline}
+            />
+            <UserInfoField
+              textKey="Phone"
+              icon={mdiPhoneOutline}
+              value={phone ? phone : "-"}
+            />
           </div>
         </div>
         <div className="flex flex-col w-full">
@@ -125,7 +99,7 @@ export const UserDetails = ({
           />
           {!!data && !!selectedOption && (
             <div className="flex flex-col">
-              {data[selectedOption as keyof IUserBookings].map((item, idx) => (
+              {data.map((item, idx) => (
                 <UserClassItem key={idx} classInstance={item.class} />
               ))}
             </div>
@@ -137,14 +111,15 @@ export const UserDetails = ({
               {t("Users.Details.Stats.Title")}
             </span>
             <div className="flex flex-col gap-4">
-              {getStats().map((item, idx) => (
+              {/* {getStats().map((item, idx) => (
                 <span key={idx}>{item}</span>
-              ))}
+              ))} */}
+              Pendiente...
             </div>
           </div>
         </div>
       </div>
-      {actionType === "delete-event" && !isCurrentUser && (
+      {actionType === "delete-event" && (
         <DeleteUserModal
           user={user}
           refetch={refetch}

@@ -1,15 +1,25 @@
 import { useTranslation } from "react-i18next";
 import { useFindMe } from "../../api";
 import { DashboardSkeleton, HeaderButton, NoDataComponent } from "../base";
-import { UserDetails } from "../users";
-import { ProfileLoadingSkeleton } from "./profile.content";
+import { UserInfoField } from "../users";
+import {
+  EditProfileInformation,
+  ProfileLoadingSkeleton,
+} from "./profile.content";
 import noDataVoid from "../../assets/images/noData/void.svg";
-import { mdiPencilOutline } from "@mdi/js";
+import {
+  mdiAccountOutline,
+  mdiEarth,
+  mdiEmailOutline,
+  mdiPencilOutline,
+  mdiPhoneOutline,
+} from "@mdi/js";
 import { useSearchParamsManager } from "../../hooks";
 
 export const ProfileDashboard = () => {
   const { t } = useTranslation();
-  const { setParams } = useSearchParamsManager([]);
+  const { params, setParams } = useSearchParamsManager(["action"]);
+  const actionType = params.get("action");
 
   const { data: user, refetch, isLoading } = useFindMe();
 
@@ -29,8 +39,36 @@ export const ProfileDashboard = () => {
       {isLoading ? (
         <ProfileLoadingSkeleton isLoading={isLoading} />
       ) : user ? (
-        <UserDetails isCurrentUser user={user} refetch={refetch} />
+        <div className="flex flex-col gap-4 max-w-[50%]">
+          {actionType === "edit-user" ? (
+            <EditProfileInformation user={user} refetch={refetch} />
+          ) : (
+            <>
+              <UserInfoField
+                value={user.name}
+                textKey="Name"
+                icon={mdiAccountOutline}
+              />
+              <UserInfoField
+                value={user.email}
+                textKey="Email"
+                icon={mdiEmailOutline}
+              />
+              <UserInfoField
+                textKey="Phone"
+                icon={mdiPhoneOutline}
+                value={user.phone ? user.phone : "-"}
+              />
+              <UserInfoField
+                icon={mdiEarth}
+                textKey="Language"
+                value={t(`Base.Languages.${user.language}`)}
+              />
+            </>
+          )}
+        </div>
       ) : (
+        // <UserDetails user={user} refetch={refetch} />
         <NoDataComponent
           image={noDataVoid}
           title={t("Profile.NoData")}

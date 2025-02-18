@@ -18,16 +18,19 @@ export const SidebarOptions = ({
 
   return (
     <SidebarItemBox isExpanded={isExpanded}>
-      {items.map(({ icon, text, adminView, onClick }, idx) => {
+      {items.map(({ icon, text, view, onClick }, idx) => {
         const path = text === "home" ? "/" : `/${text}`;
         const isSelected = location.pathname === path;
+
+        const hideOption =
+          (view === "user" && isAdmin) || (view === "admin" && !isAdmin);
 
         return (
           <SidebarBox
             key={idx}
+            hide={hideOption}
             isSelected={isSelected}
             isExpanded={isExpanded}
-            hide={adminView && !isAdmin}
             onClick={() => (!onClick ? navigate(path) : onClick())}
           >
             <Icon size="24px" path={icon} />

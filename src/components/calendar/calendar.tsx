@@ -37,10 +37,7 @@ export const CalendarDashboard = () => {
 
   const events = useMemo(() => {
     if (allClasses && allClasses.length) {
-      const bookings =
-        !isAdmin && userBookings
-          ? [...userBookings.completed, ...userBookings.pending]
-          : [];
+      const bookings = !isAdmin && userBookings ? userBookings : [];
 
       const bookingsSet = new Set(bookings.map((item) => item.class.id));
 

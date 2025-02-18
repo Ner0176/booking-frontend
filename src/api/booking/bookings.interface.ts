@@ -20,13 +20,8 @@ export interface IBooking {
   status: BookingType;
 }
 
-export interface IBookingClass {
+export interface IUserBooking {
   id: number;
   class: IClass;
   status: BookingType;
-}
-export interface IUserBookings {
-  pending: IBookingClass[];
-  completed: IBookingClass[];
-  cancelled: IBookingClass[];
 }
