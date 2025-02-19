@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateBookingPayload,
   GetBookingPayload,
+  GetUserBookingsPayload,
   IBooking,
   IUserBooking,
 } from "./bookings.interface";
@@ -17,11 +18,15 @@ export function useGetBookings(payload: GetBookingPayload) {
   });
 }
 
-export function useGetBookingsFromUser(userId: number, enabled?: boolean) {
+export function useGetBookingsFromUser(
+  userId: number,
+  payload: GetUserBookingsPayload,
+  enabled?: boolean
+) {
   return useQuery<IUserBooking[]>({
-    queryKey: ["getBookingsByUserId", userId],
-    enabled: enabled === undefined ? true : enabled,
-    queryFn: () => bookingApi.getBookingsByUserId(userId),
+    enabled: enabled ?? true,
+    queryKey: ["getBookingsByUserId", userId, payload],
+    queryFn: () => bookingApi.getBookingsByUserId(userId, payload),
   });
 }
 
@@ -63,6 +68,22 @@ export function useEditBookings(refetch: () => void) {
         type: "error",
         text: t(`${basePath}.Error`),
       });
+    },
+  });
+}
+
+export function useCancelBooking(handleSuccess: () => void) {
+  const { t } = useTranslation();
+  const basePath = "UserBookings.Cancel";
+
+  return useMutation({
+    mutationFn: (bookingId: number) => bookingApi.cancelBooking(bookingId),
+    onSuccess() {
+      handleSuccess();
+      showToast({ text: t(`${basePath}.Success`), type: "success" });
+    },
+    onError() {
+      showToast({ text: t(`${basePath}.Error`), type: "error" });
     },
   });
 }

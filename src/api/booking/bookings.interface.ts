@@ -12,6 +12,12 @@ export interface CreateBookingPayload {
   isRecurrent: boolean;
 }
 
+export interface GetUserBookingsPayload {
+  endDate?: Date;
+  startDate?: Date;
+  status?: BookingType;
+}
+
 export type BookingType = "pending" | "cancelled" | "completed";
 export interface IBooking {
   id: number;
@@ -22,6 +28,7 @@ export interface IBooking {
 
 export interface IUserBooking {
   id: number;
-  class: IClass;
   status: BookingType;
+  class: IClass | null;
+  originalClass: IClass | null;
 }

@@ -1,5 +1,9 @@
 import { axiosInstance } from "../axios-instance";
-import { CreateBookingPayload, GetBookingPayload } from "./bookings.interface";
+import {
+  CreateBookingPayload,
+  GetBookingPayload,
+  GetUserBookingsPayload,
+} from "./bookings.interface";
 
 export const bookingApi = {
   getBookings: async ({ userId, classId }: GetBookingPayload) => {
@@ -11,8 +15,19 @@ export const bookingApi = {
     const response = await axiosInstance.get(`/booking/find`, { params });
     return response.data;
   },
-  getBookingsByUserId: async (userId: number) => {
-    const response = await axiosInstance.get(`/booking/user/${userId}`);
+  getBookingsByUserId: async (
+    userId: number,
+    payload: GetUserBookingsPayload
+  ) => {
+    const params = new URLSearchParams();
+
+    Object.entries(payload).forEach(([key, value]) =>
+      params.append(key, value.toString())
+    );
+
+    const response = await axiosInstance.get(`/booking/user/${userId}`, {
+      params,
+    });
     return response.data;
   },
   createBookings: async (payload: CreateBookingPayload) => {
@@ -20,5 +35,8 @@ export const bookingApi = {
   },
   editBookings: async (payload: CreateBookingPayload) => {
     await axiosInstance.patch("/booking/edit", payload);
+  },
+  cancelBooking: async (bookingId: number) => {
+    await axiosInstance.patch(`/booking/${bookingId}`);
   },
 };
