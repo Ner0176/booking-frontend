@@ -17,6 +17,7 @@ export const DeleteModal = ({
   isDeleting,
   handleClose,
   handleDelete,
+  mainButtonText,
   checkValidations,
 }: Readonly<
   PropsWithChildren<{
@@ -25,6 +26,7 @@ export const DeleteModal = ({
     isDeleting: boolean;
     handleClose(): void;
     handleDelete(): void;
+    mainButtonText?: string;
     checkValidations?(): boolean;
   }>
 >) => {
@@ -76,7 +78,7 @@ export const DeleteModal = ({
             isLoading={isDeleting}
             onClick={handleOnDelete}
           >
-            {t("Base.Buttons.Delete")}
+            {mainButtonText ?? t("Base.Buttons.Delete")}
           </CustomButton>
         </DeleteModalFooter>
       </DeleteModalWrapper>
