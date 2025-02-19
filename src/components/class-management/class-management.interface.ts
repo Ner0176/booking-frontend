@@ -1,4 +1,9 @@
-export const CLASS_STATUS = ["all", "done", "pending", "cancelled"] as const;
+export const CLASS_STATUS = [
+  "all",
+  "completed",
+  "pending",
+  "cancelled",
+] as const;
 export type ClassStatusType = (typeof CLASS_STATUS)[number];
 
 export const CLASS_TIME_FILTERS = [

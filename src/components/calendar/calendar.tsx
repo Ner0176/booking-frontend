@@ -7,7 +7,12 @@ import { ca } from "date-fns/locale/ca";
 import { useTranslation } from "react-i18next";
 import { CustomEvent, CustomToolbar } from "./calendar.content";
 import { useUser } from "../../hooks";
-import { IAccount, useGetAllClasses, useGetBookingsFromUser } from "../../api";
+import {
+  IAccount,
+  IClass,
+  useGetAllClasses,
+  useGetBookingsFromUser,
+} from "../../api";
 import { CSSProperties, useCallback, useMemo, useState } from "react";
 import { mergeDateTime } from "../../utils";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +37,7 @@ export const CalendarDashboard = () => {
   const { data: allClasses } = useGetAllClasses({});
   const { data: userBookings } = useGetBookingsFromUser(
     +(user as IAccount).id,
+    {},
     !isAdmin && !!user
   );
 
@@ -39,7 +45,11 @@ export const CalendarDashboard = () => {
     if (allClasses && allClasses.length) {
       const bookings = !isAdmin && userBookings ? userBookings : [];
 
-      const bookingsSet = new Set(bookings.map((item) => item.class.id));
+      const bookingsSet = new Set(
+        bookings.map(({ class: classInstance, originalClass }) =>
+          !!classInstance ? classInstance.id : (originalClass as IClass).id
+        )
+      );
 
       const classesToEvent = allClasses.map(
         ({ id, date, startTime, endTime }) => {

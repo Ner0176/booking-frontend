@@ -1,10 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { CalendarBody } from "./class-management.styled";
+import {
+  ClassManagementBody,
+  CMCardContainer,
+} from "./class-management.styled";
 import { useGetAllClasses } from "../../api";
 import {
   CalendarFilters,
   CalendarHeaderButtons,
-  ClassCard,
+  ClassCardContent,
 } from "./class-management.content";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
@@ -22,7 +25,7 @@ import noDataLoading from "../../assets/images/noData/reload.svg";
 
 export const ClassesManagementDashboard = () => {
   const { t } = useTranslation();
-  const { params } = useSearchParamsManager(["event", "action"]);
+  const { params, setParams } = useSearchParamsManager(["event", "action"]);
   const eventId = params.get("event");
 
   const [datesFilter, setDatesFilter] = useState<ClassDatesFilter>({});
@@ -71,7 +74,7 @@ export const ClassesManagementDashboard = () => {
           setStatusFilter={setStatusFilter}
         />
       )}
-      <CalendarBody>
+      <ClassManagementBody>
         {!!eventId && selectedEvent ? (
           <ClassDetails classData={selectedEvent} refetchClasses={refetch} />
         ) : isLoading ? (
@@ -79,11 +82,18 @@ export const ClassesManagementDashboard = () => {
             <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
           ))
         ) : !!data && data.length > 0 ? (
-          data.map((item, idx) => <ClassCard key={idx} data={item} />)
+          data.map((item, idx) => (
+            <CMCardContainer
+              className="last:mb-6 hover:shadow-lg"
+              onClick={() => setParams([{ key: "event", value: `${item.id}` }])}
+            >
+              <ClassCardContent key={idx} data={item} />
+            </CMCardContainer>
+          ))
         ) : (
           <NoDataComponent image={noDataLoading} title={t("Classes.NoData")} />
         )}
-      </CalendarBody>
+      </ClassManagementBody>
       {params.get("action") === "create-event" && (
         <CreateClassModal refetchClasses={refetch} />
       )}

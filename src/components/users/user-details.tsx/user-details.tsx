@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { IUser, useGetBookingsFromUser } from "../../../api";
+import { BookingType, IUser, useGetBookingsFromUser } from "../../../api";
 import { SwitchSelector } from "../../base";
 import {
   DeleteUserModal,
@@ -27,7 +27,9 @@ export const UserDetails = ({
 
   const { name, phone, email } = user;
 
-  const { data } = useGetBookingsFromUser(user.id);
+  const { data } = useGetBookingsFromUser(user.id, {
+    status: selectedOption ? (selectedOption as BookingType) : undefined,
+  });
 
   useEffect(() => {
     if (!selectedOption) {
@@ -99,9 +101,12 @@ export const UserDetails = ({
           />
           {!!data && !!selectedOption && (
             <div className="flex flex-col">
-              {data.map((item, idx) => (
-                <UserClassItem key={idx} classInstance={item.class} />
-              ))}
+              {data.map(
+                (item, idx) =>
+                  !!item.class && (
+                    <UserClassItem key={idx} classInstance={item.class} />
+                  )
+              )}
             </div>
           )}
         </div>

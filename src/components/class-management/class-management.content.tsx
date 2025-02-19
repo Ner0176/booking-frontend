@@ -16,10 +16,7 @@ import {
   useState,
 } from "react";
 import { useSearchParamsManager } from "../../hooks";
-import {
-  CalendarItemContainer,
-  ClassInfoRowContainer,
-} from "./class-management.styled";
+import { ClassInfoRowContainer } from "./class-management.styled";
 import {
   capitalize,
   formatTime,
@@ -110,13 +107,10 @@ export const ClassStatusButton = ({
   );
 };
 
-export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
+export const ClassCardContent = ({ data }: Readonly<{ data: IClass }>) => {
   const { t } = useTranslation();
 
-  const { setParams } = useSearchParamsManager([]);
-
-  const { id, endTime, startTime, date, maxAmount, cancelled, currentCount } =
-    data;
+  const { endTime, startTime, date, maxAmount, cancelled, currentCount } = data;
 
   const { status, statusIcon } = (() => {
     if (cancelled) return { status: "cancelled", statusIcon: mdiCancel };
@@ -126,14 +120,11 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
 
     return isBefore(now, formattedDate)
       ? { status: "pending", statusIcon: mdiTimerSand }
-      : { status: "done", statusIcon: mdiCheck };
+      : { status: "completed", statusIcon: mdiCheck };
   })();
 
   return (
-    <CalendarItemContainer
-      className="last:mb-6 hover:shadow-lg"
-      onClick={() => setParams([{ key: "event", value: `${id}` }])}
-    >
+    <>
       <ItemInfoRow icon={statusIcon} status={status as ClassStatusType}>
         {t(`Classes.Filters.Status.Options.${status}`)}
       </ItemInfoRow>
@@ -146,7 +137,7 @@ export const ClassCard = ({ data }: Readonly<{ data: IClass }>) => {
       <ItemInfoRow icon={mdiCalendarOutline}>
         {formatToLongDate(date)}
       </ItemInfoRow>
-    </CalendarItemContainer>
+    </>
   );
 };
 
