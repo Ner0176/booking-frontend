@@ -97,8 +97,8 @@
         "Title": "Estat",
         "Options": {
           "all": "Tots",
-          "done": "Realitzada",
           "pending": "Pendent",
+          "completed": "Realitzada",
           "cancelled": "Cancel·lada"
         }
       },
@@ -252,6 +252,15 @@
     "specific": {
       "Title": "📌 Casos específics",
       "Text": "Per a situacions especials o excepcionals, es recomana contactar directament a la professora per avaluar possibles solucions o alternatives de recuperació que s'ajustin a cada cas."
+    }
+  },
+  "UserBookings": {
+    "Title": "Les meves reserves",
+    "Cancel": {
+      "Title": "Cancel·lar reserva",
+      "Success": "Reserva cancel·lada satisfactòriament",
+      "Error": "Ha ocorregut un error quan s'ha intentat cancel·lar la reserva",
+      "Description": "En cancel·lar la teva reserva per a la classe del {{date}}, <strong>perdràs la teva plaça</strong>, que podrà ser ocupada per una altra persona. <newLine /><newLine /> Abans de procedir, assegura’t de llegir i entendre les <strongLink>polítiques de cancel·lació.</strongLink>"
     }
   },
   "Settings": {

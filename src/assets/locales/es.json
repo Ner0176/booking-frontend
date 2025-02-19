@@ -97,8 +97,8 @@
         "Title": "Estado",
         "Options": {
           "all": "Todos",
-          "done": "Realizada",
           "pending": "Pendiente",
+          "completed": "Realizada",
           "cancelled": "Cancelada"
         }
       },
@@ -252,6 +252,15 @@
     "specific": {
       "Title": "📌 Casos específicos",
       "Text": "Para situaciones especiales o excepcionales, se recomienda contactar directamente a la profesora para evaluar posibles soluciones o alternativas de recuperación que se ajusten a cada caso."
+    }
+  },
+  "UserBookings": {
+    "Title": "Mis reservas",
+    "Cancel": {
+      "Title": "Cancelar reserva",
+      "Success": "Reserva cancelada correctamente",
+      "Error": "Ha ocurrido un error al intentar cancelar la reserva",
+      "Description": "Al cancelar tu reserva para la clase del {{date}}, <strong>perderás tu plaza</strong>, la cual podrá ser ocupada por otra persona. <newLine /><newLine /> Antes de proceder, asegúrate de leer y comprender las <strongLink>políticas de cancelación.</strongLink>"
     }
   },
   "Settings": {

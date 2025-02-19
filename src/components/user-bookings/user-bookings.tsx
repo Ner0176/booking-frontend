@@ -1,94 +1,120 @@
 import {
-  mdiAccountGroupOutline,
-  mdiCalendarOutline,
-  mdiCancel,
-  mdiCheck,
-  mdiClockOutline,
-  mdiTimerSand,
-} from "@mdi/js";
-import { IAccount, useGetBookingsFromUser } from "../../api";
-import { useUser } from "../../hooks";
-import { DashboardSkeleton } from "../base";
-import { formatTime, formatToLongDate, mergeDateTime } from "../../utils";
-import { isBefore } from "date-fns";
-import { ClassDatesFilter, ClassStatusType } from "../class-management";
-import { useTranslation } from "react-i18next";
+  BookingType,
+  IAccount,
+  IClass,
+  IUserBooking,
+  useGetBookingsFromUser,
+} from "../../api";
+import { useSearchParamsManager, useUser } from "../../hooks";
+import { CustomButton, DashboardSkeleton } from "../base";
 import {
   CalendarFilters,
-  ItemInfoRow,
-} from "../class-management/class-management.content";
-import { useState } from "react";
+  ClassCardContent,
+  ClassDatesFilter,
+  ClassStatusType,
+} from "../class-management";
+import { useTranslation } from "react-i18next";
+import { Fragment, useState } from "react";
+import { UBClassCardContainer } from "./user-bookings.styled";
+import { CancelBookingModal } from "./user-bookings.content";
+import Icon from "@mdi/react";
+import { mdiArrowRight } from "@mdi/js";
+
+const BUTTON_STYLES = {
+  minWidth: 0,
+  fontSize: 12,
+  minHeight: 0,
+  padding: "4px 6px 4px 6px",
+};
 
 export const UserBookingsDashboard = () => {
   const { user } = useUser();
   const { t } = useTranslation();
+  const { params, setParams } = useSearchParamsManager(["action"]);
+  const isCancelling = params.get("action") === "cancel";
 
   const [datesFilter, setDatesFilter] = useState<ClassDatesFilter>({});
+  const [bookingToCancel, setBookingToCancel] = useState<IUserBooking>();
   const [statusFilter, setStatusFilter] = useState<ClassStatusType>("all");
 
-  const { data } = useGetBookingsFromUser(+(user as IAccount).id, !!user);
+  const { data, refetch } = useGetBookingsFromUser(
+    +(user as IAccount).id,
+    {
+      status:
+        statusFilter === "all" ? undefined : (statusFilter as BookingType),
+    },
+    !!user
+  );
 
   return (
-    <DashboardSkeleton title="Mis reservas">
+    <DashboardSkeleton title={t("UserBookings.Title")}>
       <CalendarFilters
         datesFilter={datesFilter}
         statusFilter={statusFilter}
         setDatesFilter={setDatesFilter}
         setStatusFilter={setStatusFilter}
       />
-      <div className="flex justify-center w-full h-full">
-        {data?.map((booking) => {
-          const {
-            cancelled,
-            currentCount,
-            maxAmount,
-            startTime,
-            endTime,
-            date,
-          } = booking.class;
+      <div className="flex flex-col gap-4 items-center w-full h-full overflow-y-auto">
+        {data?.map((booking, idx) => {
+          const { status, originalClass, class: classInstance } = booking;
 
-          const { status, statusIcon } = (() => {
-            if (cancelled)
-              return { status: "cancelled", statusIcon: mdiCancel };
-
-            const now = new Date();
-            const formattedDate = mergeDateTime(date, endTime);
-
-            return isBefore(now, formattedDate)
-              ? { status: "pending", statusIcon: mdiTimerSand }
-              : { status: "done", statusIcon: mdiCheck };
-          })();
+          const originalClassData = (originalClass ?? classInstance) as IClass;
+          const isCancelled =
+            originalClassData.cancelled || status === "cancelled";
 
           return (
-            <div className="flex flex-row items-center border rounded-xl">
-              <div className="relative flex flex-col gap-2 px-6 border-r py-4 min-w-[350px] h-min cursor-pointer last:mb-6 hover:shadow-lg">
-                <ItemInfoRow
-                  icon={statusIcon}
-                  status={status as ClassStatusType}
-                >
-                  {t(`Classes.Filters.Status.Options.${status}`)}
-                </ItemInfoRow>
-                <ItemInfoRow icon={mdiAccountGroupOutline}>
-                  {t(`Classes.Event.Attendees`, { currentCount, maxAmount })}
-                </ItemInfoRow>
-                <ItemInfoRow icon={mdiClockOutline}>
-                  {formatTime(startTime, endTime)}
-                </ItemInfoRow>
-                <ItemInfoRow icon={mdiCalendarOutline}>
-                  {formatToLongDate(date)}
-                </ItemInfoRow>
-                <div className="underline underline-offset-4 text-red-500 top-4 right-4 absolute z-50 text-xs font-semibold">
-                  Cancelar reserva
-                </div>
-              </div>
-              {/* <div className="flex flex-col items-start h-full gap-3">
-              <span>Acciones</span>
-              <CustomButton type="error">Cancelar reserva</CustomButton>
-            </div> */}
+            <div
+              key={idx}
+              className="flex flex-row gap-6 items-center last:mb-6"
+            >
+              <UBClassCardContainer>
+                <ClassCardContent
+                  data={{ ...originalClassData, cancelled: isCancelled }}
+                />
+                {status !== "cancelled" && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <CustomButton
+                      type="error"
+                      color="secondary"
+                      styles={BUTTON_STYLES}
+                      onClick={() => {
+                        setBookingToCancel(booking);
+                        setParams([{ key: "action", value: "cancel" }]);
+                      }}
+                    >
+                      {t("UserBookings.Cancel.Title")}
+                    </CustomButton>
+                  </div>
+                )}
+              </UBClassCardContainer>
+              {isCancelled && (
+                <Fragment>
+                  <Icon
+                    className="size-8 text-neutral-400"
+                    path={mdiArrowRight}
+                  />
+                  <UBClassCardContainer>A</UBClassCardContainer>
+                </Fragment>
+              )}
             </div>
           );
         })}
       </div>
+      {isCancelling && bookingToCancel && (
+        <CancelBookingModal
+          refetch={refetch}
+          bookingId={bookingToCancel.id}
+          classData={
+            !!bookingToCancel.class
+              ? bookingToCancel.class
+              : (bookingToCancel.originalClass as IClass)
+          }
+          handleClose={() => {
+            setBookingToCancel(undefined);
+            setParams([{ key: "action" }]);
+          }}
+        />
+      )}
     </DashboardSkeleton>
   );
 };
