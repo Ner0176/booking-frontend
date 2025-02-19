@@ -28,7 +28,7 @@ export interface IBooking {
 
 export interface IUserBooking {
   id: number;
-  status: BookingType;
   class: IClass | null;
+  cancelledAt: Date | null;
   originalClass: IClass | null;
 }

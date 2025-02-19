@@ -129,7 +129,10 @@ export const ClassCardContent = ({ data }: Readonly<{ data: IClass }>) => {
         {t(`Classes.Filters.Status.Options.${status}`)}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiAccountGroupOutline}>
-        {t(`Classes.Event.Attendees`, { currentCount, maxAmount })}
+        {t(`Classes.Event.Attendees`, {
+          maxAmount,
+          currentCount: currentCount ?? "-",
+        })}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiClockOutline}>
         {formatTime(startTime, endTime)}

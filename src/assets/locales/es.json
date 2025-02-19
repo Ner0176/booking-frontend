@@ -256,6 +256,7 @@
   },
   "UserBookings": {
     "Title": "Mis reservas",
+    "NoData": "No se han encontrado reservas con los filtros seleccionados",
     "Cancel": {
       "Title": "Cancelar reserva",
       "Success": "Reserva cancelada correctamente",

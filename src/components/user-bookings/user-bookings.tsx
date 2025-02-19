@@ -1,31 +1,21 @@
 import {
-  BookingType,
   IAccount,
   IClass,
   IUserBooking,
   useGetBookingsFromUser,
 } from "../../api";
 import { useSearchParamsManager, useUser } from "../../hooks";
-import { CustomButton, DashboardSkeleton } from "../base";
+import { DashboardSkeleton, NoDataComponent } from "../base";
 import {
   CalendarFilters,
-  ClassCardContent,
   ClassDatesFilter,
   ClassStatusType,
 } from "../class-management";
 import { useTranslation } from "react-i18next";
-import { Fragment, useState } from "react";
-import { UBClassCardContainer } from "./user-bookings.styled";
-import { CancelBookingModal } from "./user-bookings.content";
-import Icon from "@mdi/react";
-import { mdiArrowRight } from "@mdi/js";
-
-const BUTTON_STYLES = {
-  minWidth: 0,
-  fontSize: 12,
-  minHeight: 0,
-  padding: "4px 6px 4px 6px",
-};
+import { useState } from "react";
+import { CancelBookingModal, UserBookingCard } from "./user-bookings.content";
+import Skeleton from "react-loading-skeleton";
+import noDataLoading from "../../assets/images/noData/woman-not-found.svg";
 
 export const UserBookingsDashboard = () => {
   const { user } = useUser();
@@ -37,11 +27,11 @@ export const UserBookingsDashboard = () => {
   const [bookingToCancel, setBookingToCancel] = useState<IUserBooking>();
   const [statusFilter, setStatusFilter] = useState<ClassStatusType>("all");
 
-  const { data, refetch } = useGetBookingsFromUser(
+  const { data, refetch, isLoading } = useGetBookingsFromUser(
     +(user as IAccount).id,
     {
-      status:
-        statusFilter === "all" ? undefined : (statusFilter as BookingType),
+      ...datesFilter,
+      ...(statusFilter === "all" ? {} : { status: statusFilter }),
     },
     !!user
   );
@@ -55,50 +45,34 @@ export const UserBookingsDashboard = () => {
         setStatusFilter={setStatusFilter}
       />
       <div className="flex flex-col gap-4 items-center w-full h-full overflow-y-auto">
-        {data?.map((booking, idx) => {
-          const { status, originalClass, class: classInstance } = booking;
-
-          const originalClassData = (originalClass ?? classInstance) as IClass;
-          const isCancelled =
-            originalClassData.cancelled || status === "cancelled";
-
-          return (
-            <div
-              key={idx}
-              className="flex flex-row gap-6 items-center last:mb-6"
-            >
-              <UBClassCardContainer>
-                <ClassCardContent
-                  data={{ ...originalClassData, cancelled: isCancelled }}
-                />
-                {status !== "cancelled" && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <CustomButton
-                      type="error"
-                      color="secondary"
-                      styles={BUTTON_STYLES}
-                      onClick={() => {
-                        setBookingToCancel(booking);
-                        setParams([{ key: "action", value: "cancel" }]);
-                      }}
-                    >
-                      {t("UserBookings.Cancel.Title")}
-                    </CustomButton>
-                  </div>
-                )}
-              </UBClassCardContainer>
-              {isCancelled && (
-                <Fragment>
-                  <Icon
-                    className="size-8 text-neutral-400"
-                    path={mdiArrowRight}
-                  />
-                  <UBClassCardContainer>A</UBClassCardContainer>
-                </Fragment>
-              )}
-            </div>
-          );
-        })}
+        {isLoading ? (
+          [...Array(6)].map((key) => (
+            <Skeleton
+              key={key}
+              style={{
+                width: 350,
+                height: 175,
+                borderRadius: 16,
+              }}
+            />
+          ))
+        ) : data && data.length > 0 ? (
+          data.map((booking, idx) => {
+            return (
+              <UserBookingCard
+                key={idx}
+                booking={booking}
+                setBookingToCancel={setBookingToCancel}
+              />
+            );
+          })
+        ) : (
+          <NoDataComponent
+            imageSize={225}
+            image={noDataLoading}
+            title={t("UserBookings.NoData")}
+          />
+        )}
       </div>
       {isCancelling && bookingToCancel && (
         <CancelBookingModal

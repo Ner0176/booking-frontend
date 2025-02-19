@@ -265,6 +265,7 @@
   },
   "Settings": {
     "Title": "Configuració general",
+    "NoData": "No s'han trobat reserves amb els filtres seleccionats",
     "Cancelation": {
       "Title": "Cancel·lació de classes",
       "MaxCancelations": "Cancel·lacions màximes (mensual)",
