@@ -8,7 +8,7 @@ export const ClassTypesWrapper = styled.div(
   tw`flex flex-row gap-4 items-center justify-between h-full`
 );
 export const ClassTypeContainer = styled.div`
-  ${tw`flex flex-col gap-2 w-full border border-neutral-200 rounded-2xl py-3 px-6 cursor-pointer`}
+  ${tw`flex flex-col gap-2 w-full border border-neutral-200 rounded-2xl min-h-[100px] py-3 px-6 cursor-pointer`}
 `;
 export const ClassTypeTitle = styled.div(
   tw`flex flex-row items-center gap-1.5`
