@@ -1,20 +1,87 @@
 import { Trans, useTranslation } from "react-i18next";
 import { CustomButton, DeleteModal, ErrorStrongContainer } from "../base";
-import { IClass, IUserBooking, useCancelBooking } from "../../api";
-import { format, isAfter } from "date-fns";
+import {
+  IClass,
+  IUserBooking,
+  useCancelBooking,
+  useGetClassConfigs,
+} from "../../api";
+import { addDays, format, isAfter, isBefore } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { StrongLinkTag, UBClassCardContainer } from "./user-bookings.styled";
-import { ClassCardContent } from "../class-management";
+import {
+  LostClassText,
+  StrongLinkTag,
+  UBClassCardContainer,
+} from "./user-bookings.styled";
+import { ClassCardContent, ItemInfoRow } from "../class-management";
 import Icon from "@mdi/react";
-import { mdiArrowRight } from "@mdi/js";
+import {
+  mdiArrowRight,
+  mdiCalendarAlertOutline,
+  mdiCalendarRemoveOutline,
+} from "@mdi/js";
 import { useSearchParamsManager } from "../../hooks";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const BUTTON_STYLES = {
   minWidth: 0,
   fontSize: 12,
   minHeight: 0,
   padding: "4px 6px 4px 6px",
+};
+
+const RecoverBookingCard = ({
+  cancelledAt,
+}: Readonly<{ cancelledAt: Date }>) => {
+  const { t } = useTranslation();
+
+  const [canRecover, setCanRecover] = useState(true);
+  const [maxRecoveryDay, setMaxRecoveryDay] = useState("");
+
+  const { data: configs } = useGetClassConfigs();
+
+  useEffect(() => {
+    if (!!cancelledAt && !!configs) {
+      const start = new Date(cancelledAt);
+      const end = addDays(start, configs.maxRecoveryDays);
+
+      setCanRecover(isBefore(new Date(), end));
+      setMaxRecoveryDay(format(end, "dd/MM/yyyy"));
+    }
+  }, [configs, cancelledAt]);
+
+  return (
+    <>
+      <Icon className="size-8 text-neutral-400" path={mdiArrowRight} />
+      <UBClassCardContainer className="justify-center shadow-sm  hover:border-violet-100 hover:bg-[#F5F3FF80]">
+        <ItemInfoRow icon={mdiCalendarRemoveOutline}>
+          {t(`UserBookings.CancelledAt`, {
+            date: format(new Date(cancelledAt), "dd/MM/yyyy"),
+          })}
+        </ItemInfoRow>
+        <ItemInfoRow icon={mdiCalendarAlertOutline}>
+          {t(`UserBookings.RecoveryLimit`, { date: maxRecoveryDay })}
+        </ItemInfoRow>
+        <div className="flex justify-center w-full mt-2">
+          {canRecover ? (
+            <CustomButton
+              color="secondary"
+              styles={{
+                fontSize: 14,
+                minHeight: 0,
+                width: "100%",
+                padding: "6px 12px 6px 12px",
+              }}
+            >
+              {t("UserBookings.RecoverClass")}
+            </CustomButton>
+          ) : (
+            <LostClassText>{t("UserBookings.LostClass")}</LostClassText>
+          )}
+        </div>
+      </UBClassCardContainer>
+    </>
+  );
 };
 
 export const UserBookingCard = ({
@@ -29,16 +96,14 @@ export const UserBookingCard = ({
 
   const { cancelledAt, originalClass, class: classInstance } = booking;
 
-  const originalClassData = (originalClass ?? classInstance) as IClass;
-
-  const isCancelled = !!originalClassData.cancelled || !!cancelledAt;
-
   const now = new Date();
+  const originalClassData = (originalClass ?? classInstance) as IClass;
+  const isCancelled = !!originalClassData.cancelled || !!cancelledAt;
   const isPending = isAfter(new Date(originalClassData.date), now);
 
   return (
     <div className="flex flex-row gap-6 items-center last:mb-6">
-      <UBClassCardContainer>
+      <UBClassCardContainer isCancelled={isCancelled}>
         <ClassCardContent
           data={{ ...originalClassData, cancelled: isCancelled }}
         />
@@ -58,12 +123,7 @@ export const UserBookingCard = ({
           </div>
         )}
       </UBClassCardContainer>
-      {isCancelled && (
-        <>
-          <Icon className="size-8 text-neutral-400" path={mdiArrowRight} />
-          <UBClassCardContainer>A</UBClassCardContainer>
-        </>
-      )}
+      {!!cancelledAt && <RecoverBookingCard cancelledAt={cancelledAt} />}
     </div>
   );
 };

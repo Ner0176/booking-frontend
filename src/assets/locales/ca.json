@@ -256,6 +256,10 @@
   },
   "UserBookings": {
     "Title": "Les meves reserves",
+    "LostClass": "CLASS PERDUDA",
+    "RecoverClass": "Recuperar classe",
+    "CancelledAt": "Data de cancel·lació: {{date}}",
+    "RecoveryLimit": "Recuperar abans de: {{date}}",
     "Cancel": {
       "Title": "Cancel·lar reserva",
       "Success": "Reserva cancel·lada satisfactòriament",

@@ -20,6 +20,8 @@ export const ClassInfoRowContainer = styled.div<{
         return tw`text-yellow-500 font-semibold`;
       case "cancelled":
         return tw`text-red-500 font-semibold`;
+      default:
+        break;
     }
   }}
 `;

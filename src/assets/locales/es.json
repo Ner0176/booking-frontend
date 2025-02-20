@@ -257,6 +257,10 @@
   "UserBookings": {
     "Title": "Mis reservas",
     "NoData": "No se han encontrado reservas con los filtros seleccionados",
+    "LostClass": "CLASE PERDIDA",
+    "RecoverClass": "Recuperar clase",
+    "CancelledAt": "Fecha de cancelación: {{date}}",
+    "RecoveryLimit": "Recuperar antes de: {{date}}",
     "Cancel": {
       "Title": "Cancelar reserva",
       "Success": "Reserva cancelada correctamente",
