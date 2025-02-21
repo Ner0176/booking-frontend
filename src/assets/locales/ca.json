@@ -241,6 +241,10 @@
       "Title": "🛑 Límit de cancel·lacions mensuals",
       "Text": "L'usuari podrà cancel·lar <strong>fins a {{total}} classes al mes</strong>. Un pic superat aquest límit, qualsevol cancel·lació addicional es considerarà <strongRed>NO</strongRed> reemborsable ni recuperable."
     },
+    "cancellationRepeat": {
+      "Title": "⚠️ Cancel·lacions repetides",
+      "Text": "<strong>No es pot cancel·lar més d'una vegada</strong> la mateixa reserva. Si s'intenta cancel·lar novament la mateixa reserva, aquesta cancel·lació es considerarà fora de termini i <strongRed>NO</strongRed> tendrà opció de reemborsament ni de recuperació."
+    },
     "minHoursBeforeCancellation": {
       "Title": "⏳ Temps límit per cancelar",
       "Text": "L'usuari tendrà l'opció de cancel·lar una reserva <strong>fins a {{total}}h abans de l'inici de la classe</strong>. Si la cancel·lació es realiza fora d'aquest termini, es comptarà com a una cancel·lació tardana y s'aplicaran les condicions de <strongRed>NO</strongRed> reemborsament ni de recuperació."

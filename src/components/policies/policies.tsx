@@ -4,6 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 const POLICIES_POINTS = [
   "maxCancellationPerMonth",
+  "cancellationRepeat",
   "minHoursBeforeCancellation",
   "maxRecoveryDays",
   "specific",

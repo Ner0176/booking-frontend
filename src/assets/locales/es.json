@@ -241,6 +241,10 @@
       "Title": "🛑 Límite de cancelaciones mensuales",
       "Text": "El usuario podrá cancelar <strong>hasta {{total}} clases al mes</strong>. Una vez superado este límite, cualquier cancelación adicional se considerará <strongRed>NO</strongRed> reembolsable ni recuperable."
     },
+    "cancellationRepeat": {
+      "Title": "⚠️ Cancelaciones repetidas",
+      "Text": "La misma reserva <strong>no puede ser cancelada más de una vez</strong>. Si se intenta cancelar nuevamente la misma reserva, dicha cancelación se considerará fuera de plazo y <strongRed>NO</strongRed> tendrá opción de reembolso ni recuperación."
+    },
     "minHoursBeforeCancellation": {
       "Title": "⏳ Tiempo límite para cancelar",
       "Text": "El usuario tendrá la opción de cancelar una reserva <strong>hasta {{total}}h antes del inicio de la clase</strong>. Si la cancelación se realiza fuera de este plazo, se contará como una cancelación tardía y se aplicarán las condiciones de <strongRed>NO</strongRed> reembolso ni recuperación."
