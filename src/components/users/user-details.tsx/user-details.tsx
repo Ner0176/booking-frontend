@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { BookingType, IUser, useGetBookingsFromUser } from "../../../api";
+import { BookingStatus, IUser, useGetBookingsFromUser } from "../../../api";
 import { SwitchSelector } from "../../base";
 import {
   DeleteUserModal,
@@ -28,7 +28,7 @@ export const UserDetails = ({
   const { name, phone, email } = user;
 
   const { data } = useGetBookingsFromUser(user.id, {
-    status: selectedOption ? (selectedOption as BookingType) : undefined,
+    status: selectedOption ? (selectedOption as BookingStatus) : undefined,
   });
 
   useEffect(() => {

@@ -34,6 +34,7 @@ import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
 import {
+  CustomButton,
   CustomInputField,
   CustomSelect,
   DashboardHeaderButton,
@@ -107,7 +108,20 @@ export const ClassStatusButton = ({
   );
 };
 
-export const ClassCardContent = ({ data }: Readonly<{ data: IClass }>) => {
+const BUTTON_STYLES = {
+  minWidth: 0,
+  fontSize: 12,
+  minHeight: 0,
+  padding: "4px 6px 4px 6px",
+};
+
+export const ClassCardContent = ({
+  data,
+  handleCancelBooking,
+}: Readonly<{
+  data: IClass;
+  handleCancelBooking?: () => void;
+}>) => {
   const { t } = useTranslation();
 
   const { endTime, startTime, date, maxAmount, cancelled, currentCount } = data;
@@ -140,6 +154,18 @@ export const ClassCardContent = ({ data }: Readonly<{ data: IClass }>) => {
       <ItemInfoRow icon={mdiCalendarOutline}>
         {formatToLongDate(date)}
       </ItemInfoRow>
+      {!!handleCancelBooking && status === "pending" && (
+        <div className="absolute top-4 right-4 z-10">
+          <CustomButton
+            type="error"
+            color="secondary"
+            styles={BUTTON_STYLES}
+            onClick={handleCancelBooking}
+          >
+            {t("UserBookings.Cancel.Title")}
+          </CustomButton>
+        </div>
+      )}
     </>
   );
 };

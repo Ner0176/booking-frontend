@@ -15,7 +15,7 @@ export interface CreateBookingPayload {
 export interface GetUserBookingsPayload {
   endDate?: Date;
   startDate?: Date;
-  status?: BookingType;
+  status?: BookingStatus;
 }
 
 export interface RecoverBookingPayload {
@@ -23,12 +23,12 @@ export interface RecoverBookingPayload {
   bookingId: number;
 }
 
-export type BookingType = "pending" | "cancelled" | "completed";
+export type BookingStatus = "pending" | "cancelled" | "completed";
 export interface IBooking {
   id: number;
   user: IUser;
   classId: number;
-  status: BookingType;
+  status: BookingStatus;
 }
 
 export interface IUserBooking {

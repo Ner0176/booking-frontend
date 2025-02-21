@@ -262,8 +262,10 @@
     "CancelledAt": "Fecha de cancelación: {{date}}",
     "RecoveryLimit": "Recuperar antes del: {{date}}",
     "BookClass": {
-      "Title": "Reserva una clase",
-      "Book": "Reservar clase"
+      "Title": "Recuperar clase",
+      "Book": "Reservar clase",
+      "Success": "Clase reservada satisfactoriamente",
+      "Error": "Ha ocurrido un error al intentar recuperar la clase"
     },
     "Cancel": {
       "Title": "Cancelar reserva",

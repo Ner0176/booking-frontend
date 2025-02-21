@@ -49,19 +49,23 @@ export function useCreateBookings(handleSuccess: () => void) {
 }
 
 export function useRecoverBooking() {
+  const { t } = useTranslation();
+  const { setParams } = useSearchParamsManager([]);
+
   return useMutation({
     mutationFn: (payload: RecoverBookingPayload) =>
       bookingApi.recoverBooking(payload),
     onSuccess() {
+      setParams([{ key: "class" }, { key: "booking" }]);
       showToast({
         type: "success",
-        text: "Clase reservada satisfactoriamente",
+        text: t("UserBookings.BookClass.Success"),
       });
     },
     onError() {
       showToast({
         type: "error",
-        text: "Ha ocurrido un error al intentar reservar la clase",
+        text: t("UserBookings.BookClass.Error"),
       });
     },
   });

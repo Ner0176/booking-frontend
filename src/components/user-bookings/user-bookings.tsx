@@ -5,7 +5,7 @@ import {
   useGetBookingsFromUser,
 } from "../../api";
 import { useSearchParamsManager, useUser } from "../../hooks";
-import { DashboardSkeleton, NoDataComponent } from "../base";
+import { DashboardSkeleton, HeaderButton, NoDataComponent } from "../base";
 import {
   CalendarFilters,
   ClassDatesFilter,
@@ -17,6 +17,7 @@ import { CancelBookingModal, UserBookingCard } from "./user-bookings.content";
 import Skeleton from "react-loading-skeleton";
 import noDataLoading from "../../assets/images/noData/woman-not-found.svg";
 import { BookClassDashboard } from "./book-class";
+import { mdiArrowLeft } from "@mdi/js";
 
 export const UserBookingsDashboard = () => {
   const { user } = useUser();
@@ -48,7 +49,20 @@ export const UserBookingsDashboard = () => {
   };
 
   return (
-    <DashboardSkeleton title={getTitle()}>
+    <DashboardSkeleton
+      title={getTitle()}
+      rightHeader={
+        selectedBooking ? (
+          <HeaderButton
+            props={{
+              icon: mdiArrowLeft,
+              tPath: "Base.Buttons.Back",
+              onClick: () => setParams([{ key: "booking" }]),
+            }}
+          />
+        ) : undefined
+      }
+    >
       {selectedBooking ? (
         <BookClassDashboard />
       ) : (
@@ -64,11 +78,7 @@ export const UserBookingsDashboard = () => {
               [...Array(6)].map((key) => (
                 <Skeleton
                   key={key}
-                  style={{
-                    width: 350,
-                    height: 175,
-                    borderRadius: 16,
-                  }}
+                  style={{ width: 350, height: 175, borderRadius: 16 }}
                 />
               ))
             ) : data && data.length > 0 ? (
@@ -89,22 +99,22 @@ export const UserBookingsDashboard = () => {
               />
             )}
           </div>
+          {isCancelling && bookingToCancel && (
+            <CancelBookingModal
+              refetch={refetch}
+              bookingId={bookingToCancel.id}
+              handleClose={() => {
+                setBookingToCancel(undefined);
+                setParams([{ key: "action" }]);
+              }}
+              classData={
+                !!bookingToCancel.class
+                  ? bookingToCancel.class
+                  : (bookingToCancel.originalClass as IClass)
+              }
+            />
+          )}
         </>
-      )}
-      {isCancelling && bookingToCancel && (
-        <CancelBookingModal
-          refetch={refetch}
-          bookingId={bookingToCancel.id}
-          handleClose={() => {
-            setBookingToCancel(undefined);
-            setParams([{ key: "action" }]);
-          }}
-          classData={
-            !!bookingToCancel.class
-              ? bookingToCancel.class
-              : (bookingToCancel.originalClass as IClass)
-          }
-        />
       )}
     </DashboardSkeleton>
   );

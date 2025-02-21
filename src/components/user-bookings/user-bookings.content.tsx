@@ -6,7 +6,7 @@ import {
   useCancelBooking,
   useGetClassConfigs,
 } from "../../api";
-import { addDays, format, isAfter, isBefore } from "date-fns";
+import { addDays, format, isBefore } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
   LostClassText,
@@ -22,13 +22,6 @@ import {
 } from "@mdi/js";
 import { useSearchParamsManager } from "../../hooks";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-
-const BUTTON_STYLES = {
-  minWidth: 0,
-  fontSize: 12,
-  minHeight: 0,
-  padding: "4px 6px 4px 6px",
-};
 
 const RecoverBookingCard = ({
   cancelledAt,
@@ -53,7 +46,6 @@ const RecoverBookingCard = ({
 
   return (
     <>
-      <Icon className="size-8 text-neutral-400" path={mdiArrowRight} />
       <UBClassCardContainer className="justify-center shadow-sm  hover:border-violet-100 hover:bg-[#F5F3FF80]">
         <ItemInfoRow icon={mdiCalendarRemoveOutline}>
           {t(`UserBookings.CancelledAt`, {
@@ -93,43 +85,43 @@ export const UserBookingCard = ({
   booking: IUserBooking;
   setBookingToCancel: Dispatch<SetStateAction<IUserBooking | undefined>>;
 }>) => {
-  const { t } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
 
   const { id, cancelledAt, originalClass, class: classInstance } = booking;
+  const isCancelled = !!classInstance?.cancelled || !!cancelledAt;
 
-  const now = new Date();
-  const originalClassData = (originalClass ?? classInstance) as IClass;
-  const isCancelled = !!originalClassData.cancelled || !!cancelledAt;
-  const isPending = isAfter(new Date(originalClassData.date), now);
+  if (!originalClass && !classInstance) return <div />;
 
   return (
     <div className="flex flex-row gap-6 items-center last:mb-6">
       <UBClassCardContainer isCancelled={isCancelled}>
         <ClassCardContent
-          data={{ ...originalClassData, cancelled: isCancelled }}
+          data={{
+            ...((classInstance ?? originalClass) as IClass),
+            cancelled: isCancelled,
+          }}
+          handleCancelBooking={() => {
+            setBookingToCancel(booking);
+            setParams([{ key: "action", value: "cancel" }]);
+          }}
         />
-        {!cancelledAt && isPending && (
-          <div className="absolute top-4 right-4 z-10">
-            <CustomButton
-              type="error"
-              color="secondary"
-              styles={BUTTON_STYLES}
-              onClick={() => {
-                setBookingToCancel(booking);
-                setParams([{ key: "action", value: "cancel" }]);
-              }}
-            >
-              {t("UserBookings.Cancel.Title")}
-            </CustomButton>
-          </div>
-        )}
       </UBClassCardContainer>
       {!!cancelledAt && (
-        <RecoverBookingCard
-          cancelledAt={cancelledAt}
-          handleClick={() => setParams([{ key: "booking", value: `${id}` }])}
-        />
+        <>
+          <Icon className="size-8 text-neutral-400" path={mdiArrowRight} />
+          {!classInstance ? (
+            <RecoverBookingCard
+              cancelledAt={cancelledAt}
+              handleClick={() =>
+                setParams([{ key: "booking", value: `${id}` }])
+              }
+            />
+          ) : (
+            <UBClassCardContainer>
+              <ClassCardContent data={classInstance} />
+            </UBClassCardContainer>
+          )}
+        </>
       )}
     </div>
   );

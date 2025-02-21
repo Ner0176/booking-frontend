@@ -262,7 +262,9 @@
     "RecoveryLimit": "Recuperar abans de: {{date}}",
     "BookClass": {
       "Title": "Reserva una classe",
-      "Book": "Reservar classe"
+      "Book": "Reservar classe",
+      "Success": "Classe reservada correctament",
+      "Error": "Ha sorgit un error a l'intentar fer la reserva"
     },
     "Cancel": {
       "Title": "Cancel·lar reserva",
