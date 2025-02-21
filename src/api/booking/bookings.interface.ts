@@ -18,6 +18,11 @@ export interface GetUserBookingsPayload {
   status?: BookingType;
 }
 
+export interface RecoverBookingPayload {
+  classId: number;
+  bookingId: number;
+}
+
 export type BookingType = "pending" | "cancelled" | "completed";
 export interface IBooking {
   id: number;

@@ -260,6 +260,10 @@
     "RecoverClass": "Recuperar classe",
     "CancelledAt": "Data de cancel·lació: {{date}}",
     "RecoveryLimit": "Recuperar abans de: {{date}}",
+    "BookClass": {
+      "Title": "Reserva una classe",
+      "Book": "Reservar classe"
+    },
     "Cancel": {
       "Title": "Cancel·lar reserva",
       "Success": "Reserva cancel·lada satisfactòriament",

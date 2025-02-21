@@ -32,7 +32,8 @@ const BUTTON_STYLES = {
 
 const RecoverBookingCard = ({
   cancelledAt,
-}: Readonly<{ cancelledAt: Date }>) => {
+  handleClick,
+}: Readonly<{ cancelledAt: Date; handleClick(): void }>) => {
   const { t } = useTranslation();
 
   const [canRecover, setCanRecover] = useState(true);
@@ -66,6 +67,7 @@ const RecoverBookingCard = ({
           {canRecover ? (
             <CustomButton
               color="secondary"
+              onClick={handleClick}
               styles={{
                 fontSize: 14,
                 minHeight: 0,
@@ -94,7 +96,7 @@ export const UserBookingCard = ({
   const { t } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
 
-  const { cancelledAt, originalClass, class: classInstance } = booking;
+  const { id, cancelledAt, originalClass, class: classInstance } = booking;
 
   const now = new Date();
   const originalClassData = (originalClass ?? classInstance) as IClass;
@@ -123,7 +125,12 @@ export const UserBookingCard = ({
           </div>
         )}
       </UBClassCardContainer>
-      {!!cancelledAt && <RecoverBookingCard cancelledAt={cancelledAt} />}
+      {!!cancelledAt && (
+        <RecoverBookingCard
+          cancelledAt={cancelledAt}
+          handleClick={() => setParams([{ key: "booking", value: `${id}` }])}
+        />
+      )}
     </div>
   );
 };

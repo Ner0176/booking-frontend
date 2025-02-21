@@ -84,10 +84,11 @@ export const ClassesManagementDashboard = () => {
         ) : !!data && data.length > 0 ? (
           data.map((item, idx) => (
             <CMCardContainer
+              key={idx}
               className="last:mb-6 hover:shadow-lg"
               onClick={() => setParams([{ key: "event", value: `${item.id}` }])}
             >
-              <ClassCardContent key={idx} data={item} />
+              <ClassCardContent data={item} />
             </CMCardContainer>
           ))
         ) : (

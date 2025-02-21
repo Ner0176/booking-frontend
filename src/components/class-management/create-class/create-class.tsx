@@ -6,8 +6,6 @@ import {
   RecurrentFields,
 } from "./create-class.content";
 import {
-  ButtonsContainer,
-  ClassContainer,
   ClassFormWrapper,
   ClassTypesWrapper,
   InputFieldsContainer,
@@ -25,7 +23,7 @@ import {
   useCreateClass,
   useGetAllUsers,
 } from "../../../api";
-import { useClickOutside, useSearchParamsManager } from "../../../hooks";
+import { useSearchParamsManager } from "../../../hooks";
 import { CustomButton, Modal, showToast } from "../../base";
 import { SwitchList } from "../class-details";
 
@@ -57,8 +55,6 @@ export const CreateClassModal = ({
     useCreateClass(handleClassSuccess);
   const { mutate: createBookings, isPending: isCreatingBookings } =
     useCreateBookings(handleCloseModal);
-
-  const ref = useClickOutside(handleCloseModal);
 
   useEffect(() => {
     if (users) setUsersList(users);
@@ -99,76 +95,72 @@ export const CreateClassModal = ({
     });
   };
 
+  const footer = (
+    <>
+      {!!showAddUsers ? (
+        <>
+          <CustomButton color="secondary" onClick={handleCloseModal}>
+            <div>{t("Base.Buttons.Skip")}</div>
+          </CustomButton>
+          <CustomButton
+            onClick={handleAddAttendees}
+            isLoading={isCreatingBookings}
+          >
+            {t("Base.Buttons.Save")}
+          </CustomButton>
+        </>
+      ) : (
+        <>
+          <CustomButton color="secondary" onClick={() => handleSelectType()}>
+            {t("Base.Buttons.Cancel")}
+          </CustomButton>
+          <CustomButton onClick={handleSubmit} isLoading={isCreatingClass}>
+            {t("Base.Buttons.CreateEvent")}
+          </CustomButton>
+        </>
+      )}
+    </>
+  );
+
   return (
-    <Modal>
-      <ClassContainer ref={ref}>
-        <span className="text-center text-2xl font-bold">
-          {t(`Classes.Event.${showAddUsers ? "AddAttendees" : "NewEvent"}`)}
-        </span>
-        {!params.get("type") ? (
-          <ClassTypesWrapper>
-            <ClassTypeBox
-              type="Recurrent"
-              icon={mdiCalendarSyncOutline}
-              handleSelectType={() => handleSelectType("recurrent")}
-            />
-            <ClassTypeBox
-              type="OneTime"
-              icon={mdiCalendarBlankOutline}
-              handleSelectType={() => handleSelectType("oneTime")}
-            />
-          </ClassTypesWrapper>
-        ) : (
-          <ClassFormWrapper>
-            <InputFieldsContainer>
-              {!!showAddUsers ? (
-                <SwitchList
-                  listMaxHeight={225}
-                  usersList={usersList}
-                  setUsersList={setUsersList}
-                  attendeesList={attendeesList}
-                  maxAmount={fields.maxAmount.value}
-                  setAttendeesList={setAttendeesList}
-                />
-              ) : isRecurrent ? (
-                <RecurrentFields fields={fields} setFields={setFields} />
-              ) : (
-                <OneTimeFields fields={fields} setFields={setFields} />
-              )}
-            </InputFieldsContainer>
-            <ButtonsContainer>
-              {!!showAddUsers ? (
-                <>
-                  <CustomButton color="secondary" onClick={handleCloseModal}>
-                    <div>{t("Base.Buttons.Skip")}</div>
-                  </CustomButton>
-                  <CustomButton
-                    onClick={handleAddAttendees}
-                    isLoading={isCreatingBookings}
-                  >
-                    {t("Base.Buttons.Save")}
-                  </CustomButton>
-                </>
-              ) : (
-                <>
-                  <CustomButton
-                    color="secondary"
-                    onClick={() => handleSelectType()}
-                  >
-                    {t("Base.Buttons.Cancel")}
-                  </CustomButton>
-                  <CustomButton
-                    onClick={handleSubmit}
-                    isLoading={isCreatingClass}
-                  >
-                    {t("Base.Buttons.CreateEvent")}
-                  </CustomButton>
-                </>
-              )}
-            </ButtonsContainer>
-          </ClassFormWrapper>
-        )}
-      </ClassContainer>
+    <Modal
+      footer={footer}
+      handleClose={handleCloseModal}
+      title={t(`Classes.Event.${showAddUsers ? "AddAttendees" : "NewEvent"}`)}
+    >
+      {!params.get("type") ? (
+        <ClassTypesWrapper>
+          <ClassTypeBox
+            type="Recurrent"
+            icon={mdiCalendarSyncOutline}
+            handleSelectType={() => handleSelectType("recurrent")}
+          />
+          <ClassTypeBox
+            type="OneTime"
+            icon={mdiCalendarBlankOutline}
+            handleSelectType={() => handleSelectType("oneTime")}
+          />
+        </ClassTypesWrapper>
+      ) : (
+        <ClassFormWrapper>
+          <InputFieldsContainer>
+            {!!showAddUsers ? (
+              <SwitchList
+                listMaxHeight={225}
+                usersList={usersList}
+                setUsersList={setUsersList}
+                attendeesList={attendeesList}
+                maxAmount={fields.maxAmount.value}
+                setAttendeesList={setAttendeesList}
+              />
+            ) : isRecurrent ? (
+              <RecurrentFields fields={fields} setFields={setFields} />
+            ) : (
+              <OneTimeFields fields={fields} setFields={setFields} />
+            )}
+          </InputFieldsContainer>
+        </ClassFormWrapper>
+      )}
     </Modal>
   );
 };

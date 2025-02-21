@@ -10,7 +10,6 @@ import { useUser } from "../../hooks";
 import { IAccount, useGetAllClasses, useGetBookingsFromUser } from "../../api";
 import { CSSProperties, useCallback, useMemo, useState } from "react";
 import { mergeDateTime } from "../../utils";
-import { useNavigate } from "react-router-dom";
 import { calendarMessageKeys } from "./calendar.interface";
 
 const LOCALIZER = dateFnsLocalizer({
@@ -22,7 +21,6 @@ const LOCALIZER = dateFnsLocalizer({
 });
 
 export const CalendarDashboard = () => {
-  const navigate = useNavigate();
   const { user, isAdmin } = useUser();
   const { t, i18n } = useTranslation();
 
@@ -100,6 +98,8 @@ export const CalendarDashboard = () => {
     <DashboardSkeleton title={t("Calendar.Title")}>
       <div className="h-full overflow-y-auto">
         <Calendar
+          step={5}
+          timeslots={6}
           events={events}
           endAccessor="end"
           defaultView="week"
@@ -114,13 +114,6 @@ export const CalendarDashboard = () => {
           messages={getCalendarTranslations()}
           onView={(view) => setCurrentView(view)}
           onNavigate={(date) => setCurrentDate(date)}
-          onSelectEvent={({ resource }) =>
-            navigate(
-              `/classes?event=${resource.id}${
-                resource.isBooking ? "&booking=true" : ""
-              }`
-            )
-          }
           components={{
             toolbar: CustomToolbar,
             event: (props) => <CustomEvent props={props} view={currentView} />,

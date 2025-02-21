@@ -3,6 +3,7 @@ import {
   CreateBookingPayload,
   GetBookingPayload,
   GetUserBookingsPayload,
+  RecoverBookingPayload,
 } from "./bookings.interface";
 
 export const bookingApi = {
@@ -29,6 +30,11 @@ export const bookingApi = {
       params,
     });
     return response.data;
+  },
+  recoverBooking: async ({ classId, bookingId }: RecoverBookingPayload) => {
+    await axiosInstance.post(`/booking/recover-booking/${bookingId}`, {
+      classId,
+    });
   },
   createBookings: async (payload: CreateBookingPayload) => {
     await axiosInstance.post("/booking/create", payload);

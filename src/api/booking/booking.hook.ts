@@ -6,6 +6,7 @@ import {
   GetUserBookingsPayload,
   IBooking,
   IUserBooking,
+  RecoverBookingPayload,
 } from "./bookings.interface";
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
@@ -43,6 +44,25 @@ export function useCreateBookings(handleSuccess: () => void) {
     },
     onError() {
       showToast({ text: t(`${basePath}.Error`), type: "error" });
+    },
+  });
+}
+
+export function useRecoverBooking() {
+  return useMutation({
+    mutationFn: (payload: RecoverBookingPayload) =>
+      bookingApi.recoverBooking(payload),
+    onSuccess() {
+      showToast({
+        type: "success",
+        text: "Clase reservada satisfactoriamente",
+      });
+    },
+    onError() {
+      showToast({
+        type: "error",
+        text: "Ha ocurrido un error al intentar reservar la clase",
+      });
     },
   });
 }

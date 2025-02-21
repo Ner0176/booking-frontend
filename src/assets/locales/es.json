@@ -260,7 +260,11 @@
     "LostClass": "CLASE PERDIDA",
     "RecoverClass": "Recuperar clase",
     "CancelledAt": "Fecha de cancelación: {{date}}",
-    "RecoveryLimit": "Recuperar antes de: {{date}}",
+    "RecoveryLimit": "Recuperar antes del: {{date}}",
+    "BookClass": {
+      "Title": "Reserva una clase",
+      "Book": "Reservar clase"
+    },
     "Cancel": {
       "Title": "Cancelar reserva",
       "Success": "Reserva cancelada correctamente",
