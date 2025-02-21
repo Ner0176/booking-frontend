@@ -1,13 +1,7 @@
 import { PropsWithChildren, useState } from "react";
-import { useClickOutside } from "../../../hooks";
 import { Modal } from "../modal";
 import { useTranslation } from "react-i18next";
 import { CustomButton } from "../button";
-import {
-  DeleteModalFooter,
-  DeleteModalTitle,
-  DeleteModalWrapper,
-} from "./delete-modal.styled";
 import { DeleteModalConfirmation } from "./delete-modal.content";
 
 export const DeleteModal = ({
@@ -31,7 +25,6 @@ export const DeleteModal = ({
   }>
 >) => {
   const { t } = useTranslation();
-  const ref = useClickOutside(handleClose);
 
   const VALID_CONFIRMATION = t("Base.DeleteConfirmation.Key");
 
@@ -49,12 +42,31 @@ export const DeleteModal = ({
     }
   };
 
+  const footer = (
+    <>
+      <CustomButton type="error" color="secondary" onClick={handleClose}>
+        {t("Base.Buttons.Cancel")}
+      </CustomButton>
+      <CustomButton
+        type="error"
+        color="primary"
+        isLoading={isDeleting}
+        onClick={handleOnDelete}
+      >
+        {mainButtonText ?? t("Base.Buttons.Delete")}
+      </CustomButton>
+    </>
+  );
+
   return (
-    <Modal>
-      <DeleteModalWrapper ref={ref} style={{ width }}>
-        <div className="flex flex-col gap-3">
-          <DeleteModalTitle>{title}</DeleteModalTitle>
-        </div>
+    <Modal
+      type="delete"
+      title={title}
+      width={width}
+      footer={footer}
+      handleClose={handleClose}
+    >
+      <div className="flex flex-col gap-3.5">
         {showConfirmation ? (
           <DeleteModalConfirmation
             showInputError={showInputError}
@@ -68,20 +80,7 @@ export const DeleteModal = ({
         ) : (
           children
         )}
-        <DeleteModalFooter>
-          <CustomButton type="error" color="secondary" onClick={handleClose}>
-            {t("Base.Buttons.Cancel")}
-          </CustomButton>
-          <CustomButton
-            type="error"
-            color="primary"
-            isLoading={isDeleting}
-            onClick={handleOnDelete}
-          >
-            {mainButtonText ?? t("Base.Buttons.Delete")}
-          </CustomButton>
-        </DeleteModalFooter>
-      </DeleteModalWrapper>
+      </div>
     </Modal>
   );
 };

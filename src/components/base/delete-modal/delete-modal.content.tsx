@@ -14,7 +14,7 @@ export const DeleteModalConfirmation = ({
 }>) => {
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col gap-3">
+    <>
       <span>
         <Trans
           i18nKey={t(`${BASE_PATH}.Description`)}
@@ -30,6 +30,6 @@ export const DeleteModalConfirmation = ({
         placeholder={t(`${BASE_PATH}.Key`)}
         customStyles={{ borderColor: showInputError ? "red" : undefined }}
       />
-    </div>
+    </>
   );
 };
