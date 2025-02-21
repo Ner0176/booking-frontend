@@ -1,10 +1,13 @@
-import { useGetAllClasses } from "../../../api";
+import { IClass, useGetAllClasses } from "../../../api";
 import { ClassCardContent } from "../../class-management";
 import { useSearchParamsManager } from "../../../hooks";
 import { useMemo } from "react";
 import { BookClassModal } from "./book-class.content";
+import { showToast } from "../../base";
+import { useTranslation } from "react-i18next";
 
 export const BookClassDashboard = () => {
+  const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["class", "booking"]);
   const classId = params.get("class");
   const bookingId = params.get("booking");
@@ -24,6 +27,17 @@ export const BookClassDashboard = () => {
     }
   }, [classId, bookingId, classesList]);
 
+  const handleSelectClass = (classInstance: IClass) => {
+    if (classInstance.currentCount >= classInstance.maxAmount) {
+      showToast({
+        type: "warning",
+        text: t("UserBookings.BookClass.AlreadyFull"),
+      });
+    } else {
+      setParams([{ key: "class", value: `${classInstance.id}` }]);
+    }
+  };
+
   return (
     <>
       {classesList &&
@@ -31,10 +45,8 @@ export const BookClassDashboard = () => {
         classesList.map((classInstance, idx) => {
           return (
             <div
+              onClick={() => handleSelectClass(classInstance)}
               className="flex flex-col gap-2 border rounded-xl px-6 py-4 min-w-[350px] h-min cursor-pointer last:mb-6 hover:shadow-lg"
-              onClick={() =>
-                setParams([{ key: "class", value: `${classInstance.id}` }])
-              }
             >
               <ClassCardContent key={idx} data={classInstance} />
             </div>

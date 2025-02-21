@@ -267,6 +267,7 @@
     "BookClass": {
       "Title": "Reserva una classe",
       "Book": "Reservar classe",
+      "AlreadyFull": "La classe està plena",
       "Success": "Classe reservada correctament",
       "Error": "Ha sorgit un error a l'intentar fer la reserva"
     },
