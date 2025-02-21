@@ -16,9 +16,12 @@ export const ToolbarBoxButton = styled.button<{ isActive: boolean }>`
   ${({ isActive }) =>
     isActive ? tw`bg-violet-50 text-violet-600 font-semibold` : tw`bg-white`}
 `;
-
 export const EventContainer = styled.div<{ view: View; isBooking: boolean }>`
-  ${tw`w-full h-full rounded-lg text-white flex items-center justify-center`}
+  ${tw`flex flex-col items-center justify-center w-full h-full rounded-lg outline-none`}
   ${({ view }) => view !== "month" && tw`absolute top-0 left-0`}
-  ${({ isBooking }) => (isBooking ? tw`bg-red-500` : tw`bg-violet-600`)}
+  ${({ isBooking }) =>
+    isBooking
+      ? tw`bg-violet-600 text-white`
+      : tw`bg-white border border-violet-600 text-violet-600`}
 `;
+export const EventText = styled.span(tw`font-semibold text-xs xl:text-sm`);

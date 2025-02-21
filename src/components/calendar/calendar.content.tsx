@@ -4,6 +4,7 @@ import { EventProps, ToolbarProps, View } from "react-big-calendar";
 import { useTranslation } from "react-i18next";
 import {
   EventContainer,
+  EventText,
   TodayButton,
   ToolbarArrowButton,
   ToolbarBoxButton,
@@ -57,11 +58,27 @@ export const CustomEvent = ({
   view,
   props,
 }: Readonly<{ props: EventProps; view: View }>) => {
-  const { title, event } = props;
+  const { t } = useTranslation();
+  const basePath = "Calendar.Event";
+
+  const { isBooking, booking } = props.event.resource;
+  const { startTime, endTime, currentCount, maxAmount } = booking;
+
+  const getTitle = () => {
+    return t(`${basePath}.Title.${isBooking ? "Booking" : "Class"}`, {
+      startTime,
+      endTime,
+    });
+  };
 
   return (
-    <EventContainer view={view} isBooking={event.resource.isBooking}>
-      {title}
+    <EventContainer view={view} isBooking={isBooking}>
+      <EventText className="py-1">{getTitle()}</EventText>
+      {view !== "month" && (
+        <EventText>
+          {t(`${basePath}.Attendees`, { currentCount, maxAmount })}
+        </EventText>
+      )}
     </EventContainer>
   );
 };

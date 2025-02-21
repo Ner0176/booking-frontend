@@ -68,6 +68,13 @@
   },
   "Calendar": {
     "Title": "El meu calendari",
+    "Event": {
+      "Title": {
+        "Booking": "La meva reserva: {{startTime}}-{{endTime}}",
+        "Class": "Classe: {{startTime}}-{{endTime}}"
+      },
+      "Attendees": "Assistents: {{currentCount}}/{{maxAmount}}"
+    },
     "Messages": {
       "allDay": "Tot el día",
       "previous": "Anterior",

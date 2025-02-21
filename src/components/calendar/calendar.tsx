@@ -44,21 +44,19 @@ export const CalendarDashboard = () => {
           .filter(Boolean)
       );
 
-      const classesToEvent = allClasses.map(
-        ({ id, date, startTime, endTime }) => {
-          const isBooking = bookingsSet.has(id);
-
-          return {
-            allDay: false,
-            resource: { id, isBooking },
-            end: mergeDateTime(date, endTime),
-            start: mergeDateTime(date, startTime),
-            title: `${
-              isBooking ? "Mi clase" : "Clase"
-            }: ${startTime} - ${endTime}`,
-          };
-        }
-      );
+      const classesToEvent = allClasses.map((booking) => {
+        const { id, date, startTime, endTime } = booking;
+        return {
+          allDay: false,
+          resource: {
+            id,
+            booking,
+            isBooking: bookingsSet.has(id),
+          },
+          end: mergeDateTime(date, endTime),
+          start: mergeDateTime(date, startTime),
+        };
+      });
       return classesToEvent as Event[];
     }
   }, [isAdmin, allClasses, userBookings]);

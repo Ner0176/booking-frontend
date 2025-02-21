@@ -68,6 +68,13 @@
   },
   "Calendar": {
     "Title": "Mi calendario",
+    "Event": {
+      "Title": {
+        "Booking": "Mi reserva: {{startTime}}-{{endTime}}",
+        "Class": "Clase: {{startTime}}-{{endTime}}"
+      },
+      "Attendees": "Asistentes: {{currentCount}}/{{maxAmount}}"
+    },
     "Messages": {
       "allDay": "Todo el día",
       "previous": "Anterior",
