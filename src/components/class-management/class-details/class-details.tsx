@@ -103,9 +103,9 @@ export const ClassDetails = ({
             </span>
             <div className="flex flex-col gap-4">
               <OneTimeFields
+                disableFields
                 fields={fields}
                 setFields={setFields}
-                disableFields={!showEditView}
               />
             </div>
           </div>

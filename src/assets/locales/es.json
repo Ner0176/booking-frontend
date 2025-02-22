@@ -125,8 +125,8 @@
     "ClassDetails": {
       "Date": "Fecha",
       "Schedule": "Horario",
-      "Edit": "Editar clase",
       "Title": "Clase {{date}}",
+      "Edit": "Editar asistentes",
       "RecurrentTitle": "Clase recurrente {{date}}",
       "Delete": {
         "Title": "Eliminar clase",
@@ -301,7 +301,7 @@
   "Sidebar": {
     "Options": {
       "Calendar": "Calendario",
-      "Management": "Gestión de clases",
+      "Management": "Gestión clases",
       "Bookings": "Reservas",
       "Users": "Usuarios",
       "Profile": "Mi perfil",

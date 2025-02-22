@@ -12,11 +12,13 @@ import { CSSProperties } from "react";
 export const CustomSelect = ({
   title,
   options,
+  fullWidth,
   customStyles,
   handleChange,
   selectedValue,
 }: Readonly<{
   title: string;
+  fullWidth?: boolean;
   selectedValue: string;
   options: ISelectOptions[];
   customStyles?: CSSProperties;
@@ -29,6 +31,7 @@ export const CustomSelect = ({
       </InputTitleContainer>
       <SelectContainer style={customStyles}>
         <StyledSelect
+          fullWidth={fullWidth}
           value={selectedValue}
           onChange={(e) => handleChange(e.target.value)}
         >

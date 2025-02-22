@@ -22,6 +22,7 @@ export const LanguageSelector = ({
 
   return (
     <CustomSelect
+      fullWidth
       options={getOptions()}
       title={t("Auth.Fields.Language")}
       selectedValue={selectedValue ?? i18n.language}
