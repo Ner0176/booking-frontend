@@ -143,7 +143,7 @@ export const ClassCardContent = ({
         {t(`Classes.Filters.Status.Options.${status}`)}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiAccountGroupOutline}>
-        {t(`Classes.Event.Attendees`, {
+        {t(`Classes.CreateClass.Attendees`, {
           maxAmount,
           currentCount: currentCount ?? "-",
         })}
@@ -171,30 +171,30 @@ export const ClassCardContent = ({
 };
 
 export const CalendarHeaderButtons = ({
-  eventId,
+  classId,
   refetch,
-  selectedEvent,
-}: Readonly<{ refetch(): void; eventId: string; selectedEvent?: IClass }>) => {
+  selectedClass,
+}: Readonly<{ refetch(): void; classId: string; selectedClass?: IClass }>) => {
   const { setParams } = useSearchParamsManager([]);
 
   const showButtons = () => {
-    if (selectedEvent) {
+    if (selectedClass) {
       const now = new Date();
       const formattedDate = mergeDateTime(
-        selectedEvent.date,
-        selectedEvent.endTime
+        selectedClass.date,
+        selectedClass.endTime
       );
       return isBefore(now, formattedDate);
     }
     return false;
   };
 
-  return !selectedEvent ? (
+  return !selectedClass ? (
     <HeaderButton
       props={{
         icon: mdiPlus,
-        tPath: "Classes.Event.NewEvent",
-        onClick: () => setParams([{ key: "action", value: "create-event" }]),
+        tPath: "Classes.CreateClass.NewClass",
+        onClick: () => setParams([{ key: "action", value: "create-class" }]),
       }}
     />
   ) : (
@@ -203,7 +203,7 @@ export const CalendarHeaderButtons = ({
         props={{
           icon: mdiArrowLeft,
           tPath: "Base.Buttons.Back",
-          onClick: () => setParams([{ key: "event" }, { key: "action" }]),
+          onClick: () => setParams([{ key: "class" }, { key: "action" }]),
         }}
       />
       {showButtons() && (
@@ -213,13 +213,13 @@ export const CalendarHeaderButtons = ({
               icon: mdiPencilOutline,
               tPath: "Classes.ClassDetails.Edit",
               onClick: () =>
-                setParams([{ key: "action", value: "edit-event" }]),
+                setParams([{ key: "action", value: "edit-class" }]),
             }}
           />
           <ClassStatusButton
             refetch={refetch}
-            classId={eventId ?? ""}
-            isCancelled={selectedEvent.cancelled}
+            classId={classId ?? ""}
+            isCancelled={selectedClass.cancelled}
           />
           <HeaderButton
             props={{
@@ -227,7 +227,7 @@ export const CalendarHeaderButtons = ({
               icon: mdiTrashCanOutline,
               tPath: "Classes.ClassDetails.Delete.Title",
               onClick: () =>
-                setParams([{ key: "action", value: "delete-event" }]),
+                setParams([{ key: "action", value: "delete-class" }]),
             }}
           />
         </>

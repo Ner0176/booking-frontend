@@ -7,7 +7,7 @@ import {
 } from "./create-class.styled";
 import { Dispatch, SetStateAction } from "react";
 import { CustomInputField, ErrorMessage } from "../../base";
-import { IEventFields, IRowConfig } from "./create-class.interface";
+import { IClassFields, IRowConfig } from "./create-class.interface";
 import { handleCheckField } from "./create-class.utils";
 import { getWeekday } from "../../../utils";
 
@@ -21,7 +21,7 @@ export const ClassTypeBox = ({
   handleSelectType: () => void;
 }>) => {
   const { t } = useTranslation();
-  const basePath = `Classes.Event.${type}`;
+  const basePath = `Classes.CreateClass.${type}`;
   return (
     <ClassTypeContainer className="hover:shadow-lg" onClick={handleSelectType}>
       <ClassTypeTitle>
@@ -40,14 +40,14 @@ const FieldRows = ({
   setFields,
   disableFields,
 }: Readonly<{
-  fields: IEventFields;
+  fields: IClassFields;
   configs: IRowConfig[];
   children?: JSX.Element;
   disableFields?: boolean;
-  setFields: Dispatch<SetStateAction<IEventFields>>;
+  setFields: Dispatch<SetStateAction<IClassFields>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Classes.Event.Fields";
+  const basePath = "Classes.CreateClass.Fields";
 
   return (
     <InputFieldsRow>
@@ -63,7 +63,7 @@ const FieldRows = ({
               type={type}
               isDisabled={disableFields}
               value={fields[accessor].value as string}
-              title={t(`Classes.Event.Fields.${accessor}`)}
+              title={t(`${basePath}.${accessor}`)}
               tooltip={hasTooltip ? tooltipInfo : undefined}
               handleChange={(value) => {
                 setFields((prev) => {
@@ -100,11 +100,11 @@ export const RecurrentFields = ({
   fields,
   setFields,
 }: Readonly<{
-  fields: IEventFields;
-  setFields: Dispatch<SetStateAction<IEventFields>>;
+  fields: IClassFields;
+  setFields: Dispatch<SetStateAction<IClassFields>>;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Classes.Event.Fields";
+  const basePath = "Classes.CreateClass.Fields";
 
   const configs: IRowConfig[] = [
     {
@@ -167,9 +167,9 @@ export const OneTimeFields = ({
   setFields,
   disableFields,
 }: Readonly<{
-  fields: IEventFields;
+  fields: IClassFields;
   disableFields?: boolean;
-  setFields: Dispatch<SetStateAction<IEventFields>>;
+  setFields: Dispatch<SetStateAction<IClassFields>>;
 }>) => {
   const configs: IRowConfig[] = [
     {

@@ -33,7 +33,7 @@ export function useGetBookingsFromUser(
 
 export function useCreateBookings(handleSuccess: () => void) {
   const { t } = useTranslation();
-  const basePath = "Classes.Event.CreateBookings";
+  const basePath = "Classes.CreateClass.CreateBookings";
 
   return useMutation({
     mutationFn: (payload: CreateBookingPayload) =>

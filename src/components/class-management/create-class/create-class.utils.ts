@@ -1,5 +1,5 @@
 import { isAfter, isEqual, parse } from "date-fns";
-import { IEventFields } from "./create-class.interface";
+import { IClassFields } from "./create-class.interface";
 
 function detectOrderError(
   isTime: boolean,
@@ -20,8 +20,8 @@ function detectOrderError(
 
 export function handleCheckField(
   value: string,
-  fields: IEventFields,
-  accessor: keyof IEventFields
+  fields: IClassFields,
+  accessor: keyof IClassFields
 ) {
   if (!value) return "emptyField";
 

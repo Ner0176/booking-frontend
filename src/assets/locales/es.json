@@ -14,7 +14,7 @@
       "Back": "Volver atrás",
       "Discard": "Descartar",
       "Save": "Guardar cambios",
-      "CreateEvent": "Crear evento"
+      "CreateClass": "Crear clase"
     },
     "DayOfWeek": {
       "MONDAY": "Lunes",
@@ -164,12 +164,12 @@
         "MaxAmountError": "El número de participantes excede la capacidad máxima"
       }
     },
-    "Event": {
-      "NewEvent": "Crear nuevo evento",
+    "CreateClass": {
+      "NewClass": "Crear nueva clase",
       "AddAttendees": "Añadir participantes",
       "Attendees": "{{currentCount}} / {{maxAmount}} asistentes",
       "Fields": {
-        "date": "Fecha del evento",
+        "date": "Fecha de la clase",
         "startDate": "Fecha de incio",
         "recurrencyLimit": "Fecha límite",
         "startTime": "Hora de inicio",
@@ -177,9 +177,9 @@
         "maxAmount": "Aforo máximo",
         "dayOfWeek": "Día de la semana",
         "Tooltip": {
-          "date": "El evento se creara a partir del día seleccionado",
-          "recurrencyLimit": "El evento se repetirá hasta la fecha límite seleccionada",
-          "dayOfWeek": "El evento se repetirá cada día de la semana seleccionado"
+          "date": "La clase se creará a partir del día seleccionado",
+          "recurrencyLimit": "La clase se repetirá hasta la fecha límite seleccionada",
+          "dayOfWeek": "La clase se repetirá cada día de la semana seleccionado"
         },
         "Errors": {
           "startDate": "La fecha de inicio debe ser anterior a la de finalización",
@@ -191,12 +191,12 @@
         }
       },
       "Recurrent": {
-        "Title": "Evento recurrente",
-        "Description": "El evento se repetirá hasta la fecha de fin introducida"
+        "Title": "Clase recurrente",
+        "Description": "La clase se repetirá hasta la fecha de fin introducida"
       },
       "OneTime": {
-        "Title": "Evento puntual",
-        "Description": "El evento se creará únicamente para la fecha seleccionada"
+        "Title": "Clase puntual",
+        "Description": "La clase se creará únicamente para la fecha seleccionada"
       },
       "Success": "La clase ha sido creada correctamente",
       "Error": "Ha ocurrido un error al intentar crear la clase",

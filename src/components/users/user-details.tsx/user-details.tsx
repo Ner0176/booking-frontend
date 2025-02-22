@@ -124,7 +124,7 @@ export const UserDetails = ({
           </div>
         </div>
       </div>
-      {actionType === "delete-event" && (
+      {actionType === "delete-class" && (
         <DeleteUserModal
           user={user}
           refetch={refetch}

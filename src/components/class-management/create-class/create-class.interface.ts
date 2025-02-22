@@ -1,13 +1,13 @@
 import { HTMLInputTypeAttribute } from "react";
 
-export type EventType = "recurrent" | "oneTime";
+export type ClassType = "recurrent" | "oneTime";
 
 interface IField<T> {
   value: T;
   error?: string;
 }
 
-export interface IEventFields {
+export interface IClassFields {
   date: IField<string>;
   endTime: IField<string>;
   startTime: IField<string>;
@@ -15,7 +15,7 @@ export interface IEventFields {
   recurrencyLimit: IField<string | undefined>;
 }
 
-export const emptyEventFields: IEventFields = {
+export const emptyClassFields: IClassFields = {
   date: { value: "" },
   endTime: { value: "" },
   maxAmount: { value: 0 },
@@ -26,7 +26,7 @@ export const emptyEventFields: IEventFields = {
 export interface IRowConfig {
   hasTooltip?: boolean;
   type: HTMLInputTypeAttribute;
-  accessor: keyof IEventFields;
+  accessor: keyof IClassFields;
 }
 
 export interface IClassIds {

@@ -12,10 +12,10 @@ import {
 } from "./create-class.styled";
 import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
 import {
-  emptyEventFields,
-  EventType,
+  emptyClassFields,
+  ClassType,
   IClassIds,
-  IEventFields,
+  IClassFields,
 } from "./create-class.interface";
 import {
   IUser,
@@ -38,7 +38,7 @@ export const CreateClassModal = ({
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [showAddUsers, setShowAddUsers] = useState<boolean>(false);
-  const [fields, setFields] = useState<IEventFields>(emptyEventFields);
+  const [fields, setFields] = useState<IClassFields>(emptyClassFields);
 
   const handleCloseModal = () => {
     refetchClasses();
@@ -60,7 +60,7 @@ export const CreateClassModal = ({
     if (users) setUsersList(users);
   }, [users]);
 
-  const handleSelectType = (newType?: EventType) => {
+  const handleSelectType = (newType?: ClassType) => {
     setParams([{ key: "type", value: newType }]);
   };
 
@@ -115,7 +115,7 @@ export const CreateClassModal = ({
             {t("Base.Buttons.Cancel")}
           </CustomButton>
           <CustomButton onClick={handleSubmit} isLoading={isCreatingClass}>
-            {t("Base.Buttons.CreateEvent")}
+            {t("Base.Buttons.CreateClass")}
           </CustomButton>
         </>
       )}
@@ -126,7 +126,9 @@ export const CreateClassModal = ({
     <Modal
       footer={footer}
       handleClose={handleCloseModal}
-      title={t(`Classes.Event.${showAddUsers ? "AddAttendees" : "NewEvent"}`)}
+      title={t(
+        `Classes.CreateClass.${showAddUsers ? "AddAttendees" : "NewClass"}`
+      )}
     >
       {!params.get("type") ? (
         <ClassTypesWrapper>

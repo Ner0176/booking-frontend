@@ -12,7 +12,7 @@ import { getWeekday } from "../../../utils";
 import { CustomButton, showToast } from "../../base";
 import { DeleteClassModal, SwitchList } from "./class-details.content";
 import { FooterButtonsWrapper } from "./class-details.styled";
-import { emptyEventFields, IEventFields, OneTimeFields } from "../create-class";
+import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../users";
@@ -26,14 +26,14 @@ export const ClassDetails = ({
   const basePath = "Classes.ClassDetails";
 
   const { params, setParams } = useSearchParamsManager(["action"]);
-  const showEditView = params.get("action") === "edit-event";
-  const showDeleteModal = params.get("action") === "delete-event";
+  const showEditView = params.get("action") === "edit-class";
+  const showDeleteModal = params.get("action") === "delete-class";
 
   const { id, date, endTime, startTime, maxAmount, recurrentId } = classData;
 
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
-  const [fields, setFields] = useState<IEventFields>(emptyEventFields);
+  const [fields, setFields] = useState<IClassFields>(emptyClassFields);
 
   const { data: users } = useGetAllUsers();
   const { data: bookings, refetch: refetchBookings } = useGetBookings({

@@ -36,7 +36,7 @@ export const UserClassItem = ({
 
   return (
     <div
-      onClick={() => navigate(`/calendar?event=${id}`)}
+      onClick={() => navigate(`/calendar?class=${id}`)}
       className="flex flex-col gap-2 border-b bg-white rounded-2xl hover:bg-neutral-50 py-4 px-6 cursor-pointer overflow-y-auto"
     >
       <div>{formatTime(startTime, endTime)}</div>

@@ -25,8 +25,8 @@ import noDataLoading from "../../assets/images/noData/reload.svg";
 
 export const ClassesManagementDashboard = () => {
   const { t } = useTranslation();
-  const { params, setParams } = useSearchParamsManager(["event", "action"]);
-  const eventId = params.get("event");
+  const { params, setParams } = useSearchParamsManager(["class", "action"]);
+  const classId = params.get("class");
 
   const [datesFilter, setDatesFilter] = useState<ClassDatesFilter>({});
   const [statusFilter, setStatusFilter] = useState<ClassStatusType>("all");
@@ -36,19 +36,19 @@ export const ClassesManagementDashboard = () => {
     statusFilter: statusFilter !== "all" ? statusFilter : undefined,
   });
 
-  const selectedEvent = useMemo(() => {
-    if (eventId && data) {
-      return data.find(({ id }) => +eventId === id);
+  const selectedClass = useMemo(() => {
+    if (classId && data) {
+      return data.find(({ id }) => +classId === id);
     }
-  }, [data, eventId]);
+  }, [data, classId]);
 
   const getTitle = () => {
     let title = t("Classes.Title");
 
-    if (!!eventId && selectedEvent?.date) {
-      const titleType = !selectedEvent.recurrentId ? "Title" : "RecurrentTitle";
+    if (!!classId && selectedClass?.date) {
+      const titleType = !selectedClass.recurrentId ? "Title" : "RecurrentTitle";
       title = t(`Classes.ClassDetails.${titleType}`, {
-        date: format(new Date(selectedEvent?.date as Date), "dd/MM/yyyy"),
+        date: format(new Date(selectedClass?.date as Date), "dd/MM/yyyy"),
       });
     }
 
@@ -61,12 +61,12 @@ export const ClassesManagementDashboard = () => {
       rightHeader={
         <CalendarHeaderButtons
           refetch={refetch}
-          eventId={eventId ?? ""}
-          selectedEvent={selectedEvent}
+          classId={classId ?? ""}
+          selectedClass={selectedClass}
         />
       }
     >
-      {!eventId && (
+      {!classId && (
         <CalendarFilters
           datesFilter={datesFilter}
           statusFilter={statusFilter}
@@ -75,8 +75,8 @@ export const ClassesManagementDashboard = () => {
         />
       )}
       <ClassManagementBody>
-        {!!eventId && selectedEvent ? (
-          <ClassDetails classData={selectedEvent} refetchClasses={refetch} />
+        {!!classId && selectedClass ? (
+          <ClassDetails classData={selectedClass} refetchClasses={refetch} />
         ) : isLoading ? (
           [...Array(6)].map((key) => (
             <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
@@ -86,7 +86,7 @@ export const ClassesManagementDashboard = () => {
             <CMCardContainer
               key={idx}
               className="last:mb-6 hover:shadow-lg"
-              onClick={() => setParams([{ key: "event", value: `${item.id}` }])}
+              onClick={() => setParams([{ key: "class", value: `${item.id}` }])}
             >
               <ClassCardContent data={item} />
             </CMCardContainer>
@@ -95,7 +95,7 @@ export const ClassesManagementDashboard = () => {
           <NoDataComponent image={noDataLoading} title={t("Classes.NoData")} />
         )}
       </ClassManagementBody>
-      {params.get("action") === "create-event" && (
+      {params.get("action") === "create-class" && (
         <CreateClassModal refetchClasses={refetch} />
       )}
     </DashboardSkeleton>

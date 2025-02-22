@@ -14,7 +14,7 @@
       "Back": "Tornar enrere",
       "Discard": "Descartar",
       "Save": "Desar canvis",
-      "CreateEvent": "Crear esdeveniment"
+      "CreateClass": "Crear classe"
     },
     "DayOfWeek": {
       "MONDAY": "Dilluns",
@@ -165,11 +165,11 @@
       }
     },
     "Event": {
-      "NewEvent": "Crear nou esdeveniment",
+      "NewClass": "Crear nova classe",
       "AddAttendees": "Afegir participants",
       "Attendees": "{{currentCount}} / {{maxAmount}} assistents",
       "Fields": {
-        "date": "Data de l'esdeveniment",
+        "date": "Data de la classe",
         "startDate": "Data d'inici",
         "recurrencyLimit": "Data límit",
         "startTime": "Hora d'inici",
@@ -177,9 +177,9 @@
         "maxAmount": "Aforament màxim",
         "dayOfWeek": "Dia de la setmana",
         "Tooltip": {
-          "date": "L'esdeveniment es crearà a partir del dia seleccionat",
-          "recurrencyLimit": "L'esdeveniment es repetirà fins a la data límit seleccionada",
-          "dayOfWeek": "L'esdeveniment es repetirà cada dia de la setmana seleccionat"
+          "date": "La classe es crearà a partir del dia seleccionat",
+          "recurrencyLimit": "La classe es repetirà fins a la data límit seleccionada",
+          "dayOfWeek": "La classe es repetirà cada dia de la setmana seleccionat"
         },
         "Errors": {
           "startDate": "La data d'inici ha de ser anterior a la de finalització",
@@ -191,12 +191,12 @@
         }
       },
       "Recurrent": {
-        "Title": "Esdeveniment recurrent",
-        "Description": "L'esdeveniment es repetirà fins a la data de fi introduïda"
+        "Title": "Classe recurrent",
+        "Description": "La classe es repetirà fins a la data de fi introduïda"
       },
       "OneTime": {
-        "Title": "Esdeveniment puntual",
-        "Description": "L'esdeveniment es crearà únicament per a la data seleccionada"
+        "Title": "Classe puntual",
+        "Description": "La classe es crearà únicament per a la data seleccionada"
       },
       "Success": "La classe ha estat creada correctament",
       "Error": "Hi ha hagut un error en intentar crear la classe",

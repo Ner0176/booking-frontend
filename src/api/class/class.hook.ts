@@ -41,10 +41,10 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
       }
 
       handleSuccess(classIds);
-      showToast({ text: t("Classes.Event.Success"), type: "success" });
+      showToast({ text: t("Classes.CreateClass.Success"), type: "success" });
     },
     onError() {
-      showToast({ text: t("Classes.Event.Error"), type: "error" });
+      showToast({ text: t("Classes.CreateClass.Error"), type: "error" });
     },
   });
 }
@@ -89,7 +89,7 @@ export function useDeleteClass(
           `${basePath}.Success.${isRecurrent ? "Recurrent" : "Specific"}`
         ),
       });
-      setParams([{ key: "event" }, { key: "action" }]);
+      setParams([{ key: "class" }, { key: "action" }]);
       refetchClasses();
     },
     onError() {

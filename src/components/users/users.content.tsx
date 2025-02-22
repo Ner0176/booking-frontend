@@ -28,7 +28,7 @@ export const UserHeaderButtons = () => {
           color: "secondary",
           icon: mdiTrashCanOutline,
           tPath: "Users.Details.Delete.Title",
-          onClick: () => setParams([{ key: "action", value: "delete-event" }]),
+          onClick: () => setParams([{ key: "action", value: "delete-class" }]),
         }}
       />
     </div>
