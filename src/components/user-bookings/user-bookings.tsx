@@ -3,9 +3,15 @@ import {
   IClass,
   IUserBooking,
   useGetBookingsFromUser,
+  useHasAvailableCancellations,
 } from "../../api";
 import { useSearchParamsManager, useUser } from "../../hooks";
-import { DashboardSkeleton, HeaderButton, NoDataComponent } from "../base";
+import {
+  DashboardSkeleton,
+  HeaderButton,
+  NoDataComponent,
+  showToast,
+} from "../base";
 import {
   CalendarFilters,
   ClassDatesFilter,
@@ -33,7 +39,13 @@ export const UserBookingsDashboard = () => {
   const [statusFilter, setStatusFilter] =
     useState<ClassStatusType>("cancelled");
 
-  const { data, refetch, isLoading } = useGetBookingsFromUser(
+  const { data: hasCancellations, refetch: refetchAvailableCancellations } =
+    useHasAvailableCancellations();
+  const {
+    isLoading,
+    data: userBookings,
+    refetch: refetchBookings,
+  } = useGetBookingsFromUser(
     +(user as IAccount).id,
     {
       ...datesFilter,
@@ -46,6 +58,18 @@ export const UserBookingsDashboard = () => {
     return t(
       selectedBooking ? "UserBookings.BookClass.Title" : "UserBookings.Title"
     );
+  };
+
+  const handleCancel = (booking: IUserBooking) => {
+    if (!hasCancellations) {
+      showToast({
+        type: "error",
+        text: t("UserBookings.Cancel.Exhausted"),
+      });
+    } else {
+      setBookingToCancel(booking);
+      setParams([{ key: "action", value: "cancel" }]);
+    }
   };
 
   return (
@@ -81,13 +105,13 @@ export const UserBookingsDashboard = () => {
                   style={{ width: 350, height: 175, borderRadius: 16 }}
                 />
               ))
-            ) : data && data.length > 0 ? (
-              data.map((booking, idx) => {
+            ) : userBookings && userBookings.length > 0 ? (
+              userBookings.map((booking, idx) => {
                 return (
                   <UserBookingCard
                     key={idx}
                     booking={booking}
-                    setBookingToCancel={setBookingToCancel}
+                    handleCancel={() => handleCancel(booking)}
                   />
                 );
               })
@@ -101,7 +125,10 @@ export const UserBookingsDashboard = () => {
           </div>
           {isCancelling && bookingToCancel && (
             <CancelBookingModal
-              refetch={refetch}
+              refetch={() => {
+                refetchBookings();
+                refetchAvailableCancellations();
+              }}
               bookingId={bookingToCancel.id}
               handleClose={() => {
                 setBookingToCancel(undefined);

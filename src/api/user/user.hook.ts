@@ -18,6 +18,13 @@ export function useGetAllUsers() {
   });
 }
 
+export function useHasAvailableCancellations() {
+  return useQuery<boolean>({
+    queryKey: ["hasAvailableCancellations"],
+    queryFn: () => userApi.hasAvailableCancellations(),
+  });
+}
+
 export function useUpdateUser(handleSuccess: () => void) {
   const { t } = useTranslation();
 

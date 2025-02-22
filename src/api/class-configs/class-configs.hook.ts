@@ -7,8 +7,9 @@ import {
 import { useTranslation } from "react-i18next";
 import { showToast } from "../../components";
 
-export const useGetClassConfigs = () => {
+export const useGetClassConfigs = (enabled?: boolean) => {
   return useQuery<IClassConfigs>({
+    enabled,
     queryKey: ["classConfigs"],
     queryFn: async () => classConfigsApi.getClassConfigs(),
   });

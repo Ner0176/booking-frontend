@@ -10,6 +10,10 @@ export const userApi = {
     const response = await axiosInstance.get("/user/all");
     return response.data;
   },
+  hasAvailableCancellations: async () => {
+    const response = await axiosInstance.get("/user/hasCancellations");
+    return response.data;
+  },
   updateUser: async (payload: UpdateUserPayload) => {
     await axiosInstance.patch("/user/update", payload);
   },

@@ -282,6 +282,7 @@
       "Title": "Cancel·lar reserva",
       "Success": "Reserva cancel·lada satisfactòriament",
       "Error": "Ha ocorregut un error quan s'ha intentat cancel·lar la reserva",
+      "Exhausted": "No tens més cancel·lacions disponibles aquest mes",
       "Description": "En cancel·lar la teva reserva per a la classe del {{date}}, <strong>perdràs la teva plaça</strong>, que podrà ser ocupada per una altra persona. <newLine /><newLine /> Abans de procedir, assegura’t de llegir i entendre les <strongLink>polítiques de cancel·lació.</strongLink>"
     }
   },

@@ -21,7 +21,7 @@ import {
   mdiCalendarRemoveOutline,
 } from "@mdi/js";
 import { useSearchParamsManager } from "../../hooks";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const RecoverBookingCard = ({
   cancelledAt,
@@ -80,10 +80,10 @@ const RecoverBookingCard = ({
 
 export const UserBookingCard = ({
   booking,
-  setBookingToCancel,
+  handleCancel,
 }: Readonly<{
+  handleCancel(): void;
   booking: IUserBooking;
-  setBookingToCancel: Dispatch<SetStateAction<IUserBooking | undefined>>;
 }>) => {
   const { setParams } = useSearchParamsManager([]);
 
@@ -96,13 +96,10 @@ export const UserBookingCard = ({
     <div className="flex flex-row gap-6 items-center last:mb-6">
       <UBClassCardContainer isCancelled={isCancelled}>
         <ClassCardContent
+          handleCancelBooking={handleCancel}
           data={{
             ...((classInstance ?? originalClass) as IClass),
             cancelled: isCancelled,
-          }}
-          handleCancelBooking={() => {
-            setBookingToCancel(booking);
-            setParams([{ key: "action", value: "cancel" }]);
           }}
         />
       </UBClassCardContainer>

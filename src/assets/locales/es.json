@@ -283,6 +283,7 @@
       "Title": "Cancelar reserva",
       "Success": "Reserva cancelada correctamente",
       "Error": "Ha ocurrido un error al intentar cancelar la reserva",
+      "Exhausted": "No tienes más cancelaciones disponibles este mes",
       "Description": "Al cancelar tu reserva para la clase del {{date}}, <strong>perderás tu plaza</strong>, la cual podrá ser ocupada por otra persona. <newLine /><newLine /> Antes de proceder, asegúrate de leer y comprender las <strongLink>políticas de cancelación.</strongLink>"
     }
   },
