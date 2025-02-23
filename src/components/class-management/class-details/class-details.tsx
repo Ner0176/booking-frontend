@@ -11,7 +11,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
 import { CustomButton, showToast } from "../../base";
 import { DeleteClassModal, SwitchList } from "./class-details.content";
-import { FooterButtonsWrapper } from "./class-details.styled";
 import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -114,13 +113,32 @@ export const ClassDetails = ({
               {!showEditView && t(`${basePath}.AttendeesList.Title`)}
             </span>
             {showEditView ? (
-              <SwitchList
-                maxAmount={maxAmount}
-                usersList={usersList}
-                setUsersList={setUsersList}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
-              />
+              <div className="flex flex-col gap-8">
+                <SwitchList
+                  maxAmount={maxAmount}
+                  usersList={usersList}
+                  setUsersList={setUsersList}
+                  attendeesList={attendeesList}
+                  setAttendeesList={setAttendeesList}
+                />
+                <div className="flex flex-row items-center justify-end gap-4 w-full">
+                  <CustomButton
+                    color="secondary"
+                    onClick={() => {
+                      setParams([{ key: "action" }]);
+                      initializeState();
+                    }}
+                  >
+                    {t("Base.Buttons.Discard")}
+                  </CustomButton>
+                  <CustomButton
+                    isLoading={isLoading}
+                    onClick={handleEditBooking}
+                  >
+                    {t("Base.Buttons.Save")}
+                  </CustomButton>
+                </div>
+              </div>
             ) : attendeesList.length ? (
               <div className="flex flex-wrap gap-3">
                 {attendeesList.map((attendee, idx) => (
@@ -136,22 +154,6 @@ export const ClassDetails = ({
             )}
           </div>
         </div>
-        {showEditView && (
-          <FooterButtonsWrapper>
-            <CustomButton
-              color="secondary"
-              onClick={() => {
-                setParams([{ key: "action" }]);
-                initializeState();
-              }}
-            >
-              {t("Base.Buttons.Discard")}
-            </CustomButton>
-            <CustomButton isLoading={isLoading} onClick={handleEditBooking}>
-              {t("Base.Buttons.Save")}
-            </CustomButton>
-          </FooterButtonsWrapper>
-        )}
       </div>
       {showDeleteModal && (
         <DeleteClassModal

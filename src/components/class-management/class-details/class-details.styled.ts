@@ -1,9 +1,6 @@
 import tw from "twin.macro";
 import { styled } from "styled-components";
 
-export const FooterButtonsWrapper = styled.div(
-  tw`flex flex-row items-center justify-end gap-3 w-full`
-);
 export const DeleteRecurrentWrapper = styled.div(
   tw`flex flex-row items-stretch justify-between gap-4 w-full`
 );
