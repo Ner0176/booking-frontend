@@ -4,18 +4,6 @@ import tw from "twin.macro";
 export const ClassContainer = styled.div(
   tw`flex flex-col w-1/2 h-2/3 pt-10 px-16 border border-neutral-200 bg-white rounded-2xl`
 );
-export const ClassTypesWrapper = styled.div(
-  tw`flex flex-row gap-4 items-center justify-between h-full`
-);
-export const ClassTypeContainer = styled.div`
-  ${tw`flex flex-col gap-2 w-full border border-neutral-200 rounded-2xl min-h-[100px] py-3 px-6 cursor-pointer`}
-`;
-export const ClassTypeTitle = styled.div(
-  tw`flex flex-row items-center gap-1.5`
-);
-export const ClassFormWrapper = styled.div(
-  tw`flex flex-col justify-between gap-4 h-full py-10`
-);
 export const InputFieldsContainer = styled.div(
   tw`flex flex-col gap-6 w-full h-full`
 );

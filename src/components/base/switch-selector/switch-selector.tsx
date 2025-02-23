@@ -5,11 +5,17 @@ import {
   SwitchSelectorOption,
 } from "./switch-selector.styled";
 import { ISwitchSelectorOption } from "./switch-selector.interface";
+import { CSSProperties } from "react";
 
 export const SwitchSelector = ({
   options,
   keyParam,
-}: Readonly<{ keyParam: string; options: ISwitchSelectorOption[] }>) => {
+  customStyles,
+}: Readonly<{
+  keyParam: string;
+  customStyles?: CSSProperties;
+  options: ISwitchSelectorOption[];
+}>) => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager([keyParam]);
   return (
@@ -21,6 +27,7 @@ export const SwitchSelector = ({
       {options.map(({ key: keyOption, text }) => (
         <SwitchSelectorOption
           key={keyOption}
+          style={customStyles}
           isSelected={params.get(keyParam) === keyOption}
           onClick={() => setParams([{ key: keyParam, value: keyOption }])}
         >

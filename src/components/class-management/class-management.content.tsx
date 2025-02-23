@@ -194,7 +194,11 @@ export const CalendarHeaderButtons = ({
       props={{
         icon: mdiPlus,
         tPath: "Classes.CreateClass.NewClass",
-        onClick: () => setParams([{ key: "action", value: "create-class" }]),
+        onClick: () =>
+          setParams([
+            { key: "action", value: "create-class" },
+            { key: "type", value: "recurrent" },
+          ]),
       }}
     />
   ) : (

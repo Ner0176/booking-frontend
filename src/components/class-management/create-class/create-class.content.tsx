@@ -1,37 +1,10 @@
-import Icon from "@mdi/react";
 import { useTranslation } from "react-i18next";
-import {
-  ClassTypeContainer,
-  ClassTypeTitle,
-  InputFieldsRow,
-} from "./create-class.styled";
+import { InputFieldsRow } from "./create-class.styled";
 import { Dispatch, SetStateAction } from "react";
 import { CustomInputField, ErrorMessage } from "../../base";
 import { IClassFields, IRowConfig } from "./create-class.interface";
 import { handleCheckField } from "./create-class.utils";
 import { getWeekday } from "../../../utils";
-
-export const ClassTypeBox = ({
-  type,
-  icon,
-  handleSelectType,
-}: Readonly<{
-  type: string;
-  icon: string;
-  handleSelectType: () => void;
-}>) => {
-  const { t } = useTranslation();
-  const basePath = `Classes.CreateClass.${type}`;
-  return (
-    <ClassTypeContainer className="hover:shadow-lg" onClick={handleSelectType}>
-      <ClassTypeTitle>
-        <Icon size="16px" style={{ marginTop: 4 }} path={icon} />
-        <span className="text-center">{t(`${basePath}.Title`)}</span>
-      </ClassTypeTitle>
-      <span className="text-sm">{t(`${basePath}.Description`)}</span>
-    </ClassTypeContainer>
-  );
-};
 
 const FieldRows = ({
   fields,

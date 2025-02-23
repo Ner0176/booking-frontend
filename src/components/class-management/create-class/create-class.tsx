@@ -1,21 +1,12 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ClassTypeBox,
-  OneTimeFields,
-  RecurrentFields,
-} from "./create-class.content";
-import {
-  ClassFormWrapper,
-  ClassTypesWrapper,
-  InputFieldsContainer,
-} from "./create-class.styled";
-import { mdiCalendarBlankOutline, mdiCalendarSyncOutline } from "@mdi/js";
+import { OneTimeFields, RecurrentFields } from "./create-class.content";
 import {
   emptyClassFields,
   ClassType,
   IClassIds,
   IClassFields,
+  classOptions,
 } from "./create-class.interface";
 import {
   IUser,
@@ -24,8 +15,9 @@ import {
   useGetAllUsers,
 } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
-import { CustomButton, Modal, showToast } from "../../base";
+import { CustomButton, Modal, showToast, SwitchSelector } from "../../base";
 import { SwitchList } from "../class-details";
+import { capitalize } from "../../../utils";
 
 export const CreateClassModal = ({
   refetchClasses,
@@ -95,6 +87,13 @@ export const CreateClassModal = ({
     });
   };
 
+  const getSwitchOptions = () => {
+    return classOptions.map((option) => ({
+      key: option,
+      text: t(`Classes.CreateClass.${capitalize(option)}.Title`),
+    }));
+  };
+
   const footer = (
     <>
       {!!showAddUsers ? (
@@ -130,38 +129,34 @@ export const CreateClassModal = ({
         `Classes.CreateClass.${showAddUsers ? "AddAttendees" : "NewClass"}`
       )}
     >
-      {!params.get("type") ? (
-        <ClassTypesWrapper>
-          <ClassTypeBox
-            type="Recurrent"
-            icon={mdiCalendarSyncOutline}
-            handleSelectType={() => handleSelectType("recurrent")}
-          />
-          <ClassTypeBox
-            type="OneTime"
-            icon={mdiCalendarBlankOutline}
-            handleSelectType={() => handleSelectType("oneTime")}
-          />
-        </ClassTypesWrapper>
-      ) : (
-        <ClassFormWrapper>
-          <InputFieldsContainer>
-            {!!showAddUsers ? (
-              <SwitchList
-                listMaxHeight={225}
-                usersList={usersList}
-                setUsersList={setUsersList}
-                attendeesList={attendeesList}
-                maxAmount={fields.maxAmount.value}
-                setAttendeesList={setAttendeesList}
+      {!!showAddUsers ? (
+        <div className="flex flex-col gap-6">
+          <div className="flex justify-end w-full">
+            <div>
+              <SwitchSelector
+                keyParam="type"
+                options={getSwitchOptions()}
+                customStyles={{ fontSize: 14 }}
               />
-            ) : isRecurrent ? (
+            </div>
+          </div>
+          <div className="flex flex-col gap-4 pb-3">
+            {isRecurrent ? (
               <RecurrentFields fields={fields} setFields={setFields} />
             ) : (
               <OneTimeFields fields={fields} setFields={setFields} />
             )}
-          </InputFieldsContainer>
-        </ClassFormWrapper>
+          </div>
+        </div>
+      ) : (
+        <SwitchList
+          listMaxHeight={225}
+          usersList={usersList}
+          setUsersList={setUsersList}
+          attendeesList={attendeesList}
+          maxAmount={fields.maxAmount.value}
+          setAttendeesList={setAttendeesList}
+        />
       )}
     </Modal>
   );

@@ -1,6 +1,7 @@
 import { HTMLInputTypeAttribute } from "react";
 
-export type ClassType = "recurrent" | "oneTime";
+export const classOptions = ["recurrent", "oneTime"] as const;
+export type ClassType = (typeof classOptions)[number];
 
 interface IField<T> {
   value: T;
