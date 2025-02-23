@@ -9,10 +9,19 @@ import {
   UserBookingsDashboard,
   UsersDashboard,
 } from "../components";
+import { useUser } from "../hooks";
 import { InvalidRoute, ProtectedRoute } from "./router.content";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 export const AppRouter = () => {
+  const { user } = useUser();
+
   return (
     <BrowserRouter>
       <Routes>
@@ -20,9 +29,7 @@ export const AppRouter = () => {
         <Route element={<AuthForm type="SignUp" />} path="/register" />
         <Route
           element={
-            <Sidebar>
-              <Outlet />
-            </Sidebar>
+            <Sidebar>{!user ? <Navigate to={"/login"} /> : <Outlet />}</Sidebar>
           }
         >
           <Route path="/" element={<CalendarDashboard />} />
