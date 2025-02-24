@@ -28,6 +28,7 @@ export const Modal = ({
   }>
 >) => {
   const ref = useClickOutside(handleClose);
+
   return (
     <>
       <ModalContainer>
@@ -42,7 +43,7 @@ export const Modal = ({
               <Icon className="size-6 text-neutral-400" path={mdiClose} />
             </div>
           </ModalHeader>
-          <div className="w-full px-8">{children}</div>
+          <div className="w-full sm:px-8">{children}</div>
           <ModalFooter type={type}>{footer}</ModalFooter>
         </ModalWrapper>
       </ModalContainer>
