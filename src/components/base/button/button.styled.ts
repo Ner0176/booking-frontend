@@ -15,6 +15,6 @@ const getButtonStyles = (type: ButtonType, color: ColorType) => {
 };
 
 export const StyledButton = styled.div<{ color: ColorType; type: ButtonType }>`
-  ${tw`flex items-center justify-center px-4 py-2.5 w-min min-w-[100px] min-h-[45px] whitespace-nowrap border border-neutral-200 rounded-full cursor-pointer`}
+  ${tw`flex items-center justify-center text-sm sm:text-base px-4 py-2.5 w-min sm:min-w-[100px] sm:min-h-[45px] whitespace-nowrap border border-neutral-200 rounded-full cursor-pointer`}
   ${({ type, color }) => getButtonStyles(type, color)}
 `;
