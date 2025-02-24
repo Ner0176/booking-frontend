@@ -25,7 +25,8 @@ export const CustomButton = ({
       type={type}
       color={color}
       style={styles}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         if (!isLoading && onClick) onClick();
       }}
     >

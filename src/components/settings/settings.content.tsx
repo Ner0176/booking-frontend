@@ -37,7 +37,7 @@ export const SettingsBox = ({
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-4 border border-neutral-200 rounded-3xl w-full max-w-[75%] p-6 pt-4">
+    <div className="flex flex-col gap-4 border border-neutral-200 rounded-3xl w-full sm:max-w-[75%] p-6 pt-4">
       <div className="flex flex-row items-center justify-between">
         <span className="font-bold text-lg">{title}</span>
         {!isEditing && (
