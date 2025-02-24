@@ -11,7 +11,7 @@ export const CMCardContainer = styled.div`
 export const ClassInfoRowContainer = styled.div<{
   status?: ClassStatusType;
 }>`
-  ${tw`flex flex-row items-center gap-1.5`}
+  ${tw`flex flex-row items-center gap-1.5 text-sm sm:text-base`}
   ${({ status }) => {
     switch (status) {
       case "completed":

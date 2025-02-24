@@ -66,7 +66,7 @@ export const DeleteModal = ({
       footer={footer}
       handleClose={handleClose}
     >
-      <div className="flex flex-col gap-3.5">
+      <div className="flex flex-col gap-3.5 py-3">
         {showConfirmation ? (
           <DeleteModalConfirmation
             showInputError={showInputError}

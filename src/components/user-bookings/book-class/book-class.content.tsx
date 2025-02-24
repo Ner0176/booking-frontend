@@ -2,7 +2,9 @@ import { useTranslation } from "react-i18next";
 import { CustomButton, CustomInputField, Modal } from "../../base";
 import { IClass, useRecoverBooking } from "../../../api";
 import { format } from "date-fns";
+import { BookModalInputWrapper } from "./book-class.styled";
 
+const BASE_PATH = "UserBookings.BookClass";
 export const BookClassModal = ({
   bookingId,
   handleClose,
@@ -30,7 +32,7 @@ export const BookClassModal = ({
           recoverBooking({ bookingId, classId: id });
         }}
       >
-        {t("UserBookings.BookClass.Book")}
+        {t(`${BASE_PATH}.Book`)}
       </CustomButton>
     </>
   );
@@ -39,29 +41,33 @@ export const BookClassModal = ({
     <Modal
       footer={footer}
       handleClose={handleClose}
-      title={t("UserBookings.BookClass.Title")}
+      title={t(`${BASE_PATH}.Title`)}
     >
       <div className="flex flex-col gap-3">
-        <div className="flex flex-row items-center justify-between gap-5">
+        <BookModalInputWrapper>
           <CustomInputField
             isDisabled
-            title="Fecha"
+            title={t(`${BASE_PATH}.Fields.Date`)}
             value={format(new Date(date), "dd/MM/yyyy")}
           />
           <CustomInputField
             isDisabled
-            title="Plazas disponibles"
             value={`${maxAmount - currentCount}`}
+            title={t(`${BASE_PATH}.Fields.FreeSpots`)}
           />
-        </div>
-        <div className="flex flex-row items-center justify-between gap-5">
+        </BookModalInputWrapper>
+        <BookModalInputWrapper>
           <CustomInputField
             isDisabled
             value={startTime}
-            title="Horario de inicio"
+            title={t(`${BASE_PATH}.Fields.Start`)}
           />
-          <CustomInputField isDisabled value={endTime} title="Horario fin" />
-        </div>
+          <CustomInputField
+            isDisabled
+            value={endTime}
+            title={t(`${BASE_PATH}.Fields.End`)}
+          />
+        </BookModalInputWrapper>
       </div>
     </Modal>
   );

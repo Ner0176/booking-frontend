@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { BookClassModal } from "./book-class.content";
 import { showToast } from "../../base";
 import { useTranslation } from "react-i18next";
+import { UBClassCardContainer } from "../user-bookings.styled";
 
 export const BookClassDashboard = () => {
   const { t } = useTranslation();
@@ -44,12 +45,11 @@ export const BookClassDashboard = () => {
         classesList.length > 0 &&
         classesList.map((classInstance, idx) => {
           return (
-            <div
+            <UBClassCardContainer
               onClick={() => handleSelectClass(classInstance)}
-              className="flex flex-col gap-2 border rounded-xl px-6 py-4 min-w-[350px] h-min cursor-pointer last:mb-6 hover:shadow-lg"
             >
               <ClassCardContent key={idx} data={classInstance} />
-            </div>
+            </UBClassCardContainer>
           );
         })}
       {!!selectedClass && (

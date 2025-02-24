@@ -276,6 +276,12 @@
       "Title": "Recuperar clase",
       "Book": "Reservar clase",
       "AlreadyFull": "La clase está llena",
+      "Fields": {
+        "Date": "Fecha",
+        "FreeSpots": "Plazas disponibles",
+        "Start": "Horario de inicio",
+        "End": "Horario de finalización"
+      },
       "Success": "Clase reservada satisfactoriamente",
       "Error": "Ha ocurrido un error al intentar recuperar la clase"
     },

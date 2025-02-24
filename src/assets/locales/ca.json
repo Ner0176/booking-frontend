@@ -275,6 +275,12 @@
       "Title": "Reserva una classe",
       "Book": "Reservar classe",
       "AlreadyFull": "La classe està plena",
+      "Fields": {
+        "Date": "Data",
+        "FreeSpots": "Places disponibles",
+        "Start": "Horari d'inici",
+        "End": "Horari de finalizació"
+      },
       "Success": "Classe reservada correctament",
       "Error": "Ha sorgit un error a l'intentar fer la reserva"
     },

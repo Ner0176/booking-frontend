@@ -48,6 +48,7 @@ import {
   mdiPlus,
   mdiTrashCanOutline,
 } from "@mdi/js";
+import { isMobile } from "react-device-detect";
 
 export const ItemInfoRow = ({
   icon,
@@ -56,7 +57,7 @@ export const ItemInfoRow = ({
 }: Readonly<PropsWithChildren<{ icon: string; status?: ClassStatusType }>>) => {
   return (
     <ClassInfoRowContainer status={status}>
-      <Icon size="20px" className="mt-1" path={icon} />
+      <Icon size={isMobile ? "16px" : "20px"} className="mt-1" path={icon} />
       {children}
     </ClassInfoRowContainer>
   );
@@ -110,9 +111,9 @@ export const ClassStatusButton = ({
 
 const BUTTON_STYLES = {
   minWidth: 0,
-  fontSize: 12,
   minHeight: 0,
   padding: "4px 6px 4px 6px",
+  fontSize: isMobile ? 10 : 12,
 };
 
 export const ClassCardContent = ({
