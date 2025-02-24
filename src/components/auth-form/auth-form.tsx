@@ -164,7 +164,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
               <SeparatorLine />
             </SeparatorContainer>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
+              <span className="text-xs sm:text-sm px-2 bg-white text-gray-500">
                 {t(`Auth.${formType}.NoAccount`)}
               </span>
             </div>
