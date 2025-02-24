@@ -16,12 +16,14 @@ import {
 import { ClassCardContent, ItemInfoRow } from "../class-management";
 import Icon from "@mdi/react";
 import {
+  mdiArrowDown,
   mdiArrowRight,
   mdiCalendarAlertOutline,
   mdiCalendarRemoveOutline,
 } from "@mdi/js";
 import { useSearchParamsManager } from "../../hooks";
 import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 
 const RecoverBookingCard = ({
   cancelledAt,
@@ -46,7 +48,7 @@ const RecoverBookingCard = ({
 
   return (
     <>
-      <UBClassCardContainer className="justify-center shadow-sm  hover:border-violet-100 hover:bg-[#F5F3FF80]">
+      <UBClassCardContainer className="justify-center shadow-sm hover:border-violet-100 hover:bg-[#F5F3FF80]">
         <ItemInfoRow icon={mdiCalendarRemoveOutline}>
           {t(`UserBookings.CancelledAt`, {
             date: format(new Date(cancelledAt), "dd/MM/yyyy"),
@@ -93,7 +95,7 @@ export const UserBookingCard = ({
   if (!originalClass && !classInstance) return <div />;
 
   return (
-    <div className="flex flex-row gap-6 items-center last:mb-6">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-center last:mb-6">
       <UBClassCardContainer isCancelled={isCancelled}>
         <ClassCardContent
           handleCancelBooking={handleCancel}
@@ -105,7 +107,10 @@ export const UserBookingCard = ({
       </UBClassCardContainer>
       {!!cancelledAt && (
         <>
-          <Icon className="size-8 text-neutral-400" path={mdiArrowRight} />
+          <Icon
+            className="size-5 sm:size-8 text-neutral-400"
+            path={isMobile ? mdiArrowDown : mdiArrowRight}
+          />
           {!classInstance ? (
             <RecoverBookingCard
               cancelledAt={cancelledAt}
