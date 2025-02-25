@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { CustomSelect } from "../select";
-import { useUser } from "../../../hooks";
+import { useUpdateUser } from "../../../stores";
 
 const CURRENT_LANGUAGES = ["es", "ca"];
 export const LanguageSelector = ({
@@ -10,7 +10,7 @@ export const LanguageSelector = ({
   selectedValue?: string;
   handleChange?: (newLanguage: string) => void;
 }>) => {
-  const { updateUser } = useUser();
+  const updateUser = useUpdateUser();
   const { t, i18n } = useTranslation();
 
   const getOptions = () => {

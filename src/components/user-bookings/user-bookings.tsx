@@ -5,7 +5,7 @@ import {
   useGetBookingsFromUser,
   useHasAvailableCancellations,
 } from "../../api";
-import { useSearchParamsManager, useUser } from "../../hooks";
+import { useSearchParamsManager } from "../../hooks";
 import { DashboardSkeleton, NoDataComponent, showToast } from "../base";
 import {
   CalendarFilters,
@@ -18,9 +18,10 @@ import { CancelBookingModal, UserBookingCard } from "./user-bookings.content";
 import Skeleton from "react-loading-skeleton";
 import noDataLoading from "../../assets/images/noData/woman-not-found.svg";
 import { BookClassDashboard } from "./book-class";
+import { useUser } from "../../stores";
 
 export const UserBookingsDashboard = () => {
-  const { user } = useUser();
+  const user = useUser();
   const { t } = useTranslation();
 
   const { params, setParams } = useSearchParamsManager(["action", "booking"]);

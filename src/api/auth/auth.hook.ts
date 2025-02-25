@@ -4,17 +4,17 @@ import { SignUpPayload, LoginPayload, IAccount } from "./auth.interface";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { showToast } from "../../components";
-import { useUser } from "../../hooks";
+import { useLogoutUser, useSetUser } from "../../stores";
 
 export function useSignUp() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { handleSetUser } = useUser();
+  const setUser = useSetUser();
 
   return useMutation<IAccount, any, SignUpPayload>({
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
     onSuccess(data) {
-      handleSetUser(data);
+      setUser(data);
       navigate("/");
     },
     onError(error) {
@@ -27,12 +27,12 @@ export function useSignUp() {
 export function useLogin() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { handleSetUser } = useUser();
+  const setUser = useSetUser();
 
   return useMutation<IAccount, any, LoginPayload>({
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
-      handleSetUser(data);
+      setUser(data);
       navigate("/");
     },
     onError(error) {
@@ -44,11 +44,12 @@ export function useLogin() {
 
 export function useLogout() {
   const navigate = useNavigate();
+  const logout = useLogoutUser();
 
   return useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess() {
-      localStorage.clear();
+      logout();
       navigate("/login");
     },
   });

@@ -6,11 +6,11 @@ import { es } from "date-fns/locale/es";
 import { ca } from "date-fns/locale/ca";
 import { useTranslation } from "react-i18next";
 import { CustomEvent, CustomToolbar } from "./calendar.content";
-import { useUser } from "../../hooks";
 import { IAccount, useGetAllClasses, useGetBookingsFromUser } from "../../api";
 import { CSSProperties, useCallback, useMemo, useState } from "react";
 import { mergeDateTime } from "../../utils";
 import { calendarMessageKeys } from "./calendar.interface";
+import { useUser } from "../../stores";
 
 const LOCALIZER = dateFnsLocalizer({
   format,
@@ -21,8 +21,10 @@ const LOCALIZER = dateFnsLocalizer({
 });
 
 export const CalendarDashboard = () => {
-  const { user, isAdmin } = useUser();
   const { t, i18n } = useTranslation();
+
+  const user = useUser();
+  const isAdmin = !!user && user.isAdmin;
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentView, setCurrentView] = useState<View>("week");

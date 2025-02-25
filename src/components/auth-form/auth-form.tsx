@@ -27,12 +27,12 @@ import {
 import { useLogin, useSignUp } from "../../api";
 import { CustomInputField, LanguageSelector, MainContainer } from "../base";
 import { checkPhone } from "../../utils";
-import { useUser } from "../../hooks";
+import { useUser } from "../../stores";
 
 const MIN_PSWD_LENGTH = 8;
 
 export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
-  const { user } = useUser();
+  const user = useUser();
   const { t } = useTranslation();
 
   const [formType, setFormType] = useState<FormType>(type);

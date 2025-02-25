@@ -4,7 +4,7 @@ import { SidebarBox } from "./sidebar.styled";
 import { ISidebarItem } from "./sidebar.interface";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useUser } from "../../../hooks";
+import { useUser } from "../../../stores";
 
 export const SidebarOptions = ({
   items,
@@ -14,7 +14,7 @@ export const SidebarOptions = ({
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isAdmin } = useUser();
+  const user = useUser();
 
   return (
     <>
@@ -23,7 +23,8 @@ export const SidebarOptions = ({
         const isSelected = location.pathname === path;
 
         const hideOption =
-          (view === "user" && isAdmin) || (view === "admin" && !isAdmin);
+          (view === "user" && !!user?.isAdmin) ||
+          (view === "admin" && !user?.isAdmin);
 
         return (
           <SidebarBox
