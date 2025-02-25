@@ -165,7 +165,6 @@
       }
     },
     "CreateClass": {
-      "NewClass": "Crear nueva clase",
       "AddAttendees": "Añadir participantes",
       "Attendees": "{{currentCount}} / {{maxAmount}} asistentes",
       "Fields": {

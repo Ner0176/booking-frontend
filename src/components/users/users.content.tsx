@@ -1,4 +1,4 @@
-import { mdiArrowLeft, mdiArrowRight, mdiTrashCanOutline } from "@mdi/js";
+import { mdiArrowRight, mdiTrashCanOutline } from "@mdi/js";
 import { HeaderButton } from "../base";
 import { useSearchParamsManager } from "../../hooks";
 import { IUser } from "../../api";
@@ -16,13 +16,6 @@ export const UserHeaderButtons = () => {
 
   return (
     <div className="flex flex-row items-center justify-end gap-4 w-full">
-      <HeaderButton
-        props={{
-          icon: mdiArrowLeft,
-          tPath: "Base.Buttons.Back",
-          onClick: () => setParams([{ key: "userId" }]),
-        }}
-      />
       <HeaderButton
         props={{
           color: "secondary",

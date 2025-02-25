@@ -18,6 +18,7 @@ import { useSearchParamsManager } from "../../../hooks";
 import { CustomButton, Modal, showToast, SwitchSelector } from "../../base";
 import { SwitchList } from "../class-details";
 import { capitalize } from "../../../utils";
+import { isMobile } from "react-device-detect";
 
 export const CreateClassModal = ({
   refetchClasses,
@@ -94,6 +95,12 @@ export const CreateClassModal = ({
     }));
   };
 
+  const getTitle = () => {
+    return showAddUsers
+      ? `Classes.CreateClass.AddAttendees`
+      : "Base.Buttons.CreateClass";
+  };
+
   const footer = (
     <>
       {!!showAddUsers ? (
@@ -122,25 +129,19 @@ export const CreateClassModal = ({
   );
 
   return (
-    <Modal
-      footer={footer}
-      handleClose={handleCloseModal}
-      title={t(
-        `Classes.CreateClass.${showAddUsers ? "AddAttendees" : "NewClass"}`
-      )}
-    >
-      {!!showAddUsers ? (
-        <div className="flex flex-col gap-6">
+    <Modal footer={footer} handleClose={handleCloseModal} title={t(getTitle())}>
+      {!showAddUsers ? (
+        <div className="flex flex-col gap-4 sm:gap-6">
           <div className="flex justify-end w-full">
-            <div>
+            <div style={{ width: isMobile ? "100%" : undefined }}>
               <SwitchSelector
                 keyParam="type"
                 options={getSwitchOptions()}
-                customStyles={{ fontSize: 14 }}
+                customStyles={{ fontSize: isMobile ? 12 : 14 }}
               />
             </div>
           </div>
-          <div className="flex flex-col gap-4 pb-3">
+          <div className="flex flex-col gap-2 sm:gap-4 sm:pb-3 overflow-y-auto max-h-[375px] sm:max-h-none">
             {isRecurrent ? (
               <RecurrentFields fields={fields} setFields={setFields} />
             ) : (

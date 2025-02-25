@@ -65,6 +65,7 @@ export const ClassesManagementDashboard = () => {
           selectedClass={selectedClass}
         />
       }
+      goBack={{ showButton: !!classId, path: "/management" }}
     >
       {!classId && (
         <CalendarFilters

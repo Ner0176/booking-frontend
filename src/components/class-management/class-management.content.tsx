@@ -42,12 +42,7 @@ import {
   HeaderButton,
 } from "../base";
 import { getDatesFromTimeFilter } from "./class-management.utils";
-import {
-  mdiArrowLeft,
-  mdiPencilOutline,
-  mdiPlus,
-  mdiTrashCanOutline,
-} from "@mdi/js";
+import { mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { isMobile } from "react-device-detect";
 
 export const ItemInfoRow = ({
@@ -194,7 +189,7 @@ export const CalendarHeaderButtons = ({
     <HeaderButton
       props={{
         icon: mdiPlus,
-        tPath: "Classes.CreateClass.NewClass",
+        tPath: "Base.Buttons.CreateClass",
         onClick: () =>
           setParams([
             { key: "action", value: "create-class" },
@@ -204,13 +199,6 @@ export const CalendarHeaderButtons = ({
     />
   ) : (
     <div className="flex flex-row items-center justify-end gap-4 w-full">
-      <HeaderButton
-        props={{
-          icon: mdiArrowLeft,
-          tPath: "Base.Buttons.Back",
-          onClick: () => setParams([{ key: "class" }, { key: "action" }]),
-        }}
-      />
       {showButtons() && (
         <>
           <HeaderButton

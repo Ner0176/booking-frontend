@@ -39,14 +39,14 @@ export const SettingsBox = ({
   return (
     <div className="flex flex-col gap-4 border border-neutral-200 rounded-3xl w-full sm:max-w-[75%] p-6 pt-4">
       <div className="flex flex-row items-center justify-between">
-        <span className="font-bold text-lg">{title}</span>
+        <span className="font-bold text-base sm:text-lg">{title}</span>
         {!isEditing && (
           <div
             onClick={() => setIsEditing((prev) => !prev)}
             className="flex flex-row items-center gap-1 text-neutral-500 cursor-pointer hover:text-violet-600 font-semibold"
           >
-            <Icon path={mdiPencilOutline} className="size-4" />
-            <span className="text-sm">{t("Base.Buttons.Edit")}</span>
+            <Icon path={mdiPencilOutline} className="size-3 sm:size-4" />
+            <span className="text-xs sm:text-sm">{t("Base.Buttons.Edit")}</span>
           </div>
         )}
       </div>

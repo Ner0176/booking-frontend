@@ -94,8 +94,8 @@ export const ClassDetails = ({
 
   return (
     <>
-      <div className="flex flex-col gap-3 justify-between w-full">
-        <div className="grid grid-cols-2 gap-10 w-full h-full">
+      <div className="flex flex-col justify-between w-full">
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-10 w-full h-full">
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
               {t(`${basePath}.Details`)}

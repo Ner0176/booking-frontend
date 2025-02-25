@@ -165,7 +165,6 @@
       }
     },
     "Event": {
-      "NewClass": "Crear nova classe",
       "AddAttendees": "Afegir participants",
       "Attendees": "{{currentCount}} / {{maxAmount}} assistents",
       "Fields": {
