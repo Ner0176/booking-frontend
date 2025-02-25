@@ -67,14 +67,24 @@ export const ClassStatusButton = ({
 
   const { mutate, isPending: isLoading } = useEditClassStatus(refetch);
 
-  return (
+  const handleChangeStatus = () => {
+    if (!!classId && !isLoading) {
+      mutate({ id: classId, cancel: !isCancelled });
+    }
+  };
+
+  return isMobile ? (
+    <div onClick={handleChangeStatus} className="text-red-600 cursor-pointer">
+      <Icon
+        className="mt-0.5 size-5"
+        path={!isCancelled ? mdiCancel : mdiCheck}
+      />
+    </div>
+  ) : (
     <DashboardHeaderButton
+      onClick={handleChangeStatus}
       className="flex justify-center min-w-[100px]"
       color={isCancelled ? "primary" : "secondary"}
-      onClick={() => {
-        if (!!classId && !isLoading)
-          mutate({ id: classId, cancel: !isCancelled });
-      }}
     >
       {isLoading ? (
         <ClipLoader
@@ -187,27 +197,24 @@ export const CalendarHeaderButtons = ({
 
   return !selectedClass ? (
     <HeaderButton
-      props={{
-        icon: mdiPlus,
-        tPath: "Base.Buttons.CreateClass",
-        onClick: () =>
-          setParams([
-            { key: "action", value: "create-class" },
-            { key: "type", value: "recurrent" },
-          ]),
-      }}
+      icon={mdiPlus}
+      tPath={"Base.Buttons.CreateClass"}
+      onClick={() =>
+        setParams([
+          { key: "action", value: "create-class" },
+          { key: "type", value: "recurrent" },
+        ])
+      }
     />
   ) : (
     <div className="flex flex-row items-center justify-end gap-4 w-full">
       {showButtons() && (
         <>
           <HeaderButton
-            props={{
-              icon: mdiPencilOutline,
-              tPath: "Classes.ClassDetails.Edit",
-              onClick: () =>
-                setParams([{ key: "action", value: "edit-class" }]),
-            }}
+            icon={mdiPencilOutline}
+            tPath="Classes.ClassDetails.Edit"
+            size={isMobile ? "small" : "default"}
+            onClick={() => setParams([{ key: "action", value: "edit-class" }])}
           />
           <ClassStatusButton
             refetch={refetch}
@@ -215,13 +222,13 @@ export const CalendarHeaderButtons = ({
             isCancelled={selectedClass.cancelled}
           />
           <HeaderButton
-            props={{
-              color: "secondary",
-              icon: mdiTrashCanOutline,
-              tPath: "Classes.ClassDetails.Delete.Title",
-              onClick: () =>
-                setParams([{ key: "action", value: "delete-class" }]),
-            }}
+            color="secondary"
+            icon={mdiTrashCanOutline}
+            size={isMobile ? "small" : "default"}
+            tPath="Classes.ClassDetails.Delete.Title"
+            onClick={() =>
+              setParams([{ key: "action", value: "delete-class" }])
+            }
           />
         </>
       )}

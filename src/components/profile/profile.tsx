@@ -26,11 +26,9 @@ export const ProfileDashboard = () => {
       title={t("Profile.Title")}
       rightHeader={
         <HeaderButton
-          props={{
-            icon: mdiPencilOutline,
-            tPath: "Profile.Edit.Button",
-            onClick: () => setParams([{ key: "action", value: "edit-user" }]),
-          }}
+          icon={mdiPencilOutline}
+          tPath={"Profile.Edit.Button"}
+          onClick={() => setParams([{ key: "action", value: "edit-user" }])}
         />
       }
     >

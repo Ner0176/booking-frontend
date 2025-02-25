@@ -12,7 +12,6 @@ import {
 import Skeleton from "react-loading-skeleton";
 import { useSearchParamsManager } from "../../hooks";
 import { useMemo, useState } from "react";
-import { format } from "date-fns";
 
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
@@ -47,9 +46,7 @@ export const ClassesManagementDashboard = () => {
 
     if (!!classId && selectedClass?.date) {
       const titleType = !selectedClass.recurrentId ? "Title" : "RecurrentTitle";
-      title = t(`Classes.ClassDetails.${titleType}`, {
-        date: format(new Date(selectedClass?.date as Date), "dd/MM/yyyy"),
-      });
+      title = t(`Classes.ClassDetails.${titleType}`);
     }
 
     return title;

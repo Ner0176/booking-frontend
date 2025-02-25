@@ -1,23 +1,37 @@
 import { useTranslation } from "react-i18next";
-import { IButtonHeaderProps } from "./dashboard-skeleton.interface";
 import Icon from "@mdi/react";
 import { DashboardHeaderButton } from "./dashboard-skeleton.styled";
 
 export const HeaderButton = ({
-  props,
+  icon,
+  tPath,
+  onClick,
+  size = "default",
+  color = "primary",
 }: Readonly<{
-  props: IButtonHeaderProps;
+  icon: string;
+  tPath: string;
+  onClick(): void;
+  size?: "small" | "default";
+  color?: "primary" | "secondary";
 }>) => {
   const { t } = useTranslation();
-  const { icon, tPath, color, onClick } = props;
 
-  return (
+  return size === "small" ? (
+    <div onClick={onClick} className="cursor-pointer">
+      <Icon
+        path={icon}
+        className="size-5"
+        style={{ color: color === "primary" ? "#7C3AEDFF" : "#DC2626FF" }}
+      />
+    </div>
+  ) : (
     <DashboardHeaderButton
+      color={color}
       onClick={(e) => {
         e.stopPropagation();
         onClick();
       }}
-      color={color ?? "primary"}
     >
       <Icon className="sm:mt-0.5 size-3 sm:size-3.5" path={icon} />
       <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">

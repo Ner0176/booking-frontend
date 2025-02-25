@@ -125,9 +125,9 @@
     "ClassDetails": {
       "Date": "Fecha",
       "Schedule": "Horario",
-      "Title": "Clase {{date}}",
+      "Title": "Clase puntual",
       "Edit": "Editar asistentes",
-      "RecurrentTitle": "Clase recurrente {{date}}",
+      "RecurrentTitle": "Clase recurrente",
       "Delete": {
         "Title": "Eliminar clase",
         "Description": "Ten en cuenta que al eliminar una clase, <strong>todas las reservas asociadas</strong> a la misma también serán eliminadas.",
