@@ -4,3 +4,8 @@ export interface IButtonHeaderProps {
   onClick(): void;
   color?: "primary" | "secondary";
 }
+
+export interface IGoBack {
+  path: string;
+  showButton: boolean;
+}
