@@ -13,6 +13,7 @@
       "Delete": "Eliminar",
       "Back": "Volver atrás",
       "Discard": "Descartar",
+      "Continue": "Continuar",
       "Save": "Guardar cambios",
       "CreateClass": "Crear clase"
     },
@@ -34,6 +35,7 @@
     "Login": {
       "Title": "Iniciar sesión",
       "NoAccount": "¿Aún no tienes una cuenta?",
+      "ForgotPassword": "¿Has olvidado tu contraseña?",
       "Error": {
         "401": "Contraseña incorrecta. Inténtelo de nuevo",
         "404": "No existe un usuario con este correo electrónico",
@@ -48,9 +50,19 @@
         "500": "Ha ocurrido un error al intentar realizar el registro"
       }
     },
+    "ForgotPassword": {
+      "Title": "Restablece tu contraseña",
+      "Description": "Escribe tu dirección de correo electrónico y te enviaremos las instrucciones para restablecer la contraseña",
+      "BackToLogin": "Volver al incio de sesión"
+    },
+    "ChangePassword": {
+      "Title": "Cambia tu contraseña",
+      "Button": "Cambiar contraseña"
+    },
     "Fields": {
       "Phone": "Teléfono (opcional)",
       "Password": "Contraseña",
+      "ConfirmPassword": "Confirmar contraseña",
       "Name": "Nombre completo",
       "Email": "Correo electrónico",
       "Language": "Idioma"

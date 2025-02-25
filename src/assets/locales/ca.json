@@ -34,6 +34,7 @@
     "Login": {
       "Title": "Iniciar sessió",
       "NoAccount": "Encara no tens un compte?",
+      "ForgotPassword": "Has oblidat la teva contrasenya?",
       "Error": {
         "401": "Contrasenya incorrecta. Torna-ho a provar",
         "404": "No existeix cap usuari amb aquest correu electrònic",
@@ -47,6 +48,15 @@
         "409": "Ja existeix un usuari amb aquest correu electrònic",
         "500": "Hi ha hagut un error en intentar realitzar el registre"
       }
+    },
+    "ForgotPassword": {
+      "Title": "Restableix la teva contrasenya",
+      "Description": "Escriu la teva adreça de correu electrònic i t’enviarem les instruccions per restablir la contrasenya",
+      "BackToLogin": "Torna a l’inici de sessió"
+    },
+    "ChangePassword": {
+      "Title": "Canvia la teva contrasenya",
+      "Button": "Canviar contrasenya"
     },
     "Fields": {
       "Phone": "Telèfon (opcional)",

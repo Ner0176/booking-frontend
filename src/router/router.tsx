@@ -1,6 +1,8 @@
 import {
   AuthForm,
+  ChangePassword,
   ClassesManagementDashboard,
+  ForgotPassword,
   PoliciesDashboard,
   ProfileDashboard,
   SettingsDashboard,
@@ -21,6 +23,8 @@ export const AppRouter = () => {
       <Routes>
         <Route element={<AuthForm type="Login" />} path="/login" />
         <Route element={<AuthForm type="SignUp" />} path="/register" />
+        <Route element={<ForgotPassword />} path="/forgot-password" />
+        <Route element={<ChangePassword />} path="/change-password" />
         <Route element={<SidebarLayout />}>
           <Route path="/" element={<ConditionalHome />} />
           <Route path="/profile" element={<ProfileDashboard />} />
