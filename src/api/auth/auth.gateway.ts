@@ -1,4 +1,8 @@
-import { LoginPayload, SignUpPayload } from "./auth.interface";
+import {
+  LoginPayload,
+  SignUpPayload,
+  ChangePasswordPayload,
+} from "./auth.interface";
 import { axiosInstance } from "../axios-instance";
 
 export const authApi = {
@@ -12,5 +16,11 @@ export const authApi = {
   signUp: async (payload: SignUpPayload) => {
     const response = await axiosInstance.post("/auth/signup", payload);
     return response.data;
+  },
+  forgotPassword: async (email: string) => {
+    await axiosInstance.post("/auth/forgot-password", { email });
+  },
+  changePassword: async (payload: ChangePasswordPayload) => {
+    await axiosInstance.post("/auth/change-password", payload);
   },
 };

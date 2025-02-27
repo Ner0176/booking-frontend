@@ -53,11 +53,15 @@
     "ForgotPassword": {
       "Title": "Restablece tu contraseña",
       "Description": "Escribe tu dirección de correo electrónico y te enviaremos las instrucciones para restablecer la contraseña",
-      "BackToLogin": "Volver al incio de sesión"
+      "BackToLogin": "Volver al incio de sesión",
+      "Success": "Revisa la bandeja de entrada del correo introducido",
+      "Error": "Ha ocurrido un error al intentar cambiar la contraseña"
     },
     "ChangePassword": {
       "Title": "Cambia tu contraseña",
-      "Button": "Cambiar contraseña"
+      "Button": "Cambiar contraseña",
+      "Success": "La contraseña ha sido cambiada correctamente",
+      "Error": "Ha ocurrido un error al intentar cambiar la contraseña"
     },
     "Fields": {
       "Phone": "Teléfono (opcional)",

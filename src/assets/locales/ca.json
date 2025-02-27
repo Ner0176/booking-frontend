@@ -52,11 +52,15 @@
     "ForgotPassword": {
       "Title": "Restableix la teva contrasenya",
       "Description": "Escriu la teva adreça de correu electrònic i t’enviarem les instruccions per restablir la contrasenya",
-      "BackToLogin": "Torna a l’inici de sessió"
+      "BackToLogin": "Torna a l’inici de sessió",
+      "Success": "Revisa la bústia del correu introduït",
+      "Error": "Ha sorgit un error quan s'ha intentat canviar la contrasenya"
     },
     "ChangePassword": {
       "Title": "Canvia la teva contrasenya",
-      "Button": "Canviar contrasenya"
+      "Button": "Canviar contrasenya",
+      "Success": "La contrasenya ha estat canviada correctament",
+      "Error": "Ha sorgit un error quan s'ha intentat canviar la contrasenya"
     },
     "Fields": {
       "Phone": "Telèfon (opcional)",

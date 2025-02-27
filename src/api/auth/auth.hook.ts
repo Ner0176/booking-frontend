@@ -1,6 +1,11 @@
 import { authApi } from "./auth.gateway";
 import { useMutation } from "@tanstack/react-query";
-import { SignUpPayload, LoginPayload, IAccount } from "./auth.interface";
+import {
+  SignUpPayload,
+  LoginPayload,
+  IAccount,
+  ChangePasswordPayload,
+} from "./auth.interface";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { showToast } from "../../components";
@@ -51,6 +56,49 @@ export function useLogout() {
     onSuccess() {
       logout();
       navigate("/login");
+    },
+  });
+}
+
+export function useForgotPassword() {
+  const { t } = useTranslation();
+  const basePath = "Auth.ForgotPassword";
+
+  return useMutation({
+    mutationFn: (email: string) => authApi.forgotPassword(email),
+    onSuccess() {
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
+    },
+    onError() {
+      showToast({
+        type: "error",
+        text: t(`${basePath}.Success`),
+      });
+    },
+  });
+}
+
+export function useChangePassword() {
+  const { t } = useTranslation();
+  const basePath = "Auth.ChangePassword";
+
+  return useMutation({
+    mutationFn: (payload: ChangePasswordPayload) =>
+      authApi.changePassword(payload),
+    onSuccess() {
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
+    },
+    onError() {
+      showToast({
+        type: "error",
+        text: t(`${basePath}.Error`),
+      });
     },
   });
 }

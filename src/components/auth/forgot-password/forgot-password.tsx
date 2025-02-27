@@ -4,6 +4,7 @@ import { AuthDashboard } from "../auth";
 import { FormButton } from "../auth-form/auth-form.styled";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForgotPassword } from "../../../api";
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ export const ForgotPassword = () => {
   const basePath = "Auth.ForgotPassword";
 
   const [email, setEmail] = useState("");
+
+  const { mutate: forgotPassword } = useForgotPassword();
 
   return (
     <AuthDashboard title={t(`${basePath}.Title`)}>
@@ -25,7 +28,14 @@ export const ForgotPassword = () => {
           handleChange={(value) => setEmail(value)}
         />
         <div className="flex flex-col gap-2 items-center">
-          <FormButton>{t("Base.Buttons.Continue")}</FormButton>
+          <FormButton
+            onClick={() => {
+              setEmail("");
+              forgotPassword(email);
+            }}
+          >
+            {t("Base.Buttons.Continue")}
+          </FormButton>
           <span
             onClick={() => navigate("/login")}
             className="text-xs sm:text-sm cursor-pointer text-neutral-500"
