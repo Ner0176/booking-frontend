@@ -11,6 +11,11 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface ChangePasswordPayload {
+  token: string;
+  password: string;
+}
+
 export interface IAccount {
   id: string;
   language: string;

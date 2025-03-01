@@ -1,6 +1,5 @@
-import Skeleton from "react-loading-skeleton";
-import { IUser, useUpdateUser } from "../../api";
-import { useSearchParamsManager, useUser } from "../../hooks";
+import { IUser, useUpdateUserApi } from "../../api";
+import { useSearchParamsManager } from "../../hooks";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import {
@@ -12,41 +11,13 @@ import { CustomButton, CustomInputField, LanguageSelector } from "../base";
 import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 import { checkPhone } from "../../utils";
 import { UserInfoField } from "../users";
-
-const LateralSkeleton = () => {
-  return (
-    <div className="flex flex-col gap-4">
-      <Skeleton style={{ width: 150, height: 25 }} />
-      {[...Array(4)].map((_, idx) => (
-        <Skeleton
-          key={idx}
-          style={{ width: "100%", height: 35, borderRadius: 16 }}
-        />
-      ))}
-    </div>
-  );
-};
-
-export const ProfileLoadingSkeleton = ({
-  isLoading,
-}: Readonly<{ isLoading: boolean }>) => {
-  return (
-    <div className="grid grid-cols-3 gap-10">
-      <LateralSkeleton />
-      <div className="flex flex-col gap-3">
-        <Skeleton style={{ width: "100%", height: 35, borderRadius: 16 }} />
-        <Skeleton style={{ width: "100%", height: 500, borderRadius: 16 }} />
-      </div>
-      <LateralSkeleton />
-    </div>
-  );
-};
+import { useUpdateUser } from "../../stores";
 
 export const EditProfileInformation = ({
   user,
   refetch,
 }: Readonly<{ user: IUser; refetch(): void }>) => {
-  const { updateUser: updateUserLocally } = useUser();
+  const updateUser = useUpdateUser();
   const { t, i18n } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
 
@@ -62,11 +33,11 @@ export const EditProfileInformation = ({
     refetch();
     setParams([{ key: "action" }]);
     i18n.changeLanguage(fields.language);
-    updateUserLocally("language", fields.language);
+    updateUser("language", fields.language);
   };
 
-  const { mutate: updateUser, isPending: isLoading } =
-    useUpdateUser(handleSuccess);
+  const { mutate: updateUserApi, isPending: isLoading } =
+    useUpdateUserApi(handleSuccess);
 
   useEffect(() => {
     setFields({ name, language, phone: phone ?? "" });
@@ -86,7 +57,7 @@ export const EditProfileInformation = ({
 
   const handleSubmit = () => {
     if (!errors.name && !errors.phone) {
-      updateUser({
+      updateUserApi({
         name: fields.name,
         phone: fields.phone,
         language: fields.language,

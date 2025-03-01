@@ -1,16 +1,21 @@
 import {
   AuthForm,
-  CalendarDashboard,
+  ChangePassword,
   ClassesManagementDashboard,
+  ForgotPassword,
   PoliciesDashboard,
   ProfileDashboard,
   SettingsDashboard,
-  Sidebar,
   UserBookingsDashboard,
   UsersDashboard,
 } from "../components";
-import { InvalidRoute, ProtectedRoute } from "./router.content";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  ConditionalHome,
+  InvalidRoute,
+  ProtectedRoute,
+  SidebarLayout,
+} from "./router.content";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export const AppRouter = () => {
   return (
@@ -18,14 +23,10 @@ export const AppRouter = () => {
       <Routes>
         <Route element={<AuthForm type="Login" />} path="/login" />
         <Route element={<AuthForm type="SignUp" />} path="/register" />
-        <Route
-          element={
-            <Sidebar>
-              <Outlet />
-            </Sidebar>
-          }
-        >
-          <Route path="/" element={<CalendarDashboard />} />
+        <Route element={<ForgotPassword />} path="/forgot-password" />
+        <Route element={<ChangePassword />} path="/change-password" />
+        <Route element={<SidebarLayout />}>
+          <Route path="/" element={<ConditionalHome />} />
           <Route path="/profile" element={<ProfileDashboard />} />
           <Route path="/policies" element={<PoliciesDashboard />} />
 

@@ -25,7 +25,7 @@ export function useHasAvailableCancellations() {
   });
 }
 
-export function useUpdateUser(handleSuccess: () => void) {
+export function useUpdateUserApi(handleSuccess: () => void) {
   const { t } = useTranslation();
 
   return useMutation({

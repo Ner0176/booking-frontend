@@ -24,6 +24,7 @@ export const UsersDashboard = () => {
   return (
     <DashboardSkeleton
       title={t(`Users.${!!userId ? "Details." : ""}Title`)}
+      goBack={{ showButton: !!selectedUser, path: "/users" }}
       rightHeader={!!userId ? <UserHeaderButtons /> : undefined}
     >
       {!!selectedUser ? (

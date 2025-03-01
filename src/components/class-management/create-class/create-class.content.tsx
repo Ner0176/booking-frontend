@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { InputFieldsRow } from "./create-class.styled";
-import { Dispatch, SetStateAction } from "react";
-import { CustomInputField, ErrorMessage } from "../../base";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CustomInputField, ErrorMessage, UsersTransferList } from "../../base";
 import { IClassFields, IRowConfig } from "./create-class.interface";
 import { handleCheckField } from "./create-class.utils";
-import { getWeekday } from "../../../utils";
+import { getWeekday, stringIncludes } from "../../../utils";
+import { mdiMagnify } from "@mdi/js";
+import { IUser } from "../../../api";
 
 const FieldRows = ({
   fields,
@@ -179,5 +181,48 @@ export const OneTimeFields = ({
         configs={configs.slice(2, 4)}
       />
     </>
+  );
+};
+
+export const AddUserToClass = ({
+  usersList,
+  setUsersList,
+  attendeesList,
+  setAttendeesList,
+}: Readonly<{
+  usersList: IUser[];
+  attendeesList: IUser[];
+  setUsersList: Dispatch<SetStateAction<IUser[]>>;
+  setAttendeesList: Dispatch<SetStateAction<IUser[]>>;
+}>) => {
+  const { t } = useTranslation();
+
+  const [search, setSearch] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    if (!search) setFilteredUsers(usersList);
+    else {
+      setFilteredUsers(
+        usersList.filter((user) => stringIncludes(user.name, search))
+      );
+    }
+  }, [search, usersList]);
+
+  return (
+    <div className="flex flex-col gap-8 h-[350px]">
+      <CustomInputField
+        value={search}
+        icon={{ name: mdiMagnify }}
+        handleChange={(value) => setSearch(value)}
+        placeholder={t(`Classes.ClassDetails.AttendeesList.Edit.SearchUser`)}
+      />
+      <UsersTransferList
+        assignedUsers={attendeesList}
+        availableUsers={filteredUsers}
+        setAvailableUsers={setUsersList}
+        setAssignedUsers={setAttendeesList}
+      />
+    </div>
   );
 };

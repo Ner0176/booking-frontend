@@ -5,13 +5,8 @@ import {
   useGetBookingsFromUser,
   useHasAvailableCancellations,
 } from "../../api";
-import { useSearchParamsManager, useUser } from "../../hooks";
-import {
-  DashboardSkeleton,
-  HeaderButton,
-  NoDataComponent,
-  showToast,
-} from "../base";
+import { useSearchParamsManager } from "../../hooks";
+import { DashboardSkeleton, NoDataComponent, showToast } from "../base";
 import {
   CalendarFilters,
   ClassDatesFilter,
@@ -23,10 +18,10 @@ import { CancelBookingModal, UserBookingCard } from "./user-bookings.content";
 import Skeleton from "react-loading-skeleton";
 import noDataLoading from "../../assets/images/noData/woman-not-found.svg";
 import { BookClassDashboard } from "./book-class";
-import { mdiArrowLeft } from "@mdi/js";
+import { useUser } from "../../stores";
 
 export const UserBookingsDashboard = () => {
-  const { user } = useUser();
+  const user = useUser();
   const { t } = useTranslation();
 
   const { params, setParams } = useSearchParamsManager(["action", "booking"]);
@@ -75,17 +70,7 @@ export const UserBookingsDashboard = () => {
   return (
     <DashboardSkeleton
       title={getTitle()}
-      rightHeader={
-        selectedBooking ? (
-          <HeaderButton
-            props={{
-              icon: mdiArrowLeft,
-              tPath: "Base.Buttons.Back",
-              onClick: () => setParams([{ key: "booking" }]),
-            }}
-          />
-        ) : undefined
-      }
+      goBack={{ showButton: !!selectedBooking, path: "/bookings" }}
     >
       {selectedBooking ? (
         <BookClassDashboard />

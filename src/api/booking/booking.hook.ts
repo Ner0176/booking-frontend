@@ -73,7 +73,7 @@ export function useRecoverBooking() {
 
 export function useEditBookings(refetch: () => void) {
   const { t } = useTranslation();
-  const basePath = "Classes.ClassDetails.AttendeesList";
+  const basePath = "Classes.ClassDetails.AttendeesList.Edit";
   const { setParams } = useSearchParamsManager([]);
 
   return useMutation({

@@ -1,4 +1,4 @@
-import { mdiArrowLeft, mdiArrowRight, mdiTrashCanOutline } from "@mdi/js";
+import { mdiArrowRight, mdiTrashCanOutline } from "@mdi/js";
 import { HeaderButton } from "../base";
 import { useSearchParamsManager } from "../../hooks";
 import { IUser } from "../../api";
@@ -10,6 +10,7 @@ import {
   UserCardSubtitle,
   UserCardTitle,
 } from "./users.styled";
+import { isMobile } from "react-device-detect";
 
 export const UserHeaderButtons = () => {
   const { setParams } = useSearchParamsManager([]);
@@ -17,19 +18,11 @@ export const UserHeaderButtons = () => {
   return (
     <div className="flex flex-row items-center justify-end gap-4 w-full">
       <HeaderButton
-        props={{
-          icon: mdiArrowLeft,
-          tPath: "Base.Buttons.Back",
-          onClick: () => setParams([{ key: "userId" }]),
-        }}
-      />
-      <HeaderButton
-        props={{
-          color: "secondary",
-          icon: mdiTrashCanOutline,
-          tPath: "Users.Details.Delete.Title",
-          onClick: () => setParams([{ key: "action", value: "delete-class" }]),
-        }}
+        color="secondary"
+        icon={mdiTrashCanOutline}
+        tPath={"Users.Details.Delete.Title"}
+        size={isMobile ? "small" : "default"}
+        onClick={() => setParams([{ key: "action", value: "delete-class" }])}
       />
     </div>
   );

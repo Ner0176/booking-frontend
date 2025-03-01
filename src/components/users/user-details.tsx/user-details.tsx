@@ -71,7 +71,7 @@ export const UserDetails = ({
 
   return (
     <>
-      <div className="grid grid-cols-3 justify-items-center gap-10 w-full">
+      <div className="flex flex-col gap-6 sm:grid sm:grid-cols-3 sm:justify-items-center sm:gap-10 w-full">
         <div className="flex flex-col gap-3 w-full">
           <span className="text-2xl font-bold underline underline-offset-2">
             {t("Users.Details.Information")}

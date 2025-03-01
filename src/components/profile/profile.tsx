@@ -2,10 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useFindMe } from "../../api";
 import { DashboardSkeleton, HeaderButton, NoDataComponent } from "../base";
 import { UserInfoField } from "../users";
-import {
-  EditProfileInformation,
-  ProfileLoadingSkeleton,
-} from "./profile.content";
+import { EditProfileInformation } from "./profile.content";
 import noDataVoid from "../../assets/images/noData/void.svg";
 import {
   mdiAccountOutline,
@@ -15,6 +12,7 @@ import {
   mdiPhoneOutline,
 } from "@mdi/js";
 import { useSearchParamsManager } from "../../hooks";
+import Skeleton from "react-loading-skeleton";
 
 export const ProfileDashboard = () => {
   const { t } = useTranslation();
@@ -28,18 +26,18 @@ export const ProfileDashboard = () => {
       title={t("Profile.Title")}
       rightHeader={
         <HeaderButton
-          props={{
-            icon: mdiPencilOutline,
-            tPath: "Profile.Edit.Button",
-            onClick: () => setParams([{ key: "action", value: "edit-user" }]),
-          }}
+          icon={mdiPencilOutline}
+          tPath={"Profile.Edit.Button"}
+          onClick={() => setParams([{ key: "action", value: "edit-user" }])}
         />
       }
     >
       {isLoading ? (
-        <ProfileLoadingSkeleton isLoading={isLoading} />
+        [...Array(4)].map((_, idx) => (
+          <Skeleton key={idx} className="h-8 sm:h-10 rounded-2xl" />
+        ))
       ) : user ? (
-        <div className="flex flex-col gap-4 max-w-[50%]">
+        <div className="flex flex-col gap-4 w-full sm:max-w-[50%]">
           {actionType === "edit-user" ? (
             <EditProfileInformation user={user} refetch={refetch} />
           ) : (

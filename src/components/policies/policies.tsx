@@ -16,15 +16,15 @@ export const PoliciesDashboard = () => {
 
   return (
     <DashboardSkeleton title={t("Policies.Title")}>
-      <div className="flex flex-col gap-8 max-w-[65%]">
+      <div className="flex flex-col gap-4 sm:gap-8 w-full sm:max-w-[65%]">
         {policies &&
           POLICIES_POINTS.map((item, idx) => {
             return (
               <div key={idx} className="flex flex-col gap-2">
-                <span className="font-bold text-lg">
+                <span className="font-bold text-base sm:text-lg">
                   {`${t(`Policies.${item}.Title`)}`}
                 </span>
-                <span className="text-sm">
+                <span className="text-xs sm:text-sm text-justify">
                   <Trans
                     i18nKey={t(`Policies.${item}.Text`)}
                     values={{ total: policies[item as keyof IClassConfigs] }}

@@ -19,7 +19,7 @@ export const SidebarBox = styled.div<{
   isSelected?: boolean;
   isExpanded?: boolean;
 }>`
-  ${tw`flex flex-row items-center gap-3 p-2.5 rounded-xl cursor-pointer`}
+  ${tw`flex flex-row items-center gap-3 p-2 sm:p-2.5 rounded-xl cursor-pointer`}
   ${({ hide }) => hide && tw`hidden`}
   ${({ isExpanded }) => isExpanded && tw`w-full`}
   ${({ isSelected }) => isSelected && tw`text-violet-600 bg-violet-50`}

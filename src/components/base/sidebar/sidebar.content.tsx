@@ -1,10 +1,10 @@
 import Icon from "@mdi/react";
 import { capitalize } from "../../../utils";
-import { SidebarBox, SidebarItemBox } from "./sidebar.styled";
+import { SidebarBox } from "./sidebar.styled";
 import { ISidebarItem } from "./sidebar.interface";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useUser } from "../../../hooks";
+import { useUser } from "../../../stores";
 
 export const SidebarOptions = ({
   items,
@@ -14,16 +14,17 @@ export const SidebarOptions = ({
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isAdmin } = useUser();
+  const user = useUser();
 
   return (
-    <SidebarItemBox isExpanded={isExpanded}>
+    <>
       {items.map(({ icon, text, view, onClick }, idx) => {
         const path = text === "calendar" ? "/" : `/${text}`;
         const isSelected = location.pathname === path;
 
         const hideOption =
-          (view === "user" && isAdmin) || (view === "admin" && !isAdmin);
+          (view === "user" && !!user?.isAdmin) ||
+          (view === "admin" && !user?.isAdmin);
 
         return (
           <SidebarBox
@@ -33,13 +34,13 @@ export const SidebarOptions = ({
             isExpanded={isExpanded}
             onClick={() => (!onClick ? navigate(path) : onClick())}
           >
-            <Icon size="24px" path={icon} />
+            <Icon className="size-5 sm:size-6" path={icon} />
             {isExpanded && (
               <span>{t(`Sidebar.Options.${capitalize(text)}`)}</span>
             )}
           </SidebarBox>
         );
       })}
-    </SidebarItemBox>
+    </>
   );
 };

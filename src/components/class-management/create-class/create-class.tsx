@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { OneTimeFields, RecurrentFields } from "./create-class.content";
+import {
+  AddUserToClass,
+  OneTimeFields,
+  RecurrentFields,
+} from "./create-class.content";
 import {
   emptyClassFields,
   ClassType,
@@ -16,8 +20,8 @@ import {
 } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { CustomButton, Modal, showToast, SwitchSelector } from "../../base";
-import { SwitchList } from "../class-details";
 import { capitalize } from "../../../utils";
+import { isMobile } from "react-device-detect";
 
 export const CreateClassModal = ({
   refetchClasses,
@@ -94,6 +98,12 @@ export const CreateClassModal = ({
     }));
   };
 
+  const getTitle = () => {
+    return showAddUsers
+      ? `Classes.CreateClass.AddAttendees`
+      : "Base.Buttons.CreateClass";
+  };
+
   const footer = (
     <>
       {!!showAddUsers ? (
@@ -104,6 +114,7 @@ export const CreateClassModal = ({
           <CustomButton
             onClick={handleAddAttendees}
             isLoading={isCreatingBookings}
+            isDisabled={!attendeesList.length}
           >
             {t("Base.Buttons.Save")}
           </CustomButton>
@@ -122,25 +133,19 @@ export const CreateClassModal = ({
   );
 
   return (
-    <Modal
-      footer={footer}
-      handleClose={handleCloseModal}
-      title={t(
-        `Classes.CreateClass.${showAddUsers ? "AddAttendees" : "NewClass"}`
-      )}
-    >
-      {!!showAddUsers ? (
-        <div className="flex flex-col gap-6">
+    <Modal footer={footer} handleClose={handleCloseModal} title={t(getTitle())}>
+      {!showAddUsers ? (
+        <div className="flex flex-col gap-4 sm:gap-6">
           <div className="flex justify-end w-full">
-            <div>
+            <div style={{ width: isMobile ? "100%" : undefined }}>
               <SwitchSelector
                 keyParam="type"
                 options={getSwitchOptions()}
-                customStyles={{ fontSize: 14 }}
+                customStyles={{ fontSize: isMobile ? 12 : 14 }}
               />
             </div>
           </div>
-          <div className="flex flex-col gap-4 pb-3">
+          <div className="flex flex-col gap-2 sm:gap-4 sm:pb-3 overflow-y-auto max-h-[375px] sm:max-h-none">
             {isRecurrent ? (
               <RecurrentFields fields={fields} setFields={setFields} />
             ) : (
@@ -149,12 +154,10 @@ export const CreateClassModal = ({
           </div>
         </div>
       ) : (
-        <SwitchList
-          listMaxHeight={225}
+        <AddUserToClass
           usersList={usersList}
           setUsersList={setUsersList}
           attendeesList={attendeesList}
-          maxAmount={fields.maxAmount.value}
           setAttendeesList={setAttendeesList}
         />
       )}

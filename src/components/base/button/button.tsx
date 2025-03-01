@@ -2,21 +2,22 @@ import { CSSProperties, PropsWithChildren } from "react";
 import { StyledButton } from "./button.styled";
 import { ButtonType, ColorType } from "./button.interface";
 import { ClipLoader } from "react-spinners";
+import { isMobile } from "react-device-detect";
 
 export const CustomButton = ({
   styles,
   onClick,
   children,
   isLoading,
-  size = 16,
+  isDisabled,
   type = "default",
   color = "primary",
 }: Readonly<
   PropsWithChildren<{
-    size?: number;
     type?: ButtonType;
     color?: ColorType;
     isLoading?: boolean;
+    isDisabled?: boolean;
     onClick?: () => void;
     styles?: CSSProperties;
   }>
@@ -25,17 +26,18 @@ export const CustomButton = ({
     <StyledButton
       type={type}
       color={color}
-      style={{ fontSize: size, ...styles }}
-      onClick={() => {
-        if (!isLoading && onClick) onClick();
+      style={styles}
+      isDisabled={isDisabled}
+      onClick={(e) => {
+        if (!isLoading && !isDisabled && !!onClick) onClick();
       }}
     >
       {!!isLoading ? (
         <ClipLoader
-          size={20}
           color="white"
           loading={true}
           data-testid="loader"
+          size={isMobile ? 16 : 20}
           aria-label="Loading Spinner"
         />
       ) : (

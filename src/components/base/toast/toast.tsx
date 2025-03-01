@@ -1,5 +1,6 @@
 import { TypeOptions } from "react-toastify/dist/types";
 import { Slide, toast, ToastPosition } from "react-toastify";
+import { isMobile } from "react-device-detect";
 
 export const showToast = ({
   text,
@@ -17,8 +18,10 @@ export const showToast = ({
     theme: "colored",
     transition: Slide,
     pauseOnHover: true,
+
     hideProgressBar: true,
     autoClose: autoClose ?? 5000,
-    position: position ?? "bottom-right",
+    style: isMobile ? { fontSize: 12 } : undefined,
+    position: position ?? (isMobile ? "top-right" : "bottom-right"),
   });
 };

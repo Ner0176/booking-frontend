@@ -1,16 +1,9 @@
 import { useTranslation } from "react-i18next";
-import {
-  IClass,
-  IUser,
-  useEditBookings,
-  useGetAllUsers,
-  useGetBookings,
-} from "../../../api";
+import { IClass, IUser, useGetAllUsers, useGetBookings } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
-import { CustomButton, showToast } from "../../base";
-import { DeleteClassModal, SwitchList } from "./class-details.content";
+import { DeleteClassModal, EditListModal } from "./class-details.content";
 import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -39,11 +32,6 @@ export const ClassDetails = ({
     classId: id,
   });
 
-  const { mutate: editBookings, isPending: isLoading } = useEditBookings(() => {
-    refetchClasses();
-    refetchBookings();
-  });
-
   const { initUsersList, initAttendeesList } = useMemo(() => {
     let filteredUsers: IUser[] = [];
     let bookingsUsers: IUser[] = [];
@@ -59,21 +47,6 @@ export const ClassDetails = ({
       initAttendeesList: bookingsUsers,
     };
   }, [users, bookings]);
-
-  const handleEditBooking = () => {
-    if (attendeesList.length > maxAmount) {
-      showToast({
-        type: "error",
-        text: t(`${basePath}.AttendeesList.MaxAmountError`),
-      });
-      return;
-    }
-    editBookings({
-      isRecurrent: false,
-      classId: id.toString(),
-      userIds: attendeesList.map(({ id }) => id),
-    });
-  };
 
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
@@ -94,8 +67,8 @@ export const ClassDetails = ({
 
   return (
     <>
-      <div className="flex flex-col gap-3 justify-between w-full">
-        <div className="grid grid-cols-2 gap-10 w-full h-full">
+      <div className="flex flex-col justify-between w-full">
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-10 w-full h-full">
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
               {t(`${basePath}.Details`)}
@@ -112,34 +85,7 @@ export const ClassDetails = ({
             <span className="font-bold text-xl underline underline-offset-2">
               {!showEditView && t(`${basePath}.AttendeesList.Title`)}
             </span>
-            {showEditView ? (
-              <div className="flex flex-col gap-8">
-                <SwitchList
-                  maxAmount={maxAmount}
-                  usersList={usersList}
-                  setUsersList={setUsersList}
-                  attendeesList={attendeesList}
-                  setAttendeesList={setAttendeesList}
-                />
-                <div className="flex flex-row items-center justify-end gap-4 w-full">
-                  <CustomButton
-                    color="secondary"
-                    onClick={() => {
-                      setParams([{ key: "action" }]);
-                      initializeState();
-                    }}
-                  >
-                    {t("Base.Buttons.Discard")}
-                  </CustomButton>
-                  <CustomButton
-                    isLoading={isLoading}
-                    onClick={handleEditBooking}
-                  >
-                    {t("Base.Buttons.Save")}
-                  </CustomButton>
-                </div>
-              </div>
-            ) : attendeesList.length ? (
+            {attendeesList.length ? (
               <div className="flex flex-wrap gap-3">
                 {attendeesList.map((attendee, idx) => (
                   <UserCard
@@ -155,6 +101,23 @@ export const ClassDetails = ({
           </div>
         </div>
       </div>
+      {showEditView && (
+        <EditListModal
+          refetch={() => {
+            refetchClasses();
+            refetchBookings();
+          }}
+          classData={classData}
+          usersList={usersList}
+          setUsersList={setUsersList}
+          attendeesList={attendeesList}
+          setAttendeesList={setAttendeesList}
+          handleClose={() => {
+            setParams([{ key: "type" }, { key: "action" }]);
+            initializeState();
+          }}
+        />
+      )}
       {showDeleteModal && (
         <DeleteClassModal
           id={id}
