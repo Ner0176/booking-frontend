@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useFindMe } from "../../api";
-import { DashboardSkeleton, HeaderButton, NoDataComponent } from "../base";
+import { DashboardSkeleton, HeaderButton, EmptyData } from "../base";
 import { UserInfoField } from "../users";
 import { EditProfileInformation } from "./profile.content";
 import noDataVoid from "../../assets/images/noData/void.svg";
@@ -67,7 +67,7 @@ export const ProfileDashboard = () => {
         </div>
       ) : (
         // <UserDetails user={user} refetch={refetch} />
-        <NoDataComponent
+        <EmptyData
           image={noDataVoid}
           title={t("Profile.NoData")}
           customStyles={{ paddingTop: 80 }}

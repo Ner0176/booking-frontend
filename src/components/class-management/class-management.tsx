@@ -15,7 +15,7 @@ import { useMemo, useState } from "react";
 
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
-import { DashboardSkeleton, NoDataComponent } from "../base";
+import { DashboardSkeleton, EmptyData } from "../base";
 import {
   ClassDatesFilter,
   ClassStatusType,
@@ -90,7 +90,7 @@ export const ClassesManagementDashboard = () => {
             </CMCardContainer>
           ))
         ) : (
-          <NoDataComponent image={noDataLoading} title={t("Classes.NoData")} />
+          <EmptyData image={noDataLoading} title={t("Classes.NoData")} />
         )}
       </ClassManagementBody>
       {params.get("action") === "create-class" && (

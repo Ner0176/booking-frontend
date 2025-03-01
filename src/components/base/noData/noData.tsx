@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 
-export const NoDataComponent = ({
+export const EmptyData = ({
   image,
   title,
   textSize,

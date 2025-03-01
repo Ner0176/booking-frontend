@@ -6,7 +6,7 @@ import {
   useHasAvailableCancellations,
 } from "../../api";
 import { useSearchParamsManager } from "../../hooks";
-import { DashboardSkeleton, NoDataComponent, showToast } from "../base";
+import { DashboardSkeleton, EmptyData, showToast } from "../base";
 import {
   CalendarFilters,
   ClassDatesFilter,
@@ -101,7 +101,7 @@ export const UserBookingsDashboard = () => {
                 );
               })
             ) : (
-              <NoDataComponent
+              <EmptyData
                 imageSize={225}
                 image={noDataLoading}
                 title={t("UserBookings.NoData")}

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { DashboardSkeleton, NoDataComponent } from "../base";
+import { DashboardSkeleton, EmptyData } from "../base";
 import { useGetAllUsers } from "../../api";
 import { useSearchParamsManager } from "../../hooks";
 import { UserDetails } from "./user-details.tsx";
@@ -46,7 +46,7 @@ export const UsersDashboard = () => {
               />
             ))
           ) : (
-            <NoDataComponent
+            <EmptyData
               image={noDataLoading}
               title={t("Users.NoData")}
               customStyles={{ paddingTop: 80 }}
