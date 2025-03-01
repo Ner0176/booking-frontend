@@ -215,7 +215,7 @@ export const AddUserToClass = ({
         value={search}
         icon={{ name: mdiMagnify }}
         handleChange={(value) => setSearch(value)}
-        placeholder={t(`Classes.ClassDetails.AttendeesList.Edit.SearchUser`)}
+        placeholder={t(`Base.SearchUser`)}
       />
       <UsersTransferList
         assignedUsers={attendeesList}
