@@ -9,6 +9,7 @@ export const CustomButton = ({
   onClick,
   children,
   isLoading,
+  isDisabled,
   type = "default",
   color = "primary",
 }: Readonly<
@@ -16,6 +17,7 @@ export const CustomButton = ({
     type?: ButtonType;
     color?: ColorType;
     isLoading?: boolean;
+    isDisabled?: boolean;
     onClick?: () => void;
     styles?: CSSProperties;
   }>
@@ -25,9 +27,9 @@ export const CustomButton = ({
       type={type}
       color={color}
       style={styles}
+      isDisabled={isDisabled}
       onClick={(e) => {
-        e.stopPropagation();
-        if (!isLoading && onClick) onClick();
+        if (!isLoading && !isDisabled && !!onClick) onClick();
       }}
     >
       {!!isLoading ? (

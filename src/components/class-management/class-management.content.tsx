@@ -214,24 +214,27 @@ export const CalendarHeaderButtons = ({
             icon={mdiPencilOutline}
             tPath="Classes.ClassDetails.Edit"
             size={isMobile ? "small" : "default"}
-            onClick={() => setParams([{ key: "action", value: "edit-class" }])}
+            onClick={() =>
+              setParams([
+                { key: "action", value: "edit-class" },
+                { key: "type", value: "recurrent" },
+              ])
+            }
           />
           <ClassStatusButton
             refetch={refetch}
             classId={classId ?? ""}
             isCancelled={selectedClass.cancelled}
           />
-          <HeaderButton
-            color="secondary"
-            icon={mdiTrashCanOutline}
-            size={isMobile ? "small" : "default"}
-            tPath="Classes.ClassDetails.Delete.Title"
-            onClick={() =>
-              setParams([{ key: "action", value: "delete-class" }])
-            }
-          />
         </>
       )}
+      <HeaderButton
+        color="secondary"
+        icon={mdiTrashCanOutline}
+        size={isMobile ? "small" : "default"}
+        tPath="Classes.ClassDetails.Delete.Title"
+        onClick={() => setParams([{ key: "action", value: "delete-class" }])}
+      />
     </div>
   );
 };

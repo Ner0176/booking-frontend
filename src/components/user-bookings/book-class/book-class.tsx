@@ -46,6 +46,7 @@ export const BookClassDashboard = () => {
         classesList.map((classInstance, idx) => {
           return (
             <UBClassCardContainer
+              className="cursor-pointer shadow-sm"
               onClick={() => handleSelectClass(classInstance)}
             >
               <ClassCardContent key={idx} data={classInstance} />

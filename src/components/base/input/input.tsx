@@ -23,7 +23,7 @@ export const CustomInputField = ({
   handleChange,
   customStyles,
 }: Readonly<{
-  title: string;
+  title?: string;
   value: string;
   error?: string;
   icon?: IIconProps;
@@ -37,10 +37,12 @@ export const CustomInputField = ({
 }>) => {
   return (
     <InputFieldContainer>
-      <InputTitleContainer>
-        <InputFieldTitle>{title}</InputFieldTitle>
-        {!!tooltip && <InfoTooltip content={tooltip} />}
-      </InputTitleContainer>
+      {!!title && (
+        <InputTitleContainer>
+          <InputFieldTitle>{title}</InputFieldTitle>
+          {!!tooltip && <InfoTooltip content={tooltip} />}
+        </InputTitleContainer>
+      )}
       <CustomInputContainer hasIcon={!!icon} isBlocked={!!isDisabled}>
         {!!icon && (
           <svg

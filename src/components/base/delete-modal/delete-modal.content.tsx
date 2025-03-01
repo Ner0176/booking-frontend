@@ -24,7 +24,6 @@ export const DeleteModalConfirmation = ({
         />
       </span>
       <CustomInputField
-        title=""
         value={confirmationText}
         handleChange={setConfirmationText}
         placeholder={t(`${BASE_PATH}.Key`)}

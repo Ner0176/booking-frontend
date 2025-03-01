@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { OneTimeFields, RecurrentFields } from "./create-class.content";
+import {
+  AddUserToClass,
+  OneTimeFields,
+  RecurrentFields,
+} from "./create-class.content";
 import {
   emptyClassFields,
   ClassType,
@@ -16,7 +20,6 @@ import {
 } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { CustomButton, Modal, showToast, SwitchSelector } from "../../base";
-import { SwitchList } from "../class-details";
 import { capitalize } from "../../../utils";
 import { isMobile } from "react-device-detect";
 
@@ -111,6 +114,7 @@ export const CreateClassModal = ({
           <CustomButton
             onClick={handleAddAttendees}
             isLoading={isCreatingBookings}
+            isDisabled={!attendeesList.length}
           >
             {t("Base.Buttons.Save")}
           </CustomButton>
@@ -150,12 +154,10 @@ export const CreateClassModal = ({
           </div>
         </div>
       ) : (
-        <SwitchList
-          listMaxHeight={225}
+        <AddUserToClass
           usersList={usersList}
           setUsersList={setUsersList}
           attendeesList={attendeesList}
-          maxAmount={fields.maxAmount.value}
           setAttendeesList={setAttendeesList}
         />
       )}

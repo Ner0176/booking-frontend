@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../../hooks";
 import {
   SwitchSelectorBox,
@@ -16,8 +15,8 @@ export const SwitchSelector = ({
   customStyles?: CSSProperties;
   options: ISwitchSelectorOption[];
 }>) => {
-  const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager([keyParam]);
+
   return (
     <SwitchSelectorBox
       style={{
@@ -31,7 +30,7 @@ export const SwitchSelector = ({
           isSelected={params.get(keyParam) === keyOption}
           onClick={() => setParams([{ key: keyParam, value: keyOption }])}
         >
-          {t(`${text}`)}
+          {text}
         </SwitchSelectorOption>
       ))}
     </SwitchSelectorBox>
