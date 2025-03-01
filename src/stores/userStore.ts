@@ -9,7 +9,7 @@ interface UserState {
   updateUser: (key: string, value: string) => void;
 }
 
-const useUserStore = create<UserState>()(
+export const useUserStore = create<UserState>()(
   persist(
     (set, get) => ({
       user: null,
