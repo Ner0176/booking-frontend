@@ -1,13 +1,20 @@
 import { useTranslation } from "react-i18next";
-import { BookingStatus, IUser, useGetBookingsFromUser } from "../../../api";
-import { SwitchSelector } from "../../base";
+import {
+  BookingStatus,
+  IClass,
+  IUser,
+  useGetBookingsFromUser,
+} from "../../../api";
+import { EmptyData, SwitchSelector } from "../../base";
 import {
   DeleteUserModal,
   UserClassItem,
   UserInfoField,
+  UserStats,
 } from "./user-details.content";
 import { useSearchParamsManager } from "../../../hooks";
 import { useEffect } from "react";
+import emptyHistory from "../../../assets/images/noData/void.svg";
 import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 
 const CLASS_KEY_PARAM = "classType";
@@ -27,7 +34,7 @@ export const UserDetails = ({
 
   const { name, phone, email } = user;
 
-  const { data } = useGetBookingsFromUser(user.id, {
+  const { data: userBookings } = useGetBookingsFromUser(user.id, {
     status: selectedOption ? (selectedOption as BookingStatus) : undefined,
   });
 
@@ -43,31 +50,6 @@ export const UserDetails = ({
       text: t(`Users.Details.SwitchOptions.${option}`),
     }));
   };
-
-  // const getStats = () => {
-  //   let stats: string[] = [];
-  //   const basePath = "Users.Details.Stats";
-
-  //   if (data) {
-  //     stats = CLASS_OPTIONS.map((option) =>
-  //       t(`${basePath}.${option}`, {
-  //         amount: data[option as BookingType].length,
-  //       })
-  //     );
-
-  //     let date: Date | undefined;
-  //     if (data.completed.length > 0) {
-  //       date = new Date(data.completed[0].class.date);
-  //     }
-  //     stats.push(
-  //       t(`${basePath}.firstClass`, {
-  //         amount: date ? format(date, "dd/MM/yyyy") : "-",
-  //       })
-  //     );
-  //   }
-
-  //   return stats;
-  // };
 
   return (
     <>
@@ -99,30 +81,32 @@ export const UserDetails = ({
             keyParam={CLASS_KEY_PARAM}
             options={getSelectorOptions()}
           />
-          {!!data && !!selectedOption && (
+          {!!selectedOption && (
             <div className="flex flex-col">
-              {data.map(
-                (item, idx) =>
-                  !!item.class && (
-                    <UserClassItem key={idx} classInstance={item.class} />
-                  )
+              {!!userBookings && userBookings.length > 0 ? (
+                userBookings.map(
+                  ({ class: classInstance, originalClass }, idx) =>
+                    (!!classInstance || !!originalClass) && (
+                      <UserClassItem
+                        key={idx}
+                        classInstance={
+                          (classInstance ?? originalClass) as IClass
+                        }
+                      />
+                    )
+                )
+              ) : (
+                <div className="mt-10">
+                  <EmptyData
+                    image={emptyHistory}
+                    title={t(`Users.Details.Empty.${selectedOption}`)}
+                  />
+                </div>
               )}
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-3 w-full">
-          <div className="flex flex-col gap-3">
-            <span className="text-2xl font-bold underline underline-offset-2">
-              {t("Users.Details.Stats.Title")}
-            </span>
-            <div className="flex flex-col gap-4">
-              {/* {getStats().map((item, idx) => (
-                <span key={idx}>{item}</span>
-              ))} */}
-              Pendiente...
-            </div>
-          </div>
-        </div>
+        <UserStats userId={user.id} />
       </div>
       {actionType === "delete-class" && (
         <DeleteUserModal

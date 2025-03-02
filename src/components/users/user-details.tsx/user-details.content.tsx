@@ -4,7 +4,12 @@ import {
   DeleteModal,
   ErrorStrongContainer,
 } from "../../base";
-import { IClass, IUser, useDeleteUser } from "../../../api";
+import {
+  IClass,
+  IUser,
+  useDeleteUser,
+  useGetUserBookingsStats,
+} from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { formatTime, formatToLongDate } from "../../../utils";
 import { useSearchParamsManager } from "../../../hooks";
@@ -36,11 +41,36 @@ export const UserClassItem = ({
 
   return (
     <div
-      onClick={() => navigate(`/calendar?class=${id}`)}
-      className="flex flex-col gap-2 border-b bg-white rounded-2xl hover:bg-neutral-50 py-4 px-6 cursor-pointer overflow-y-auto"
+      onClick={() => navigate(`/management?class=${id}`)}
+      className="flex flex-col gap-2 border-b bg-white hover:bg-neutral-50 py-4 px-6 cursor-pointer overflow-y-auto"
     >
       <div>{formatTime(startTime, endTime)}</div>
       <div>{formatToLongDate(date)}</div>
+    </div>
+  );
+};
+
+export const UserStats = ({ userId }: Readonly<{ userId: number }>) => {
+  const { t } = useTranslation();
+  const basePath = "Users.Details.Stats";
+
+  const { data: userStats } = useGetUserBookingsStats(userId);
+
+  return (
+    <div className="flex flex-col gap-3 w-full">
+      <div className="flex flex-col gap-3">
+        <span className="text-2xl font-bold underline underline-offset-2">
+          {t(`${basePath}.Title`)}
+        </span>
+        <div className="flex flex-col gap-4">
+          {userStats &&
+            Object.entries(userStats).map(([key, value]) => {
+              return (
+                <span>{t(`${basePath}.${key}`, { amount: value ?? "-" })}</span>
+              );
+            })}
+        </div>
+      </div>
     </div>
   );
 };

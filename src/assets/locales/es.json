@@ -2,6 +2,7 @@
   "Base": {
     "EndDate": "Fecha de fin",
     "StartDate": "Fecha de inicio",
+    "SearchUser": "Buscar usuarios...",
     "DeleteConfirmation": {
       "Key": "Confirmar acción",
       "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto."
@@ -173,11 +174,16 @@
       "AttendeesList": {
         "Title": "Lista de asistentes",
         "Empty": "Aún no hay participantes",
-        "UsersTitle": "Lista de usuarios ({{value}})",
-        "LongTitle": "Lista de asistentes ({{currentCount}}/{{maxAmount}})",
-        "Success": "La lista de asistentes ha sido editada correctamente",
-        "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
-        "MaxAmountError": "El número de participantes excede la capacidad máxima"
+        "Edit": {
+          "Title": "Editar lista de asistentes",
+          "Options": {
+            "Recurrent": "Edición recurrente",
+            "OneTime": "Edición puntual"
+          },
+          "Success": "La lista de asistentes ha sido editada correctamente",
+          "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
+          "MaxAmountError": "El número de participantes excede la capacidad máxima"
+        }
       }
     },
     "CreateClass": {
@@ -238,12 +244,17 @@
         "cancelled": "Canceladas",
         "completed": "Realizadas"
       },
+      "Empty": {
+        "pending": "Este usuario no tiene clases pendientes",
+        "completed": "Este usuario aún no ha realizado ninguna clase",
+        "cancelled": "Este usuario no ha cancelado ninguna clase"
+      },
       "Stats": {
         "Title": "Estadísticas",
-        "completed": "Clases realizadas: {{amount}}",
-        "cancelled": "Clases canceladas: {{amount}}",
-        "pending": "Clases pendientes: {{amount}}",
-        "firstClass": "Primera clase realizada: {{amount}}"
+        "completed": "✅ Clases realizadas: {{amount}}",
+        "cancelled": "❌ Clases canceladas: {{amount}}",
+        "pending": "⏳ Clases pendientes: {{amount}}",
+        "firstDay": "📅 Primera clase realizada: {{amount}}"
       }
     }
   },

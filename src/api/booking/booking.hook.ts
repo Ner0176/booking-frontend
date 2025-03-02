@@ -6,6 +6,7 @@ import {
   GetUserBookingsPayload,
   IBooking,
   IUserBooking,
+  IUserBookingStats,
   RecoverBookingPayload,
 } from "./bookings.interface";
 import { showToast } from "../../components";
@@ -28,6 +29,13 @@ export function useGetBookingsFromUser(
     enabled: enabled ?? true,
     queryKey: ["getBookingsByUserId", userId, payload],
     queryFn: () => bookingApi.getBookingsByUserId(userId, payload),
+  });
+}
+
+export function useGetUserBookingsStats(userId: number) {
+  return useQuery<IUserBookingStats>({
+    queryKey: ["getUserBookingsStats", userId],
+    queryFn: () => bookingApi.getUserBookingStats(userId),
   });
 }
 

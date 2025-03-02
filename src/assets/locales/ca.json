@@ -2,6 +2,7 @@
   "Base": {
     "EndDate": "Data de fi",
     "StartDate": "Data d'inici",
+    "SearchUser": "Cercar usuaris...",
     "DeleteConfirmation": {
       "Key": "Confirmar acció",
       "Description": "<strong>Avís:</strong> aquesta acció és <strong>irreversible</strong>. Si vols continuar, escriu <strong>Confirmar acció</strong> en el següent camp de text."
@@ -171,11 +172,16 @@
       "AttendeesList": {
         "Title": "Llista d'assistents",
         "Empty": "Encara no hi ha participants",
-        "UsersTitle": "Llista d'usuaris ({{value}})",
-        "LongTitle": "Llista d'assistents ({{currentCount}}/{{maxAmount}})",
-        "Success": "La llista d'assistents ha estat editada correctament",
-        "Error": "Hi ha hagut un error en intentar editar la llista d'assistents",
-        "MaxAmountError": "El nombre de participants supera la capacitat màxima"
+        "Edit": {
+          "Title": "Editar llista d'assistents",
+          "Options": {
+            "Recurrent": "Edició recurrent",
+            "OneTime": "Edició puntual"
+          },
+          "Success": "La llista d'assistents ha estat editada correctament",
+          "Error": "Hi ha hagut un error en intentar editar la llista d'assistents",
+          "MaxAmountError": "El nombre de participants supera la capacitat màxima"
+        }
       }
     },
     "Event": {
@@ -236,12 +242,17 @@
         "cancelled": "Cancel·lades",
         "completed": "Realitzades"
       },
+      "Empty": {
+        "pending": "Aquest usuari no té classes pendents",
+        "completed": "Aquest usuari encara no ha duit a terme cap classe",
+        "cancelled": "Aquest usuari no ha cancel·lat cap classe"
+      },
       "Stats": {
         "Title": "Estadístiques",
-        "completed": "Classes realitzades: {{amount}}",
-        "cancelled": "Classes cancel·lades: {{amount}}",
-        "pending": "Classes pendents: {{amount}}",
-        "firstClass": "Primera classe realitzada: {{amount}}"
+        "completed": "✅ Classes realitzades: {{amount}}",
+        "cancelled": "❌ Classes cancel·lades: {{amount}}",
+        "pending": "⏳ Classes pendents: {{amount}}",
+        "firstClass": "📅 Primera classe realitzada: {{amount}}"
       }
     }
   },
