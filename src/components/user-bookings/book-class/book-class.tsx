@@ -1,11 +1,12 @@
-import { IClass, useGetAllClasses } from "../../../api";
-import { ClassCardContent } from "../../class-management";
+import { IClass, useGetAllClasses, useGetClassConfigs } from "../../../api";
+import { ClassCardContent, ClassDatesFilter } from "../../class-management";
 import { useSearchParamsManager } from "../../../hooks";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BookClassModal } from "./book-class.content";
 import { showToast } from "../../base";
 import { useTranslation } from "react-i18next";
 import { UBClassCardContainer } from "../user-bookings.styled";
+import { addDays } from "date-fns";
 
 export const BookClassDashboard = () => {
   const { t } = useTranslation();
@@ -13,14 +14,26 @@ export const BookClassDashboard = () => {
   const classId = params.get("class");
   const bookingId = params.get("booking");
 
-  const now = useMemo(() => {
-    return new Date();
-  }, []);
+  const [timeFilter, setTimeFilter] = useState<ClassDatesFilter>();
 
-  const { data: classesList } = useGetAllClasses({
-    statusFilter: "pending",
-    timeFilter: { startDate: now },
-  });
+  const { data: classConfigs } = useGetClassConfigs();
+  const { data: classesList } = useGetAllClasses(
+    {
+      timeFilter,
+      statusFilter: "pending",
+    },
+    !!timeFilter
+  );
+
+  useEffect(() => {
+    if (classConfigs) {
+      const today = new Date();
+      setTimeFilter({
+        startDate: today,
+        endDate: addDays(today, classConfigs.maxAdvanceTime),
+      });
+    }
+  }, [classConfigs]);
 
   const selectedClass = useMemo(() => {
     if (!!bookingId && !!classId && classesList) {
