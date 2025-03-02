@@ -103,6 +103,7 @@ export const SettingsCancelation = () => {
   const handleSubmit = () => {
     if (settings) {
       updateConfigs({
+        maxAdvanceTime: 15,
         maxRecoveryDays: settings.maxRecoveryDays || 60,
         maxCancellationPerMonth: settings.maxCancellationPerMonth || 2,
         minHoursBeforeCancellation: settings.minHoursBeforeCancellation || 2,
@@ -121,19 +122,26 @@ export const SettingsCancelation = () => {
     >
       <CustomInputField
         isDisabled={!isEditing}
+        title={t(`${basePath}.Anticipation`)}
+        value={`${settings?.minHoursBeforeCancellation || 2}`}
+        handleChange={(value) =>
+          handleUpdateField("minHoursBeforeCancellation", value)
+        }
+      />
+      <CustomInputField
+        isDisabled={!isEditing}
         title={t(`${basePath}.MaxCancelations`)}
         value={`${settings?.maxCancellationPerMonth || 2}`}
         handleChange={(value) =>
           handleUpdateField("maxCancellationPerMonth", value)
         }
       />
+
       <CustomInputField
         isDisabled={!isEditing}
-        title={t(`${basePath}.Anticipation`)}
-        value={`${settings?.minHoursBeforeCancellation || 2}`}
-        handleChange={(value) =>
-          handleUpdateField("minHoursBeforeCancellation", value)
-        }
+        title={t(`${basePath}.MaxAdvanceTime`)}
+        value={`${settings?.maxAdvanceTime || 15}`}
+        handleChange={(value) => handleUpdateField("maxAdvanceTime", value)}
       />
       <CustomInputField
         isDisabled={!isEditing}

@@ -268,25 +268,29 @@
   "Policies": {
     "Title": "Polítiques de cancel·lació",
     "Error": "Ha ocorregut un error quan s'han intentat obtenir les polítiques de cancel·lació",
+    "maxAdvanceTime": {
+      "Title": "📅 Temps màxim d'antelació per reservar",
+      "Text": "L'usuari podrà reservar les seves sessions amb una <strong>antelació màxima de {{total}} dies</strong>. Les reserves que superin aquest límit <strongRed>NO</strongRed> seran acceptades per assegurar la correcta planificació i disponibilitat de les classes."
+    },
     "maxCancellationPerMonth": {
       "Title": "🛑 Límit de cancel·lacions mensuals",
       "Text": "L'usuari podrà cancel·lar <strong>fins a {{total}} classes al mes</strong>. Un pic superat aquest límit, qualsevol cancel·lació addicional es considerarà <strongRed>NO</strongRed> reemborsable ni recuperable."
     },
     "cancellationRepeat": {
       "Title": "⚠️ Cancel·lacions repetides",
-      "Text": "<strong>No es pot cancel·lar més d'una vegada</strong> la mateixa reserva. Si s'intenta cancel·lar novament la mateixa reserva, aquesta cancel·lació es considerarà fora de termini i <strongRed>NO</strongRed> tendrà opció de reemborsament ni de recuperació."
+      "Text": "La mateixa reserva <strong>no es pot cancel·lar més d'una vegada</strong>. Si s'intenta cancel·lar novament, la cancel·lació es considerarà fora de termini i <strongRed>NO</strongRed> tendrà opció de reemborsament ni recuperació."
     },
     "minHoursBeforeCancellation": {
-      "Title": "⏳ Temps límit per cancelar",
-      "Text": "L'usuari tendrà l'opció de cancel·lar una reserva <strong>fins a {{total}}h abans de l'inici de la classe</strong>. Si la cancel·lació es realiza fora d'aquest termini, es comptarà com a una cancel·lació tardana y s'aplicaran les condicions de <strongRed>NO</strongRed> reemborsament ni de recuperació."
+      "Title": "⏳ Temps límit per cancel·lar",
+      "Text": "L'usuari podrà cancel·lar una reserva <strong>fins a {{total}} hores abans de l'inici de la classe</strong>. Si la cancel·lació es realitza després d'aquest termini, es considerarà tardana i s'aplicaran les condicions de <strongRed>NO</strongRed> reemborsament ni recuperació."
     },
     "maxRecoveryDays": {
       "Title": "🔄 Recuperació de classes",
-      "Text": "Una classe cancelada dins del termini establert podrà ser reprogramada o recuperada <strong>dins d'un període màxim de {{total}} dies</strong>. Si l'usuari no recupera la classe dins d'aquest plaç, es considerarà una classe perduda i <strongRed>NO</strongRed> hi haurà opció de reemborsament ni de recuperació posterior."
+      "Text": "Una classe cancel·lada dins del termini establert podrà reprogramar-se o recuperar-se <strong>en un període màxim de {{total}} dies</strong>. Si no s'utilitza dins d'aquest termini, es considerarà perduda i <strongRed>NO</strongRed> hi haurà opció de reemborsament ni recuperació posterior."
     },
     "specific": {
       "Title": "📌 Casos específics",
-      "Text": "Per a situacions especials o excepcionals, es recomana contactar directament a la professora per avaluar possibles solucions o alternatives de recuperació que s'ajustin a cada cas."
+      "Text": "Per a situacions especials o excepcionals, es recomana contactar directament amb la professora per avaluar possibles solucions o alternatives de recuperació."
     }
   },
   "UserBookings": {
@@ -321,7 +325,8 @@
     "NoData": "No s'han trobat reserves amb els filtres seleccionats",
     "Cancelation": {
       "Title": "Cancel·lació de classes",
-      "MaxCancelations": "Cancel·lacions màximes (mensual)",
+      "MaxAdvanceTime": "Antel·lació màxima reserva (dies)",
+      "MaxCancelations": "Cancel·lacions màximes (mes)",
       "Anticipation": "Antel·lació mínima (hores)",
       "MaxRecovery": "Període màxim recuperació (dies)",
       "Success": "Configuracions de cancel·lació actualitzades satisfactòriament",
