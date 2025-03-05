@@ -214,12 +214,7 @@ export const CalendarHeaderButtons = ({
             icon={mdiPencilOutline}
             tPath="Classes.ClassDetails.Edit"
             size={isMobile ? "small" : "default"}
-            onClick={() =>
-              setParams([
-                { key: "action", value: "edit-class" },
-                { key: "type", value: "recurrent" },
-              ])
-            }
+            onClick={() => setParams([{ key: "action", value: "edit-class" }])}
           />
           <ClassStatusButton
             refetch={refetch}

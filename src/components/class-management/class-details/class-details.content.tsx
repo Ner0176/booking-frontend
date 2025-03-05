@@ -137,7 +137,7 @@ export const EditListModal = ({
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
 
-  const { params } = useSearchParamsManager(["type"]);
+  const { params, setParams } = useSearchParamsManager(["type"]);
 
   const { id, maxAmount, recurrentId } = classData;
 
@@ -155,6 +155,12 @@ export const EditListModal = ({
       );
     }
   }, [search, usersList]);
+
+  useEffect(() => {
+    if (!params.get("type") && !!recurrentId) {
+      setParams([{ key: "type", value: "recurrent" }]);
+    }
+  }, [params, recurrentId, setParams]);
 
   const handleEditBooking = () => {
     if (attendeesList.length > maxAmount) {
