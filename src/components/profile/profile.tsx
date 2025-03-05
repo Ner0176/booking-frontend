@@ -36,20 +36,20 @@ export const ProfileDashboard = () => {
         [...Array(4)].map((_, idx) => (
           <Skeleton key={idx} className="h-8 sm:h-10 rounded-2xl" />
         ))
-      ) : user ? (
-        <div className="flex flex-col gap-4 w-full sm:max-w-[50%]">
+      ) : !!user ? (
+        <div className="flex flex-col gap-4 w-full sm:max-w-[70%] xl:max-w-[50%]">
           {actionType === "edit-user" ? (
             <EditProfileInformation user={user} refetch={refetch} />
           ) : (
             <>
               <UserInfoField
-                value={user.name}
                 textKey="Name"
+                value={user.name}
                 icon={mdiAccountOutline}
               />
               <UserInfoField
-                value={user.email}
                 textKey="Email"
+                value={user.email}
                 icon={mdiEmailOutline}
               />
               <UserInfoField
@@ -66,8 +66,7 @@ export const ProfileDashboard = () => {
           )}
         </div>
       ) : (
-        // <UserDetails user={user} refetch={refetch} />
-        <EmptyData
+        <NoDataComponent
           image={noDataVoid}
           title={t("Profile.NoData")}
           customStyles={{ paddingTop: 80 }}

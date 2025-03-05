@@ -17,7 +17,7 @@ export const PoliciesDashboard = () => {
 
   return (
     <DashboardSkeleton title={t("Policies.Title")}>
-      <div className="flex flex-col gap-4 sm:gap-6 w-full sm:max-w-[65%] ">
+      <div className="flex flex-col gap-4 sm:gap-6 w-full sm:max-w-[75%] xl:max-w-[65%]">
         {policies &&
           POLICIES_POINTS.map((item, idx) => {
             return (

@@ -31,8 +31,7 @@ export const UserBookingsDashboard = () => {
 
   const [datesFilter, setDatesFilter] = useState<ClassDatesFilter>({});
   const [bookingToCancel, setBookingToCancel] = useState<IUserBooking>();
-  const [statusFilter, setStatusFilter] =
-    useState<ClassStatusType>("cancelled");
+  const [statusFilter, setStatusFilter] = useState<ClassStatusType>("all");
 
   const { data: hasCancellations, refetch: refetchAvailableCancellations } =
     useHasAvailableCancellations();

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { BookClassModal } from "./book-class.content";
 import { showToast } from "../../base";
 import { useTranslation } from "react-i18next";
-import { UBClassCardContainer } from "../user-bookings.styled";
+import { UBClassCardWrapper } from "../user-bookings.styled";
 import { addDays } from "date-fns";
 
 export const BookClassDashboard = () => {
@@ -58,12 +58,12 @@ export const BookClassDashboard = () => {
         classesList.length > 0 &&
         classesList.map((classInstance, idx) => {
           return (
-            <UBClassCardContainer
+            <UBClassCardWrapper
               className="cursor-pointer shadow-sm"
               onClick={() => handleSelectClass(classInstance)}
             >
               <ClassCardContent key={idx} data={classInstance} />
-            </UBClassCardContainer>
+            </UBClassCardWrapper>
           );
         })}
       {!!selectedClass && (
