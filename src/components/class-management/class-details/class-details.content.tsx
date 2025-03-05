@@ -194,7 +194,7 @@ export const EditListModal = ({
           <CustomInputField
             value={search}
             icon={{ name: mdiMagnify }}
-            placeholder={t(`${basePath}.SearchUser`)}
+            placeholder={t(`Base.SearchUser`)}
             handleChange={(value) => setSearch(value)}
           />
           {recurrentId && (

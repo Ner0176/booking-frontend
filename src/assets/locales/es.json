@@ -2,6 +2,7 @@
   "Base": {
     "EndDate": "Fecha de fin",
     "StartDate": "Fecha de inicio",
+    "SearchUser": "Buscar usuarios...",
     "DeleteConfirmation": {
       "Key": "Confirmar acción",
       "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto."
@@ -173,11 +174,16 @@
       "AttendeesList": {
         "Title": "Lista de asistentes",
         "Empty": "Aún no hay participantes",
-        "UsersTitle": "Lista de usuarios ({{value}})",
-        "LongTitle": "Lista de asistentes ({{currentCount}}/{{maxAmount}})",
-        "Success": "La lista de asistentes ha sido editada correctamente",
-        "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
-        "MaxAmountError": "El número de participantes excede la capacidad máxima"
+        "Edit": {
+          "Title": "Editar lista de asistentes",
+          "Options": {
+            "Recurrent": "Edición recurrente",
+            "OneTime": "Edición puntual"
+          },
+          "Success": "La lista de asistentes ha sido editada correctamente",
+          "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
+          "MaxAmountError": "El número de participantes excede la capacidad máxima"
+        }
       }
     },
     "CreateClass": {
@@ -238,12 +244,17 @@
         "cancelled": "Canceladas",
         "completed": "Realizadas"
       },
+      "Empty": {
+        "pending": "Este usuario no tiene clases pendientes",
+        "completed": "Este usuario aún no ha realizado ninguna clase",
+        "cancelled": "Este usuario no ha cancelado ninguna clase"
+      },
       "Stats": {
         "Title": "Estadísticas",
-        "completed": "Clases realizadas: {{amount}}",
-        "cancelled": "Clases canceladas: {{amount}}",
-        "pending": "Clases pendientes: {{amount}}",
-        "firstClass": "Primera clase realizada: {{amount}}"
+        "completed": "✅ Clases realizadas: {{amount}}",
+        "cancelled": "❌ Clases canceladas: {{amount}}",
+        "pending": "⏳ Clases pendientes: {{amount}}",
+        "firstDay": "📅 Primera clase realizada: {{amount}}"
       }
     }
   },
@@ -259,25 +270,29 @@
   "Policies": {
     "Title": "Políticas de cancelación",
     "Error": "Ha ocurrido un error al intentar obtener las políticas de cancelación",
+    "maxAdvanceTime": {
+      "Title": "📅 Tiempo máximo de antelación para reservar",
+      "Text": "El usuario podrá reservar sus sesiones con una <strong>antelación máxima de {{total}} días</strong>. Las reservas que superen este límite <strongRed>NO</strongRed> serán aceptadas para asegurar la correcta planificación y disponibilidad de las clases."
+    },
     "maxCancellationPerMonth": {
       "Title": "🛑 Límite de cancelaciones mensuales",
       "Text": "El usuario podrá cancelar <strong>hasta {{total}} clases al mes</strong>. Una vez superado este límite, cualquier cancelación adicional se considerará <strongRed>NO</strongRed> reembolsable ni recuperable."
     },
     "cancellationRepeat": {
       "Title": "⚠️ Cancelaciones repetidas",
-      "Text": "La misma reserva <strong>no puede ser cancelada más de una vez</strong>. Si se intenta cancelar nuevamente la misma reserva, dicha cancelación se considerará fuera de plazo y <strongRed>NO</strongRed> tendrá opción de reembolso ni recuperación."
+      "Text": "La misma reserva <strong>no puede ser cancelada más de una vez</strong>. Si se intenta cancelar nuevamente, la cancelación se considerará fuera de plazo y <strongRed>NO</strongRed> tendrá opción de reembolso ni recuperación."
     },
     "minHoursBeforeCancellation": {
       "Title": "⏳ Tiempo límite para cancelar",
-      "Text": "El usuario tendrá la opción de cancelar una reserva <strong>hasta {{total}}h antes del inicio de la clase</strong>. Si la cancelación se realiza fuera de este plazo, se contará como una cancelación tardía y se aplicarán las condiciones de <strongRed>NO</strongRed> reembolso ni recuperación."
+      "Text": "El usuario podrá cancelar una reserva <strong>hasta {{total}} horas antes del inicio de la clase</strong>. Si la cancelación se realiza después de ese plazo, se considerará tardía y se aplicarán las condiciones de <strongRed>NO</strongRed> reembolso ni recuperación."
     },
     "maxRecoveryDays": {
       "Title": "🔄 Recuperación de clases",
-      "Text": "Una clase cancelada dentro del plazo establecido podrá ser reprogramada o recuperada <strong>dentro de un período máximo de {{total}} días</strong>. Si el usuario no utiliza dicha clase dentro de este plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de reembolso ni recuperación posterior."
+      "Text": "Una clase cancelada dentro del plazo establecido podrá reprogramarse o recuperarse <strong>en un período máximo de {{total}} días</strong>. Si no se utiliza dentro de ese plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de reembolso ni recuperación posterior."
     },
     "specific": {
       "Title": "📌 Casos específicos",
-      "Text": "Para situaciones especiales o excepcionales, se recomienda contactar directamente a la profesora para evaluar posibles soluciones o alternativas de recuperación que se ajusten a cada caso."
+      "Text": "Para situaciones especiales o excepcionales, se recomienda contactar directamente a la profesora para evaluar posibles soluciones o alternativas de recuperación."
     }
   },
   "UserBookings": {
@@ -312,7 +327,8 @@
     "Title": "Ajustes generales",
     "Cancelation": {
       "Title": "Cancelación de clases",
-      "MaxCancelations": "Cancelaciones máximas (mensual)",
+      "MaxAdvanceTime": "Antelación máxima reserva (días)",
+      "MaxCancelations": "Cancelaciones máximas (mes)",
       "Anticipation": "Antelación mínima (horas)",
       "MaxRecovery": "Periodo máximo recuperación (días)",
       "Success": "Configuraciones de cancelación actualizadas correctamente",

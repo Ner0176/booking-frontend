@@ -37,3 +37,10 @@ export interface IUserBooking {
   cancelledAt: Date | null;
   originalClass: IClass | null;
 }
+
+export interface IUserBookingStats {
+  pending: number;
+  firstDay: string;
+  cancelled: number;
+  completed: number;
+}

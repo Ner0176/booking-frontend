@@ -16,6 +16,10 @@ export const bookingApi = {
     const response = await axiosInstance.get(`/booking/find`, { params });
     return response.data;
   },
+  getUserBookingStats: async (userId: number) => {
+    const response = await axiosInstance.get(`/booking/user-stats/${userId}`);
+    return response.data;
+  },
   getBookingsByUserId: async (
     userId: number,
     payload: GetUserBookingsPayload

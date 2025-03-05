@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useFindMe } from "../../api";
-import { DashboardSkeleton, HeaderButton, NoDataComponent } from "../base";
+import { DashboardSkeleton, HeaderButton, EmptyData } from "../base";
 import { UserInfoField } from "../users";
 import { EditProfileInformation } from "./profile.content";
 import noDataVoid from "../../assets/images/noData/void.svg";

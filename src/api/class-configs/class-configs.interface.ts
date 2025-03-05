@@ -1,4 +1,5 @@
 export interface EditClassConfigsPayload {
+  maxAdvanceTime: number;
   maxRecoveryDays: number;
   maxCancellationPerMonth: number;
   minHoursBeforeCancellation: number;
@@ -6,6 +7,7 @@ export interface EditClassConfigsPayload {
 
 export interface IClassConfigs {
   id?: number;
+  maxAdvanceTime: number;
   maxRecoveryDays: number;
   maxCancellationPerMonth: number;
   minHoursBeforeCancellation: number;

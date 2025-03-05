@@ -11,6 +11,7 @@ import { CSSProperties, useCallback, useMemo, useState } from "react";
 import { mergeDateTime } from "../../utils";
 import { calendarMessageKeys } from "./calendar.interface";
 import { useUser } from "../../stores";
+import { useNavigate } from "react-router-dom";
 
 const LOCALIZER = dateFnsLocalizer({
   format,
@@ -21,6 +22,7 @@ const LOCALIZER = dateFnsLocalizer({
 });
 
 export const CalendarDashboard = () => {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
   const user = useUser();
@@ -73,6 +75,13 @@ export const CalendarDashboard = () => {
     }, {});
   };
 
+  const handleSelectEvent = (event: Event) => {
+    const bookingId = event.resource?.booking?.id;
+    if (!!isAdmin && bookingId) {
+      navigate(`/management?class=${bookingId}`);
+    }
+  };
+
   const dayPropGetter = useCallback(
     (date: Date) => {
       const isCurrentMonth = currentDate.getMonth() === date.getMonth();
@@ -111,6 +120,7 @@ export const CalendarDashboard = () => {
           min={new Date(2025, 1, 1, 8, 0)}
           max={new Date(2025, 1, 1, 22, 0)}
           eventPropGetter={eventPropGetter}
+          onSelectEvent={handleSelectEvent}
           messages={getCalendarTranslations()}
           onView={(view) => setCurrentView(view)}
           onNavigate={(date) => setCurrentDate(date)}

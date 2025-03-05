@@ -8,6 +8,8 @@ import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../users";
+import { EmptyData } from "../../base";
+import noUsers from "../../../assets/images/noData/folders.svg";
 
 export const ClassDetails = ({
   classData,
@@ -96,7 +98,11 @@ export const ClassDetails = ({
                 ))}
               </div>
             ) : (
-              <span> {t(`${basePath}.AttendeesList.Empty`)}</span>
+              <EmptyData
+                textSize={16}
+                image={noUsers}
+                title={t(`${basePath}.AttendeesList.Empty`)}
+              />
             )}
           </div>
         </div>
