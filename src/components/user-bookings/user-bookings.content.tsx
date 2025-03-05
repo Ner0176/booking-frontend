@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 import {
   LostClassText,
   StrongLinkTag,
-  UBClassCardContainer,
+  UBClassCardsContainer,
+  UBClassCardWrapper,
 } from "./user-bookings.styled";
 import { ClassCardContent, ItemInfoRow } from "../class-management";
 import Icon from "@mdi/react";
@@ -48,7 +49,7 @@ const RecoverBookingCard = ({
 
   return (
     <>
-      <UBClassCardContainer className="justify-center shadow-sm hover:border-violet-100 hover:bg-[#F5F3FF80]">
+      <UBClassCardWrapper className="justify-center shadow-sm hover:border-violet-100 hover:bg-[#F5F3FF80]">
         <ItemInfoRow icon={mdiCalendarRemoveOutline}>
           {t(`UserBookings.CancelledAt`, {
             date: format(new Date(cancelledAt), "dd/MM/yyyy"),
@@ -75,7 +76,7 @@ const RecoverBookingCard = ({
             <LostClassText>{t("UserBookings.LostClass")}</LostClassText>
           )}
         </div>
-      </UBClassCardContainer>
+      </UBClassCardWrapper>
     </>
   );
 };
@@ -95,8 +96,8 @@ export const UserBookingCard = ({
   if (!originalClass && !classInstance) return <div />;
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-center last:mb-6">
-      <UBClassCardContainer isCancelled={isCancelled}>
+    <UBClassCardsContainer isCancelled={isCancelled}>
+      <UBClassCardWrapper isCancelled={isCancelled}>
         <ClassCardContent
           handleCancelBooking={handleCancel}
           data={{
@@ -104,7 +105,7 @@ export const UserBookingCard = ({
             cancelled: isCancelled,
           }}
         />
-      </UBClassCardContainer>
+      </UBClassCardWrapper>
       {!!cancelledAt && (
         <>
           <Icon
@@ -119,13 +120,13 @@ export const UserBookingCard = ({
               }
             />
           ) : (
-            <UBClassCardContainer>
+            <UBClassCardWrapper>
               <ClassCardContent data={classInstance} />
-            </UBClassCardContainer>
+            </UBClassCardWrapper>
           )}
         </>
       )}
-    </div>
+    </UBClassCardsContainer>
   );
 };
 
