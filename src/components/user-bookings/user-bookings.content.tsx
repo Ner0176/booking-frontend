@@ -107,7 +107,7 @@ export const UserBookingCard = ({
           handleCancelBooking={handleCancel}
           hasCancellations={hasCancellations}
           data={{
-            ...((classInstance ?? originalClass) as IClass),
+            ...((originalClass ?? classInstance) as IClass),
             cancelled: isCancelled,
           }}
         />
