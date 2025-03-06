@@ -2,6 +2,7 @@ import { ClassDatesFilter, ClassStatusType } from "../../components";
 
 export interface GetClassesPayload {
   enabled?: boolean;
+  excludeUserBookings?: boolean;
   timeFilter?: ClassDatesFilter;
   statusFilter?: ClassStatusType;
 }

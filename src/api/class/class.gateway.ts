@@ -7,7 +7,11 @@ import {
 } from "./class.interface";
 
 export const classApi = {
-  getAllClasses: async ({ statusFilter, timeFilter }: GetClassesPayload) => {
+  getAllClasses: async ({
+    timeFilter,
+    statusFilter,
+    excludeUserBookings,
+  }: GetClassesPayload) => {
     const params = new URLSearchParams();
 
     if (!!statusFilter) {
@@ -20,6 +24,10 @@ export const classApi = {
         params.append("startDate", startDate.toDateString());
         params.append("endDate", endDate.toDateString());
       }
+    }
+
+    if (!!excludeUserBookings) {
+      params.append("excludeUserBookings", `${excludeUserBookings}`);
     }
 
     const response = await axiosInstance.get("/class/all", { params });

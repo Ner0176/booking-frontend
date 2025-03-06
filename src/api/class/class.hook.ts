@@ -12,12 +12,12 @@ import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
 
 export function useGetAllClasses(payload: GetClassesPayload) {
-  const { enabled, timeFilter, statusFilter } = payload;
+  const { enabled, ...filters } = payload;
 
   return useQuery<IClass[], Error>({
+    queryKey: ["getAllClasses", filters],
+    queryFn: () => classApi.getAllClasses(filters),
     enabled: enabled === undefined ? true : enabled,
-    queryKey: ["getAllClasses", statusFilter, timeFilter],
-    queryFn: () => classApi.getAllClasses({ statusFilter, timeFilter }),
   });
 }
 

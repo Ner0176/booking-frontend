@@ -3,13 +3,14 @@ import { ClassCardContent, ClassDatesFilter } from "../../class-management";
 import { useSearchParamsManager } from "../../../hooks";
 import { useEffect, useMemo, useState } from "react";
 import { BookClassModal } from "./book-class.content";
-import { showToast } from "../../base";
+import { EmptyData, showToast } from "../../base";
 import { useTranslation } from "react-i18next";
 import { UBClassCardWrapper } from "../user-bookings.styled";
 import { addDays } from "date-fns";
 import { FullClassText } from "./book-class.styled";
+import emptyList from "../../../assets/images/noData/lost.svg";
 
-const BASE_PATH = "UserBookings.BookClass.AlreadyFull";
+const BASE_PATH = "UserBookings.BookClass";
 
 export const BookClassDashboard = ({
   handleRefetch,
@@ -24,8 +25,9 @@ export const BookClassDashboard = ({
   const { data: classConfigs } = useGetClassConfigs();
   const { data: classesList } = useGetAllClasses({
     timeFilter,
-    statusFilter: "pending",
     enabled: !!timeFilter,
+    statusFilter: "pending",
+    excludeUserBookings: true,
   });
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export const BookClassDashboard = ({
     if (classInstance.currentCount >= classInstance.maxAmount) {
       showToast({
         type: "warning",
-        text: t(`${BASE_PATH}.Message`),
+        text: t(`${BASE_PATH}.AlreadyFull.Message`),
       });
     } else {
       setParams([{ key: "class", value: `${classInstance.id}` }]);
@@ -57,12 +59,10 @@ export const BookClassDashboard = ({
 
   return (
     <>
-      {classesList &&
-        classesList.length > 0 &&
+      {classesList && classesList?.length > 0 ? (
         classesList.map((classInstance, idx) => {
           const { currentCount, maxAmount } = classInstance;
           const isFull = currentCount === maxAmount;
-
           return (
             <UBClassCardWrapper
               isFull={isFull}
@@ -71,11 +71,25 @@ export const BookClassDashboard = ({
             >
               <ClassCardContent key={idx} data={classInstance} />
               {isFull && (
-                <FullClassText>{t(`${BASE_PATH}.Button`)}</FullClassText>
+                <FullClassText>
+                  {t(`${BASE_PATH}.AlreadyFull.Button`)}
+                </FullClassText>
               )}
             </UBClassCardWrapper>
           );
-        })}
+        })
+      ) : (
+        <div className="mt-12">
+          <EmptyData
+            textSize={20}
+            imageSize={300}
+            image={emptyList}
+            title={t(`${BASE_PATH}.EmptyList`, {
+              days: classConfigs?.maxAdvanceTime,
+            })}
+          />
+        </div>
+      )}
       {!!selectedClass && (
         <BookClassModal
           handleRefetch={handleRefetch}
