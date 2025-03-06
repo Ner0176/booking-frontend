@@ -100,6 +100,7 @@ export const UserBookingsDashboard = () => {
                   <UserBookingCard
                     key={idx}
                     booking={booking}
+                    hasCancellations={!!hasCancellations}
                     handleCancel={() => handleCancel(booking)}
                   />
                 );

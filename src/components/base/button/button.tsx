@@ -28,7 +28,7 @@ export const CustomButton = ({
       color={color}
       style={styles}
       isDisabled={isDisabled}
-      onClick={(e) => {
+      onClick={() => {
         if (!isLoading && !isDisabled && !!onClick) onClick();
       }}
     >

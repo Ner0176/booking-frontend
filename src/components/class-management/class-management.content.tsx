@@ -9,6 +9,7 @@ import {
   mdiTimerSand,
 } from "@mdi/js";
 import {
+  CSSProperties,
   Dispatch,
   PropsWithChildren,
   SetStateAction,
@@ -114,18 +115,13 @@ export const ClassStatusButton = ({
   );
 };
 
-const BUTTON_STYLES = {
-  minWidth: 0,
-  minHeight: 0,
-  padding: "4px 6px 4px 6px",
-  fontSize: isMobile ? 10 : 12,
-};
-
 export const ClassCardContent = ({
   data,
+  hasCancellations,
   handleCancelBooking,
 }: Readonly<{
   data: IClass;
+  hasCancellations?: boolean;
   handleCancelBooking?: () => void;
 }>) => {
   const { t } = useTranslation();
@@ -142,6 +138,15 @@ export const ClassCardContent = ({
       ? { status: "pending", statusIcon: mdiTimerSand }
       : { status: "completed", statusIcon: mdiCheck };
   })();
+
+  const getButtonStyles = () => {
+    return {
+      minWidth: 0,
+      minHeight: 0,
+      padding: "4px 6px 4px 6px",
+      fontSize: isMobile ? 10 : 12,
+    } as CSSProperties;
+  };
 
   return (
     <>
@@ -165,8 +170,9 @@ export const ClassCardContent = ({
           <CustomButton
             type="error"
             color="secondary"
-            styles={BUTTON_STYLES}
+            styles={getButtonStyles()}
             onClick={handleCancelBooking}
+            isDisabled={!hasCancellations}
           >
             {t("UserBookings.Cancel.Title")}
           </CustomButton>

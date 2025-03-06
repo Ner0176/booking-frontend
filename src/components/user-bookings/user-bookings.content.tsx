@@ -84,9 +84,11 @@ const RecoverBookingCard = ({
 export const UserBookingCard = ({
   booking,
   handleCancel,
+  hasCancellations,
 }: Readonly<{
   handleCancel(): void;
   booking: IUserBooking;
+  hasCancellations: boolean;
 }>) => {
   const { setParams } = useSearchParamsManager([]);
 
@@ -103,6 +105,7 @@ export const UserBookingCard = ({
       <UBClassCardWrapper isCancelled={isCancelled}>
         <ClassCardContent
           handleCancelBooking={handleCancel}
+          hasCancellations={hasCancellations}
           data={{
             ...((classInstance ?? originalClass) as IClass),
             cancelled: isCancelled,
