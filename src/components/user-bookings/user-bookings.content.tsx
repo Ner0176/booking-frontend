@@ -96,7 +96,10 @@ export const UserBookingCard = ({
   if (!originalClass && !classInstance) return <div />;
 
   return (
-    <UBClassCardsContainer isCancelled={isCancelled}>
+    <UBClassCardsContainer
+      className="last:mb-6"
+      isCancelled={isCancelled && !!cancelledAt}
+    >
       <UBClassCardWrapper isCancelled={isCancelled}>
         <ClassCardContent
           handleCancelBooking={handleCancel}
@@ -109,8 +112,8 @@ export const UserBookingCard = ({
       {!!cancelledAt && (
         <>
           <Icon
-            className="size-5 sm:size-8 text-neutral-400"
             path={isMobile ? mdiArrowDown : mdiArrowRight}
+            className="size-5 sm:size-8 text-neutral-400 flex-shrink-0"
           />
           {!classInstance ? (
             <RecoverBookingCard

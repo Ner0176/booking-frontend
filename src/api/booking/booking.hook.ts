@@ -56,7 +56,7 @@ export function useCreateBookings(handleSuccess: () => void) {
   });
 }
 
-export function useRecoverBooking() {
+export function useRecoverBooking(handleRefetch: () => void) {
   const { t } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
 
@@ -64,6 +64,7 @@ export function useRecoverBooking() {
     mutationFn: (payload: RecoverBookingPayload) =>
       bookingApi.recoverBooking(payload),
     onSuccess() {
+      handleRefetch();
       setParams([{ key: "class" }, { key: "booking" }]);
       showToast({
         type: "success",

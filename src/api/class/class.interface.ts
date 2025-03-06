@@ -1,8 +1,9 @@
 import { ClassDatesFilter, ClassStatusType } from "../../components";
 
 export interface GetClassesPayload {
-  statusFilter?: ClassStatusType;
+  enabled?: boolean;
   timeFilter?: ClassDatesFilter;
+  statusFilter?: ClassStatusType;
 }
 
 export interface CreateClassPayload {

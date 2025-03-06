@@ -7,8 +7,13 @@ import { showToast } from "../../base";
 import { useTranslation } from "react-i18next";
 import { UBClassCardWrapper } from "../user-bookings.styled";
 import { addDays } from "date-fns";
+import { FullClassText } from "./book-class.styled";
 
-export const BookClassDashboard = () => {
+const BASE_PATH = "UserBookings.BookClass.AlreadyFull";
+
+export const BookClassDashboard = ({
+  handleRefetch,
+}: Readonly<{ handleRefetch(): void }>) => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["class", "booking"]);
   const classId = params.get("class");
@@ -17,13 +22,11 @@ export const BookClassDashboard = () => {
   const [timeFilter, setTimeFilter] = useState<ClassDatesFilter>();
 
   const { data: classConfigs } = useGetClassConfigs();
-  const { data: classesList } = useGetAllClasses(
-    {
-      timeFilter,
-      statusFilter: "pending",
-    },
-    !!timeFilter
-  );
+  const { data: classesList } = useGetAllClasses({
+    timeFilter,
+    statusFilter: "pending",
+    enabled: !!timeFilter,
+  });
 
   useEffect(() => {
     if (classConfigs) {
@@ -45,7 +48,7 @@ export const BookClassDashboard = () => {
     if (classInstance.currentCount >= classInstance.maxAmount) {
       showToast({
         type: "warning",
-        text: t("UserBookings.BookClass.AlreadyFull"),
+        text: t(`${BASE_PATH}.Message`),
       });
     } else {
       setParams([{ key: "class", value: `${classInstance.id}` }]);
@@ -57,17 +60,25 @@ export const BookClassDashboard = () => {
       {classesList &&
         classesList.length > 0 &&
         classesList.map((classInstance, idx) => {
+          const { currentCount, maxAmount } = classInstance;
+          const isFull = currentCount === maxAmount;
+
           return (
             <UBClassCardWrapper
-              className="cursor-pointer shadow-sm"
+              isFull={isFull}
+              className="cursor-pointer shadow-sm last:mb-4"
               onClick={() => handleSelectClass(classInstance)}
             >
               <ClassCardContent key={idx} data={classInstance} />
+              {isFull && (
+                <FullClassText>{t(`${BASE_PATH}.Button`)}</FullClassText>
+              )}
             </UBClassCardWrapper>
           );
         })}
       {!!selectedClass && (
         <BookClassModal
+          handleRefetch={handleRefetch}
           selectedClass={selectedClass}
           bookingId={+(bookingId as string)}
           handleClose={() => setParams([{ key: "class" }])}

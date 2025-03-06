@@ -11,10 +11,9 @@ import { IClassIds, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
 
-export function useGetAllClasses(
-  { statusFilter, timeFilter }: GetClassesPayload,
-  enabled?: boolean
-) {
+export function useGetAllClasses(payload: GetClassesPayload) {
+  const { enabled, timeFilter, statusFilter } = payload;
+
   return useQuery<IClass[], Error>({
     enabled: enabled === undefined ? true : enabled,
     queryKey: ["getAllClasses", statusFilter, timeFilter],

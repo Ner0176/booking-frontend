@@ -54,6 +54,11 @@ export const UserBookingsDashboard = () => {
     );
   };
 
+  const handleRefetch = () => {
+    refetchBookings();
+    refetchAvailableCancellations();
+  };
+
   const handleCancel = (booking: IUserBooking) => {
     if (!hasCancellations) {
       showToast({
@@ -72,7 +77,7 @@ export const UserBookingsDashboard = () => {
       goBack={{ showButton: !!selectedBooking, path: "/bookings" }}
     >
       {selectedBooking ? (
-        <BookClassDashboard />
+        <BookClassDashboard handleRefetch={handleRefetch} />
       ) : (
         <>
           <CalendarFilters
@@ -109,10 +114,7 @@ export const UserBookingsDashboard = () => {
           </div>
           {isCancelling && bookingToCancel && (
             <CancelBookingModal
-              refetch={() => {
-                refetchBookings();
-                refetchAvailableCancellations();
-              }}
+              refetch={handleRefetch}
               bookingId={bookingToCancel.id}
               handleClose={() => {
                 setBookingToCancel(undefined);

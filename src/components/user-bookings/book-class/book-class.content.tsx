@@ -8,18 +8,21 @@ const BASE_PATH = "UserBookings.BookClass";
 export const BookClassModal = ({
   bookingId,
   handleClose,
+  handleRefetch,
   selectedClass,
 }: Readonly<{
   bookingId: number;
   handleClose(): void;
   selectedClass: IClass;
+  handleRefetch(): void;
 }>) => {
   const { t } = useTranslation();
 
   const { id, date, startTime, endTime, currentCount, maxAmount } =
     selectedClass;
 
-  const { mutate: recoverBooking, isPending: isLoading } = useRecoverBooking();
+  const { mutate: recoverBooking, isPending: isLoading } =
+    useRecoverBooking(handleRefetch);
 
   const footer = (
     <>
