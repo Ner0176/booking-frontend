@@ -2,7 +2,10 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: "http://localhost:8000/",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8000"
+      : process.env.BACK_PROD_URL,
   headers: {
     "Content-Type": "application/json",
   },
