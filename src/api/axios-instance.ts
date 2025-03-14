@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
   baseURL:
     process.env.NODE_ENV === "development"
       ? "http://localhost:8000"
-      : process.env.BACK_PROD_URL,
+      : "https://mioreset-app-backend.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
