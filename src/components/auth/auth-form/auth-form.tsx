@@ -5,7 +5,7 @@ import {
   mdiEyeOutline,
   mdiPhoneOutline,
 } from "@mdi/js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormButton,
   SeparatorContainer,
@@ -44,6 +44,10 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
 
   const { mutate: login } = useLogin();
   const { mutate: signUp } = useSignUp();
+
+  useEffect(() => {
+    if (!!user) navigate("/");
+  }, [user, navigate]);
 
   const handleAuthFields = (field: string, value: string) => {
     setAuthFields((prev) => {
