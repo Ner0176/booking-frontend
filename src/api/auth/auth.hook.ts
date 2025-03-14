@@ -12,6 +12,7 @@ import { showToast } from "../../components";
 import { useLogoutUser, useSetUser } from "../../stores";
 
 export function useSignUp() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const setUser = useSetUser();
 
@@ -19,6 +20,7 @@ export function useSignUp() {
     mutationFn: (payload: SignUpPayload) => authApi.signUp(payload),
     onSuccess(data) {
       setUser(data);
+      navigate("/");
     },
     onError(error) {
       const status = error.response.data.statusCode;
@@ -28,6 +30,7 @@ export function useSignUp() {
 }
 
 export function useLogin() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const setUser = useSetUser();
 
@@ -35,6 +38,7 @@ export function useLogin() {
     mutationFn: (credentials: LoginPayload) => authApi.login(credentials),
     onSuccess(data) {
       setUser(data);
+      navigate("/");
     },
     onError(error) {
       const status = error.response.data.statusCode;
