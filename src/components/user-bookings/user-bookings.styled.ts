@@ -13,7 +13,7 @@ export const UBClassCardWrapper = styled.div<{
   isFull?: boolean;
   isCancelled?: boolean;
 }>`
-  ${tw`relative flex flex-col gap-2 px-6 py-4 min-w-[275px] w-full sm:min-w-[350px] h-full sm:min-h-[150px] border rounded-xl`}
+  ${tw`relative flex flex-col gap-2 px-6 py-4 min-w-[275px] w-full sm:min-w-[350px] min-h-[150px] border rounded-xl`}
   ${({ isFull }) => isFull && tw`bg-yellow-50 border-yellow-100 shadow-md`}
   ${({ isCancelled }) => isCancelled && tw`bg-red-50 border-red-100`}
 `;
