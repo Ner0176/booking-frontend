@@ -302,7 +302,11 @@
     "BookClass": {
       "Title": "Reserva una classe",
       "Book": "Reservar classe",
-      "AlreadyFull": "La classe està plena",
+      "EmptyList": "No hi ha cap classe disponible en els pròxims {{days}} dies",
+      "AlreadyFull": {
+        "Button": "Classe completa",
+        "Message": "La clase està plena"
+      },
       "Fields": {
         "Date": "Data",
         "FreeSpots": "Places disponibles",

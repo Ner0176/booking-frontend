@@ -305,7 +305,11 @@
     "BookClass": {
       "Title": "Recuperar clase",
       "Book": "Reservar clase",
-      "AlreadyFull": "La clase está llena",
+      "EmptyList": "No hay ninguna clase disponible en los próximos {{days}} días",
+      "AlreadyFull": {
+        "Button": "Clase completa",
+        "Message": "La clase está llena"
+      },
       "Fields": {
         "Date": "Fecha",
         "FreeSpots": "Plazas disponibles",
