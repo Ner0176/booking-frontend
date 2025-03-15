@@ -12,6 +12,7 @@ export const DeleteModal = ({
   handleClose,
   handleDelete,
   mainButtonText,
+  isButtonDisabled,
   checkValidations,
 }: Readonly<
   PropsWithChildren<{
@@ -21,6 +22,7 @@ export const DeleteModal = ({
     handleClose(): void;
     handleDelete(): void;
     mainButtonText?: string;
+    isButtonDisabled?: boolean;
     checkValidations?(): boolean;
   }>
 >) => {
@@ -52,6 +54,10 @@ export const DeleteModal = ({
         color="primary"
         isLoading={isDeleting}
         onClick={handleOnDelete}
+        isDisabled={
+          isButtonDisabled ||
+          (showConfirmation && confirmationText !== VALID_CONFIRMATION)
+        }
       >
         {mainButtonText ?? t("Base.Buttons.Delete")}
       </CustomButton>

@@ -70,6 +70,7 @@ export const DeleteClassModal = ({
       handleDelete={handleDelete}
       width={!!recurrentId ? "50%" : "40%"}
       checkValidations={handleCheckValidations}
+      isButtonDisabled={!!recurrentId && !selectedOption}
       title={t(`${basePath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
     >
       {!!recurrentId && (
