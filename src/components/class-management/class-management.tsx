@@ -90,7 +90,9 @@ export const ClassesManagementDashboard = () => {
             </CMCardContainer>
           ))
         ) : (
-          <EmptyData image={noDataLoading} title={t("Classes.NoData")} />
+          <div className="flex flex-row justify-center items-start w-full">
+            <EmptyData image={noDataLoading} title={t("Classes.NoData")} />
+          </div>
         )}
       </ClassManagementBody>
       {params.get("action") === "create-class" && (
