@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../users";
 import { EmptyData } from "../../base";
 import noUsers from "../../../assets/images/noData/folders.svg";
+import Skeleton from "react-loading-skeleton";
 
 export const ClassDetails = ({
   classData,
@@ -29,8 +30,12 @@ export const ClassDetails = ({
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [fields, setFields] = useState<IClassFields>(emptyClassFields);
 
-  const { data: users } = useGetAllUsers();
-  const { data: bookings, refetch: refetchBookings } = useGetBookings({
+  const { data: users, isLoading: isUsersLoading } = useGetAllUsers();
+  const {
+    data: bookings,
+    refetch: refetchBookings,
+    isLoading: isBookingsLoading,
+  } = useGetBookings({
     classId: id,
   });
 
@@ -85,9 +90,19 @@ export const ClassDetails = ({
           </div>
           <div className="flex flex-col gap-3">
             <span className="font-bold text-xl underline underline-offset-2">
-              {!showEditView && t(`${basePath}.AttendeesList.Title`)}
+              {t(`${basePath}.AttendeesList.Title`)}
             </span>
-            {attendeesList.length ? (
+            {isUsersLoading || isBookingsLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[...Array(6)].map((key) => (
+                  <Skeleton
+                    key={key}
+                    className="w-full h-16"
+                    style={{ borderRadius: 16 }}
+                  />
+                ))}
+              </div>
+            ) : attendeesList.length ? (
               <div className="flex flex-wrap gap-3">
                 {attendeesList.map((attendee, idx) => (
                   <UserCard
