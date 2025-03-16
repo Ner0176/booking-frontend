@@ -30,8 +30,10 @@ export const ClassesManagementDashboard = () => {
   const [datesFilter, setDatesFilter] = useState<ClassDatesFilter>({});
   const [statusFilter, setStatusFilter] = useState<ClassStatusType>("all");
 
+  const isDatesFilterActive = !!datesFilter.startDate && !!datesFilter.endDate;
+
   const { data, refetch, isLoading } = useGetAllClasses({
-    timeFilter: datesFilter,
+    timeFilter: isDatesFilterActive ? datesFilter : undefined,
     statusFilter: statusFilter !== "all" ? statusFilter : undefined,
   });
 

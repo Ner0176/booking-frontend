@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import { ClassStatusType } from "./class-management.interface";
 
 export const ClassManagementBody = styled.div(
-  tw`flex flex-wrap justify-center sm:justify-between gap-4 sm:px-8 h-full overflow-y-auto`
+  tw`flex flex-wrap justify-center sm:justify-between gap-4 h-full overflow-y-auto`
 );
 export const CMCardContainer = styled.div`
   ${tw`flex flex-col gap-2 border rounded-xl px-6 py-4 min-w-[275px] sm:min-w-[350px] h-min cursor-pointer`}
