@@ -103,7 +103,7 @@ export const SettingsCancelation = () => {
   const handleSubmit = () => {
     if (settings) {
       updateConfigs({
-        maxAdvanceTime: 15,
+        maxAdvanceTime: settings.maxAdvanceTime || 15,
         maxRecoveryDays: settings.maxRecoveryDays || 60,
         maxCancellationPerMonth: settings.maxCancellationPerMonth || 2,
         minHoursBeforeCancellation: settings.minHoursBeforeCancellation || 2,
