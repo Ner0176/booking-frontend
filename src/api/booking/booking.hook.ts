@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateBookingPayload,
   GetBookingPayload,
-  GetUserBookingsPayload,
+  GetUserBookingsParams,
   IBooking,
   IUserBooking,
   IUserBookingStats,
@@ -20,15 +20,15 @@ export function useGetBookings(payload: GetBookingPayload) {
   });
 }
 
-export function useGetBookingsFromUser(
-  userId: number,
-  payload: GetUserBookingsPayload,
-  enabled?: boolean
-) {
+export function useGetBookingsFromUser({
+  userId,
+  payload,
+  enabled,
+}: GetUserBookingsParams) {
   return useQuery<IUserBooking[]>({
     enabled: enabled ?? true,
     queryKey: ["getBookingsByUserId", userId, payload],
-    queryFn: () => bookingApi.getBookingsByUserId(userId, payload),
+    queryFn: () => bookingApi.getBookingsByUserId({ userId, payload }),
   });
 }
 

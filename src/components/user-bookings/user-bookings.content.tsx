@@ -92,42 +92,46 @@ export const UserBookingCard = ({
 }>) => {
   const { setParams } = useSearchParamsManager([]);
 
-  const { id, cancelledAt, originalClass, class: classInstance } = booking;
-  const isCancelled = !!classInstance?.cancelled || !!cancelledAt;
+  const { id, cancelledAt, originalClass, class: currentClass } = booking;
 
-  if (!originalClass && !classInstance) return <div />;
+  if (!originalClass && !currentClass) return <div />;
+
+  const cancelledByAdmin = !!currentClass?.cancelled;
+  const cancelledByUser = !!cancelledAt && !currentClass?.cancelled;
+  const isCancelled = cancelledByAdmin || cancelledByUser;
+
+  const leftCardData = cancelledByUser ? originalClass : currentClass;
+  const showRecoverCard =
+    (cancelledByUser && !currentClass) || (cancelledByAdmin && !originalClass);
 
   return (
-    <UBClassCardsContainer
-      className="last:mb-6"
-      isCancelled={isCancelled && !!cancelledAt}
-    >
+    <UBClassCardsContainer className="last:mb-6" isCancelled={isCancelled}>
       <UBClassCardWrapper isCancelled={isCancelled}>
         <ClassCardContent
           handleCancelBooking={handleCancel}
           hasCancellations={hasCancellations}
           data={{
-            ...((originalClass ?? classInstance) as IClass),
+            ...(leftCardData as IClass),
             cancelled: isCancelled,
           }}
         />
       </UBClassCardWrapper>
-      {!!cancelledAt && (
+      {isCancelled && (
         <>
           <Icon
             path={isMobile ? mdiArrowDown : mdiArrowRight}
             className="size-5 sm:size-8 text-neutral-400 flex-shrink-0"
           />
-          {!classInstance ? (
+          {showRecoverCard ? (
             <RecoverBookingCard
-              cancelledAt={cancelledAt}
+              cancelledAt={cancelledAt ?? new Date()}
               handleClick={() =>
                 setParams([{ key: "booking", value: `${id}` }])
               }
             />
           ) : (
             <UBClassCardWrapper>
-              <ClassCardContent data={classInstance} />
+              <ClassCardContent data={currentClass as IClass} />
             </UBClassCardWrapper>
           )}
         </>

@@ -39,14 +39,16 @@ export const UserBookingsDashboard = () => {
     isLoading,
     data: userBookings,
     refetch: refetchBookings,
-  } = useGetBookingsFromUser(
-    +(user as IAccount).id,
-    {
+  } = useGetBookingsFromUser({
+    enabled: !!user,
+    userId: +(user as IAccount).id,
+    payload: {
       ...datesFilter,
       ...(statusFilter === "all" ? {} : { status: statusFilter }),
     },
-    !!user
-  );
+  });
+
+  console.log("userBookings", userBookings);
 
   const getTitle = () => {
     return t(
@@ -88,12 +90,15 @@ export const UserBookingsDashboard = () => {
           />
           <div className="flex flex-col gap-4 items-center w-full h-full overflow-y-auto">
             {isLoading ? (
-              [...Array(6)].map((key) => (
-                <Skeleton
-                  key={key}
-                  style={{ width: 350, height: 175, borderRadius: 16 }}
-                />
-              ))
+              <div className="flex flex-col gap-3 w-full">
+                {[...Array(6)].map((key) => (
+                  <Skeleton
+                    key={key}
+                    className="w-full h-[175px]"
+                    style={{ borderRadius: 16 }}
+                  />
+                ))}
+              </div>
             ) : userBookings && userBookings.length > 0 ? (
               userBookings.map((booking, idx) => {
                 return (

@@ -221,6 +221,7 @@
       },
       "Success": "La clase ha sido creada correctamente",
       "Error": "Ha ocurrido un error al intentar crear la clase",
+      "SubmitError": "Rellena todos los campos correctamente",
       "CreateBookings": {
         "Success": "Los usuarios han sido añadidos a la clase correctamente",
         "Error": "Ha ocurrido un error al intentar añadir los usuarios a la clase"

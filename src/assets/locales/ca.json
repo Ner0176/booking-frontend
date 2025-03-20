@@ -184,7 +184,7 @@
         }
       }
     },
-    "Event": {
+    "CreateClass": {
       "AddAttendees": "Afegir participants",
       "Attendees": "{{currentCount}} / {{maxAmount}} assistents",
       "Fields": {
@@ -219,6 +219,7 @@
       },
       "Success": "La classe ha estat creada correctament",
       "Error": "Hi ha hagut un error en intentar crear la classe",
+      "SubmitError": "Emplena tots els camps correctament",
       "CreateBookings": {
         "Success": "Els usuaris han estat afegits a la classe correctament",
         "Error": "Hi ha hagut un error en intentar afegir els usuaris a la classe"

@@ -34,8 +34,11 @@ export const UserDetails = ({
 
   const { name, phone, email } = user;
 
-  const { data: userBookings } = useGetBookingsFromUser(user.id, {
-    status: selectedOption ? (selectedOption as BookingStatus) : undefined,
+  const { data: userBookings } = useGetBookingsFromUser({
+    userId: user.id,
+    payload: {
+      status: selectedOption ? (selectedOption as BookingStatus) : undefined,
+    },
   });
 
   useEffect(() => {

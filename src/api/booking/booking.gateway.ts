@@ -2,15 +2,14 @@ import { axiosInstance } from "../axios-instance";
 import {
   CreateBookingPayload,
   GetBookingPayload,
-  GetUserBookingsPayload,
+  GetUserBookingsParams,
   RecoverBookingPayload,
 } from "./bookings.interface";
 
 export const bookingApi = {
-  getBookings: async ({ userId, classId }: GetBookingPayload) => {
+  getBookings: async ({ classId }: GetBookingPayload) => {
     const params = new URLSearchParams();
 
-    if (userId) params.append("userId", userId.toString());
     if (classId) params.append("classId", classId.toString());
 
     const response = await axiosInstance.get(`/booking/find`, { params });
@@ -20,10 +19,7 @@ export const bookingApi = {
     const response = await axiosInstance.get(`/booking/user-stats/${userId}`);
     return response.data;
   },
-  getBookingsByUserId: async (
-    userId: number,
-    payload: GetUserBookingsPayload
-  ) => {
+  getBookingsByUserId: async ({ userId, payload }: GetUserBookingsParams) => {
     const params = new URLSearchParams();
 
     Object.entries(payload).forEach(([key, value]) =>

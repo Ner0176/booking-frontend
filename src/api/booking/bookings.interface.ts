@@ -2,7 +2,6 @@ import { IClass } from "../class";
 import { IUser } from "../user";
 
 export interface GetBookingPayload {
-  userId?: number;
   classId?: number;
 }
 
@@ -12,10 +11,10 @@ export interface CreateBookingPayload {
   isRecurrent: boolean;
 }
 
-export interface GetUserBookingsPayload {
-  endDate?: Date;
-  startDate?: Date;
-  status?: BookingStatus;
+export interface GetUserBookingsParams {
+  userId: number;
+  enabled?: boolean;
+  payload: { endDate?: Date; startDate?: Date; status?: BookingStatus };
 }
 
 export interface RecoverBookingPayload {

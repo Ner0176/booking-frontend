@@ -30,14 +30,12 @@ export const ClassDetails = ({
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [fields, setFields] = useState<IClassFields>(emptyClassFields);
 
-  const { data: users, isLoading: isUsersLoading } = useGetAllUsers();
   const {
     data: bookings,
     refetch: refetchBookings,
     isLoading: isBookingsLoading,
-  } = useGetBookings({
-    classId: id,
-  });
+  } = useGetBookings({ classId: id });
+  const { data: users, isLoading: isUsersLoading } = useGetAllUsers();
 
   const { initUsersList, initAttendeesList } = useMemo(() => {
     let filteredUsers: IUser[] = [];

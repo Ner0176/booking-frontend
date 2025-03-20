@@ -32,11 +32,11 @@ export const CalendarDashboard = () => {
   const [currentView, setCurrentView] = useState<View>("week");
 
   const { data: allClasses } = useGetAllClasses({});
-  const { data: userBookings } = useGetBookingsFromUser(
-    +(user as IAccount).id,
-    {},
-    !isAdmin && !!user
-  );
+  const { data: userBookings } = useGetBookingsFromUser({
+    payload: {},
+    enabled: !isAdmin && !!user,
+    userId: +(user as IAccount).id,
+  });
 
   const events = useMemo(() => {
     if (allClasses && allClasses.length) {
