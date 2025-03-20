@@ -9,9 +9,11 @@ import { CSSProperties } from "react";
 export const SwitchSelector = ({
   options,
   keyParam,
+  handleClick,
   customStyles,
 }: Readonly<{
   keyParam: string;
+  handleClick?: () => void;
   customStyles?: CSSProperties;
   options: ISwitchSelectorOption[];
 }>) => {
@@ -28,7 +30,10 @@ export const SwitchSelector = ({
           key={keyOption}
           style={customStyles}
           isSelected={params.get(keyParam) === keyOption}
-          onClick={() => setParams([{ key: keyParam, value: keyOption }])}
+          onClick={() => {
+            setParams([{ key: keyParam, value: keyOption }]);
+            if (handleClick) handleClick();
+          }}
         >
           {text}
         </SwitchSelectorOption>

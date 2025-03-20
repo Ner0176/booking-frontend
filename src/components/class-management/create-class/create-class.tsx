@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   AddUserToClass,
@@ -7,7 +7,6 @@ import {
 } from "./create-class.content";
 import {
   emptyClassFields,
-  ClassType,
   IClassIds,
   IClassFields,
   classOptions,
@@ -56,15 +55,14 @@ export const CreateClassModal = ({
     if (users) setUsersList(users);
   }, [users]);
 
-  const handleSelectType = (newType?: ClassType) => {
-    setParams([{ key: "type", value: newType }]);
-  };
+  const isSubmitButtonDisabled = useMemo(() => {
+    return Object.values(fields).some((field) => {
+      if (!isRecurrent && field === fields.recurrencyLimit) return false;
+      return !!field.error || !field.value;
+    });
+  }, [fields, isRecurrent]);
 
   const handleSubmit = () => {
-    for (const item of Object.values(fields)) {
-      if (!!item["error"]) return;
-    }
-
     const recurrencyDate = fields.recurrencyLimit.value;
     createClass({
       end: fields.endTime.value,
@@ -120,14 +118,13 @@ export const CreateClassModal = ({
           </CustomButton>
         </>
       ) : (
-        <>
-          <CustomButton color="secondary" onClick={() => handleSelectType()}>
-            {t("Base.Buttons.Cancel")}
-          </CustomButton>
-          <CustomButton onClick={handleSubmit} isLoading={isCreatingClass}>
-            {t("Base.Buttons.CreateClass")}
-          </CustomButton>
-        </>
+        <CustomButton
+          onClick={handleSubmit}
+          isLoading={isCreatingClass}
+          isDisabled={isSubmitButtonDisabled}
+        >
+          {t("Base.Buttons.CreateClass")}
+        </CustomButton>
       )}
     </>
   );
@@ -141,6 +138,7 @@ export const CreateClassModal = ({
               <SwitchSelector
                 keyParam="type"
                 options={getSwitchOptions()}
+                handleClick={() => setFields(emptyClassFields)}
                 customStyles={{ fontSize: isMobile ? 12 : 14 }}
               />
             </div>
