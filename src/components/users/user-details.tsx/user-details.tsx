@@ -16,6 +16,7 @@ import { useSearchParamsManager } from "../../../hooks";
 import { useEffect } from "react";
 import emptyHistory from "../../../assets/images/noData/void.svg";
 import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
+import Skeleton from "react-loading-skeleton";
 
 const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
@@ -34,7 +35,7 @@ export const UserDetails = ({
 
   const { name, phone, email } = user;
 
-  const { data: userBookings } = useGetBookingsFromUser({
+  const { isLoading, data: userBookings } = useGetBookingsFromUser({
     userId: user.id,
     payload: {
       status: selectedOption ? (selectedOption as BookingStatus) : undefined,
@@ -85,8 +86,12 @@ export const UserDetails = ({
             options={getSelectorOptions()}
           />
           {!!selectedOption && (
-            <div className="flex flex-col">
-              {!!userBookings && userBookings.length > 0 ? (
+            <div className="flex flex-col overflow-y-auto h-[500px]">
+              {isLoading ? (
+                [...Array(5)].map((_, idx) => (
+                  <Skeleton key={idx} className="w-full h-[80px]" />
+                ))
+              ) : !!userBookings && userBookings.length > 0 ? (
                 userBookings.map(
                   ({ class: classInstance, originalClass }, idx) =>
                     (!!classInstance || !!originalClass) && (
