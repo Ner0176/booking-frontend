@@ -3,6 +3,7 @@ import {
   CustomInputField,
   DeleteModal,
   ErrorStrongContainer,
+  SectionTitle,
 } from "../../base";
 import {
   IClass,
@@ -59,9 +60,7 @@ export const UserStats = ({ userId }: Readonly<{ userId: number }>) => {
   return (
     <div className="flex flex-col gap-3 w-full">
       <div className="flex flex-col gap-3">
-        <span className="text-2xl font-bold underline underline-offset-2">
-          {t(`${basePath}.Title`)}
-        </span>
+        <SectionTitle>{t(`${basePath}.Title`)}</SectionTitle>
         <div className="flex flex-col gap-4">
           {userStats &&
             Object.entries(userStats).map(([key, value]) => {

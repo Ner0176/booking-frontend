@@ -43,7 +43,7 @@ import {
   HeaderButton,
 } from "../base";
 import { getDatesFromTimeFilter } from "./class-management.utils";
-import { mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import { mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { isMobile } from "react-device-detect";
 
 export const ItemInfoRow = ({
@@ -215,19 +215,11 @@ export const CalendarHeaderButtons = ({
   ) : (
     <div className="flex flex-row items-center justify-end gap-4 w-full">
       {showButtons() && (
-        <>
-          <HeaderButton
-            icon={mdiPencilOutline}
-            tPath="Classes.ClassDetails.Edit"
-            size={isMobile ? "small" : "default"}
-            onClick={() => setParams([{ key: "action", value: "edit-class" }])}
-          />
-          <ClassStatusButton
-            refetch={refetch}
-            classId={classId ?? ""}
-            isCancelled={selectedClass.cancelled}
-          />
-        </>
+        <ClassStatusButton
+          refetch={refetch}
+          classId={classId ?? ""}
+          isCancelled={selectedClass.cancelled}
+        />
       )}
       <HeaderButton
         color="secondary"

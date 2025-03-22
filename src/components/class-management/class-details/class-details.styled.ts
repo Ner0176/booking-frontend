@@ -1,5 +1,5 @@
 import tw from "twin.macro";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export const DeleteRecurrentWrapper = styled.div(
   tw`flex flex-row items-stretch justify-between gap-4 w-full`

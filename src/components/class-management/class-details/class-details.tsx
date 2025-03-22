@@ -8,9 +8,11 @@ import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../users";
-import { EmptyData } from "../../base";
+import { CustomButton, EmptyData, SectionTitle } from "../../base";
 import noUsers from "../../../assets/images/noData/folders.svg";
 import Skeleton from "react-loading-skeleton";
+import { mdiSquareEditOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 
 export const ClassDetails = ({
   classData,
@@ -21,8 +23,9 @@ export const ClassDetails = ({
   const basePath = "Classes.ClassDetails";
 
   const { params, setParams } = useSearchParamsManager(["action"]);
-  const showEditView = params.get("action") === "edit-class";
+  const showEditClassView = params.get("action") === "edit-class";
   const showDeleteModal = params.get("action") === "delete-class";
+  const showEditAttendeesView = params.get("action") === "edit-attendees";
 
   const { id, date, endTime, startTime, maxAmount, recurrentId } = classData;
 
@@ -70,26 +73,58 @@ export const ClassDetails = ({
     initializeState();
   }, [initializeState]);
 
+  const handleCloseAction = () => {
+    setParams([{ key: "type" }, { key: "action" }]);
+    initializeState();
+  };
+
+  const SectionHeader = ({
+    title,
+    actionValue,
+  }: Readonly<{ title: string; actionValue: string }>) => {
+    return (
+      <div
+        onClick={() => setParams([{ key: "action", value: actionValue }])}
+        className="flex flex-row items-center gap-1.5 cursor-pointer"
+      >
+        <SectionTitle>{title}</SectionTitle>
+        <Icon path={mdiSquareEditOutline} className="size-5 text-neutral-800" />
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="flex flex-col justify-between w-full">
         <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-10 w-full h-full">
           <div className="flex flex-col gap-3">
-            <span className="font-bold text-xl underline underline-offset-2">
-              {t(`${basePath}.Details`)}
-            </span>
+            <SectionHeader
+              title={t(`${basePath}.Details`)}
+              actionValue="edit-class"
+            />
             <div className="flex flex-col gap-4">
               <OneTimeFields
-                disableFields
                 fields={fields}
                 setFields={setFields}
+                disableFields={!showEditClassView}
               />
+              {showEditClassView && (
+                <div className="flex flex-row justify-end items-center gap-3 w-full">
+                  <CustomButton color="secondary" onClick={handleCloseAction}>
+                    {t("Base.Buttons.Cancel")}
+                  </CustomButton>
+                  <CustomButton onClick={() => {}}>
+                    {t("Base.Buttons.Save")}
+                  </CustomButton>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <span className="font-bold text-xl underline underline-offset-2">
-              {t(`${basePath}.AttendeesList.Title`)}
-            </span>
+            <SectionHeader
+              actionValue="edit-attendees"
+              title={t(`${basePath}.AttendeesList.Title`)}
+            />
             {isUsersLoading || isBookingsLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[...Array(6)].map((key) => (
@@ -120,7 +155,7 @@ export const ClassDetails = ({
           </div>
         </div>
       </div>
-      {showEditView && (
+      {showEditAttendeesView && (
         <EditListModal
           refetch={() => {
             refetchClasses();
@@ -130,11 +165,8 @@ export const ClassDetails = ({
           usersList={usersList}
           setUsersList={setUsersList}
           attendeesList={attendeesList}
+          handleClose={handleCloseAction}
           setAttendeesList={setAttendeesList}
-          handleClose={() => {
-            setParams([{ key: "type" }, { key: "action" }]);
-            initializeState();
-          }}
         />
       )}
       {showDeleteModal && (
