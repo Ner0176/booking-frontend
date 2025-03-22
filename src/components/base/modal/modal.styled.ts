@@ -5,8 +5,8 @@ import { isMobile } from "react-device-detect";
 
 export const ModalContainer = styled.div`
   ${isMobile
-    ? tw`fixed z-50 bottom-0 left-0 w-full max-h-[90%]`
-    : tw`absolute inset-0 z-50 flex flex-row items-center justify-center w-full h-screen`}
+    ? tw`fixed z-[60] bottom-0 left-0 w-full max-h-[90%]`
+    : tw`fixed inset-0 z-[60] flex flex-row items-center justify-center w-full h-screen`}
 `;
 export const ModalWrapper = styled.div<{ type: ModalType }>`
   ${isMobile
@@ -27,5 +27,5 @@ export const ModalFooter = styled.div<{ type: ModalType }>`
       : tw`sm:pb-6`}
 `;
 export const ModalBackground = styled.div(
-  tw`absolute inset-0 z-40 bg-black opacity-50`
+  tw`fixed inset-0 z-50 bg-black opacity-50`
 );
