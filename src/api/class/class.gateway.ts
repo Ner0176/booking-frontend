@@ -2,7 +2,7 @@ import { axiosInstance } from "../axios-instance";
 import {
   CreateClassPayload,
   DeleteClassPayload,
-  EditStatusPayload,
+  EditClassPayload,
   GetClassesPayload,
 } from "./class.interface";
 
@@ -37,8 +37,8 @@ export const classApi = {
     const response = await axiosInstance.post("/class/create", payload);
     return response.data;
   },
-  editClassStatus: async ({ id, cancel }: EditStatusPayload) => {
-    await axiosInstance.patch(`/class/${id}`, { cancel });
+  editClass: async ({ id, ...payload }: EditClassPayload) => {
+    await axiosInstance.patch(`/class/${id}`, payload);
   },
   deleteClass: async ({ id, isRecurrent }: DeleteClassPayload) => {
     const params = new URLSearchParams();

@@ -15,9 +15,13 @@ export interface CreateClassPayload {
   recurrencyLimit?: Date;
 }
 
-export interface EditStatusPayload {
+export interface EditClassPayload {
   id: string;
-  cancel: boolean;
+  date?: Date;
+  endTime?: string;
+  cancel?: boolean;
+  maxAmount?: number;
+  startTime?: string;
 }
 
 export interface DeleteClassPayload {

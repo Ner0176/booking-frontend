@@ -173,6 +173,7 @@ export const ClassDetails = ({
         <EditClassDetailsModal
           classData={classData}
           handleClose={handleCloseAction}
+          handleSuccess={() => refetchClasses()}
         />
       )}
       {showDeleteModal && (

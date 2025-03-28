@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateClassPayload,
   DeleteClassPayload,
-  EditStatusPayload,
+  EditClassPayload,
   GetClassesPayload,
   IClass,
 } from "./class.interface";
@@ -48,13 +48,12 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
   });
 }
 
-export function useEditClassStatus(handleSuccess: () => void) {
+export function useEditClass(handleSuccess: () => void) {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.Status";
 
   return useMutation({
-    mutationFn: (payload: EditStatusPayload) =>
-      classApi.editClassStatus(payload),
+    mutationFn: (payload: EditClassPayload) => classApi.editClass(payload),
     onSuccess() {
       handleSuccess();
       showToast({

@@ -4,7 +4,13 @@ import {
   IClassDetailsCard,
   RecurrentOptionType,
 } from "./class-details.interface";
-import { IClass, IUser, useDeleteClass, useEditBookings } from "../../../api";
+import {
+  IClass,
+  IUser,
+  useDeleteClass,
+  useEditBookings,
+  useEditClass,
+} from "../../../api";
 import {
   CustomButton,
   CustomInputField,
@@ -255,16 +261,24 @@ export const EditListModal = ({
 export const EditClassDetailsModal = ({
   classData,
   handleClose,
-}: Readonly<{ classData: IClass; handleClose(): void }>) => {
+  handleSuccess,
+}: Readonly<{
+  classData: IClass;
+  handleClose(): void;
+  handleSuccess(): void;
+}>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails";
-
-  const { date, endTime, startTime, maxAmount } = classData;
 
   const [hasEdited, setHasEdited] = useState(false);
   const [fields, setFields] = useState<IClassFields>(emptyClassFields);
 
+  const { mutate: editClass, isPending: isLoading } =
+    useEditClass(handleSuccess);
+
   useEffect(() => {
+    const { date, endTime, startTime, maxAmount } = classData;
+
     setFields({
       endTime: { value: endTime },
       recurrencyLimit: { value: "" },
@@ -272,7 +286,17 @@ export const EditClassDetailsModal = ({
       maxAmount: { value: maxAmount },
       date: { value: format(new Date(date), "yyyy-MM-dd") },
     });
-  }, [date, endTime, startTime, maxAmount]);
+  }, [classData]);
+
+  const handleSubmit = () => {
+    editClass({
+      id: `${classData.id}`,
+      endTime: fields.endTime.value,
+      startTime: fields.startTime.value,
+      date: new Date(fields.date.value),
+      maxAmount: +fields.maxAmount.value,
+    });
+  };
 
   return (
     <Modal
@@ -281,7 +305,11 @@ export const EditClassDetailsModal = ({
           <CustomButton color="secondary" onClick={handleClose}>
             {t("Base.Buttons.Cancel")}
           </CustomButton>
-          <CustomButton isDisabled={!hasEdited} onClick={() => {}}>
+          <CustomButton
+            isLoading={isLoading}
+            onClick={handleSubmit}
+            isDisabled={!hasEdited}
+          >
             {t("Base.Buttons.Save")}
           </CustomButton>
         </div>

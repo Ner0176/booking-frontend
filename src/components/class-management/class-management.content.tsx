@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { IClass, useEditClassStatus } from "../../api";
+import { IClass, useEditClass } from "../../api";
 import {
   mdiAccountGroupOutline,
   mdiCalendarOutline,
@@ -66,7 +66,7 @@ export const ClassStatusButton = ({
 }: Readonly<{ classId: string; refetch(): void; isCancelled: boolean }>) => {
   const { t } = useTranslation();
 
-  const { mutate, isPending: isLoading } = useEditClassStatus(refetch);
+  const { mutate, isPending: isLoading } = useEditClass(refetch);
 
   const handleChangeStatus = () => {
     if (!!classId && !isLoading) {
