@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { CSSProperties, PropsWithChildren } from "react";
 import {
   DashboardBody,
   DashboardContainer,
@@ -15,11 +15,13 @@ export const DashboardSkeleton = ({
   goBack,
   children,
   rightHeader,
+  customBodyStyles,
 }: Readonly<
   PropsWithChildren<{
     title: string;
     goBack?: IGoBack;
     rightHeader?: JSX.Element;
+    customBodyStyles?: CSSProperties;
   }>
 >) => {
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ export const DashboardSkeleton = ({
         </div>
         {rightHeader}
       </DashboardHeader>
-      <DashboardBody>{children}</DashboardBody>
+      <DashboardBody style={customBodyStyles}>{children}</DashboardBody>
     </DashboardContainer>
   );
 };

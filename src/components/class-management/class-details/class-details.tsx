@@ -3,16 +3,24 @@ import { IClass, IUser, useGetAllUsers, useGetBookings } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
-import { DeleteClassModal, EditListModal } from "./class-details.content";
-import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
-import { format } from "date-fns";
+import {
+  ClassDetailsCard,
+  DeleteClassModal,
+  EditClassDetailsModal,
+  EditListModal,
+} from "./class-details.content";
 import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../users";
-import { CustomButton, EmptyData, SectionTitle } from "../../base";
+import { CustomInputField, EmptyData } from "../../base";
 import noUsers from "../../../assets/images/noData/folders.svg";
 import Skeleton from "react-loading-skeleton";
-import { mdiSquareEditOutline } from "@mdi/js";
+import { mdiMagnify, mdiPencilOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import {
+  AttendeesListWrapper,
+  ClassDetailsWrapper,
+  EditAttendeesButton,
+} from "./class-details.styled";
 
 export const ClassDetails = ({
   classData,
@@ -27,11 +35,11 @@ export const ClassDetails = ({
   const showDeleteModal = params.get("action") === "delete-class";
   const showEditAttendeesView = params.get("action") === "edit-attendees";
 
-  const { id, date, endTime, startTime, maxAmount, recurrentId } = classData;
+  const { id, date, endTime, startTime, recurrentId } = classData;
 
+  const [search, setSearch] = useState("");
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
-  const [fields, setFields] = useState<IClassFields>(emptyClassFields);
 
   const {
     data: bookings,
@@ -59,15 +67,7 @@ export const ClassDetails = ({
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
     setAttendeesList(initAttendeesList);
-    setFields({
-      endTime: { value: endTime },
-      recurrencyLimit: { value: "" },
-      startTime: { value: startTime },
-      maxAmount: { value: maxAmount },
-      date: { value: format(new Date(date), "yyyy-MM-dd") },
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initUsersList, initAttendeesList, classData]);
+  }, [initUsersList, initAttendeesList]);
 
   useEffect(() => {
     initializeState();
@@ -78,53 +78,30 @@ export const ClassDetails = ({
     initializeState();
   };
 
-  const SectionHeader = ({
-    title,
-    actionValue,
-  }: Readonly<{ title: string; actionValue: string }>) => {
-    return (
-      <div
-        onClick={() => setParams([{ key: "action", value: actionValue }])}
-        className="flex flex-row items-center gap-1.5 cursor-pointer"
-      >
-        <SectionTitle>{title}</SectionTitle>
-        <Icon path={mdiSquareEditOutline} className="size-5 text-neutral-800" />
-      </div>
-    );
-  };
-
   return (
     <>
       <div className="flex flex-col justify-between w-full">
-        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-10 w-full h-full">
-          <div className="flex flex-col gap-3">
-            <SectionHeader
-              title={t(`${basePath}.Details`)}
-              actionValue="edit-class"
-            />
-            <div className="flex flex-col gap-4">
-              <OneTimeFields
-                fields={fields}
-                setFields={setFields}
-                disableFields={!showEditClassView}
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-3 sm:gap-10 w-full h-full">
+          <AttendeesListWrapper>
+            <div className="flex flex-row items-center gap-3">
+              <CustomInputField
+                value={search}
+                icon={{ name: mdiMagnify }}
+                customContainerStyles={{ width: "75%" }}
+                handleChange={(value) => setSearch(value)}
+                placeholder={t(`${basePath}.AttendeesList.Placeholder`)}
               />
-              {showEditClassView && (
-                <div className="flex flex-row justify-end items-center gap-3 w-full">
-                  <CustomButton color="secondary" onClick={handleCloseAction}>
-                    {t("Base.Buttons.Cancel")}
-                  </CustomButton>
-                  <CustomButton onClick={() => {}}>
-                    {t("Base.Buttons.Save")}
-                  </CustomButton>
-                </div>
-              )}
+              <EditAttendeesButton
+                onClick={() =>
+                  setParams([{ key: "action", value: "edit-attendees" }])
+                }
+              >
+                <Icon className="size-3.5 mt-0.5" path={mdiPencilOutline} />
+                <span className="text-sm font-semibold">
+                  {t(`${basePath}.Edit`)}
+                </span>
+              </EditAttendeesButton>
             </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <SectionHeader
-              actionValue="edit-attendees"
-              title={t(`${basePath}.AttendeesList.Title`)}
-            />
             {isUsersLoading || isBookingsLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[...Array(6)].map((key) => (
@@ -152,7 +129,30 @@ export const ClassDetails = ({
                 title={t(`${basePath}.AttendeesList.Empty`)}
               />
             )}
-          </div>
+          </AttendeesListWrapper>
+          <ClassDetailsWrapper>
+            <div className="flex justify-center w-full px-4">
+              <div className="flex flex-col gap-5 border border-neutral-200 rounded-2xl w-full p-4 shadow-sm">
+                <div className="flex flex-row items-center gap-1.5">
+                  <span className="font-semibold">
+                    {t(`${basePath}.Details`)}
+                  </span>
+                  <div
+                    onClick={() =>
+                      setParams([{ key: "action", value: "edit-class" }])
+                    }
+                  >
+                    <Icon
+                      path={mdiPencilOutline}
+                      className="mt-0.5 size-5 cursor-pointer text-neutral-500"
+                    />
+                  </div>
+                </div>
+                <ClassDetailsCard type="schedule" classData={classData} />
+                <ClassDetailsCard type="amount" classData={classData} />
+              </div>
+            </div>
+          </ClassDetailsWrapper>
         </div>
       </div>
       {showEditAttendeesView && (
@@ -167,6 +167,12 @@ export const ClassDetails = ({
           attendeesList={attendeesList}
           handleClose={handleCloseAction}
           setAttendeesList={setAttendeesList}
+        />
+      )}
+      {showEditClassView && (
+        <EditClassDetailsModal
+          classData={classData}
+          handleClose={handleCloseAction}
         />
       )}
       {showDeleteModal && (

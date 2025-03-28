@@ -28,7 +28,7 @@ export const UserInfoField = ({
       value={value}
       icon={{ name: icon }}
       title={t(`Auth.Fields.${textKey}`)}
-      customStyles={{ backgroundColor: "white" }}
+      customSelectStyles={{ backgroundColor: "white" }}
     />
   );
 };

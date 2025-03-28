@@ -27,7 +27,7 @@ export const DeleteModalConfirmation = ({
         value={confirmationText}
         handleChange={setConfirmationText}
         placeholder={t(`${BASE_PATH}.Key`)}
-        customStyles={{ borderColor: showInputError ? "red" : undefined }}
+        customSelectStyles={{ borderColor: showInputError ? "red" : undefined }}
       />
     </>
   );

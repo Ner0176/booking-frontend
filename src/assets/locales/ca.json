@@ -138,11 +138,23 @@
       }
     },
     "ClassDetails": {
-      "Date": "Data",
-      "Schedule": "Horari",
       "Title": "Classe puntual",
       "Edit": "Editar assistents",
+      "Details": "Detalls de la classe",
       "RecurrentTitle": "Classe recurrent",
+      "Cards": {
+        "Schedule": {
+          "Title": "Horaris",
+          "Date": "Data: {{date}}",
+          "Schedule": "Horari: {{schedule}}",
+          "Recurrency": "Recurrencia: {{recurrency}}"
+        },
+        "Amount": {
+          "Title": "Aforament",
+          "MaxAmount": "Aforament màxim: {{maxAmount}}",
+          "CurrentCount": "Assistents actuals: {{currentCount}}"
+        }
+      },
       "Delete": {
         "Title": "Eliminar classe",
         "Description": "Tingues en compte que en eliminar una classe, <strong>totes les reserves associades</strong> a aquesta també seran eliminades.",
@@ -167,11 +179,10 @@
         "Success": "L'estat de la classe ha estat actualitzat correctament",
         "Error": "Hi ha hagut un error en intentar actualitzar l'estat de la classe"
       },
-      "MaxAmount": "Capacitat màxima",
-      "Details": "Detalls de la classe",
       "AttendeesList": {
         "Title": "Llista d'assistents",
         "Empty": "Encara no hi ha participants",
+        "Placeholder": "Cercar assistents...",
         "Edit": {
           "Title": "Editar llista d'assistents",
           "Options": {

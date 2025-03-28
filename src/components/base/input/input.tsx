@@ -21,7 +21,8 @@ export const CustomInputField = ({
   handleBlur,
   placeholder,
   handleChange,
-  customStyles,
+  customSelectStyles,
+  customContainerStyles,
 }: Readonly<{
   title?: string;
   value: string;
@@ -30,20 +31,25 @@ export const CustomInputField = ({
   placeholder?: string;
   isDisabled?: boolean;
   tooltip?: ITooltipContent;
-  customStyles?: CSSProperties;
   type?: HTMLInputTypeAttribute;
+  customSelectStyles?: CSSProperties;
   handleBlur?: (value: string) => void;
+  customContainerStyles?: CSSProperties;
   handleChange?: (value: string) => void;
 }>) => {
   return (
-    <InputFieldContainer>
+    <InputFieldContainer style={customContainerStyles}>
       {!!title && (
         <InputTitleContainer>
           <InputFieldTitle>{title}</InputFieldTitle>
           {!!tooltip && <InfoTooltip content={tooltip} />}
         </InputTitleContainer>
       )}
-      <CustomInputContainer hasIcon={!!icon} isBlocked={!!isDisabled}>
+      <CustomInputContainer
+        hasIcon={!!icon}
+        isBlocked={!!isDisabled}
+        style={customSelectStyles}
+      >
         {!!icon && (
           <svg
             viewBox="0 0 24 24"
@@ -59,10 +65,10 @@ export const CustomInputField = ({
           type={type}
           value={value}
           hasIcon={!!icon}
-          style={customStyles}
           disabled={isDisabled}
           isBlocked={!!isDisabled}
           placeholder={placeholder}
+          style={customSelectStyles}
           onBlur={(e) => {
             if (handleBlur) handleBlur(e.target.value);
           }}
