@@ -86,9 +86,9 @@ export const UserBookingCard = ({
   handleCancel,
   hasCancellations,
 }: Readonly<{
-  handleCancel(): void;
   booking: IUserBooking;
-  hasCancellations: boolean;
+  handleCancel?: () => void;
+  hasCancellations?: boolean;
 }>) => {
   const { setParams } = useSearchParamsManager([]);
 

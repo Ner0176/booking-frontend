@@ -11,7 +11,7 @@ import {
 } from "./class-details.content";
 import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../users";
-import { CustomInputField, EmptyData } from "../../base";
+import { CardContainer, CustomInputField, EmptyData } from "../../base";
 import noUsers from "../../../assets/images/noData/folders.svg";
 import Skeleton from "react-loading-skeleton";
 import { mdiMagnify, mdiPencilOutline } from "@mdi/js";
@@ -81,13 +81,12 @@ export const ClassDetails = ({
   return (
     <>
       <div className="flex flex-col justify-between w-full">
-        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-3 sm:gap-10 w-full h-full">
+        <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
           <AttendeesListWrapper>
-            <div className="flex flex-row items-center gap-3">
+            <div className="flex flex-row items-center justify-center gap-3 w-full">
               <CustomInputField
                 value={search}
                 icon={{ name: mdiMagnify }}
-                customContainerStyles={{ width: "75%" }}
                 handleChange={(value) => setSearch(value)}
                 placeholder={t(`${basePath}.AttendeesList.Placeholder`)}
               />
@@ -131,8 +130,8 @@ export const ClassDetails = ({
             )}
           </AttendeesListWrapper>
           <ClassDetailsWrapper>
-            <div className="flex justify-center w-full px-4">
-              <div className="flex flex-col gap-5 border border-neutral-200 rounded-2xl w-full p-4 shadow-sm">
+            <div className="flex justify-center w-full px-10">
+              <CardContainer mainCard>
                 <div className="flex flex-row items-center gap-1.5">
                   <span className="font-semibold">
                     {t(`${basePath}.Details`)}
@@ -150,7 +149,7 @@ export const ClassDetails = ({
                 </div>
                 <ClassDetailsCard type="schedule" classData={classData} />
                 <ClassDetailsCard type="amount" classData={classData} />
-              </div>
+              </CardContainer>
             </div>
           </ClassDetailsWrapper>
         </div>

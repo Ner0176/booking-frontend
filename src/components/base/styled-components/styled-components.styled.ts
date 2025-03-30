@@ -4,9 +4,10 @@ import { styled } from "styled-components";
 export const MainContainer = styled.div(
   tw`w-full h-dvh sm:h-screen bg-white overflow-hidden`
 );
-export const SectionTitle = styled.span(
-  tw`font-bold text-xl underline underline-offset-2`
-);
+export const CardContainer = styled.div<{ mainCard?: boolean }>`
+  ${tw`flex flex-col gap-3 p-4 w-full border border-neutral-200 rounded-2xl`}
+  ${({ mainCard }) => mainCard && tw`h-fit gap-5 shadow-sm`}
+`;
 export const ErrorMessage = styled.span(
   tw`ml-3 sm:-mt-1 text-[10px] sm:text-xs text-red-500 font-semibold`
 );

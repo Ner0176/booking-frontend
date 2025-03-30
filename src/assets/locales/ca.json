@@ -249,6 +249,7 @@
         "Description": "Aquesta acció <strong>eliminarà</strong> l'usuari <strong>{{name}}</strong> de la plataforma. Totes les seves dades, incloses les seves reserves, seran eliminades de manera <strong>definitiva.</strong>"
       },
       "Information": "Informació de l'usuari",
+      "Data": "Dades personals",
       "SwitchOptions": {
         "pending": "Pendents",
         "cancelled": "Cancel·lades",
@@ -264,7 +265,7 @@
         "completed": "✅ Classes realitzades: {{amount}}",
         "cancelled": "❌ Classes cancel·lades: {{amount}}",
         "pending": "⏳ Classes pendents: {{amount}}",
-        "firstClass": "📅 Primera classe realitzada: {{amount}}"
+        "firstday": "📅 Primera classe realitzada: {{amount}}"
       }
     }
   },

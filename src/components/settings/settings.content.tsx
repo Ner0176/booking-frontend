@@ -15,6 +15,7 @@ import {
 } from "./settings.interface";
 import { useGetClassConfigs, useUpdateClassConfigs } from "../../api";
 import Skeleton from "react-loading-skeleton";
+import { SettingsContainer, SettingsEditContainer } from "./settings.styled";
 
 export const SettingsBox = ({
   title,
@@ -37,17 +38,14 @@ export const SettingsBox = ({
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-4 border border-neutral-200 rounded-3xl w-full sm:max-w-[75%] p-6 pt-4">
+    <SettingsContainer>
       <div className="flex flex-row items-center justify-between">
         <span className="font-bold text-base sm:text-lg">{title}</span>
         {!isEditing && (
-          <div
-            onClick={() => setIsEditing((prev) => !prev)}
-            className="flex flex-row items-center gap-1 text-neutral-500 cursor-pointer hover:text-violet-600 font-semibold"
-          >
+          <SettingsEditContainer onClick={() => setIsEditing((prev) => !prev)}>
             <Icon path={mdiPencilOutline} className="size-3 sm:size-4" />
             <span className="text-xs sm:text-sm">{t("Base.Buttons.Edit")}</span>
-          </div>
+          </SettingsEditContainer>
         )}
       </div>
       <div className="flex flex-col gap-3">
@@ -67,7 +65,7 @@ export const SettingsBox = ({
           </CustomButton>
         </div>
       )}
-    </div>
+    </SettingsContainer>
   );
 };
 

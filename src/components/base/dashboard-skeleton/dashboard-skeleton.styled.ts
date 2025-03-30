@@ -5,13 +5,13 @@ export const DashboardContainer = styled.div(
   tw`relative flex flex-col h-full pt-6 sm:pt-8`
 );
 export const DashboardHeader = styled.div(
-  tw`flex flex-row items-center justify-between pb-4 px-4 sm:px-14 border-b`
+  tw`flex flex-row items-center justify-between pb-4 px-4 sm:px-10 border-b`
 );
 export const DashboardTitle = styled.span(
   tw`font-bold text-2xl sm:text-3xl whitespace-nowrap`
 );
 export const DashboardBody = styled.div(
-  tw`flex flex-col gap-5 mt-4 h-full px-4 sm:px-14 overflow-y-auto`
+  tw`flex flex-col gap-5 mt-4 h-full px-4 sm:px-10 overflow-y-auto`
 );
 export const DashboardHeaderButton = styled.div<{
   color: "primary" | "secondary";

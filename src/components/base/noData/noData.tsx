@@ -22,12 +22,12 @@ export const EmptyData = ({
         src={image}
         draggable={false}
         alt="No data icon"
-        className="size-48"
+        className="size-40 sm:size-48"
         style={{ width: imageSize }}
       />
       <span
         style={{ fontSize: textSize }}
-        className="font-semibold text-lg select-none"
+        className="font-semibold text-base sm:text-lg select-none text-center"
       >
         {title}
       </span>

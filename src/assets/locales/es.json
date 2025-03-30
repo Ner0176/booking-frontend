@@ -251,6 +251,7 @@
         "Description": "Esta acción <strong>eliminará</strong> al usuario <strong>{{name}}</strong> de la plataforma. Todos sus datos, incluidas sus reservas, serán eliminados de forma <strong>definitiva.</strong>"
       },
       "Information": "Información del usuario",
+      "Data": "Datos personales",
       "SwitchOptions": {
         "pending": "Pendientes",
         "cancelled": "Canceladas",
@@ -266,7 +267,7 @@
         "completed": "✅ Clases realizadas: {{amount}}",
         "cancelled": "❌ Clases canceladas: {{amount}}",
         "pending": "⏳ Clases pendientes: {{amount}}",
-        "firstDay": "📅 Primera clase realizada: {{amount}}"
+        "firstday": "📅 Primera clase realizada: {{amount}}"
       }
     }
   },

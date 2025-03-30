@@ -65,7 +65,7 @@ export const ClassesManagementDashboard = () => {
         />
       }
       goBack={{ showButton: !!classId, path: "/management" }}
-      customBodyStyles={{ marginTop: classId ? 0 : undefined }}
+      customBodyStyles={classId ? { margin: 0, padding: 0 } : {}}
     >
       {!classId && (
         <CalendarFilters

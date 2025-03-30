@@ -42,6 +42,7 @@ export const UsersDashboard = () => {
       title={t(`Users.${!!userId ? "Details." : ""}Title`)}
       goBack={{ showButton: !!selectedUser, path: "/users" }}
       rightHeader={!!userId ? <UserHeaderButtons /> : undefined}
+      customBodyStyles={!!userId ? { margin: 0, padding: 0 } : {}}
     >
       {!!selectedUser ? (
         <UserDetails user={selectedUser} refetch={refetch} />

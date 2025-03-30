@@ -12,6 +12,7 @@ import {
   useEditClass,
 } from "../../../api";
 import {
+  CardContainer,
   CustomButton,
   CustomInputField,
   DeleteModal,
@@ -22,7 +23,6 @@ import {
   UsersTransferList,
 } from "../../base";
 import {
-  ClassCardContainer,
   DeleteRecurrentOption,
   DeleteRecurrentWrapper,
 } from "./class-details.styled";
@@ -30,6 +30,7 @@ import {
   mdiAccountArrowUp,
   mdiAccountGroupOutline,
   mdiCalendarOutline,
+  mdiCalendarSyncOutline,
   mdiClockOutline,
   mdiMagnify,
 } from "@mdi/js";
@@ -372,7 +373,7 @@ export const ClassDetailsCard = ({
 
       if (!!recurrentId) {
         details.push({
-          icon: mdiClockOutline,
+          icon: mdiCalendarSyncOutline,
           text: t(`${basePath}.Recurrency`, {
             recurrency: capitalize(
               format(new Date(date), "EEEE", {
@@ -389,7 +390,7 @@ export const ClassDetailsCard = ({
   }, [t, user?.language, basePath, type, classData]);
 
   return (
-    <ClassCardContainer>
+    <CardContainer>
       <span className="text-sm font-semibold">{t(`${basePath}.Title`)}</span>
       {cardDetails.map(({ icon, text }, idx) => (
         <div key={idx} className="flex flex-row items-center gap-1.5">
@@ -397,6 +398,6 @@ export const ClassDetailsCard = ({
           <span className="text-sm">{text}</span>
         </div>
       ))}
-    </ClassCardContainer>
+    </CardContainer>
   );
 };
