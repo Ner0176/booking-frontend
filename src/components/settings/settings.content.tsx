@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { mdiPencilOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import {
+  cancellationReasons,
   emptyCancelationSettings,
   ICancelationSettings,
 } from "./settings.interface";
@@ -118,35 +119,20 @@ export const SettingsCancelation = () => {
       setIsEditing={setIsEditing}
       title={t(`${basePath}.Title`)}
     >
-      <CustomInputField
-        isDisabled={!isEditing}
-        title={t(`${basePath}.Anticipation`)}
-        value={`${settings?.minHoursBeforeCancellation || 2}`}
-        handleChange={(value) =>
-          handleUpdateField("minHoursBeforeCancellation", value)
-        }
-      />
-      <CustomInputField
-        isDisabled={!isEditing}
-        title={t(`${basePath}.MaxCancelations`)}
-        value={`${settings?.maxCancellationPerMonth || 2}`}
-        handleChange={(value) =>
-          handleUpdateField("maxCancellationPerMonth", value)
-        }
-      />
-
-      <CustomInputField
-        isDisabled={!isEditing}
-        title={t(`${basePath}.MaxAdvanceTime`)}
-        value={`${settings?.maxAdvanceTime || 15}`}
-        handleChange={(value) => handleUpdateField("maxAdvanceTime", value)}
-      />
-      <CustomInputField
-        isDisabled={!isEditing}
-        title={t(`${basePath}.MaxRecovery`)}
-        value={`${settings?.maxRecoveryDays || 60}`}
-        handleChange={(value) => handleUpdateField("maxRecoveryDays", value)}
-      />
+      {Object.entries(cancellationReasons).map(([key, value]) => {
+        return (
+          <CustomInputField
+            key={key}
+            type="number"
+            isDisabled={!isEditing}
+            title={t(`${basePath}.${key}`)}
+            value={`${settings[value] ?? ""}`}
+            handleChange={(newFieldValue) =>
+              handleUpdateField(value, newFieldValue)
+            }
+          />
+        );
+      })}
     </SettingsBox>
   );
 };
