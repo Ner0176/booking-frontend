@@ -21,6 +21,7 @@ import {
   ClassDetailsWrapper,
   EditAttendeesButton,
 } from "./class-details.styled";
+import { isMobile } from "react-device-detect";
 
 export const ClassDetails = ({
   classData,
@@ -95,9 +96,12 @@ export const ClassDetails = ({
                   setParams([{ key: "action", value: "edit-attendees" }])
                 }
               >
-                <Icon className="size-3.5 mt-0.5" path={mdiPencilOutline} />
-                <span className="text-sm font-semibold">
-                  {t(`${basePath}.Edit`)}
+                <Icon
+                  className="size-3 sm:size-3.5 mt-0.5"
+                  path={mdiPencilOutline}
+                />
+                <span className="text-xs sm:text-sm font-semibold">
+                  {t(`${isMobile ? "Base.Buttons" : basePath}.Edit`)}
                 </span>
               </EditAttendeesButton>
             </div>
@@ -130,10 +134,10 @@ export const ClassDetails = ({
             )}
           </AttendeesListWrapper>
           <ClassDetailsWrapper>
-            <div className="flex justify-center w-full px-10">
+            <div className="flex justify-center w-full px-4 sm:px-10">
               <CardContainer mainCard>
                 <div className="flex flex-row items-center gap-1.5">
-                  <span className="font-semibold">
+                  <span className="text-sm sm:text-base font-bold">
                     {t(`${basePath}.Details`)}
                   </span>
                   <div
@@ -143,7 +147,7 @@ export const ClassDetails = ({
                   >
                     <Icon
                       path={mdiPencilOutline}
-                      className="mt-0.5 size-5 cursor-pointer text-neutral-500"
+                      className="mt-0.5 size-4 sm:size-5 cursor-pointer text-neutral-500"
                     />
                   </div>
                 </div>

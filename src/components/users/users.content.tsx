@@ -11,6 +11,7 @@ import {
   UserCardTitle,
 } from "./users.styled";
 import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 
 export const UserHeaderButtons = () => {
   const { setParams } = useSearchParamsManager([]);
@@ -32,9 +33,11 @@ export const UserCard = ({
   user,
   handleClick,
 }: Readonly<{ user: IUser; handleClick(): void }>) => {
-  const [isHover, setIsHover] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const { name, email, phone } = user;
+
+  const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <UserCardContainer
@@ -50,8 +53,8 @@ export const UserCard = ({
         </div>
       </div>
       <UserCardButton isHover={isHover}>
-        Ver perfil
-        <Icon size="14px" path={mdiArrowRight} />
+        <span className="text-[10px] sm:text-xs">{t("Users.View")}</span>
+        <Icon className="size-3 sm:size-3.5" path={mdiArrowRight} />
       </UserCardButton>
     </UserCardContainer>
   );

@@ -186,10 +186,13 @@
         "Empty": "Aún no hay participantes",
         "Placeholder": "Buscar asistentes...",
         "Edit": {
-          "Title": "Editar lista de asistentes",
           "Options": {
             "Recurrent": "Edición recurrente",
-            "OneTime": "Edición puntual"
+            "OneTime": "Edición puntual",
+            "Short": {
+              "Recurrent": "Recurrente",
+              "OneTime": "Puntual"
+            }
           },
           "Success": "La lista de asistentes ha sido editada correctamente",
           "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
@@ -241,6 +244,7 @@
   },
   "Users": {
     "Title": "Usuarios",
+    "View": "Ver perfil",
     "NoData": "Aún no hay usuarios registrados en la plataforma",
     "Details": {
       "Title": "Detalles de usuario",

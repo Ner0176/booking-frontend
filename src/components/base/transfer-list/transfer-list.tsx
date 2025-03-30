@@ -28,9 +28,8 @@ export const UsersTransferList = ({
       />
       <TFIconContainer>
         <Icon
-          size="16px"
           path={mdiArrowLeftRight}
-          className="text-neutral-400"
+          className="size-3.5 sm:size-4 text-neutral-400"
         />
       </TFIconContainer>
       <TransferListColumn

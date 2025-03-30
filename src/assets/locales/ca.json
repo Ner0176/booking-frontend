@@ -184,10 +184,13 @@
         "Empty": "Encara no hi ha participants",
         "Placeholder": "Cercar assistents...",
         "Edit": {
-          "Title": "Editar llista d'assistents",
           "Options": {
             "Recurrent": "Edició recurrent",
-            "OneTime": "Edició puntual"
+            "OneTime": "Edició puntual",
+            "Short": {
+              "Recurrent": "Recurrent",
+              "OneTime": "Puntual"
+            }
           },
           "Success": "La llista d'assistents ha estat editada correctament",
           "Error": "Hi ha hagut un error en intentar editar la llista d'assistents",
@@ -240,6 +243,7 @@
   "Users": {
     "Title": "Usuaris",
     "NoData": "Encara no hi ha usuaris registrats a la plataforma",
+    "View": "Veure perfil",
     "Details": {
       "Title": "Detalls de l'usuari",
       "Delete": {

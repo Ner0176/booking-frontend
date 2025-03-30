@@ -15,6 +15,7 @@ import {
   CardContainer,
   CustomButton,
   CustomInputField,
+  CustomSelect,
   DeleteModal,
   ErrorStrongContainer,
   Modal,
@@ -47,6 +48,7 @@ import { ca } from "date-fns/locale/ca";
 import { useUser } from "../../../stores";
 import { format } from "date-fns";
 import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
+import { isMobile } from "react-device-detect";
 
 export const DeleteClassModal = ({
   id,
@@ -170,6 +172,17 @@ export const EditListModal = ({
 
   const { id, maxAmount, recurrentId } = classData;
 
+  const SELECT_OPTIONS = [
+    {
+      key: "recurrent",
+      text: t(`${basePath}.Options.${isMobile ? "Short." : ""}Recurrent`),
+    },
+    {
+      key: "oneTime",
+      text: t(`${basePath}.Options.${isMobile ? "Short." : ""}OneTime`),
+    },
+  ];
+
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
 
@@ -212,7 +225,7 @@ export const EditListModal = ({
   return (
     <Modal
       handleClose={handleClose}
-      title={t(`${basePath}.Title`)}
+      title={t(`Classes.ClassDetails.Edit`)}
       footer={
         <div className="flex flex-row items-center justify-end gap-4 w-full">
           <CustomButton color="secondary" onClick={handleClose}>
@@ -224,29 +237,26 @@ export const EditListModal = ({
         </div>
       }
     >
-      <div className="flex flex-col gap-8 h-[350px]">
-        <div className="flex flex-row items-center gap-5 w-full">
+      <div className="flex flex-col gap-5 sm:gap-8 h-[350px]">
+        <div className="flex flex-row items-center gap-2.5 sm:gap-5 w-full">
           <CustomInputField
             value={search}
             icon={{ name: mdiMagnify }}
             placeholder={t(`Base.SearchUser`)}
             handleChange={(value) => setSearch(value)}
           />
-          {recurrentId && (
-            <div style={{ width: "100%" }}>
-              <SwitchSelector
-                keyParam="type"
-                customStyles={{ fontSize: 14 }}
-                options={[
-                  {
-                    key: "recurrent",
-                    text: t(`${basePath}.Options.Recurrent`),
-                  },
-                  { key: "oneTime", text: t(`${basePath}.Options.OneTime`) },
-                ]}
+          {recurrentId &&
+            (isMobile ? (
+              <CustomSelect
+                options={SELECT_OPTIONS}
+                selectedValue={params.get("type") ?? ""}
+                handleChange={(v) => setParams([{ key: "type", value: v }])}
               />
-            </div>
-          )}
+            ) : (
+              <div style={{ width: "100%" }}>
+                <SwitchSelector keyParam="type" options={SELECT_OPTIONS} />
+              </div>
+            ))}
         </div>
         <UsersTransferList
           assignedUsers={attendeesList}
@@ -391,11 +401,13 @@ export const ClassDetailsCard = ({
 
   return (
     <CardContainer>
-      <span className="text-sm font-semibold">{t(`${basePath}.Title`)}</span>
+      <span className="text-xs sm:text-sm font-semibold">
+        {t(`${basePath}.Title`)}
+      </span>
       {cardDetails.map(({ icon, text }, idx) => (
         <div key={idx} className="flex flex-row items-center gap-1.5">
-          <Icon className="size-4 mt-1" path={icon} />
-          <span className="text-sm">{text}</span>
+          <Icon className="size-3.5 sm:size-4 mt-1" path={icon} />
+          <span className="text-xs sm:text-sm">{text}</span>
         </div>
       ))}
     </CardContainer>

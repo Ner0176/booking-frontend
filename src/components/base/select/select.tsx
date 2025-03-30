@@ -1,12 +1,7 @@
 import Icon from "@mdi/react";
 import { ISelectOptions } from "./select.interface";
-import { SelectContainer, StyledSelect } from "./select.styled";
+import { SelectContainer, SelectWrapper, StyledSelect } from "./select.styled";
 import { mdiChevronDown } from "@mdi/js";
-import {
-  InputFieldContainer,
-  InputFieldTitle,
-  InputTitleContainer,
-} from "../input/input.styled";
 import { CSSProperties } from "react";
 
 export const CustomSelect = ({
@@ -17,7 +12,7 @@ export const CustomSelect = ({
   handleChange,
   selectedValue,
 }: Readonly<{
-  title: string;
+  title?: string;
   fullWidth?: boolean;
   selectedValue: string;
   options: ISelectOptions[];
@@ -25,13 +20,14 @@ export const CustomSelect = ({
   handleChange: (v: string) => void;
 }>) => {
   return (
-    <InputFieldContainer>
-      <InputTitleContainer>
-        <InputFieldTitle>{title}</InputFieldTitle>
-      </InputTitleContainer>
-      <SelectContainer style={customStyles}>
+    <SelectContainer fullWidth={fullWidth}>
+      {!!title && (
+        <span className="text-[10px] sm:text-xs font-semibold pl-1">
+          {title}
+        </span>
+      )}
+      <SelectWrapper style={customStyles}>
         <StyledSelect
-          fullWidth={fullWidth}
           value={selectedValue}
           onChange={(e) => handleChange(e.target.value)}
         >
@@ -42,7 +38,7 @@ export const CustomSelect = ({
           ))}
         </StyledSelect>
         <Icon size="20px" className="mr-2" path={mdiChevronDown} />
-      </SelectContainer>
-    </InputFieldContainer>
+      </SelectWrapper>
+    </SelectContainer>
   );
 };

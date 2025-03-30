@@ -139,7 +139,6 @@ export const CreateClassModal = ({
                 keyParam="type"
                 options={getSwitchOptions()}
                 handleClick={() => setFields(emptyClassFields)}
-                customStyles={{ fontSize: isMobile ? 12 : 14 }}
               />
             </div>
           </div>
