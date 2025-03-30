@@ -29,7 +29,12 @@ import { isMobile } from "react-device-detect";
 const RecoverBookingCard = ({
   cancelledAt,
   handleClick,
-}: Readonly<{ cancelledAt: Date; handleClick(): void }>) => {
+  hideRecoverButton,
+}: Readonly<{
+  cancelledAt: Date;
+  handleClick(): void;
+  hideRecoverButton?: boolean;
+}>) => {
   const { t } = useTranslation();
 
   const [canRecover, setCanRecover] = useState(true);
@@ -58,24 +63,26 @@ const RecoverBookingCard = ({
         <ItemInfoRow icon={mdiCalendarAlertOutline}>
           {t(`UserBookings.RecoveryLimit`, { date: maxRecoveryDay })}
         </ItemInfoRow>
-        <div className="flex justify-center w-full mt-2">
-          {canRecover ? (
-            <CustomButton
-              color="secondary"
-              onClick={handleClick}
-              styles={{
-                fontSize: 14,
-                minHeight: 0,
-                width: "100%",
-                padding: "6px 12px 6px 12px",
-              }}
-            >
-              {t("UserBookings.RecoverClass")}
-            </CustomButton>
-          ) : (
-            <LostClassText>{t("UserBookings.LostClass")}</LostClassText>
-          )}
-        </div>
+        {!hideRecoverButton && (
+          <div className="flex justify-center w-full mt-2">
+            {canRecover ? (
+              <CustomButton
+                color="secondary"
+                onClick={handleClick}
+                styles={{
+                  fontSize: 14,
+                  minHeight: 0,
+                  width: "100%",
+                  padding: "6px 12px 6px 12px",
+                }}
+              >
+                {t("UserBookings.RecoverClass")}
+              </CustomButton>
+            ) : (
+              <LostClassText>{t("UserBookings.LostClass")}</LostClassText>
+            )}
+          </div>
+        )}
       </UBClassCardWrapper>
     </>
   );
@@ -85,10 +92,12 @@ export const UserBookingCard = ({
   booking,
   handleCancel,
   hasCancellations,
+  hideRecoverButton,
 }: Readonly<{
   booking: IUserBooking;
   handleCancel?: () => void;
   hasCancellations?: boolean;
+  hideRecoverButton?: boolean;
 }>) => {
   const { setParams } = useSearchParamsManager([]);
 
@@ -124,6 +133,7 @@ export const UserBookingCard = ({
           />
           {showRecoverCard ? (
             <RecoverBookingCard
+              hideRecoverButton={hideRecoverButton}
               cancelledAt={cancelledAt ?? new Date()}
               handleClick={() =>
                 setParams([{ key: "booking", value: `${id}` }])

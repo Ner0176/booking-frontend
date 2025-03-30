@@ -71,7 +71,13 @@ export const UserDetails = ({
                 ))
               ) : !!userBookings && userBookings.length > 0 ? (
                 userBookings.map((booking, idx) => {
-                  return <UserBookingCard key={idx} booking={booking} />;
+                  return (
+                    <UserBookingCard
+                      key={idx}
+                      booking={booking}
+                      hideRecoverButton
+                    />
+                  );
                 })
               ) : (
                 <div className="mt-10">
