@@ -59,7 +59,7 @@ export const UsersDashboard = () => {
               [...Array(10)].map((key) => (
                 <Skeleton
                   key={key}
-                  className="w-[300px] h-[150px] rounded-2xl"
+                  style={{ width: 300, height: 75, borderRadius: 16 }}
                 />
               ))
             ) : filteredUsers.length > 0 ? (
