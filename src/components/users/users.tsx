@@ -41,7 +41,7 @@ export const UsersDashboard = () => {
     <DashboardSkeleton
       title={t(`Users.${!!userId ? "Details." : ""}Title`)}
       goBack={{ showButton: !!selectedUser, path: "/users" }}
-      rightHeader={!!userId ? <UserHeaderButtons /> : undefined}
+      rightHeader={<UserHeaderButtons isUserDetail={!!userId} />}
       customBodyStyles={!!userId ? { margin: 0, padding: 0 } : {}}
     >
       {!!selectedUser ? (

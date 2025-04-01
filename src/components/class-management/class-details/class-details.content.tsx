@@ -1,53 +1,21 @@
 import { Trans, useTranslation } from "react-i18next";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import {
-  IClassDetailsCard,
-  RecurrentOptionType,
-} from "./class-details.interface";
-import {
-  IClass,
-  IUser,
-  useDeleteClass,
-  useEditBookings,
-  useEditClass,
-} from "../../../api";
+import { useState } from "react";
+import { RecurrentOptionType } from "./class-details.interface";
+import { useDeleteClass, useEditClass } from "../../../api";
 import {
   CardContainer,
   CustomButton,
-  CustomInputField,
-  CustomSelect,
   DeleteModal,
   ErrorStrongContainer,
   Modal,
   showToast,
   SwitchSelector,
-  UsersTransferList,
 } from "../../base";
 import {
+  DeleteModalText,
   DeleteRecurrentOption,
   DeleteRecurrentWrapper,
 } from "./class-details.styled";
-import {
-  mdiAccountArrowUp,
-  mdiAccountGroupOutline,
-  mdiCalendarOutline,
-  mdiCalendarSyncOutline,
-  mdiClockOutline,
-  mdiMagnify,
-} from "@mdi/js";
-import {
-  capitalize,
-  formatTime,
-  formatToLongDate,
-  stringIncludes,
-} from "../../../utils";
-import { useSearchParamsManager } from "../../../hooks";
-import Icon from "@mdi/react";
-import { es } from "date-fns/locale/es";
-import { ca } from "date-fns/locale/ca";
-import { useUser } from "../../../stores";
-import { format } from "date-fns";
-import { emptyClassFields, IClassFields, OneTimeFields } from "../create-class";
 import { isMobile } from "react-device-detect";
 
 export const DeleteClassModal = ({
@@ -98,14 +66,14 @@ export const DeleteClassModal = ({
       isDeleting={isLoading}
       handleClose={handleClose}
       handleDelete={handleDelete}
-      width={!!recurrentId ? "50%" : "40%"}
       checkValidations={handleCheckValidations}
       isButtonDisabled={!!recurrentId && !selectedOption}
+      width={isMobile ? "100%" : !!recurrentId ? "50%" : "40%"}
       title={t(`${basePath}.${!recurrentId ? "Title" : "Recurrent.Title"}`)}
     >
       {!!recurrentId && (
         <>
-          <span>
+          <DeleteModalText>
             <Trans
               values={{ dateTime }}
               i18nKey={`${basePath}.Recurrent.Description`}
@@ -113,7 +81,7 @@ export const DeleteClassModal = ({
                 strong: <ErrorStrongContainer />,
               }}
             />
-          </span>
+          </DeleteModalText>
           <DeleteRecurrentWrapper>
             <DeleteRecurrentOption
               className="hover:bg-neutral-50"
@@ -136,280 +104,95 @@ export const DeleteClassModal = ({
           </DeleteRecurrentWrapper>
         </>
       )}
-      <span>
+      <DeleteModalText>
         <Trans
           i18nKey={`${basePath}.Description`}
           components={{
             strong: <ErrorStrongContainer />,
           }}
         />
-      </span>
+      </DeleteModalText>
     </DeleteModal>
   );
 };
 
-export const EditListModal = ({
+export const ClassSettingsMobile = ({
+  classId,
   refetch,
-  classData,
-  usersList,
+  isCancelled,
   handleClose,
-  setUsersList,
-  attendeesList,
-  setAttendeesList,
+  handleDeleteClass,
 }: Readonly<{
+  classId: string;
   refetch(): void;
-  classData: IClass;
-  usersList: IUser[];
   handleClose(): void;
-  attendeesList: IUser[];
-  setUsersList: Dispatch<SetStateAction<IUser[]>>;
-  setAttendeesList: Dispatch<SetStateAction<IUser[]>>;
+  isCancelled: boolean;
+  handleDeleteClass(): void;
 }>) => {
   const { t } = useTranslation();
-  const basePath = "Classes.ClassDetails.AttendeesList.Edit";
+  const basePath = "Classes.ClassDetails.Filters";
 
-  const { params, setParams } = useSearchParamsManager(["type"]);
+  const { mutate, isPending: isLoading } = useEditClass(refetch);
 
-  const { id, maxAmount, recurrentId } = classData;
-
-  const SELECT_OPTIONS = [
-    {
-      key: "recurrent",
-      text: t(`${basePath}.Options.${isMobile ? "Short." : ""}Recurrent`),
-    },
-    {
-      key: "oneTime",
-      text: t(`${basePath}.Options.${isMobile ? "Short." : ""}OneTime`),
-    },
-  ];
-
-  const [search, setSearch] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
-
-  const { mutate: editBookings, isPending: isLoading } =
-    useEditBookings(refetch);
-
-  useEffect(() => {
-    if (!search) setFilteredUsers(usersList);
-    else {
-      setFilteredUsers(
-        usersList.filter((user) => stringIncludes(user.name, search))
-      );
+  const handleChangeStatus = () => {
+    if (!!classId && !isLoading) {
+      mutate({ id: classId, cancel: !isCancelled });
     }
-  }, [search, usersList]);
+  };
 
-  useEffect(() => {
-    if (!params.get("type") && !!recurrentId) {
-      setParams([{ key: "type", value: "recurrent" }]);
-    }
-  }, [params, recurrentId, setParams]);
-
-  const handleEditBooking = () => {
-    if (attendeesList.length > maxAmount) {
-      showToast({
-        type: "error",
-        text: t(`${basePath}.MaxAmountError`),
-      });
-      return;
-    }
-
-    const editRecurrently = params.get("type") === "recurrent";
-
-    editBookings({
-      isRecurrent: editRecurrently,
-      userIds: attendeesList.map(({ id }) => id),
-      classId: `${editRecurrently ? recurrentId : id}`,
-    });
+  const ActionCard = ({
+    action,
+    isLoading,
+    handleClick,
+  }: Readonly<{
+    isLoading?: boolean;
+    handleClick?(): void;
+    action: "Cancel" | "Enable" | "Delete";
+  }>) => {
+    return (
+      <CardContainer>
+        <span className="text-xs font-semibold">
+          {t(`${basePath}.${action}.Title`)}
+        </span>
+        <span className="text-[10px] text-neutral-500">
+          {t(`${basePath}.${action}.Description`)}
+        </span>
+        <CustomButton
+          color="secondary"
+          onClick={handleClick}
+          isLoading={isLoading}
+          type={action === "Enable" ? "default" : "error"}
+          styles={{ fontSize: 12, paddingBottom: 6, paddingTop: 6 }}
+        >
+          {t(`${basePath}.${action}.Button`)}
+        </CustomButton>
+      </CardContainer>
+    );
   };
 
   return (
-    <Modal
-      handleClose={handleClose}
-      title={t(`Classes.ClassDetails.Edit`)}
-      footer={
-        <div className="flex flex-row items-center justify-end gap-4 w-full">
-          <CustomButton color="secondary" onClick={handleClose}>
-            {t("Base.Buttons.Discard")}
-          </CustomButton>
-          <CustomButton isLoading={isLoading} onClick={handleEditBooking}>
-            {t("Base.Buttons.Save")}
-          </CustomButton>
-        </div>
-      }
-    >
-      <div className="flex flex-col gap-5 sm:gap-8 h-[350px]">
-        <div className="flex flex-row items-center gap-2.5 sm:gap-5 w-full">
-          <CustomInputField
-            value={search}
-            icon={{ name: mdiMagnify }}
-            placeholder={t(`Base.SearchUser`)}
-            handleChange={(value) => setSearch(value)}
-          />
-          {recurrentId &&
-            (isMobile ? (
-              <CustomSelect
-                options={SELECT_OPTIONS}
-                selectedValue={params.get("type") ?? ""}
-                handleChange={(v) => setParams([{ key: "type", value: v }])}
-              />
-            ) : (
-              <div style={{ width: "100%" }}>
-                <SwitchSelector keyParam="type" options={SELECT_OPTIONS} />
-              </div>
-            ))}
-        </div>
-        <UsersTransferList
-          assignedUsers={attendeesList}
-          availableUsers={filteredUsers}
-          setAvailableUsers={setUsersList}
-          setAssignedUsers={setAttendeesList}
+    <Modal title={"Acciones de clase"} handleClose={handleClose}>
+      <div className="flex flex-col gap-3">
+        <SwitchSelector
+          keyParam="visual"
+          customStyles={{ paddingTop: 12, paddingBottom: 12 }}
+          options={[
+            { key: "attendees", text: t(`${basePath}.Switch.Attendees`) },
+            { key: "details", text: t(`${basePath}.Switch.Details`) },
+          ]}
         />
-      </div>
-    </Modal>
-  );
-};
-
-export const EditClassDetailsModal = ({
-  classData,
-  handleClose,
-  handleSuccess,
-}: Readonly<{
-  classData: IClass;
-  handleClose(): void;
-  handleSuccess(): void;
-}>) => {
-  const { t } = useTranslation();
-  const basePath = "Classes.ClassDetails";
-
-  const [hasEdited, setHasEdited] = useState(false);
-  const [fields, setFields] = useState<IClassFields>(emptyClassFields);
-
-  const { mutate: editClass, isPending: isLoading } =
-    useEditClass(handleSuccess);
-
-  useEffect(() => {
-    const { date, endTime, startTime, maxAmount } = classData;
-
-    setFields({
-      endTime: { value: endTime },
-      recurrencyLimit: { value: "" },
-      startTime: { value: startTime },
-      maxAmount: { value: maxAmount },
-      date: { value: format(new Date(date), "yyyy-MM-dd") },
-    });
-  }, [classData]);
-
-  const handleSubmit = () => {
-    editClass({
-      id: `${classData.id}`,
-      endTime: fields.endTime.value,
-      startTime: fields.startTime.value,
-      date: new Date(fields.date.value),
-      maxAmount: +fields.maxAmount.value,
-    });
-  };
-
-  return (
-    <Modal
-      footer={
-        <div className="flex flex-row justify-end items-center gap-3 w-full">
-          <CustomButton color="secondary" onClick={handleClose}>
-            {t("Base.Buttons.Cancel")}
-          </CustomButton>
-          <CustomButton
+        <CardContainer mainCard>
+          <span className="text-[13px] font-bold">
+            {t(`${basePath}.Actions`)}
+          </span>
+          <ActionCard
             isLoading={isLoading}
-            onClick={handleSubmit}
-            isDisabled={!hasEdited}
-          >
-            {t("Base.Buttons.Save")}
-          </CustomButton>
-        </div>
-      }
-      handleClose={handleClose}
-      title={t(`${basePath}.Details`)}
-    >
-      <div className="flex flex-col gap-2 sm:gap-4 sm:pb-3 overflow-y-auto max-h-[375px] sm:max-h-none">
-        <OneTimeFields
-          fields={fields}
-          setFields={(newValues) => {
-            setHasEdited(true);
-            setFields(newValues);
-          }}
-        />
+            handleClick={handleChangeStatus}
+            action={isCancelled ? "Enable" : "Cancel"}
+          />
+          <ActionCard action="Delete" handleClick={handleDeleteClass} />
+        </CardContainer>
       </div>
     </Modal>
-  );
-};
-
-export const ClassDetailsCard = ({
-  type,
-  classData,
-}: Readonly<{ type: "schedule" | "amount"; classData: IClass }>) => {
-  const { t } = useTranslation();
-  const basePath = `Classes.ClassDetails.Cards.${capitalize(type)}`;
-
-  const user = useUser();
-  const { date, startTime, endTime, maxAmount, currentCount, recurrentId } =
-    classData;
-
-  const cardDetails = useMemo(() => {
-    let details: IClassDetailsCard[] = [];
-    if (type === "amount") {
-      details = [
-        {
-          icon: mdiAccountGroupOutline,
-          text: t(`${basePath}.CurrentCount`, { currentCount }),
-        },
-        {
-          icon: mdiAccountArrowUp,
-          text: t(`${basePath}.MaxAmount`, { maxAmount }),
-        },
-      ];
-    } else {
-      details = [
-        {
-          icon: mdiClockOutline,
-          text: t(`${basePath}.Schedule`, {
-            schedule: formatTime(startTime, endTime),
-          }),
-        },
-        {
-          icon: mdiCalendarOutline,
-          text: t(`${basePath}.Date`, {
-            date: formatToLongDate(date),
-          }),
-        },
-      ];
-
-      if (!!recurrentId) {
-        details.push({
-          icon: mdiCalendarSyncOutline,
-          text: t(`${basePath}.Recurrency`, {
-            recurrency: capitalize(
-              format(new Date(date), "EEEE", {
-                locale: user?.language === "es" ? es : ca,
-              })
-            ),
-          }),
-        });
-      }
-    }
-
-    return details;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, user?.language, basePath, type, classData]);
-
-  return (
-    <CardContainer>
-      <span className="text-xs sm:text-sm font-semibold">
-        {t(`${basePath}.Title`)}
-      </span>
-      {cardDetails.map(({ icon, text }, idx) => (
-        <div key={idx} className="flex flex-row items-center gap-1.5">
-          <Icon className="size-3.5 sm:size-4 mt-1" path={icon} />
-          <span className="text-xs sm:text-sm">{text}</span>
-        </div>
-      ))}
-    </CardContainer>
   );
 };

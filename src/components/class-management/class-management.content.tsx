@@ -7,6 +7,7 @@ import {
   mdiCheck,
   mdiClockOutline,
   mdiTimerSand,
+  mdiTuneVariant,
 } from "@mdi/js";
 import {
   CSSProperties,
@@ -56,62 +57,6 @@ export const ItemInfoRow = ({
       <Icon size={isMobile ? "14px" : "20px"} className="sm:mt-1" path={icon} />
       {children}
     </ClassInfoRowContainer>
-  );
-};
-
-export const ClassStatusButton = ({
-  classId,
-  refetch,
-  isCancelled,
-}: Readonly<{ classId: string; refetch(): void; isCancelled: boolean }>) => {
-  const { t } = useTranslation();
-
-  const { mutate, isPending: isLoading } = useEditClass(refetch);
-
-  const handleChangeStatus = () => {
-    if (!!classId && !isLoading) {
-      mutate({ id: classId, cancel: !isCancelled });
-    }
-  };
-
-  return isMobile ? (
-    <div onClick={handleChangeStatus} className="text-red-600 cursor-pointer">
-      <Icon
-        className="mt-0.5 size-5"
-        path={!isCancelled ? mdiCancel : mdiCheck}
-      />
-    </div>
-  ) : (
-    <DashboardHeaderButton
-      onClick={handleChangeStatus}
-      className="flex justify-center min-w-[100px]"
-      color={isCancelled ? "primary" : "secondary"}
-    >
-      {isLoading ? (
-        <ClipLoader
-          size={20}
-          color="gray"
-          loading={true}
-          data-testid="loader"
-          aria-label="Loading Spinner"
-        />
-      ) : (
-        <>
-          <Icon
-            size="14px"
-            className="mt-0.5"
-            path={!isCancelled ? mdiCancel : mdiCheck}
-          />
-          <span className="text-sm font-semibold">
-            {t(
-              `Classes.ClassDetails.Status.${
-                !isCancelled ? "Cancel" : "Enable"
-              }`
-            )}
-          </span>
-        </>
-      )}
-    </DashboardHeaderButton>
   );
 };
 
@@ -182,6 +127,55 @@ export const ClassCardContent = ({
   );
 };
 
+export const ClassStatusButton = ({
+  classId,
+  refetch,
+  isCancelled,
+}: Readonly<{ classId: string; refetch(): void; isCancelled: boolean }>) => {
+  const { t } = useTranslation();
+
+  const { mutate, isPending: isLoading } = useEditClass(refetch);
+
+  const handleChangeStatus = () => {
+    if (!!classId && !isLoading) {
+      mutate({ id: classId, cancel: !isCancelled });
+    }
+  };
+
+  return (
+    <DashboardHeaderButton
+      onClick={handleChangeStatus}
+      className="flex justify-center min-w-[100px]"
+      color={isCancelled ? "primary" : "secondary"}
+    >
+      {isLoading ? (
+        <ClipLoader
+          size={20}
+          color="gray"
+          loading={true}
+          data-testid="loader"
+          aria-label="Loading Spinner"
+        />
+      ) : (
+        <>
+          <Icon
+            size="14px"
+            className="mt-0.5"
+            path={!isCancelled ? mdiCancel : mdiCheck}
+          />
+          <span className="text-sm font-semibold">
+            {t(
+              `Classes.ClassDetails.Status.${
+                !isCancelled ? "Cancel" : "Enable"
+              }`
+            )}
+          </span>
+        </>
+      )}
+    </DashboardHeaderButton>
+  );
+};
+
 export const CalendarHeaderButtons = ({
   classId,
   refetch,
@@ -189,7 +183,7 @@ export const CalendarHeaderButtons = ({
 }: Readonly<{ refetch(): void; classId: string; selectedClass?: IClass }>) => {
   const { setParams } = useSearchParamsManager([]);
 
-  const showButtons = () => {
+  const showStatusButton = () => {
     if (selectedClass) {
       const now = new Date();
       const formattedDate = mergeDateTime(
@@ -201,34 +195,46 @@ export const CalendarHeaderButtons = ({
     return false;
   };
 
-  return !selectedClass ? (
+  const WebHeaderButtons = () => {
+    return !selectedClass ? (
+      <HeaderButton
+        icon={mdiPlus}
+        tPath={"Base.Buttons.CreateClass"}
+        onClick={() =>
+          setParams([
+            { key: "action", value: "create-class" },
+            { key: "type", value: "recurrent" },
+          ])
+        }
+      />
+    ) : (
+      <div className="flex flex-row items-center justify-end gap-4 w-full">
+        {showStatusButton() && (
+          <ClassStatusButton
+            refetch={refetch}
+            classId={classId ?? ""}
+            isCancelled={selectedClass.cancelled}
+          />
+        )}
+        <HeaderButton
+          color="secondary"
+          icon={mdiTrashCanOutline}
+          tPath="Classes.ClassDetails.Delete.Title"
+          onClick={() => setParams([{ key: "action", value: "delete-class" }])}
+        />
+      </div>
+    );
+  };
+
+  return isMobile ? (
     <HeaderButton
-      icon={mdiPlus}
-      tPath={"Base.Buttons.CreateClass"}
-      onClick={() =>
-        setParams([
-          { key: "action", value: "create-class" },
-          { key: "type", value: "recurrent" },
-        ])
-      }
+      color="primary"
+      icon={mdiTuneVariant}
+      tPath="Base.Buttons.Filters"
+      onClick={() => setParams([{ key: "modal", value: "filters" }])}
     />
   ) : (
-    <div className="flex flex-row items-center justify-end gap-4 w-full">
-      {showButtons() && (
-        <ClassStatusButton
-          refetch={refetch}
-          classId={classId ?? ""}
-          isCancelled={selectedClass.cancelled}
-        />
-      )}
-      <HeaderButton
-        color="secondary"
-        icon={mdiTrashCanOutline}
-        size={isMobile ? "small" : "default"}
-        tPath="Classes.ClassDetails.Delete.Title"
-        onClick={() => setParams([{ key: "action", value: "delete-class" }])}
-      />
-    </div>
+    <WebHeaderButtons />
   );
 };
 

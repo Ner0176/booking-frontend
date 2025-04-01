@@ -26,7 +26,7 @@ export const CustomSelect = ({
           {title}
         </span>
       )}
-      <SelectWrapper style={customStyles}>
+      <SelectWrapper style={customStyles} fullWidth={fullWidth}>
         <StyledSelect
           value={selectedValue}
           onChange={(e) => handleChange(e.target.value)}

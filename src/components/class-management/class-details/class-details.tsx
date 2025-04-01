@@ -1,44 +1,35 @@
-import { useTranslation } from "react-i18next";
 import { IClass, IUser, useGetAllUsers, useGetBookings } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
-import {
-  ClassDetailsCard,
-  DeleteClassModal,
-  EditClassDetailsModal,
-  EditListModal,
-} from "./class-details.content";
-import { useNavigate } from "react-router-dom";
-import { UserCard } from "../../users";
-import { CardContainer, CustomInputField, EmptyData } from "../../base";
-import noUsers from "../../../assets/images/noData/folders.svg";
-import Skeleton from "react-loading-skeleton";
-import { mdiMagnify, mdiPencilOutline } from "@mdi/js";
-import Icon from "@mdi/react";
-import {
-  AttendeesListWrapper,
-  ClassDetailsWrapper,
-  EditAttendeesButton,
-} from "./class-details.styled";
+import { ClassSettingsMobile, DeleteClassModal } from "./class-details.content";
+import { ClassDetailsData, EditClassDetailsModal } from "./class-data";
+import { ClassAttendeesList, EditListModal } from "./attendees-list";
 import { isMobile } from "react-device-detect";
 
 export const ClassDetails = ({
   classData,
   refetchClasses,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-  const basePath = "Classes.ClassDetails";
+  const { params, setParams } = useSearchParamsManager([
+    "modal",
+    "visual",
+    "action",
+  ]);
 
-  const { params, setParams } = useSearchParamsManager(["action"]);
+  const showFiltersModal = params.get("modal") === "filters";
   const showEditClassView = params.get("action") === "edit-class";
   const showDeleteModal = params.get("action") === "delete-class";
   const showEditAttendeesView = params.get("action") === "edit-attendees";
 
+  const classVisual = params.get("visual");
+  const showAttendeesList =
+    classVisual === "all" || classVisual === "attendees";
+  const showClassDetailsData =
+    classVisual === "all" || classVisual === "details";
+
   const { id, date, endTime, startTime, recurrentId } = classData;
 
-  const [search, setSearch] = useState("");
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
 
@@ -72,7 +63,10 @@ export const ClassDetails = ({
 
   useEffect(() => {
     initializeState();
-  }, [initializeState]);
+    if (!classVisual) {
+      setParams([{ key: "visual", value: isMobile ? "attendees" : "all" }]);
+    }
+  }, [classVisual, setParams, initializeState]);
 
   const handleCloseAction = () => {
     setParams([{ key: "type" }, { key: "action" }]);
@@ -83,79 +77,23 @@ export const ClassDetails = ({
     <>
       <div className="flex flex-col justify-between w-full">
         <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
-          <AttendeesListWrapper>
-            <div className="flex flex-row items-center justify-center gap-3 w-full">
-              <CustomInputField
-                value={search}
-                icon={{ name: mdiMagnify }}
-                handleChange={(value) => setSearch(value)}
-                placeholder={t(`${basePath}.AttendeesList.Placeholder`)}
-              />
-              <EditAttendeesButton
-                onClick={() =>
-                  setParams([{ key: "action", value: "edit-attendees" }])
-                }
-              >
-                <Icon
-                  className="size-3 sm:size-3.5 mt-0.5"
-                  path={mdiPencilOutline}
-                />
-                <span className="text-xs sm:text-sm font-semibold">
-                  {t(`${isMobile ? "Base.Buttons" : basePath}.Edit`)}
-                </span>
-              </EditAttendeesButton>
-            </div>
-            {isUsersLoading || isBookingsLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[...Array(6)].map((key) => (
-                  <Skeleton
-                    key={key}
-                    className="w-full h-16"
-                    style={{ borderRadius: 16 }}
-                  />
-                ))}
-              </div>
-            ) : attendeesList.length ? (
-              <div className="flex flex-wrap gap-3">
-                {attendeesList.map((attendee, idx) => (
-                  <UserCard
-                    key={idx}
-                    user={attendee}
-                    handleClick={() => navigate(`/users?userId=${attendee.id}`)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <EmptyData
-                textSize={16}
-                image={noUsers}
-                title={t(`${basePath}.AttendeesList.Empty`)}
-              />
-            )}
-          </AttendeesListWrapper>
-          <ClassDetailsWrapper>
-            <div className="flex justify-center w-full px-4 sm:px-10">
-              <CardContainer mainCard>
-                <div className="flex flex-row items-center gap-1.5">
-                  <span className="text-sm sm:text-base font-bold">
-                    {t(`${basePath}.Details`)}
-                  </span>
-                  <div
-                    onClick={() =>
-                      setParams([{ key: "action", value: "edit-class" }])
-                    }
-                  >
-                    <Icon
-                      path={mdiPencilOutline}
-                      className="mt-0.5 size-4 sm:size-5 cursor-pointer text-neutral-500"
-                    />
-                  </div>
-                </div>
-                <ClassDetailsCard type="schedule" classData={classData} />
-                <ClassDetailsCard type="amount" classData={classData} />
-              </CardContainer>
-            </div>
-          </ClassDetailsWrapper>
+          {showAttendeesList && (
+            <ClassAttendeesList
+              attendeesList={attendeesList}
+              isLoading={isBookingsLoading || isUsersLoading}
+              editAttendeesList={() =>
+                setParams([{ key: "action", value: "edit-attendees" }])
+              }
+            />
+          )}
+          {showClassDetailsData && (
+            <ClassDetailsData
+              classData={classData}
+              editClassData={() =>
+                setParams([{ key: "action", value: "edit-class" }])
+              }
+            />
+          )}
         </div>
       </div>
       {showEditAttendeesView && (
@@ -189,6 +127,20 @@ export const ClassDetails = ({
           refetchClasses={refetchClasses}
           handleClose={() => setParams([{ key: "action" }])}
           dateTime={`${getWeekday(date)}  ${startTime}h - ${endTime}h`}
+        />
+      )}
+      {showFiltersModal && (
+        <ClassSettingsMobile
+          refetch={refetchClasses}
+          classId={`${classData.id}`}
+          isCancelled={classData.cancelled}
+          handleDeleteClass={() =>
+            setParams([
+              { key: "modal" },
+              { key: "action", value: "delete-class" },
+            ])
+          }
+          handleClose={() => setParams([{ key: "modal" }])}
         />
       )}
     </>

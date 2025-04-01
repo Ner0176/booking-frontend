@@ -49,7 +49,7 @@ export const DeleteUserModal = ({
       handleDelete={() => deleteUser(id)}
       title={t("Users.Details.Delete.Title")}
     >
-      <span>
+      <span className="text-xs sm:text-base text-justify sm:text-start">
         <Trans
           values={{ name, email }}
           i18nKey={"Users.Details.Delete.Description"}

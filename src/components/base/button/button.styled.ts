@@ -19,7 +19,7 @@ export const StyledButton = styled.div<{
   type: ButtonType;
   isDisabled?: boolean;
 }>`
-  ${tw`flex items-center justify-center text-sm sm:text-base px-4 py-2.5 w-min sm:min-w-[100px] sm:min-h-[45px] whitespace-nowrap border border-neutral-200 rounded-full cursor-pointer`}
+  ${tw`flex items-center justify-center text-sm sm:text-base px-4 py-2 sm:py-2.5 min-w-[75px] sm:min-w-[100px] sm:min-h-[45px] whitespace-nowrap border border-neutral-200 rounded-full cursor-pointer`}
   ${({ type, color }) => getButtonStyles(type, color)}
   ${({ isDisabled }) => isDisabled && tw`cursor-not-allowed`}
   ${({ color, isDisabled }) =>

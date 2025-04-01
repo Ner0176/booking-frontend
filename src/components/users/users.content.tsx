@@ -1,4 +1,4 @@
-import { mdiArrowRight, mdiTrashCanOutline } from "@mdi/js";
+import { mdiArrowRight, mdiTrashCanOutline, mdiTuneVariant } from "@mdi/js";
 import { HeaderButton } from "../base";
 import { useSearchParamsManager } from "../../hooks";
 import { IUser } from "../../api";
@@ -13,20 +13,31 @@ import {
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 
-export const UserHeaderButtons = () => {
+export const UserHeaderButtons = ({
+  isUserDetail,
+}: Readonly<{ isUserDetail: boolean }>) => {
   const { setParams } = useSearchParamsManager([]);
 
-  return (
+  return isUserDetail ? (
     <div className="flex flex-row items-center justify-end gap-4 w-full">
-      <HeaderButton
-        color="secondary"
-        icon={mdiTrashCanOutline}
-        tPath={"Users.Details.Delete.Title"}
-        size={isMobile ? "small" : "default"}
-        onClick={() => setParams([{ key: "action", value: "delete-class" }])}
-      />
+      {isMobile ? (
+        <HeaderButton
+          color="primary"
+          icon={mdiTuneVariant}
+          tPath="Base.Buttons.Filters"
+          onClick={() => setParams([{ key: "modal", value: "filters" }])}
+        />
+      ) : (
+        <HeaderButton
+          color="secondary"
+          icon={mdiTrashCanOutline}
+          tPath={"Users.Details.Delete.Title"}
+          size={isMobile ? "small" : "default"}
+          onClick={() => setParams([{ key: "action", value: "delete-class" }])}
+        />
+      )}
     </div>
-  );
+  ) : null;
 };
 
 export const UserCard = ({

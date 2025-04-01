@@ -186,7 +186,7 @@ export const CancelBookingModal = ({
       handleDelete={() => cancelBooking(bookingId)}
       mainButtonText={t("UserBookings.Cancel.Title")}
     >
-      <span className="text-xs sm:text-base">
+      <span className="text-xs sm:text-base text-justify sm:text-start">
         <Trans
           values={{ date: getBookingDate() }}
           i18nKey={"UserBookings.Cancel.Description"}

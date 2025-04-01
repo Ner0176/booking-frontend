@@ -9,6 +9,7 @@
     },
     "Buttons": {
       "Edit": "Editar",
+      "Filters": "Filtres",
       "Skip": "Saltar pas",
       "Cancel": "Cancel·lar",
       "Delete": "Eliminar",
@@ -153,6 +154,28 @@
           "Title": "Aforament",
           "MaxAmount": "Aforament màxim: {{maxAmount}}",
           "CurrentCount": "Assistents actuals: {{currentCount}}"
+        }
+      },
+      "Filters": {
+        "Switch": {
+          "Attendees": "Llista d'assistents",
+          "Details": "Dades de la classe"
+        },
+        "Actions": "Accions",
+        "Cancel": {
+          "Title": "Cancel·lar",
+          "Button": "Cancel·lar classe",
+          "Description": "La classe serà cancel·lada i els assistents tendran l'opció de reservar una nova sessió"
+        },
+        "Enable": {
+          "Title": "Activar",
+          "Button": "Activar classe",
+          "Description": "La classe serà activada i els assistents tornaran a tenir la sessió disponible"
+        },
+        "Delete": {
+          "Title": "Eliminar",
+          "Button": "Eliminar classe",
+          "Description": "La classe i les seves reserves seran eliminades definitivament"
         }
       },
       "Delete": {

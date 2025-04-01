@@ -22,7 +22,7 @@ export const Modal = ({
   PropsWithChildren<{
     width?: string;
     type?: ModalType;
-    footer: JSX.Element;
+    footer?: JSX.Element;
     handleClose(): void;
     title: string | JSX.Element;
   }>
@@ -47,7 +47,7 @@ export const Modal = ({
             </div>
           </ModalHeader>
           <div className="w-full sm:px-8">{children}</div>
-          <ModalFooter type={type}>{footer}</ModalFooter>
+          {footer && <ModalFooter type={type}>{footer}</ModalFooter>}
         </ModalWrapper>
       </ModalContainer>
       <ModalBackground />

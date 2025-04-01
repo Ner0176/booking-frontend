@@ -9,6 +9,7 @@
     },
     "Buttons": {
       "Edit": "Editar",
+      "Filters": "Filtros",
       "Skip": "Saltar paso",
       "Cancel": "Cancelar",
       "Delete": "Eliminar",
@@ -155,6 +156,28 @@
           "Title": "Capacidad",
           "MaxAmount": "Capacidad máxima: {{maxAmount}}",
           "CurrentCount": "Asistentes actuales: {{currentCount}}"
+        }
+      },
+      "Filters": {
+        "Switch": {
+          "Attendees": "Lista de asistentes",
+          "Details": "Datos de la clase"
+        },
+        "Actions": "Acciones",
+        "Cancel": {
+          "Title": "Cancelar",
+          "Button": "Cancelar clase",
+          "Description": "La clase será cancelada y los asistentes tendrán la opción de agendar una nueva sesión"
+        },
+        "Enable": {
+          "Title": "Activar",
+          "Button": "Activar clase",
+          "Description": "La clase será activada y los asistentes volverán a tener la sesión disponible"
+        },
+        "Delete": {
+          "Title": "Eliminar",
+          "Button": "Eliminar clase",
+          "Description": "La clase y sus respectivas reservas serán eliminadas permanentemente"
         }
       },
       "Delete": {

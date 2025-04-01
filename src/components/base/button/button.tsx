@@ -34,11 +34,11 @@ export const CustomButton = ({
     >
       {!!isLoading ? (
         <ClipLoader
-          color="white"
           loading={true}
           data-testid="loader"
           size={isMobile ? 16 : 20}
           aria-label="Loading Spinner"
+          color={color === "primary" ? "white" : "#D4D4D4FF"}
         />
       ) : (
         children

@@ -37,7 +37,7 @@ export const DashboardSkeleton = ({
             >
               <Icon
                 path={mdiArrowLeft}
-                className="size-6 sm:size-7 mt-0.5 sm:mt-1"
+                className="size-5 sm:size-7 mt-0.5 sm:mt-1"
               />
             </div>
           )}
