@@ -53,7 +53,7 @@ export const ItemInfoRow = ({
 }: Readonly<PropsWithChildren<{ icon: string; status?: ClassStatusType }>>) => {
   return (
     <ClassInfoRowContainer status={status}>
-      <Icon size={isMobile ? "16px" : "20px"} className="mt-1" path={icon} />
+      <Icon size={isMobile ? "14px" : "20px"} className="sm:mt-1" path={icon} />
       {children}
     </ClassInfoRowContainer>
   );

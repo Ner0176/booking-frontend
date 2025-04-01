@@ -242,7 +242,7 @@
   },
   "Users": {
     "Title": "Usuaris",
-    "NoData": "Encara no hi ha usuaris registrats a la plataforma",
+    "NoData": "No s'han trobat usuaris amb els filtres seleccionats",
     "View": "Veure perfil",
     "Details": {
       "Title": "Detalls de l'usuari",

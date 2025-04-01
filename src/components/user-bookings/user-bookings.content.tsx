@@ -70,10 +70,10 @@ const RecoverBookingCard = ({
                 color="secondary"
                 onClick={handleClick}
                 styles={{
-                  fontSize: 14,
                   minHeight: 0,
                   width: "100%",
-                  padding: "6px 12px 6px 12px",
+                  fontSize: isMobile ? 12 : 14,
+                  padding: isMobile ? "5px 10px 5px 10px" : "6px 12px 6px 12px",
                 }}
               >
                 {t("UserBookings.RecoverClass")}
@@ -186,7 +186,7 @@ export const CancelBookingModal = ({
       handleDelete={() => cancelBooking(bookingId)}
       mainButtonText={t("UserBookings.Cancel.Title")}
     >
-      <span className="text-sm sm:text-base">
+      <span className="text-xs sm:text-base">
         <Trans
           values={{ date: getBookingDate() }}
           i18nKey={"UserBookings.Cancel.Description"}

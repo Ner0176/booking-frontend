@@ -15,7 +15,7 @@ export const DeleteModalConfirmation = ({
   const { t } = useTranslation();
   return (
     <>
-      <span className="text-sm sm:text-base">
+      <span className="text-xs sm:text-base">
         <Trans
           i18nKey={t(`${BASE_PATH}.Description`)}
           components={{

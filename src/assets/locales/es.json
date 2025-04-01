@@ -245,7 +245,7 @@
   "Users": {
     "Title": "Usuarios",
     "View": "Ver perfil",
-    "NoData": "Aún no hay usuarios registrados en la plataforma",
+    "NoData": "No se han encontrado usuarios con los filtros seleccionado",
     "Details": {
       "Title": "Detalles de usuario",
       "Delete": {

@@ -35,12 +35,15 @@ export const Modal = ({
         <ModalWrapper ref={ref} type={type} style={{ width }}>
           <ModalHeader type={type}>
             {typeof title === "string" ? (
-              <span className="text-2xl font-bold">{title}</span>
+              <span className="text-xl sm:text-2xl font-bold">{title}</span>
             ) : (
               title
             )}
             <div onClick={handleClose} className="cursor-pointer">
-              <Icon className="size-6 text-neutral-400" path={mdiClose} />
+              <Icon
+                className="size-5 sm:size-6 text-neutral-400"
+                path={mdiClose}
+              />
             </div>
           </ModalHeader>
           <div className="w-full sm:px-8">{children}</div>

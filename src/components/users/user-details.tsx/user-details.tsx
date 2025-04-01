@@ -58,7 +58,7 @@ export const UserDetails = ({
   return (
     <>
       <div className="flex flex-col gap-6 sm:gap-0 sm:grid sm:grid-cols-3 sm:justify-items-center size-full">
-        <div className="col-span-2 flex flex-col w-full px-10 mt-4">
+        <div className="col-span-2 flex flex-col w-full px-4 sm:px-10 mt-4">
           <SwitchSelector
             keyParam={CLASS_KEY_PARAM}
             options={getSelectorOptions()}
@@ -90,7 +90,7 @@ export const UserDetails = ({
             </div>
           )}
         </div>
-        <div className="flex justify-center size-full px-10 border-l border-neutral-200 pt-4">
+        <div className="flex justify-center size-full px-4 sm:px-10 border-l border-neutral-200 pt-4">
           <CardContainer mainCard>
             <span className="font-semibold">
               {t(`${basePath}.Information`)}
@@ -127,7 +127,7 @@ export const UserDetails = ({
                         ? format(new Date(value), "dd/MM/yyyy")
                         : value;
                     return (
-                      <span className="text-sm">
+                      <span className="text-xs sm:text-sm">
                         {t(`${basePath}.Stats.${key}`, { amount: stat })}
                       </span>
                     );

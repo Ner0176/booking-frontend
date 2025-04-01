@@ -47,7 +47,7 @@ export const UsersDashboard = () => {
       {!!selectedUser ? (
         <UserDetails user={selectedUser} refetch={refetch} />
       ) : (
-        <div className="flex flex-col w-full gap-8">
+        <div className="flex flex-col w-full gap-4 sm:gap-8">
           <CustomInputField
             value={search}
             icon={{ name: mdiMagnify }}

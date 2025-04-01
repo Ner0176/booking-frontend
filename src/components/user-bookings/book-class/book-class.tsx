@@ -9,6 +9,7 @@ import { UBClassCardWrapper } from "../user-bookings.styled";
 import { addDays } from "date-fns";
 import { FullClassText } from "./book-class.styled";
 import emptyList from "../../../assets/images/noData/lost.svg";
+import { isMobile } from "react-device-detect";
 
 const BASE_PATH = "UserBookings.BookClass";
 
@@ -79,11 +80,11 @@ export const BookClassDashboard = ({
           );
         })
       ) : (
-        <div className="mt-12">
+        <div className="mt-8 sm:mt-12">
           <EmptyData
-            textSize={20}
-            imageSize={300}
             image={emptyList}
+            textSize={isMobile ? 14 : 20}
+            imageSize={isMobile ? 250 : 300}
             title={t(`${BASE_PATH}.EmptyList`, {
               days: classConfigs?.maxAdvanceTime,
             })}
