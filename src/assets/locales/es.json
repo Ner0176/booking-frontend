@@ -307,6 +307,18 @@
         "cancelled": "❌ Clases canceladas: {{amount}}",
         "pending": "⏳ Clases pendientes: {{amount}}",
         "firstday": "📅 Primera clase realizada: {{amount}}"
+      },
+      "Filters": {
+        "Title": "Acciones de usuario",
+        "Switch": {
+          "History": "Historial de clases",
+          "Details": "Datos del usuario"
+        },
+        "Delete": {
+          "Title": "Eliminar usuario",
+          "Description": "Este usuario y todas sus reservas serán eliminadas de la plataforma",
+          "Button": "Eliminar permanentemente"
+        }
       }
     }
   },

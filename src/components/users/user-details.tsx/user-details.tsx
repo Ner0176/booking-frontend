@@ -6,7 +6,11 @@ import {
   useGetUserBookingsStats,
 } from "../../../api";
 import { CardContainer, EmptyData, SwitchSelector } from "../../base";
-import { DeleteUserModal, UserInfoField } from "./user-details.content";
+import {
+  DeleteUserModal,
+  UserInfoField,
+  UserSettingsMobile,
+} from "./user-details.content";
 import { useSearchParamsManager } from "../../../hooks";
 import { useEffect } from "react";
 import emptyHistory from "../../../assets/images/noData/void.svg";
@@ -14,6 +18,7 @@ import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 import Skeleton from "react-loading-skeleton";
 import { format } from "date-fns";
 import { UserBookingCard } from "../../user-bookings/user-bookings.content";
+import { isMobile } from "react-device-detect";
 
 const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
@@ -28,9 +33,16 @@ export const UserDetails = ({
   const { params, setParams } = useSearchParamsManager([
     CLASS_KEY_PARAM,
     "action",
+    "modal",
+    "visual",
   ]);
   const actionType = params.get("action");
   const selectedOption = params.get(CLASS_KEY_PARAM);
+  const showFiltersModal = params.get("modal") === "filters" && isMobile;
+
+  const userVisual = params.get("visual");
+  const showUserHistory = userVisual === "all" || userVisual === "history";
+  const showUserDetails = userVisual === "all" || userVisual === "details";
 
   const { id, name, phone, email } = user;
 
@@ -41,6 +53,12 @@ export const UserDetails = ({
       status: selectedOption ? (selectedOption as BookingStatus) : undefined,
     },
   });
+
+  useEffect(() => {
+    if (!userVisual) {
+      setParams([{ key: "visual", value: isMobile ? "history" : "all" }]);
+    }
+  }, [setParams, userVisual]);
 
   useEffect(() => {
     if (!selectedOption) {
@@ -58,90 +76,105 @@ export const UserDetails = ({
   return (
     <>
       <div className="flex flex-col gap-6 sm:gap-0 sm:grid sm:grid-cols-3 sm:justify-items-center size-full">
-        <div className="col-span-2 flex flex-col w-full px-4 sm:px-10 mt-4">
-          <SwitchSelector
-            keyParam={CLASS_KEY_PARAM}
-            options={getSelectorOptions()}
-          />
-          {!!selectedOption && (
-            <div className="flex flex-col gap-3 overflow-y-auto h-[500px] mt-3">
-              {isLoading ? (
-                [...Array(5)].map((_, idx) => (
-                  <Skeleton key={idx} className="w-full h-[80px]" />
-                ))
-              ) : !!userBookings && userBookings.length > 0 ? (
-                userBookings.map((booking, idx) => {
-                  return (
-                    <UserBookingCard
-                      key={idx}
-                      booking={booking}
-                      hideRecoverButton
-                    />
-                  );
-                })
-              ) : (
-                <div className="mt-10">
-                  <EmptyData
-                    image={emptyHistory}
-                    title={t(`${basePath}.Empty.${selectedOption}`)}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-        <div className="flex justify-center size-full px-4 sm:px-10 border-l border-neutral-200 pt-4">
-          <CardContainer mainCard>
-            <span className="font-semibold">
-              {t(`${basePath}.Information`)}
-            </span>
-            <CardContainer>
-              <span className="text-sm font-semibold">
-                {t(`${basePath}.Data`)}
-              </span>
-              <UserInfoField
-                value={name}
-                textKey="Name"
-                icon={mdiAccountOutline}
-              />
-              <UserInfoField
-                value={email}
-                textKey="Email"
-                icon={mdiEmailOutline}
-              />
-              <UserInfoField
-                textKey="Phone"
-                icon={mdiPhoneOutline}
-                value={phone ? phone : "-"}
-              />
-            </CardContainer>
-            <CardContainer>
-              <span className="text-sm font-semibold">
-                {t(`${basePath}.Stats.Title`)}
-              </span>
-              <div className="flex flex-col gap-4">
-                {userStats &&
-                  Object.entries(userStats).map(([key, value]) => {
-                    const stat =
-                      key === "firstday"
-                        ? format(new Date(value), "dd/MM/yyyy")
-                        : value;
+        {showUserHistory && (
+          <div className="col-span-2 flex flex-col w-full px-4 sm:px-10 mt-4">
+            <SwitchSelector
+              keyParam={CLASS_KEY_PARAM}
+              options={getSelectorOptions()}
+            />
+            {!!selectedOption && (
+              <div className="flex flex-col gap-3 overflow-y-auto sm:h-[500px] mt-3">
+                {isLoading ? (
+                  [...Array(5)].map((_, idx) => (
+                    <Skeleton key={idx} className="w-full h-[80px]" />
+                  ))
+                ) : !!userBookings && userBookings.length > 0 ? (
+                  userBookings.map((booking, idx) => {
                     return (
-                      <span className="text-xs sm:text-sm">
-                        {t(`${basePath}.Stats.${key}`, { amount: stat })}
-                      </span>
+                      <UserBookingCard
+                        key={idx}
+                        booking={booking}
+                        hideRecoverButton
+                      />
                     );
-                  })}
+                  })
+                ) : (
+                  <div className="mt-10">
+                    <EmptyData
+                      image={emptyHistory}
+                      title={t(`${basePath}.Empty.${selectedOption}`)}
+                    />
+                  </div>
+                )}
               </div>
+            )}
+          </div>
+        )}
+        {showUserDetails && (
+          <div className="flex justify-center size-full px-4 sm:px-10 border-l border-neutral-200 pt-4">
+            <CardContainer mainCard>
+              <span className="font-semibold">
+                {t(`${basePath}.Information`)}
+              </span>
+              <CardContainer>
+                <span className="text-sm font-semibold">
+                  {t(`${basePath}.Data`)}
+                </span>
+                <UserInfoField
+                  value={name}
+                  textKey="Name"
+                  icon={mdiAccountOutline}
+                />
+                <UserInfoField
+                  value={email}
+                  textKey="Email"
+                  icon={mdiEmailOutline}
+                />
+                <UserInfoField
+                  textKey="Phone"
+                  icon={mdiPhoneOutline}
+                  value={phone ? phone : "-"}
+                />
+              </CardContainer>
+              <CardContainer>
+                <span className="text-sm font-semibold">
+                  {t(`${basePath}.Stats.Title`)}
+                </span>
+                <div className="flex flex-col gap-4">
+                  {userStats &&
+                    Object.entries(userStats).map(([key, value]) => {
+                      const stat =
+                        key === "firstday"
+                          ? format(new Date(value), "dd/MM/yyyy")
+                          : value;
+                      return (
+                        <span className="text-xs sm:text-sm">
+                          {t(`${basePath}.Stats.${key}`, { amount: stat })}
+                        </span>
+                      );
+                    })}
+                </div>
+              </CardContainer>
             </CardContainer>
-          </CardContainer>
-        </div>
+          </div>
+        )}
       </div>
       {actionType === "delete-class" && (
         <DeleteUserModal
           user={user}
           refetch={refetch}
           handleClose={() => setParams([{ key: "action" }])}
+        />
+      )}
+      {showFiltersModal && (
+        <UserSettingsMobile
+          handleClose={() => setParams([{ key: "modal" }])}
+          handleDeleteClass={() => {
+            setParams([
+              { key: "modal" },
+              { key: "action", value: "delete-class" },
+            ]);
+          }}
         />
       )}
     </>

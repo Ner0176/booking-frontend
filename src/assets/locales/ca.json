@@ -305,6 +305,18 @@
         "cancelled": "❌ Classes cancel·lades: {{amount}}",
         "pending": "⏳ Classes pendents: {{amount}}",
         "firstday": "📅 Primera classe realitzada: {{amount}}"
+      },
+      "Filters": {
+        "Title": "Accions d'usuari",
+        "Switch": {
+          "History": "Historial de classes",
+          "Details": "Dades de l'usuari"
+        },
+        "Delete": {
+          "Title": "Eliminar usuari",
+          "Description": "Aquest usuari i totes les seves reserves seran eliminades de la plataforma",
+          "Button": "Eliminar definitivament"
+        }
       }
     }
   },

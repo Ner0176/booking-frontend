@@ -18,9 +18,9 @@ export const ClassDetails = ({
     "action",
   ]);
 
-  const showFiltersModal = params.get("modal") === "filters";
   const showEditClassView = params.get("action") === "edit-class";
   const showDeleteModal = params.get("action") === "delete-class";
+  const showFiltersModal = params.get("modal") === "filters" && isMobile;
   const showEditAttendeesView = params.get("action") === "edit-attendees";
 
   const classVisual = params.get("visual");
