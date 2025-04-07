@@ -14,13 +14,15 @@ import { useMemo, useState } from "react";
 
 import { CreateClassModal } from "./create-class";
 import { ClassDetails } from "./class-details";
-import { DashboardSkeleton, EmptyData } from "../base";
+import { DashboardSkeleton, EmptyData, HeaderButton } from "../base";
 import {
   ClassDatesFilter,
   ClassStatusType,
 } from "./class-management.interface";
 import noDataLoading from "../../assets/images/noData/reload.svg";
 import { CalendarFilters } from "./filters";
+import { isMobile } from "react-device-detect";
+import { mdiTuneVariant } from "@mdi/js";
 
 export const ClassesManagementDashboard = () => {
   const { t } = useTranslation();
@@ -54,16 +56,27 @@ export const ClassesManagementDashboard = () => {
     return title;
   };
 
+  const RightHeaderButtons = () => {
+    return isMobile ? (
+      <HeaderButton
+        color="primary"
+        icon={mdiTuneVariant}
+        tPath="Base.Buttons.Filters"
+        onClick={() => setParams([{ key: "modal", value: "filters" }])}
+      />
+    ) : (
+      <CalendarHeaderButtons
+        refetch={refetch}
+        classId={classId ?? ""}
+        selectedClass={selectedClass}
+      />
+    );
+  };
+
   return (
     <DashboardSkeleton
       title={getTitle()}
-      rightHeader={
-        <CalendarHeaderButtons
-          refetch={refetch}
-          classId={classId ?? ""}
-          selectedClass={selectedClass}
-        />
-      }
+      rightHeader={<RightHeaderButtons />}
       goBack={{ showButton: !!classId, path: "/management" }}
       customBodyStyles={classId ? { margin: 0, padding: 0 } : {}}
     >

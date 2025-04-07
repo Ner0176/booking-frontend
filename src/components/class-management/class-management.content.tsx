@@ -7,7 +7,6 @@ import {
   mdiCheck,
   mdiClockOutline,
   mdiTimerSand,
-  mdiTuneVariant,
 } from "@mdi/js";
 import { CSSProperties, PropsWithChildren } from "react";
 import { useSearchParamsManager } from "../../hooks";
@@ -109,46 +108,35 @@ export const CalendarHeaderButtons = ({
 }: Readonly<{ refetch(): void; classId: string; selectedClass?: IClass }>) => {
   const { setParams } = useSearchParamsManager([]);
 
-  const WebHeaderButtons = () => {
-    return !selectedClass ? (
-      <HeaderButton
-        icon={mdiPlus}
-        tPath={"Base.Buttons.CreateClass"}
-        onClick={() =>
-          setParams([
-            { key: "action", value: "create-class" },
-            { key: "type", value: "recurrent" },
-          ])
-        }
-      />
-    ) : (
-      <div className="flex flex-row items-center justify-end gap-4 w-full">
-        {isClassCompleted(selectedClass) && (
-          <ClassStatusButton
-            refetch={refetch}
-            classId={classId ?? ""}
-            isCancelled={selectedClass.cancelled}
-          />
-        )}
-        <HeaderButton
-          color="secondary"
-          icon={mdiTrashCanOutline}
-          tPath="Classes.ClassDetails.Delete.Title"
-          onClick={() => setParams([{ key: "action", value: "delete-class" }])}
-        />
-      </div>
-    );
-  };
-
-  return isMobile ? (
+  return !selectedClass ? (
     <HeaderButton
-      color="primary"
-      icon={mdiTuneVariant}
-      tPath="Base.Buttons.Filters"
-      onClick={() => setParams([{ key: "modal", value: "filters" }])}
+      icon={mdiPlus}
+      tPath={"Base.Buttons.CreateClass"}
+      onClick={() =>
+        setParams([
+          { key: "action", value: "create-class" },
+          { key: "type", value: "recurrent" },
+        ])
+      }
     />
   ) : (
-    <WebHeaderButtons />
+    <div className="flex flex-row items-center justify-end gap-4 w-full">
+      {isClassCompleted(selectedClass) && (
+        <ClassStatusButton
+          classId={classId ?? ""}
+          refetch={() => {
+            if (refetch) refetch();
+          }}
+          isCancelled={selectedClass.cancelled}
+        />
+      )}
+      <HeaderButton
+        color="secondary"
+        icon={mdiTrashCanOutline}
+        tPath="Classes.ClassDetails.Delete.Title"
+        onClick={() => setParams([{ key: "action", value: "delete-class" }])}
+      />
+    </div>
   );
 };
 

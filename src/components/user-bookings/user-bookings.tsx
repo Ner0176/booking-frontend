@@ -6,7 +6,7 @@ import {
   useHasAvailableCancellations,
 } from "../../api";
 import { useSearchParamsManager } from "../../hooks";
-import { DashboardSkeleton, EmptyData, showToast } from "../base";
+import { DashboardSkeleton, EmptyData, HeaderButton, showToast } from "../base";
 import {
   CalendarFilters,
   ClassDatesFilter,
@@ -19,6 +19,8 @@ import Skeleton from "react-loading-skeleton";
 import noDataLoading from "../../assets/images/noData/woman-not-found.svg";
 import { BookClassDashboard } from "./book-class";
 import { useUser } from "../../stores";
+import { mdiTuneVariant } from "@mdi/js";
+import { isMobile } from "react-device-detect";
 
 export const UserBookingsDashboard = () => {
   const user = useUser();
@@ -76,6 +78,16 @@ export const UserBookingsDashboard = () => {
   return (
     <DashboardSkeleton
       title={getTitle()}
+      rightHeader={
+        isMobile ? (
+          <HeaderButton
+            color="primary"
+            icon={mdiTuneVariant}
+            tPath="Base.Buttons.Filters"
+            onClick={() => setParams([{ key: "modal", value: "filters" }])}
+          />
+        ) : undefined
+      }
       goBack={{ showButton: !!selectedBooking, path: "/bookings" }}
     >
       {selectedBooking ? (
