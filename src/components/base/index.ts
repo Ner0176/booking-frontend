@@ -6,6 +6,7 @@ export * from "./button";
 export * from "./select";
 export * from "./sidebar";
 export * from "./calendar";
+export * from "./action-card";
 export * from "./delete-modal";
 export * from "./info-tooltip";
 export * from "./transfer-list";

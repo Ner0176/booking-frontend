@@ -136,6 +136,17 @@
           "last6Months": "Darrers 6 mesos",
           "custom": "Personalitzat"
         }
+      },
+      "Modal": {
+        "Title": "Filtres",
+        "Status": {
+          "Title": "Filtre d'estat",
+          "Description": "Visualitza les classes segons el seu estat"
+        },
+        "Time": {
+          "Title": "Filtre de temps",
+          "Description": "Visualitza les classes que es troben dins un determinat rang de temps"
+        }
       }
     },
     "ClassDetails": {
@@ -157,6 +168,7 @@
         }
       },
       "Filters": {
+        "Title": "Accions de classe",
         "Switch": {
           "Attendees": "Llista d'assistents",
           "Details": "Dades de la classe"

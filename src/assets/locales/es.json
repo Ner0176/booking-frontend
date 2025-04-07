@@ -138,6 +138,17 @@
           "last6Months": "Últimos 6 meses",
           "custom": "Personalizado"
         }
+      },
+      "Modal": {
+        "Title": "Filtros",
+        "Status": {
+          "Title": "Filtro de estado",
+          "Description": "Muestra las clases según su estado"
+        },
+        "Time": {
+          "Title": "Filtro de tiempo",
+          "Description": "Muestra las clases que se encuentran dentro de un rango de tiempo específico"
+        }
       }
     },
     "ClassDetails": {
@@ -159,6 +170,7 @@
         }
       },
       "Filters": {
+        "Title": "Acciones de clase",
         "Switch": {
           "Attendees": "Lista de asistentes",
           "Details": "Datos de la clase"

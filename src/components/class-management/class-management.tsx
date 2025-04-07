@@ -5,7 +5,6 @@ import {
 } from "./class-management.styled";
 import { useGetAllClasses } from "../../api";
 import {
-  CalendarFilters,
   CalendarHeaderButtons,
   ClassCardContent,
 } from "./class-management.content";
@@ -21,6 +20,7 @@ import {
   ClassStatusType,
 } from "./class-management.interface";
 import noDataLoading from "../../assets/images/noData/reload.svg";
+import { CalendarFilters } from "./filters";
 
 export const ClassesManagementDashboard = () => {
   const { t } = useTranslation();
