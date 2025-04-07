@@ -9,43 +9,18 @@ import {
   mdiTimerSand,
   mdiTuneVariant,
 } from "@mdi/js";
-import {
-  CSSProperties,
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { CSSProperties, PropsWithChildren } from "react";
 import { useSearchParamsManager } from "../../hooks";
 import { ClassInfoRowContainer } from "./class-management.styled";
-import {
-  capitalize,
-  formatTime,
-  formatToLongDate,
-  mergeDateTime,
-} from "../../utils";
-import {
-  CLASS_STATUS,
-  CLASS_TIME_FILTERS,
-  ClassDatesFilter,
-  ClassStatusType,
-  ClassTimeFilterType,
-} from "./class-management.interface";
+import { formatTime, formatToLongDate, mergeDateTime } from "../../utils";
+import { ClassStatusType } from "./class-management.interface";
 import { useTranslation } from "react-i18next";
 import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
-import {
-  CustomButton,
-  CustomInputField,
-  CustomSelect,
-  DashboardHeaderButton,
-  getInputDate,
-  HeaderButton,
-} from "../base";
-import { getDatesFromTimeFilter } from "./class-management.utils";
+import { CustomButton, DashboardHeaderButton, HeaderButton } from "../base";
 import { mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { isMobile } from "react-device-detect";
+import { isClassCompleted } from "./class-management.utils";
 
 export const ItemInfoRow = ({
   icon,
@@ -127,7 +102,57 @@ export const ClassCardContent = ({
   );
 };
 
-export const ClassStatusButton = ({
+export const CalendarHeaderButtons = ({
+  classId,
+  refetch,
+  selectedClass,
+}: Readonly<{ refetch(): void; classId: string; selectedClass?: IClass }>) => {
+  const { setParams } = useSearchParamsManager([]);
+
+  const WebHeaderButtons = () => {
+    return !selectedClass ? (
+      <HeaderButton
+        icon={mdiPlus}
+        tPath={"Base.Buttons.CreateClass"}
+        onClick={() =>
+          setParams([
+            { key: "action", value: "create-class" },
+            { key: "type", value: "recurrent" },
+          ])
+        }
+      />
+    ) : (
+      <div className="flex flex-row items-center justify-end gap-4 w-full">
+        {isClassCompleted(selectedClass) && (
+          <ClassStatusButton
+            refetch={refetch}
+            classId={classId ?? ""}
+            isCancelled={selectedClass.cancelled}
+          />
+        )}
+        <HeaderButton
+          color="secondary"
+          icon={mdiTrashCanOutline}
+          tPath="Classes.ClassDetails.Delete.Title"
+          onClick={() => setParams([{ key: "action", value: "delete-class" }])}
+        />
+      </div>
+    );
+  };
+
+  return isMobile ? (
+    <HeaderButton
+      color="primary"
+      icon={mdiTuneVariant}
+      tPath="Base.Buttons.Filters"
+      onClick={() => setParams([{ key: "modal", value: "filters" }])}
+    />
+  ) : (
+    <WebHeaderButtons />
+  );
+};
+
+const ClassStatusButton = ({
   classId,
   refetch,
   isCancelled,
@@ -173,157 +198,5 @@ export const ClassStatusButton = ({
         </>
       )}
     </DashboardHeaderButton>
-  );
-};
-
-export const CalendarHeaderButtons = ({
-  classId,
-  refetch,
-  selectedClass,
-}: Readonly<{ refetch(): void; classId: string; selectedClass?: IClass }>) => {
-  const { setParams } = useSearchParamsManager([]);
-
-  const showStatusButton = () => {
-    if (selectedClass) {
-      const now = new Date();
-      const formattedDate = mergeDateTime(
-        selectedClass.date,
-        selectedClass.endTime
-      );
-      return isBefore(now, formattedDate);
-    }
-    return false;
-  };
-
-  const WebHeaderButtons = () => {
-    return !selectedClass ? (
-      <HeaderButton
-        icon={mdiPlus}
-        tPath={"Base.Buttons.CreateClass"}
-        onClick={() =>
-          setParams([
-            { key: "action", value: "create-class" },
-            { key: "type", value: "recurrent" },
-          ])
-        }
-      />
-    ) : (
-      <div className="flex flex-row items-center justify-end gap-4 w-full">
-        {showStatusButton() && (
-          <ClassStatusButton
-            refetch={refetch}
-            classId={classId ?? ""}
-            isCancelled={selectedClass.cancelled}
-          />
-        )}
-        <HeaderButton
-          color="secondary"
-          icon={mdiTrashCanOutline}
-          tPath="Classes.ClassDetails.Delete.Title"
-          onClick={() => setParams([{ key: "action", value: "delete-class" }])}
-        />
-      </div>
-    );
-  };
-
-  return isMobile ? (
-    <HeaderButton
-      color="primary"
-      icon={mdiTuneVariant}
-      tPath="Base.Buttons.Filters"
-      onClick={() => setParams([{ key: "modal", value: "filters" }])}
-    />
-  ) : (
-    <WebHeaderButtons />
-  );
-};
-
-const DateRangeInput = ({
-  type,
-  dateValue,
-  setDateValue,
-}: Readonly<{
-  dateValue?: Date;
-  type: "endDate" | "startDate";
-  setDateValue: Dispatch<SetStateAction<ClassDatesFilter>>;
-}>) => {
-  const { t } = useTranslation();
-  return (
-    <CustomInputField
-      type="date"
-      value={getInputDate(dateValue)}
-      title={t(`Base.${capitalize(type)}`)}
-      handleChange={(date) =>
-        setDateValue((prev) => {
-          return {
-            ...prev,
-            [type]: !!date ? new Date(date) : undefined,
-          };
-        })
-      }
-    />
-  );
-};
-
-export const CalendarFilters = ({
-  datesFilter,
-  statusFilter,
-  setDatesFilter,
-  setStatusFilter,
-}: Readonly<{
-  datesFilter: ClassDatesFilter;
-  statusFilter: ClassStatusType;
-  setDatesFilter: Dispatch<SetStateAction<ClassDatesFilter>>;
-  setStatusFilter: Dispatch<SetStateAction<ClassStatusType>>;
-}>) => {
-  const { t } = useTranslation();
-  const basePath = "Classes.Filters";
-
-  const [timeFilter, setTimeFilter] = useState<ClassTimeFilterType>("all");
-
-  useEffect(() => {
-    const addFilter = timeFilter !== "custom" && timeFilter !== "all";
-    setDatesFilter(addFilter ? getDatesFromTimeFilter(timeFilter) : {});
-  }, [timeFilter, setDatesFilter]);
-
-  const getSelectOptions = (type: "Status" | "Time") => {
-    const optionsList = type === "Time" ? CLASS_TIME_FILTERS : CLASS_STATUS;
-    return optionsList.map((option) => ({
-      key: option,
-      text: t(`Classes.Filters.${type}.Options.${option}`),
-    }));
-  };
-
-  return (
-    <div className="flex justify-end w-full">
-      <div className="flex flex-row items-center gap-3">
-        <CustomSelect
-          selectedValue={statusFilter}
-          options={getSelectOptions("Status")}
-          title={t(`${basePath}.Status.Title`)}
-          handleChange={(v) => setStatusFilter(v as ClassStatusType)}
-        />
-        <CustomSelect
-          selectedValue={timeFilter}
-          options={getSelectOptions("Time")}
-          title={t(`${basePath}.Time.Title`)}
-          handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
-        />
-        {timeFilter === "custom" && (
-          <div className="flex flex-row items-center gap-3">
-            <DateRangeInput
-              type="startDate"
-              setDateValue={setDatesFilter}
-              dateValue={datesFilter.startDate}
-            />
-            <DateRangeInput
-              type="endDate"
-              setDateValue={setDatesFilter}
-              dateValue={datesFilter.endDate}
-            />
-          </div>
-        )}
-      </div>
-    </div>
   );
 };

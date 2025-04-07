@@ -6,6 +6,7 @@ import { ClassSettingsMobile, DeleteClassModal } from "./class-details.content";
 import { ClassDetailsData, EditClassDetailsModal } from "./class-data";
 import { ClassAttendeesList, EditListModal } from "./attendees-list";
 import { isMobile } from "react-device-detect";
+import { isClassCompleted } from "../class-management.utils";
 
 export const ClassDetails = ({
   classData,
@@ -134,6 +135,7 @@ export const ClassDetails = ({
           refetch={refetchClasses}
           classId={`${classData.id}`}
           isCancelled={classData.cancelled}
+          showCancelAction={isClassCompleted(classData)}
           handleDeleteClass={() =>
             setParams([
               { key: "modal" },

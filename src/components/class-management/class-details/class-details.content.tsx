@@ -3,6 +3,7 @@ import { useState } from "react";
 import { RecurrentOptionType } from "./class-details.interface";
 import { useDeleteClass, useEditClass } from "../../../api";
 import {
+  ActionCard,
   CardContainer,
   CustomButton,
   DeleteModal,
@@ -121,12 +122,14 @@ export const ClassSettingsMobile = ({
   refetch,
   isCancelled,
   handleClose,
+  showCancelAction,
   handleDeleteClass,
 }: Readonly<{
   classId: string;
   refetch(): void;
   handleClose(): void;
   isCancelled: boolean;
+  showCancelAction: boolean;
   handleDeleteClass(): void;
 }>) => {
   const { t } = useTranslation();
@@ -140,7 +143,7 @@ export const ClassSettingsMobile = ({
     }
   };
 
-  const ActionCard = ({
+  const CustomActionCard = ({
     action,
     isLoading,
     handleClick,
@@ -150,13 +153,10 @@ export const ClassSettingsMobile = ({
     action: "Cancel" | "Enable" | "Delete";
   }>) => {
     return (
-      <CardContainer>
-        <span className="text-xs font-semibold">
-          {t(`${basePath}.${action}.Title`)}
-        </span>
-        <span className="text-[10px] text-neutral-500">
-          {t(`${basePath}.${action}.Description`)}
-        </span>
+      <ActionCard
+        title={t(`${basePath}.${action}.Title`)}
+        description={t(`${basePath}.${action}.Description`)}
+      >
         <CustomButton
           color="secondary"
           onClick={handleClick}
@@ -166,12 +166,12 @@ export const ClassSettingsMobile = ({
         >
           {t(`${basePath}.${action}.Button`)}
         </CustomButton>
-      </CardContainer>
+      </ActionCard>
     );
   };
 
   return (
-    <Modal title={"Acciones de clase"} handleClose={handleClose}>
+    <Modal title={t(`${basePath}.Title`)} handleClose={handleClose}>
       <div className="flex flex-col gap-3">
         <SwitchSelector
           keyParam="visual"
@@ -185,12 +185,14 @@ export const ClassSettingsMobile = ({
           <span className="text-[13px] font-bold">
             {t(`${basePath}.Actions`)}
           </span>
-          <ActionCard
-            isLoading={isLoading}
-            handleClick={handleChangeStatus}
-            action={isCancelled ? "Enable" : "Cancel"}
-          />
-          <ActionCard action="Delete" handleClick={handleDeleteClass} />
+          {showCancelAction && (
+            <CustomActionCard
+              isLoading={isLoading}
+              handleClick={handleChangeStatus}
+              action={isCancelled ? "Enable" : "Cancel"}
+            />
+          )}
+          <CustomActionCard action="Delete" handleClick={handleDeleteClass} />
         </CardContainer>
       </div>
     </Modal>

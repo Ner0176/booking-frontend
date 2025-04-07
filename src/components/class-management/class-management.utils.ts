@@ -2,6 +2,7 @@ import {
   endOfDay,
   endOfMonth,
   endOfWeek,
+  isBefore,
   startOfDay,
   startOfMonth,
   startOfWeek,
@@ -11,6 +12,8 @@ import {
   ClassDatesFilter,
   ClassTimeFilterType,
 } from "./class-management.interface";
+import { mergeDateTime } from "../../utils";
+import { IClass } from "../../api";
 
 function getLastXMonths(date: Date, total: number) {
   return {
@@ -50,4 +53,16 @@ export function getDatesFromTimeFilter(
   }
 
   return dateRange;
+}
+
+export function isClassCompleted(classInstance: IClass | undefined) {
+  if (classInstance) {
+    const now = new Date();
+    const formattedDate = mergeDateTime(
+      classInstance.date,
+      classInstance.endTime
+    );
+    return isBefore(now, formattedDate);
+  }
+  return false;
 }
