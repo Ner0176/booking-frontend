@@ -20,8 +20,8 @@ import {
 } from "@mdi/js";
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
-import { useLogout } from "../../../api";
 import { ISidebarItem } from "./sidebar.interface";
+import { useNavigate } from "react-router-dom";
 
 const TOP_SIDEBAR_ITEMS: ISidebarItem[] = [
   {
@@ -52,9 +52,9 @@ const BOTTOM_SIDEBAR_ITEMS: ISidebarItem[] = [
 ];
 
 export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const { mutate: logout } = useLogout();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <MainContainer>
@@ -70,8 +70,11 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
                 ...BOTTOM_SIDEBAR_ITEMS,
                 {
                   text: "signOut",
-                  onClick: logout,
                   icon: mdiExitToApp,
+                  onClick: () => {
+                    localStorage.clear();
+                    navigate("/");
+                  },
                 },
               ]}
             />
@@ -92,7 +95,7 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
 export const MobileSidebar = ({
   children,
 }: Readonly<PropsWithChildren<{}>>) => {
-  const { mutate: logout } = useLogout();
+  const navigate = useNavigate();
 
   return (
     <MainContainer>
@@ -107,8 +110,11 @@ export const MobileSidebar = ({
               ...[
                 {
                   text: "signOut",
-                  onClick: logout,
                   icon: mdiExitToApp,
+                  onClick: () => {
+                    localStorage.clear();
+                    navigate("/");
+                  },
                 },
               ],
             ]}

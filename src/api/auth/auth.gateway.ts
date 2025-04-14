@@ -6,9 +6,6 @@ import {
 import { axiosInstance } from "../axios-instance";
 
 export const authApi = {
-  logout: async () => {
-    await axiosInstance.post("/auth/logout");
-  },
   login: async (payload: LoginPayload) => {
     const response = await axiosInstance.post("/auth/login", payload);
     return response.data;

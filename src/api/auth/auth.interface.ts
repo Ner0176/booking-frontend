@@ -21,3 +21,7 @@ export interface IAccount {
   language: string;
   isAdmin: boolean;
 }
+
+export interface IAuthResponse extends IAccount {
+  token?: string;
+}
