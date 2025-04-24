@@ -33,8 +33,8 @@ export const HeaderButton = ({
         onClick();
       }}
     >
-      <Icon className="sm:mt-0.5 size-3 sm:size-3.5" path={icon} />
-      <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">
+      <Icon className="sm:mt-0.5 size-2.5 sm:size-3.5" path={icon} />
+      <span className="text-[10px] sm:text-sm font-semibold whitespace-nowrap">
         {t(tPath)}
       </span>
     </DashboardHeaderButton>

@@ -29,7 +29,7 @@ export const DashboardSkeleton = ({
   return (
     <DashboardContainer>
       <DashboardHeader>
-        <div className="flex flex-row items-center gap-2 sm:gap-3">
+        <div className="flex flex-row items-center gap-1.5 sm:gap-3">
           {!!goBack?.showButton && (
             <div
               className="cursor-pointer"

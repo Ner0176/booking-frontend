@@ -61,7 +61,7 @@ export const ClassesManagementDashboard = () => {
       <HeaderButton
         color="primary"
         icon={mdiTuneVariant}
-        tPath="Base.Buttons.Filters"
+        tPath="Base.Buttons.Options"
         onClick={() => setParams([{ key: "modal", value: "filters" }])}
       />
     ) : (
