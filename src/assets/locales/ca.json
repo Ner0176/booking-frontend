@@ -138,14 +138,23 @@
         }
       },
       "Modal": {
-        "Title": "Filtres",
-        "Status": {
-          "Title": "Filtre d'estat",
-          "Description": "Visualitza les classes segons el seu estat"
+        "Actions": {
+          "Title": "Accions",
+          "CreateClass": {
+            "Title": "Crear",
+            "Description": "Crea una classe puntual o un conjunt de classes recurrents"
+          }
         },
-        "Time": {
-          "Title": "Filtre de temps",
-          "Description": "Visualitza les classes que es troben dins un determinat rang de temps"
+        "Filters": {
+          "Title": "Filtres",
+          "Status": {
+            "Title": "Filtre d'estat",
+            "Description": "Visualitza les classes segons el seu estat"
+          },
+          "Time": {
+            "Title": "Filtre de temps",
+            "Description": "Visualitza les classes que es troben dins un determinat rang de temps"
+          }
         }
       }
     },

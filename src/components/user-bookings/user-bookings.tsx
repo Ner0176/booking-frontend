@@ -8,7 +8,7 @@ import {
 import { useSearchParamsManager } from "../../hooks";
 import { DashboardSkeleton, EmptyData, HeaderButton, showToast } from "../base";
 import {
-  CalendarFilters,
+  ClassesListFilters,
   ClassDatesFilter,
   ClassStatusType,
 } from "../class-management";
@@ -94,7 +94,7 @@ export const UserBookingsDashboard = () => {
         <BookClassDashboard handleRefetch={handleRefetch} />
       ) : (
         <>
-          <CalendarFilters
+          <ClassesListFilters
             datesFilter={datesFilter}
             statusFilter={statusFilter}
             setDatesFilter={setDatesFilter}

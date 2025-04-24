@@ -8,12 +8,18 @@ import {
 } from "../class-management.interface";
 import { useTranslation } from "react-i18next";
 import { getDatesFromTimeFilter } from "../class-management.utils";
-import { ActionCard, CustomSelect, Modal } from "../../base";
+import {
+  ActionCard,
+  CardContainer,
+  CustomButton,
+  CustomSelect,
+  Modal,
+} from "../../base";
 import { DateRangeInput } from "./class-management-filters.content";
 import { isMobile } from "react-device-detect";
 import { useSearchParamsManager } from "../../../hooks";
 
-export const CalendarFilters = ({
+export const ClassesListFilters = ({
   datesFilter,
   statusFilter,
   setDatesFilter,
@@ -81,36 +87,53 @@ export const CalendarFilters = ({
     </div>
   ) : params.get("modal") === "filters" ? (
     <Modal
-      title={t(`${basePath}.Modal.Title`)}
+      title={t(`Base.Buttons.Options`)}
       handleClose={() => setParams([{ key: "modal" }])}
     >
-      <div className="flex flex-col gap-3">
-        <ActionCard
-          title={t(`${basePath}.Modal.Status.Title`)}
-          description={t(`${basePath}.Modal.Status.Description`)}
-        >
-          <CustomSelect
-            fullWidth
-            selectedValue={statusFilter}
-            options={getSelectOptions("Status")}
-            handleChange={(v) => setStatusFilter(v as ClassStatusType)}
-          />
-        </ActionCard>
-        <ActionCard
-          title={t(`${basePath}.Modal.Time.Title`)}
-          description={t(`${basePath}.Modal.Time.Description`)}
-        >
-          <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col gap-3 h-full overflow-y-auto">
+        <CardContainer mainCard>
+          <span className="text-[13px] font-bold">
+            {t(`${basePath}.Modal.Actions.Title`)}
+          </span>
+          <ActionCard tPath={`${basePath}.Modal.Actions.CreateClass`}>
+            <CustomButton
+              onClick={() =>
+                setParams([
+                  { key: "modal" },
+                  { key: "action", value: "create-class" },
+                  { key: "type", value: "recurrent" },
+                ])
+              }
+            >
+              {t("Base.Buttons.CreateClass")}
+            </CustomButton>
+          </ActionCard>
+        </CardContainer>
+        <CardContainer mainCard>
+          <span className="text-[13px] font-bold">
+            {t(`${basePath}.Modal.Filters.Title`)}
+          </span>
+          <ActionCard tPath={`${basePath}.Modal.Filters.Status`}>
             <CustomSelect
               fullWidth
-              selectedValue={timeFilter}
-              options={getSelectOptions("Time")}
-              title={t(`${basePath}.Time.Title`)}
-              handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
+              selectedValue={statusFilter}
+              options={getSelectOptions("Status")}
+              handleChange={(v) => setStatusFilter(v as ClassStatusType)}
             />
-            <CustomDates />
-          </div>
-        </ActionCard>
+          </ActionCard>
+          <ActionCard tPath={`${basePath}.Modal.Filters.Time`}>
+            <div className="flex flex-col items-center gap-3">
+              <CustomSelect
+                fullWidth
+                selectedValue={timeFilter}
+                options={getSelectOptions("Time")}
+                title={t(`${basePath}.Time.Title`)}
+                handleChange={(v) => setTimeFilter(v as ClassTimeFilterType)}
+              />
+              <CustomDates />
+            </div>
+          </ActionCard>
+        </CardContainer>
       </div>
     </Modal>
   ) : null;

@@ -20,7 +20,7 @@ import {
   ClassStatusType,
 } from "./class-management.interface";
 import noDataLoading from "../../assets/images/noData/reload.svg";
-import { CalendarFilters } from "./filters";
+import { ClassesListFilters } from "./filters";
 import { isMobile } from "react-device-detect";
 import { mdiTuneVariant } from "@mdi/js";
 
@@ -81,7 +81,7 @@ export const ClassesManagementDashboard = () => {
       customBodyStyles={classId ? { margin: 0, padding: 0 } : {}}
     >
       {!classId && (
-        <CalendarFilters
+        <ClassesListFilters
           datesFilter={datesFilter}
           statusFilter={statusFilter}
           setDatesFilter={setDatesFilter}

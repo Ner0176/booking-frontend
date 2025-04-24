@@ -140,14 +140,23 @@
         }
       },
       "Modal": {
-        "Title": "Filtros",
-        "Status": {
-          "Title": "Filtro de estado",
-          "Description": "Muestra las clases según su estado"
+        "Actions": {
+          "Title": "Acciones",
+          "CreateClass": {
+            "Title": "Crear",
+            "Description": "Crea una clase puntual o un conjunto de clases recurrentes"
+          }
         },
-        "Time": {
-          "Title": "Filtro de tiempo",
-          "Description": "Muestra las clases que se encuentran dentro de un rango de tiempo específico"
+        "Filters": {
+          "Title": "Filtros",
+          "Status": {
+            "Title": "Filtro de estado",
+            "Description": "Muestra las clases según su estado"
+          },
+          "Time": {
+            "Title": "Filtro de tiempo",
+            "Description": "Muestra las clases que se encuentran dentro de un rango de tiempo específico"
+          }
         }
       }
     },

@@ -85,10 +85,7 @@ export const UserSettingsMobile = ({
             { key: "details", text: t(`${basePath}.Switch.Details`) },
           ]}
         />
-        <ActionCard
-          title={t(`${basePath}.Delete.Title`)}
-          description={t(`${basePath}.Delete.Description`)}
-        >
+        <ActionCard tPath={`${basePath}.Delete`}>
           <CustomButton
             type={"error"}
             color="secondary"

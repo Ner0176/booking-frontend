@@ -153,10 +153,7 @@ export const ClassSettingsMobile = ({
     action: "Cancel" | "Enable" | "Delete";
   }>) => {
     return (
-      <ActionCard
-        title={t(`${basePath}.${action}.Title`)}
-        description={t(`${basePath}.${action}.Description`)}
-      >
+      <ActionCard tPath={`${basePath}.${action}`}>
         <CustomButton
           color="secondary"
           onClick={handleClick}
