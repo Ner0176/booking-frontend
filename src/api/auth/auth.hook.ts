@@ -73,6 +73,7 @@ export function useForgotPassword() {
 }
 
 export function useChangePassword() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const basePath = "Auth.ChangePassword";
 
@@ -80,6 +81,7 @@ export function useChangePassword() {
     mutationFn: (payload: ChangePasswordPayload) =>
       authApi.changePassword(payload),
     onSuccess() {
+      navigate("/login");
       showToast({
         type: "success",
         text: t(`${basePath}.Success`),

@@ -61,6 +61,7 @@
     "ChangePassword": {
       "Title": "Canvia la teva contrasenya",
       "Button": "Canviar contrasenya",
+      "EmptyPassword": "Les contrassenyes no són iguals",
       "Success": "La contrasenya ha estat canviada correctament",
       "Error": "Ha sorgit un error quan s'ha intentat canviar la contrasenya"
     },

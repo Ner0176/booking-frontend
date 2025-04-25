@@ -1,18 +1,39 @@
 import { useTranslation } from "react-i18next";
 import { AuthDashboard } from "../auth";
-import { CustomInputField } from "../../base";
+import { CustomInputField, showToast } from "../../base";
 import { useState } from "react";
 import { FormButton } from "../auth-form/auth-form.styled";
 import { mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
+import { useChangePassword } from "../../../api";
+import { ClipLoader } from "react-spinners";
+import { isMobile } from "react-device-detect";
 
 export const ChangePassword = () => {
   const { t } = useTranslation();
   const basePath = "Auth.ChangePassword";
 
+  const url = new URLSearchParams(window.location.search);
+  const token = url.get("token");
+
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { mutate: changePassword, isPending: isLoading } = useChangePassword();
+
+  const handleSubmit = () => {
+    if (isLoading) return;
+
+    if (!password || password !== confirmPassword) {
+      showToast({ type: "error", text: t(`${basePath}.EmptyPassword`) });
+      return;
+    }
+
+    if (token) {
+      changePassword({ token, password });
+    }
+  };
 
   return (
     <AuthDashboard title={t(`${basePath}.Title`)}>
@@ -39,7 +60,18 @@ export const ChangePassword = () => {
             name: showConfirmPassword ? mdiEyeOutline : mdiEyeOffOutline,
           }}
         />
-        <FormButton>{t(`${basePath}.Button`)}</FormButton>
+        <FormButton onClick={handleSubmit}>
+          {isLoading ? (
+            <ClipLoader
+              loading={true}
+              data-testid="loader"
+              size={isMobile ? 16 : 20}
+              aria-label="Loading Spinner"
+            />
+          ) : (
+            t(`${basePath}.Button`)
+          )}
+        </FormButton>
       </div>
     </AuthDashboard>
   );
