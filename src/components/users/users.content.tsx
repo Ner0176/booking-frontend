@@ -64,7 +64,9 @@ export const UserCard = ({
         </div>
       </div>
       <UserCardButton isHover={isHover}>
-        <span className="text-[10px] sm:text-xs">{t("Users.View")}</span>
+        <span className="text-[10px] sm:text-xs whitespace-nowrap">
+          {t("Users.View")}
+        </span>
         <Icon className="size-3 sm:size-3.5" path={mdiArrowRight} />
       </UserCardButton>
     </UserCardContainer>
