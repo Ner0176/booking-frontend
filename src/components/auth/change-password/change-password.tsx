@@ -1,12 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { AuthDashboard } from "../auth";
-import { CustomInputField, showToast } from "../../base";
+import { CustomInputField, LoadingSpinner, showToast } from "../../base";
 import { useState } from "react";
 import { FormButton } from "../auth-form/auth-form.styled";
 import { mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
 import { useChangePassword } from "../../../api";
-import { ClipLoader } from "react-spinners";
-import { isMobile } from "react-device-detect";
 
 export const ChangePassword = () => {
   const { t } = useTranslation();
@@ -61,16 +59,7 @@ export const ChangePassword = () => {
           }}
         />
         <FormButton onClick={handleSubmit}>
-          {isLoading ? (
-            <ClipLoader
-              loading={true}
-              data-testid="loader"
-              size={isMobile ? 16 : 20}
-              aria-label="Loading Spinner"
-            />
-          ) : (
-            t(`${basePath}.Button`)
-          )}
+          {isLoading ? <LoadingSpinner /> : t(`${basePath}.Button`)}
         </FormButton>
       </div>
     </AuthDashboard>

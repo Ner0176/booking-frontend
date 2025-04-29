@@ -43,15 +43,15 @@ export function useCreateBookings(handleSuccess: () => void) {
   const { t } = useTranslation();
   const basePath = "Classes.CreateClass.CreateBookings";
 
-  return useMutation({
+  return useMutation<any, any, any>({
     mutationFn: (payload: CreateBookingPayload) =>
       bookingApi.createBookings(payload),
     onSuccess() {
       handleSuccess();
       showToast({ text: t(`${basePath}.Success`), type: "success" });
     },
-    onError() {
-      showToast({ text: t(`${basePath}.Error`), type: "error" });
+    onError(error) {
+      showToast({ text: error.response.data.message, type: "error" });
     },
   });
 }
@@ -60,7 +60,7 @@ export function useRecoverBooking(handleRefetch: () => void) {
   const { t } = useTranslation();
   const { setParams } = useSearchParamsManager([]);
 
-  return useMutation({
+  return useMutation<any, any, any>({
     mutationFn: (payload: RecoverBookingPayload) =>
       bookingApi.recoverBooking(payload),
     onSuccess() {
@@ -71,11 +71,8 @@ export function useRecoverBooking(handleRefetch: () => void) {
         text: t("UserBookings.BookClass.Success"),
       });
     },
-    onError() {
-      showToast({
-        type: "error",
-        text: t("UserBookings.BookClass.Error"),
-      });
+    onError(error) {
+      showToast({ text: error.response.data.message, type: "error" });
     },
   });
 }
@@ -85,7 +82,7 @@ export function useEditBookings(refetch: () => void) {
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
   const { setParams } = useSearchParamsManager([]);
 
-  return useMutation({
+  return useMutation<any, any, any>({
     mutationFn: (payload: CreateBookingPayload) =>
       bookingApi.editBookings(payload),
     onSuccess() {
@@ -96,11 +93,8 @@ export function useEditBookings(refetch: () => void) {
         text: t(`${basePath}.Success`),
       });
     },
-    onError() {
-      showToast({
-        type: "error",
-        text: t(`${basePath}.Error`),
-      });
+    onError(error) {
+      showToast({ text: error.response.data.message, type: "error" });
     },
   });
 }
@@ -109,14 +103,14 @@ export function useCancelBooking(handleSuccess: () => void) {
   const { t } = useTranslation();
   const basePath = "UserBookings.Cancel";
 
-  return useMutation({
+  return useMutation<any, any, any>({
     mutationFn: (bookingId: number) => bookingApi.cancelBooking(bookingId),
     onSuccess() {
       handleSuccess();
       showToast({ text: t(`${basePath}.Success`), type: "success" });
     },
-    onError() {
-      showToast({ text: t(`${basePath}.Error`), type: "error" });
+    onError(error) {
+      showToast({ text: error.response.data.message, type: "error" });
     },
   });
 }

@@ -28,17 +28,14 @@ export function useHasAvailableCancellations() {
 export function useUpdateUserApi(handleSuccess: () => void) {
   const { t } = useTranslation();
 
-  return useMutation({
+  return useMutation<any, any, any>({
     mutationFn: (payload: UpdateUserPayload) => userApi.updateUser(payload),
     onSuccess() {
       handleSuccess();
       showToast({ type: "success", text: t("Profile.Edit.Success") });
     },
-    onError() {
-      showToast({
-        type: "error",
-        text: t("Profile.Edit.Error"),
-      });
+    onError(error) {
+      showToast({ type: "error", text: error.response.data.message });
     },
   });
 }

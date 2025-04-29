@@ -14,9 +14,13 @@ import { ClassInfoRowContainer } from "./class-management.styled";
 import { formatTime, formatToLongDate, mergeDateTime } from "../../utils";
 import { ClassStatusType } from "./class-management.interface";
 import { useTranslation } from "react-i18next";
-import { ClipLoader } from "react-spinners";
 import { isBefore } from "date-fns";
-import { CustomButton, DashboardHeaderButton, HeaderButton } from "../base";
+import {
+  CustomButton,
+  DashboardHeaderButton,
+  HeaderButton,
+  LoadingSpinner,
+} from "../base";
 import { mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { isMobile } from "react-device-detect";
 import { isClassCompleted } from "./class-management.utils";
@@ -162,13 +166,7 @@ const ClassStatusButton = ({
       color={isCancelled ? "primary" : "secondary"}
     >
       {isLoading ? (
-        <ClipLoader
-          size={20}
-          color="gray"
-          loading={true}
-          data-testid="loader"
-          aria-label="Loading Spinner"
-        />
+        <LoadingSpinner color="gray" />
       ) : (
         <>
           <Icon

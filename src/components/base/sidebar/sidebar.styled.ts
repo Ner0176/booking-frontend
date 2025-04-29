@@ -24,3 +24,7 @@ export const SidebarBox = styled.div<{
   ${({ isExpanded }) => isExpanded && tw`w-full`}
   ${({ isSelected }) => isSelected && tw`text-violet-600 bg-violet-50`}
 `;
+
+export const MobileSidebarMenu = styled.div(
+  tw`fixed bottom-0 z-40 w-full h-[50px] flex flex-row items-center justify-evenly gap-3 bg-white border-t border-neutral-200 cursor-pointer`
+);

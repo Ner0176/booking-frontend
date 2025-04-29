@@ -36,20 +36,11 @@
     "Login": {
       "Title": "Iniciar sessió",
       "NoAccount": "Encara no tens un compte?",
-      "ForgotPassword": "Has oblidat la teva contrasenya?",
-      "Error": {
-        "401": "Contrasenya incorrecta. Torna-ho a provar",
-        "404": "No existeix cap usuari amb aquest correu electrònic",
-        "500": "Hi ha hagut un error en intentar iniciar sessió"
-      }
+      "ForgotPassword": "Has oblidat la teva contrasenya?"
     },
     "SignUp": {
       "Title": "Registrar-se",
-      "NoAccount": "Ja tens un compte?",
-      "Error": {
-        "409": "Ja existeix un usuari amb aquest correu electrònic",
-        "500": "Hi ha hagut un error en intentar realitzar el registre"
-      }
+      "NoAccount": "Ja tens un compte?"
     },
     "ForgotPassword": {
       "Title": "Restableix la teva contrasenya",
@@ -221,8 +212,7 @@
       "Status": {
         "Cancel": "Cancel·lar classe",
         "Enable": "Activar classe",
-        "Success": "L'estat de la classe ha estat actualitzat correctament",
-        "Error": "Hi ha hagut un error en intentar actualitzar l'estat de la classe"
+        "Success": "L'estat de la classe ha estat actualitzat correctament"
       },
       "AttendeesList": {
         "Title": "Llista d'assistents",
@@ -238,7 +228,6 @@
             }
           },
           "Success": "La llista d'assistents ha estat editada correctament",
-          "Error": "Hi ha hagut un error en intentar editar la llista d'assistents",
           "MaxAmountError": "El nombre de participants supera la capacitat màxima"
         }
       }
@@ -277,11 +266,9 @@
         "Description": "La classe es crearà únicament per a la data seleccionada"
       },
       "Success": "La classe ha estat creada correctament",
-      "Error": "Hi ha hagut un error en intentar crear la classe",
       "SubmitError": "Emplena tots els camps correctament",
       "CreateBookings": {
-        "Success": "Els usuaris han estat afegits a la classe correctament",
-        "Error": "Hi ha hagut un error en intentar afegir els usuaris a la classe"
+        "Success": "Els usuaris han estat afegits a la classe correctament"
       }
     }
   },
@@ -334,8 +321,7 @@
     "Title": "El meu perfil",
     "Edit": {
       "Button": "Editar perfil",
-      "Success": "El teu perfil s'ha editat correctament",
-      "Error": "Ha ocorregut un error a l'intentar editar les dades del teu perfil"
+      "Success": "El teu perfil s'ha editat correctament"
     },
     "NoData": "No s'han trobat dades associades al teu perfil"
   },
@@ -387,13 +373,11 @@
         "Start": "Horari d'inici",
         "End": "Horari de finalizació"
       },
-      "Success": "Classe reservada correctament",
-      "Error": "Ha sorgit un error a l'intentar fer la reserva"
+      "Success": "Classe reservada correctament"
     },
     "Cancel": {
       "Title": "Cancel·lar reserva",
       "Success": "Reserva cancel·lada satisfactòriament",
-      "Error": "Ha ocorregut un error quan s'ha intentat cancel·lar la reserva",
       "Exhausted": "No tens més cancel·lacions disponibles aquest mes",
       "Description": "En cancel·lar la teva reserva per a la classe del {{date}}, <strong>perdràs la teva plaça</strong>, que podrà ser ocupada per una altra persona. <newLine /><newLine /> Abans de procedir, assegura’t de llegir i entendre les <strongLink>polítiques de cancel·lació.</strongLink>"
     }

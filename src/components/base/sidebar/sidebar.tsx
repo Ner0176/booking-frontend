@@ -2,6 +2,7 @@ import Icon from "@mdi/react";
 import { MainContainer } from "../styled-components";
 import {
   MainWrapper,
+  MobileSidebarMenu,
   SidebarButton,
   SidebarContainer,
   SidebarItemBox,
@@ -73,7 +74,7 @@ export const Sidebar = ({ children }: Readonly<PropsWithChildren<{}>>) => {
                   icon: mdiExitToApp,
                   onClick: () => {
                     localStorage.clear();
-                    navigate("/");
+                    navigate("/login");
                   },
                 },
               ]}
@@ -101,7 +102,7 @@ export const MobileSidebar = ({
     <MainContainer>
       <div className="relative flex flex-col h-full w-full">
         <div className="w-full h-[90%]">{children}</div>
-        <div className="fixed bottom-0 z-40 w-full h-[50px] flex flex-row items-center justify-evenly gap-3 bg-white border-t border-neutral-200 cursor-pointer">
+        <MobileSidebarMenu>
           <SidebarOptions
             isExpanded={false}
             items={[
@@ -113,13 +114,13 @@ export const MobileSidebar = ({
                   icon: mdiExitToApp,
                   onClick: () => {
                     localStorage.clear();
-                    navigate("/");
+                    navigate("/login");
                   },
                 },
               ],
             ]}
           />
-        </div>
+        </MobileSidebarMenu>
       </div>
     </MainContainer>
   );

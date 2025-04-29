@@ -1,8 +1,7 @@
 import { CSSProperties, PropsWithChildren } from "react";
 import { StyledButton } from "./button.styled";
 import { ButtonType, ColorType } from "./button.interface";
-import { ClipLoader } from "react-spinners";
-import { isMobile } from "react-device-detect";
+import { LoadingSpinner } from "../loading-spinner";
 
 export const CustomButton = ({
   styles,
@@ -33,13 +32,7 @@ export const CustomButton = ({
       }}
     >
       {!!isLoading ? (
-        <ClipLoader
-          loading={true}
-          data-testid="loader"
-          size={isMobile ? 16 : 20}
-          aria-label="Loading Spinner"
-          color={color === "primary" ? "white" : "#D4D4D4FF"}
-        />
+        <LoadingSpinner color={color === "primary" ? "white" : "#D4D4D4FF"} />
       ) : (
         children
       )}

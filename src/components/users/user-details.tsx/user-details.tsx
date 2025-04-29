@@ -46,13 +46,15 @@ export const UserDetails = ({
 
   const { id, name, phone, email } = user;
 
-  const { data: userStats } = useGetUserBookingsStats(id);
-  const { isLoading, data: userBookings } = useGetBookingsFromUser({
-    userId: user.id,
-    payload: {
-      status: selectedOption ? (selectedOption as BookingStatus) : undefined,
-    },
-  });
+  const { data: userStats, isLoading: isLoadingStats } =
+    useGetUserBookingsStats(id);
+  const { data: userBookings, isLoading: isLoadingBookings } =
+    useGetBookingsFromUser({
+      userId: user.id,
+      payload: {
+        status: selectedOption ? (selectedOption as BookingStatus) : undefined,
+      },
+    });
 
   useEffect(() => {
     if (!userVisual) {
@@ -73,6 +75,14 @@ export const UserDetails = ({
     }));
   };
 
+  const formatStat = (key: string, value: string) => {
+    if (key === "firstDay") {
+      return !value ? "-" : format(new Date(value), "dd/MM/yyyy");
+    }
+
+    return value;
+  };
+
   return (
     <>
       <div className="flex flex-col gap-6 sm:gap-0 sm:grid sm:grid-cols-3 sm:justify-items-center size-full">
@@ -84,7 +94,7 @@ export const UserDetails = ({
             />
             {!!selectedOption && (
               <div className="flex flex-col gap-3 overflow-y-auto sm:h-[500px] mt-3">
-                {isLoading ? (
+                {isLoadingBookings ? (
                   [...Array(5)].map((_, idx) => (
                     <Skeleton key={idx} className="w-full h-[80px]" />
                   ))
@@ -141,18 +151,20 @@ export const UserDetails = ({
                   {t(`${basePath}.Stats.Title`)}
                 </span>
                 <div className="flex flex-col gap-4">
-                  {userStats &&
-                    Object.entries(userStats).map(([key, value]) => {
-                      const stat =
-                        key === "firstday"
-                          ? format(new Date(value), "dd/MM/yyyy")
-                          : value;
-                      return (
-                        <span className="text-xs sm:text-sm">
-                          {t(`${basePath}.Stats.${key}`, { amount: stat })}
-                        </span>
-                      );
-                    })}
+                  {isLoadingStats
+                    ? [...Array(4)].map((_, idx) => (
+                        <Skeleton key={idx} className="w-full h-5" />
+                      ))
+                    : userStats &&
+                      Object.entries(userStats).map(([key, value]) => {
+                        return (
+                          <span className="text-xs sm:text-sm">
+                            {t(`${basePath}.Stats.${key}`, {
+                              amount: formatStat(key, value),
+                            })}
+                          </span>
+                        );
+                      })}
                 </div>
               </CardContainer>
             </CardContainer>

@@ -37,20 +37,11 @@
     "Login": {
       "Title": "Iniciar sesión",
       "NoAccount": "¿Aún no tienes una cuenta?",
-      "ForgotPassword": "¿Has olvidado tu contraseña?",
-      "Error": {
-        "401": "Contraseña incorrecta. Inténtelo de nuevo",
-        "404": "No existe un usuario con este correo electrónico",
-        "500": "Ha ocurrido un error al intentar iniciar sesión"
-      }
+      "ForgotPassword": "¿Has olvidado tu contraseña?"
     },
     "SignUp": {
       "Title": "Registrarse",
-      "NoAccount": "¿Ya tienes una cuenta?",
-      "Error": {
-        "409": "Ya existe un usuario con este correo electrónico",
-        "500": "Ha ocurrido un error al intentar realizar el registro"
-      }
+      "NoAccount": "¿Ya tienes una cuenta?"
     },
     "ForgotPassword": {
       "Title": "Restablece tu contraseña",
@@ -223,8 +214,7 @@
       "Status": {
         "Cancel": "Cancelar clase",
         "Enable": "Activar clase",
-        "Success": "El estado de la clase ha sido actualizado correctamente",
-        "Error": "Ha ocurrido un error al intentar actualizar el estado de la clase"
+        "Success": "El estado de la clase ha sido actualizado correctamente"
       },
       "AttendeesList": {
         "Title": "Lista de asistentes",
@@ -240,7 +230,6 @@
             }
           },
           "Success": "La lista de asistentes ha sido editada correctamente",
-          "Error": "Ha ocurrido un error al intentar editar la lista de asistentes",
           "MaxAmountError": "El número de participantes excede la capacidad máxima"
         }
       }
@@ -279,11 +268,9 @@
         "Description": "La clase se creará únicamente para la fecha seleccionada"
       },
       "Success": "La clase ha sido creada correctamente",
-      "Error": "Ha ocurrido un error al intentar crear la clase",
       "SubmitError": "Rellena todos los campos correctamente",
       "CreateBookings": {
-        "Success": "Los usuarios han sido añadidos a la clase correctamente",
-        "Error": "Ha ocurrido un error al intentar añadir los usuarios a la clase"
+        "Success": "Los usuarios han sido añadidos a la clase correctamente"
       }
     }
   },
@@ -336,8 +323,7 @@
     "Title": "Mi perfil",
     "Edit": {
       "Button": "Editar perfil",
-      "Success": "Tu perfil ha sido editado correctamente",
-      "Error": "Ha ocurrido un error al intentar editar los datos de tu perfil"
+      "Success": "Tu perfil ha sido editado correctamente"
     },
     "NoData": "No se han encontrado datos asociados a tu perfil"
   },
@@ -390,13 +376,11 @@
         "Start": "Horario de inicio",
         "End": "Horario de finalización"
       },
-      "Success": "Clase reservada satisfactoriamente",
-      "Error": "Ha ocurrido un error al intentar recuperar la clase"
+      "Success": "Clase reservada satisfactoriamente"
     },
     "Cancel": {
       "Title": "Cancelar reserva",
       "Success": "Reserva cancelada correctamente",
-      "Error": "Ha ocurrido un error al intentar cancelar la reserva",
       "Exhausted": "No tienes más cancelaciones disponibles este mes",
       "Description": "Al cancelar tu reserva para la clase del {{date}}, <strong>perderás tu plaza</strong>, la cual podrá ser ocupada por otra persona. <newLine /><newLine /> Antes de proceder, asegúrate de leer y comprender las <strongLink>políticas de cancelación.</strongLink>"
     }

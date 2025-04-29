@@ -13,7 +13,6 @@ import { useSetUser } from "../../stores";
 
 export function useSignUp() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const setUser = useSetUser();
 
   return useMutation<IAuthResponse, any, SignUpPayload>({
@@ -25,15 +24,13 @@ export function useSignUp() {
       navigate("/");
     },
     onError(error) {
-      const status = error.response.data.statusCode;
-      showToast({ text: t(`Auth.SignUp.Error.${status}`), type: "error" });
+      showToast({ type: "error", text: error.response.data.message });
     },
   });
 }
 
 export function useLogin() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const setUser = useSetUser();
 
   return useMutation<IAuthResponse, any, LoginPayload>({
@@ -45,8 +42,7 @@ export function useLogin() {
       navigate("/");
     },
     onError(error) {
-      const status = error.response.data.statusCode;
-      showToast({ text: t(`Auth.Login.Error.${status}`), type: "error" });
+      showToast({ type: "error", text: error.response.data.message });
     },
   });
 }
@@ -88,6 +84,7 @@ export function useChangePassword() {
       });
     },
     onError() {
+      navigate("/forgot-password");
       showToast({
         type: "error",
         text: t(`${basePath}.Error`),

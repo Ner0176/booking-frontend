@@ -10,6 +10,7 @@ export * from "./action-card";
 export * from "./delete-modal";
 export * from "./info-tooltip";
 export * from "./transfer-list";
+export * from "./loading-spinner";
 export * from "./switch-selector";
 export * from "./styled-components";
 export * from "./language-selector";

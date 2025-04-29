@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { CustomInputField } from "../../base";
+import { CustomInputField, LoadingSpinner } from "../../base";
 import { AuthDashboard } from "../auth";
 import { FormButton } from "../auth-form/auth-form.styled";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export const ForgotPassword = () => {
 
   const [email, setEmail] = useState("");
 
-  const { mutate: forgotPassword } = useForgotPassword();
+  const { mutate: forgotPassword, isPending: isLoading } = useForgotPassword();
 
   return (
     <AuthDashboard title={t(`${basePath}.Title`)}>
@@ -30,11 +30,13 @@ export const ForgotPassword = () => {
         <div className="flex flex-col gap-2 items-center">
           <FormButton
             onClick={() => {
-              setEmail("");
-              forgotPassword(email);
+              if (!isLoading) {
+                setEmail("");
+                forgotPassword(email);
+              }
             }}
           >
-            {t("Base.Buttons.Continue")}
+            {isLoading ? <LoadingSpinner /> : t("Base.Buttons.Continue")}
           </FormButton>
           <span
             onClick={() => navigate("/login")}

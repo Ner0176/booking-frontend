@@ -24,7 +24,7 @@ export function useGetAllClasses(payload: GetClassesPayload) {
 export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
   const { t } = useTranslation();
 
-  return useMutation<IClass[], Error, CreateClassPayload>({
+  return useMutation<IClass[], any, CreateClassPayload>({
     mutationFn: (payload: CreateClassPayload) => classApi.createClass(payload),
     onSuccess(data) {
       let classIds = {
@@ -42,8 +42,8 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
       handleSuccess(classIds);
       showToast({ text: t("Classes.CreateClass.Success"), type: "success" });
     },
-    onError() {
-      showToast({ text: t("Classes.CreateClass.Error"), type: "error" });
+    onError(error) {
+      showToast({ text: error.response.data.message, type: "error" });
     },
   });
 }
@@ -52,7 +52,7 @@ export function useEditClass(handleSuccess: () => void) {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.Status";
 
-  return useMutation({
+  return useMutation<any, any, any>({
     mutationFn: (payload: EditClassPayload) => classApi.editClass(payload),
     onSuccess() {
       handleSuccess();
@@ -61,11 +61,8 @@ export function useEditClass(handleSuccess: () => void) {
         text: t(`${basePath}.Success`),
       });
     },
-    onError() {
-      showToast({
-        type: "error",
-        text: t(`${basePath}.Error`),
-      });
+    onError(error) {
+      showToast({ text: error.response.data.message, type: "error" });
     },
   });
 }

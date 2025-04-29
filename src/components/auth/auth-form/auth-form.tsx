@@ -24,7 +24,7 @@ import {
   initAuthErrors,
 } from "./auth-form.interface";
 import { useLogin, useSignUp } from "../../../api";
-import { CustomInputField, LanguageSelector } from "../../base";
+import { CustomInputField, LanguageSelector, LoadingSpinner } from "../../base";
 import { checkPhone } from "../../../utils";
 import { useUser } from "../../../stores";
 import { useNavigate } from "react-router-dom";
@@ -42,8 +42,9 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const [authErrors, setAuthErrors] = useState<IAuthErrors>(initAuthErrors);
   const [authFields, setAuthFields] = useState<IAuthFields>(emptyAuthFields);
 
-  const { mutate: login } = useLogin();
-  const { mutate: signUp } = useSignUp();
+  const { mutate: login, isPending: isLoadingLogin } = useLogin();
+  const { mutate: signUp, isPending: isLoadingSignUp } = useSignUp();
+  const isLoading = isLoadingLogin || isLoadingSignUp;
 
   const handleAuthFields = (field: string, value: string) => {
     setAuthFields((prev) => {
@@ -156,10 +157,12 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
       <FormButton
         onClick={() => {
           const { email, phone, password, name } = authErrors;
-          if (!email && !phone && !password && !name) handleSubmit();
+          if (!isLoading && !email && !phone && !password && !name) {
+            handleSubmit();
+          }
         }}
       >
-        {t(`Auth.${formType}.Title`)}
+        {isLoading ? <LoadingSpinner /> : t(`Auth.${formType}.Title`)}
       </FormButton>
       <div className="relative">
         <SeparatorContainer>
