@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import noDataLoading from "../../assets/images/noData/ovni.svg";
 import { mdiMagnify } from "@mdi/js";
 import { stringIncludes } from "../../utils";
+import { isMobile } from "react-device-detect";
 
 export const UsersDashboard = () => {
   const { t } = useTranslation();
@@ -59,7 +60,11 @@ export const UsersDashboard = () => {
               [...Array(10)].map((key) => (
                 <Skeleton
                   key={key}
-                  style={{ width: 300, height: 75, borderRadius: 16 }}
+                  style={{
+                    height: 75,
+                    borderRadius: 16,
+                    width: isMobile ? "100%" : 325,
+                  }}
                 />
               ))
             ) : filteredUsers.length > 0 ? (

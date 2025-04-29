@@ -18,6 +18,7 @@ import {
 import { DateRangeInput } from "./class-management-filters.content";
 import { isMobile } from "react-device-detect";
 import { useSearchParamsManager } from "../../../hooks";
+import { useUser } from "../../../stores";
 
 export const ClassesListFilters = ({
   datesFilter,
@@ -30,6 +31,7 @@ export const ClassesListFilters = ({
   setDatesFilter: Dispatch<SetStateAction<ClassDatesFilter>>;
   setStatusFilter: Dispatch<SetStateAction<ClassStatusType>>;
 }>) => {
+  const user = useUser();
   const { t } = useTranslation();
   const basePath = "Classes.Filters";
 
@@ -91,24 +93,26 @@ export const ClassesListFilters = ({
       handleClose={() => setParams([{ key: "modal" }])}
     >
       <div className="flex flex-col gap-3 h-full overflow-y-auto">
-        <CardContainer mainCard>
-          <span className="text-[13px] font-bold">
-            {t(`${basePath}.Modal.Actions.Title`)}
-          </span>
-          <ActionCard tPath={`${basePath}.Modal.Actions.CreateClass`}>
-            <CustomButton
-              onClick={() =>
-                setParams([
-                  { key: "modal" },
-                  { key: "action", value: "create-class" },
-                  { key: "type", value: "recurrent" },
-                ])
-              }
-            >
-              {t("Base.Buttons.CreateClass")}
-            </CustomButton>
-          </ActionCard>
-        </CardContainer>
+        {!!user?.isAdmin && (
+          <CardContainer mainCard>
+            <span className="text-[13px] font-bold">
+              {t(`${basePath}.Modal.Actions.Title`)}
+            </span>
+            <ActionCard tPath={`${basePath}.Modal.Actions.CreateClass`}>
+              <CustomButton
+                onClick={() =>
+                  setParams([
+                    { key: "modal" },
+                    { key: "action", value: "create-class" },
+                    { key: "type", value: "recurrent" },
+                  ])
+                }
+              >
+                {t("Base.Buttons.CreateClass")}
+              </CustomButton>
+            </ActionCard>
+          </CardContainer>
+        )}
         <CardContainer mainCard>
           <span className="text-[13px] font-bold">
             {t(`${basePath}.Modal.Filters.Title`)}
