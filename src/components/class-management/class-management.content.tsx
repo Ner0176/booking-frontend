@@ -24,6 +24,7 @@ import {
 import { mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { isMobile } from "react-device-detect";
 import { isClassCompleted } from "./class-management.utils";
+import { useUser } from "../../stores";
 
 export const ItemInfoRow = ({
   icon,
@@ -47,6 +48,7 @@ export const ClassCardContent = ({
   hasCancellations?: boolean;
   handleCancelBooking?: () => void;
 }>) => {
+  const user = useUser();
   const { t } = useTranslation();
 
   const { endTime, startTime, date, maxAmount, cancelled, currentCount } = data;
@@ -86,7 +88,7 @@ export const ClassCardContent = ({
         {formatTime(startTime, endTime)}
       </ItemInfoRow>
       <ItemInfoRow icon={mdiCalendarOutline}>
-        {formatToLongDate(date)}
+        {formatToLongDate(date, user?.language)}
       </ItemInfoRow>
       {!!handleCancelBooking && status === "pending" && (
         <div className="absolute top-4 right-4 z-10">

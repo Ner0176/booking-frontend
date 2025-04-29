@@ -57,7 +57,7 @@ export const ClassDetailsCard = ({
         {
           icon: mdiCalendarOutline,
           text: t(`${basePath}.Date`, {
-            date: formatToLongDate(date),
+            date: formatToLongDate(date, user?.language),
           }),
         },
       ];
