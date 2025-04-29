@@ -12,7 +12,7 @@ export const SwitchFormButton = styled(FormButton)`
   ${tw`text-blue-700 bg-white shadow-md`}
 `;
 export const SignUpFieldsContainer = styled.div(
-  tw`flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-8`
+  tw`flex flex-col md:grid md:grid-cols-2 md:items-center gap-3 md:gap-8`
 );
 export const ForgotPasswordText = styled.span(
   tw`w-full flex justify-end text-[10px] sm:text-xs cursor-pointer text-neutral-500`
