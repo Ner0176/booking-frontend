@@ -109,6 +109,7 @@
   "Classes": {
     "Title": "Gestión de clases",
     "NoData": "No hay clases disponibles con los filtros seleccionados",
+    "ClassMaxSpots": "El límite de personas de esta clase es de {{amount}}.",
     "Filters": {
       "Status": {
         "Title": "Estado",

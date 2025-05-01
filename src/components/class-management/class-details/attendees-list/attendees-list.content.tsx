@@ -129,6 +129,7 @@ export const EditListModal = ({
           assignedUsers={attendeesList}
           availableUsers={filteredUsers}
           setAvailableUsers={setUsersList}
+          listMaxSpots={classData.maxAmount}
           setAssignedUsers={setAttendeesList}
         />
       </div>

@@ -64,10 +64,13 @@ export const ClassDetails = ({
 
   useEffect(() => {
     initializeState();
+  }, [initializeState]);
+
+  useEffect(() => {
     if (!classVisual) {
       setParams([{ key: "visual", value: isMobile ? "attendees" : "all" }]);
     }
-  }, [classVisual, setParams, initializeState]);
+  }, [classVisual, setParams]);
 
   const handleCloseAction = () => {
     setParams([{ key: "type" }, { key: "action" }]);

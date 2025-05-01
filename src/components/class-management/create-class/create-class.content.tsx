@@ -186,11 +186,13 @@ export const OneTimeFields = ({
 
 export const AddUserToClass = ({
   usersList,
+  classSpots,
   setUsersList,
   attendeesList,
   setAttendeesList,
 }: Readonly<{
   usersList: IUser[];
+  classSpots: number;
   attendeesList: IUser[];
   setUsersList: Dispatch<SetStateAction<IUser[]>>;
   setAttendeesList: Dispatch<SetStateAction<IUser[]>>;
@@ -214,10 +216,11 @@ export const AddUserToClass = ({
       <CustomInputField
         value={search}
         icon={{ name: mdiMagnify }}
-        handleChange={(value) => setSearch(value)}
         placeholder={t(`Base.SearchUser`)}
+        handleChange={(value) => setSearch(value)}
       />
       <UsersTransferList
+        listMaxSpots={classSpots}
         assignedUsers={attendeesList}
         availableUsers={filteredUsers}
         setAvailableUsers={setUsersList}

@@ -107,6 +107,7 @@
   "Classes": {
     "Title": "Gestió de classes",
     "NoData": "No hi ha classes disponibles amb els filtres seleccionats",
+    "ClassMaxSpots": "El límit de persones d’aquesta classe és de {{amount}}.",
     "Filters": {
       "Status": {
         "Title": "Estat",

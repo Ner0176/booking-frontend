@@ -155,6 +155,7 @@ export const CreateClassModal = ({
           usersList={usersList}
           setUsersList={setUsersList}
           attendeesList={attendeesList}
+          classSpots={fields.maxAmount.value}
           setAttendeesList={setAttendeesList}
         />
       )}
