@@ -76,7 +76,7 @@ export const UserDetails = ({
   };
 
   const formatStat = (key: string, value: string) => {
-    if (key === "firstDay") {
+    if (key === "firstday") {
       return !value ? "-" : format(new Date(value), "dd/MM/yyyy");
     }
 
