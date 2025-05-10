@@ -77,6 +77,10 @@ export const ClassDetails = ({
     initializeState();
   };
 
+  const handleEditClass = () => {
+    setParams([{ key: "modal" }, { key: "action", value: "edit-class" }]);
+  };
+
   return (
     <>
       <div className="flex flex-col justify-between w-full">
@@ -93,9 +97,8 @@ export const ClassDetails = ({
           {showClassDetailsData && (
             <ClassDetailsData
               classData={classData}
-              editClassData={() =>
-                setParams([{ key: "action", value: "edit-class" }])
-              }
+              editClassData={handleEditClass}
+              isClassCompleted={isClassCompleted(classData)}
             />
           )}
         </div>
@@ -138,7 +141,8 @@ export const ClassDetails = ({
           refetch={refetchClasses}
           classId={`${classData.id}`}
           isCancelled={classData.cancelled}
-          showCancelAction={isClassCompleted(classData)}
+          handleEditClass={handleEditClass}
+          isClassCompleted={isClassCompleted(classData)}
           handleDeleteClass={() =>
             setParams([
               { key: "modal" },

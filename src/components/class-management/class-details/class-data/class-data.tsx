@@ -1,15 +1,21 @@
-import { mdiPencilOutline } from "@mdi/js";
-import { CardContainer } from "../../../base";
-import { ClassDetailsWrapper } from "../class-details.styled";
-import { ClassDetailsCard } from "./class-data.content";
-import { useTranslation } from "react-i18next";
 import Icon from "@mdi/react";
 import { IClass } from "../../../../api";
+import { mdiPencilOutline } from "@mdi/js";
+import { CardContainer } from "../../../base";
+import { useTranslation } from "react-i18next";
+import { isMobile } from "react-device-detect";
+import { ClassDetailsCard } from "./class-data.content";
+import { ClassDetailsWrapper } from "../class-details.styled";
 
 export const ClassDetailsData = ({
   classData,
   editClassData,
-}: Readonly<{ classData: IClass; editClassData(): void }>) => {
+  isClassCompleted,
+}: Readonly<{
+  classData: IClass;
+  editClassData(): void;
+  isClassCompleted: boolean;
+}>) => {
   const { t } = useTranslation();
 
   return (
@@ -20,12 +26,14 @@ export const ClassDetailsData = ({
             <span className="text-sm sm:text-base font-bold">
               {t(`Classes.ClassDetails.Details`)}
             </span>
-            <div onClick={editClassData}>
-              <Icon
-                path={mdiPencilOutline}
-                className="mt-0.5 size-4 sm:size-5 cursor-pointer text-neutral-500"
-              />
-            </div>
+            {!isMobile && (
+              <div onClick={editClassData}>
+                <Icon
+                  path={mdiPencilOutline}
+                  className="mt-0.5 size-4 sm:size-5 cursor-pointer text-neutral-500"
+                />
+              </div>
+            )}
           </div>
           <ClassDetailsCard type="schedule" classData={classData} />
           <ClassDetailsCard type="amount" classData={classData} />

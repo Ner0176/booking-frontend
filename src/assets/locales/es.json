@@ -178,6 +178,11 @@
           "Details": "Datos de la clase"
         },
         "Actions": "Acciones",
+        "Edit": {
+          "Title": "Editar",
+          "Button": "Editar clase",
+          "Description": "Los distintos atributos de la clase podrán ser editados, tanto de forma puntual como de forma recurrente"
+        },
         "Cancel": {
           "Title": "Cancelar",
           "Button": "Cancelar clase",

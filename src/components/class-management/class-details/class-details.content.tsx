@@ -1,5 +1,5 @@
 import { Trans, useTranslation } from "react-i18next";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { RecurrentOptionType } from "./class-details.interface";
 import { useDeleteClass, useEditClass } from "../../../api";
 import {
@@ -122,14 +122,16 @@ export const ClassSettingsMobile = ({
   refetch,
   isCancelled,
   handleClose,
-  showCancelAction,
+  handleEditClass,
+  isClassCompleted,
   handleDeleteClass,
 }: Readonly<{
   classId: string;
   refetch(): void;
   handleClose(): void;
   isCancelled: boolean;
-  showCancelAction: boolean;
+  handleEditClass(): void;
+  isClassCompleted: boolean;
   handleDeleteClass(): void;
 }>) => {
   const { t } = useTranslation();
@@ -150,7 +152,7 @@ export const ClassSettingsMobile = ({
   }: Readonly<{
     isLoading?: boolean;
     handleClick?(): void;
-    action: "Cancel" | "Enable" | "Delete";
+    action: "Cancel" | "Enable" | "Delete" | "Edit";
   }>) => {
     return (
       <ActionCard tPath={`${basePath}.${action}`}>
@@ -158,8 +160,8 @@ export const ClassSettingsMobile = ({
           color="secondary"
           onClick={handleClick}
           isLoading={isLoading}
-          type={action === "Enable" ? "default" : "error"}
           styles={{ fontSize: 12, paddingBottom: 6, paddingTop: 6 }}
+          type={action === "Enable" || action === "Edit" ? "default" : "error"}
         >
           {t(`${basePath}.${action}.Button`)}
         </CustomButton>
@@ -182,12 +184,19 @@ export const ClassSettingsMobile = ({
           <span className="text-[13px] font-bold">
             {t(`${basePath}.Actions`)}
           </span>
-          {showCancelAction && (
-            <CustomActionCard
-              isLoading={isLoading}
-              handleClick={handleChangeStatus}
-              action={isCancelled ? "Enable" : "Cancel"}
-            />
+          {isClassCompleted && (
+            <Fragment>
+              <CustomActionCard
+                action="Edit"
+                isLoading={isLoading}
+                handleClick={handleEditClass}
+              />
+              <CustomActionCard
+                isLoading={isLoading}
+                handleClick={handleChangeStatus}
+                action={isCancelled ? "Enable" : "Cancel"}
+              />
+            </Fragment>
           )}
           <CustomActionCard action="Delete" handleClick={handleDeleteClass} />
         </CardContainer>
