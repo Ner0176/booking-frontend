@@ -1,10 +1,12 @@
-import { styled } from "styled-components";
 import tw from "twin.macro";
+import { styled } from "styled-components";
+import { isMobile } from "react-device-detect";
 import { ClassStatusType } from "./class-management.interface";
 
-export const ClassManagementBody = styled.div(
-  tw`flex flex-col sm:flex-wrap justify-start sm:justify-between gap-4 h-full overflow-y-auto`
-);
+export const ClassManagementBody = styled.div`
+  ${tw`flex justify-start sm:justify-between gap-4 h-full overflow-y-auto`}
+  ${isMobile ? tw`flex-col` : tw`flex-wrap`}
+`;
 export const CMCardContainer = styled.div`
   ${tw`flex flex-col gap-2 border rounded-xl px-4 sm:px-6 py-3 sm:py-4 w-full sm:w-fit sm:min-w-[350px] h-min cursor-pointer`}
 `;
