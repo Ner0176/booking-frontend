@@ -23,7 +23,7 @@ export const CustomInput = styled.input<{
   hasIcon: boolean;
   isBlocked?: boolean;
 }>`
-  ${tw`text-xs sm:text-sm w-full py-2 !outline-none`}
+  ${tw`text-xs sm:text-sm !w-full py-2 !outline-none appearance-none`}
   ${({ hasIcon }) => !hasIcon && tw`px-3`}
   ${({ isBlocked }) => isBlocked && tw`!bg-neutral-50`}
 `;
