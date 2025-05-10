@@ -45,7 +45,7 @@ export const UsersTransferList = ({
   };
 
   return (
-    <div className="flex flex-row items-center gap-3">
+    <div className="flex flex-row items-center gap-1.5 sm:gap-3">
       <TransferListColumn
         users={availableUsers}
         listMaxHeight={listMaxHeight}
@@ -63,7 +63,7 @@ export const UsersTransferList = ({
       <TFIconContainer>
         <Icon
           path={mdiArrowLeftRight}
-          className="size-3.5 sm:size-4 text-neutral-400"
+          className="size-3 sm:size-4 text-neutral-400"
         />
       </TFIconContainer>
       <TransferListColumn
