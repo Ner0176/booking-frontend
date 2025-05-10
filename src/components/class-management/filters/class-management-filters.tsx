@@ -92,7 +92,7 @@ export const ClassesListFilters = ({
       title={t(`Base.Buttons.Options`)}
       handleClose={() => setParams([{ key: "modal" }])}
     >
-      <div className="flex flex-col gap-3 h-full overflow-y-auto">
+      <div className="flex flex-col gap-3">
         {!!user?.isAdmin && (
           <CardContainer mainCard>
             <span className="text-[13px] font-bold">

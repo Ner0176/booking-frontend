@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import {
   ModalBackground,
+  ModalBody,
   ModalContainer,
   ModalFooter,
   ModalHeader,
@@ -41,12 +42,12 @@ export const Modal = ({
             )}
             <div onClick={handleClose} className="cursor-pointer">
               <Icon
-                className="size-5 sm:size-6 text-neutral-400"
                 path={mdiClose}
+                className="size-5 sm:size-6 text-neutral-400"
               />
             </div>
           </ModalHeader>
-          <div className="w-full sm:px-8">{children}</div>
+          <ModalBody>{children}</ModalBody>
           {footer && <ModalFooter type={type}>{footer}</ModalFooter>}
         </ModalWrapper>
       </ModalContainer>

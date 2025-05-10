@@ -29,3 +29,8 @@ export const ModalFooter = styled.div<{ type: ModalType }>`
 export const ModalBackground = styled.div(
   tw`fixed inset-0 z-50 bg-black opacity-50`
 );
+export const ModalBody = styled.div`
+  ${tw`w-full sm:px-8 overflow-y-auto`}
+  flex: 1 1 auto;
+  max-height: calc(100vh - 200px);
+`;
