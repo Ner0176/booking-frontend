@@ -2,7 +2,7 @@ import tw from "twin.macro";
 import { styled } from "styled-components";
 
 export const InputFieldContainer = styled.div(
-  tw`flex flex-col gap-0.5 sm:gap-1.5 w-full`
+  tw`flex flex-col gap-0.5 sm:gap-1.5 !w-full`
 );
 export const InputTitleContainer = styled.div(
   tw`flex flex-row items-center gap-1.5`
