@@ -32,5 +32,5 @@ export const ModalBackground = styled.div(
 export const ModalBody = styled.div`
   ${tw`w-full sm:px-8 overflow-y-auto`}
   flex: 1 1 auto;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 225px);
 `;
