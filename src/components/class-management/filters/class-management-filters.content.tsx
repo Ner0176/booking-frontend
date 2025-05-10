@@ -19,6 +19,7 @@ export const DateRangeInput = ({
       type="date"
       value={getInputDate(dateValue)}
       title={t(`Base.${capitalize(type)}`)}
+      customContainerStyles={{ width: "100%" }}
       handleChange={(date) =>
         setDateValue((prev) => {
           return {
