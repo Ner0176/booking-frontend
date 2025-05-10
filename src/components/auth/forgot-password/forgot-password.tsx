@@ -17,8 +17,8 @@ export const ForgotPassword = () => {
 
   return (
     <AuthDashboard title={t(`${basePath}.Title`)}>
-      <div className="flex flex-col gap-6 px-10">
-        <span className="text-sm sm:text-base text-center text-neutral-500">
+      <div className="flex flex-col gap-6 sm:px-10">
+        <span className="text-[13px] sm:text-base text-center text-neutral-500">
           {t(`${basePath}.Description`)}
         </span>
         <CustomInputField

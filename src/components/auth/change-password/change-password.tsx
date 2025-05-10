@@ -35,7 +35,7 @@ export const ChangePassword = () => {
 
   return (
     <AuthDashboard title={t(`${basePath}.Title`)}>
-      <div className="flex flex-col gap-6 px-10">
+      <div className="flex flex-col gap-6 sm:px-10">
         <CustomInputField
           value={password}
           title={t("Auth.Fields.Password")}

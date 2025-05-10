@@ -9,7 +9,7 @@ export const AuthDashboard = ({
   return (
     <MainContainer>
       <AuthWrapper>
-        <span className="font-bold text-3xl">{title}</span>
+        <span className="font-bold text-3xl text-center">{title}</span>
         <ContentBox>{children}</ContentBox>
       </AuthWrapper>
     </MainContainer>
