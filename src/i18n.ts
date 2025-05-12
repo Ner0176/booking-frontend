@@ -5,7 +5,7 @@ import { initReactI18next } from "react-i18next";
 import { useUserStore } from "./stores";
 
 const user = useUserStore.getState().user;
-const savedLanguage = user ? user.language : "es";
+const savedLanguage = !!user ? user.language : "es";
 
 i18n.use(initReactI18next).init({
   lng: savedLanguage,
