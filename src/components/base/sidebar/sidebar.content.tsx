@@ -34,9 +34,14 @@ export const SidebarOptions = ({
             isExpanded={isExpanded}
             onClick={() => (!onClick ? navigate(path) : onClick())}
           >
-            <Icon className="size-5 sm:size-6" path={icon} />
+            <Icon
+              path={icon}
+              className="size-5 sm:size-4 lg:size-5 xl:size-6"
+            />
             {isExpanded && (
-              <span>{t(`Sidebar.Options.${capitalize(text)}`)}</span>
+              <span className="text-xs xl:text-sm 2xl:text-base">
+                {t(`Sidebar.Options.${capitalize(text)}`)}
+              </span>
             )}
           </SidebarBox>
         );
