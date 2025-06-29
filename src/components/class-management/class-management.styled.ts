@@ -8,12 +8,12 @@ export const ClassManagementBody = styled.div`
   ${isMobile ? tw`flex-col` : tw`flex-wrap`}
 `;
 export const CMCardContainer = styled.div`
-  ${tw`flex flex-col gap-2 border rounded-xl px-4 sm:px-6 py-3 sm:py-4 w-full sm:w-fit sm:min-w-[350px] h-min cursor-pointer`}
+  ${tw`flex flex-col gap-2 border rounded-xl px-4 xl:px-6 py-3 xl:py-4 w-full sm:w-fit sm:min-w-[350px] lg:min-w-[280px] xl:min-w-[350px] h-min cursor-pointer`}
 `;
 export const ClassInfoRowContainer = styled.div<{
   status?: ClassStatusType;
 }>`
-  ${tw`flex flex-row items-center gap-1.5 text-xs sm:text-base`}
+  ${tw`flex flex-row items-center gap-1.5 text-xs sm:text-sm xl:text-base`}
   ${({ status }) => {
     switch (status) {
       case "completed":
