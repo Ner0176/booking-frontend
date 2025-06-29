@@ -38,9 +38,9 @@ export const ChangePassword = () => {
       <div className="flex flex-col gap-6 sm:px-10">
         <CustomInputField
           value={password}
-          title={t("Auth.Fields.Password")}
-          placeholder={t("Auth.Fields.Password")}
+          title={t("Auth.Fields.Password.Title")}
           handleChange={(value) => setPassword(value)}
+          placeholder={t("Auth.Fields.Password.Placeholder")}
           type={showPassword === false ? "password" : "text"}
           icon={{
             handleClick: () => setShowPassword((prev) => !prev),

@@ -81,12 +81,12 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         <>
           <CustomInputField
             value={authFields.name}
-            placeholder="María Marcos"
-            title={t("Auth.Fields.Name")}
             icon={{ name: mdiAccountOutline }}
+            title={t("Auth.Fields.Name.Title")}
+            placeholder={t("Auth.Fields.Name.Placeholder")}
             handleBlur={() => {
               let showError = false;
-              if (!authFields.name.length) showError = true;
+              if (!authFields.name.trim().length) showError = true;
               handleErrors("name", showError);
             }}
             handleChange={(v) => handleAuthFields("name", v)}
@@ -129,8 +129,8 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
       <div className="flex flex-col gap-2">
         <CustomInputField
           value={authFields.password}
-          title={t("Auth.Fields.Password")}
-          placeholder={t("Auth.Fields.Password")}
+          title={t("Auth.Fields.Password.Title")}
+          placeholder={t("Auth.Fields.Password.Placeholder")}
           type={showPassword === false ? "password" : "text"}
           handleChange={(v) => handleAuthFields("password", v)}
           handleBlur={() => {

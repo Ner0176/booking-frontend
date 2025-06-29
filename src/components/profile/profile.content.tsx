@@ -70,8 +70,8 @@ export const EditProfileInformation = ({
       <CustomInputField
         placeholder={name}
         value={fields.name}
-        title={t("Auth.Fields.Name")}
         icon={{ name: mdiAccountOutline }}
+        title={t("Auth.Fields.Name.Title")}
         handleBlur={() => {
           let showError = false;
           if (!fields.name.length) showError = true;

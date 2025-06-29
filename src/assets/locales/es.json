@@ -59,9 +59,15 @@
     },
     "Fields": {
       "Phone": "Teléfono (opcional)",
-      "Password": "Contraseña",
+      "Password": {
+        "Title": "Contraseña",
+        "Placeholder": "Introduce una contraseña..."
+      },
       "ConfirmPassword": "Confirmar contraseña",
-      "Name": "Nombre completo",
+      "Name": {
+        "Title": "Nombre completo",
+        "Placeholder": "Introduce tu nombre completo..."
+      },
       "Email": "Correo electrónico",
       "Language": "Idioma"
     },

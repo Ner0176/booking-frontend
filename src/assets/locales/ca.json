@@ -58,8 +58,14 @@
     },
     "Fields": {
       "Phone": "Telèfon (opcional)",
-      "Password": "Contrasenya",
-      "Name": "Nom complet",
+      "Password": {
+        "Title": "Contrasenya",
+        "Placeholder": "Introdueix una contrasenya..."
+      },
+      "Name": {
+        "Title": "Nom complet",
+        "Placeholder": "Introdueix el teu nom complet..."
+      },
       "Email": "Correu electrònic",
       "Language": "Idioma"
     },
