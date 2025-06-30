@@ -132,7 +132,7 @@ export const UserDetails = ({
                 </span>
                 <UserInfoField
                   value={name}
-                  textKey="Name"
+                  textKey="Name.Title"
                   icon={mdiAccountOutline}
                 />
                 <UserInfoField
