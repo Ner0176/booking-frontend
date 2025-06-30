@@ -43,8 +43,8 @@ export const ProfileDashboard = () => {
           ) : (
             <>
               <UserInfoField
-                textKey="Name"
                 value={user.name}
+                textKey="Name.Title"
                 icon={mdiAccountOutline}
               />
               <UserInfoField
