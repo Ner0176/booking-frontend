@@ -51,7 +51,15 @@ export const ClassCardContent = ({
   const user = useUser();
   const { t } = useTranslation();
 
-  const { endTime, startTime, date, maxAmount, cancelled, currentCount } = data;
+  const {
+    date,
+    color,
+    endTime,
+    startTime,
+    maxAmount,
+    cancelled,
+    currentCount,
+  } = data;
 
   const { status, statusIcon } = (() => {
     if (cancelled) return { status: "cancelled", statusIcon: mdiCancel };
@@ -90,6 +98,12 @@ export const ClassCardContent = ({
       <ItemInfoRow icon={mdiCalendarOutline}>
         {formatToLongDate(date, user?.language)}
       </ItemInfoRow>
+      {!!user?.isAdmin && !!color && (
+        <div
+          style={{ backgroundColor: color }}
+          className="absolute z-20 right-0 top-0 h-full w-12 rounded-tr-xl rounded-br-xl"
+        />
+      )}
       {!!handleCancelBooking && status === "pending" && (
         <div className="absolute top-4 right-4 z-10">
           <CustomButton

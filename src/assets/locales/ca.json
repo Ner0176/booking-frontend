@@ -7,6 +7,20 @@
       "Key": "Confirmar acció",
       "Description": "<strong>Avís:</strong> aquesta acció és <strong>irreversible</strong>. Si vols continuar, escriu <strong>Confirmar acció</strong> en el següent camp de text."
     },
+    "Colors": {
+      "pink": "Rosa pastel",
+      "peach": "Melicotó",
+      "yellow": "Groc pastel",
+      "mint": "Verd menta",
+      "green": "Verd pastel",
+      "turquoise": "Turquesa suau",
+      "white": "Blanc",
+      "blue_lavender": "Blau lavanda",
+      "purple": "Lila pastel",
+      "purple_lavender": "Lavanda rosada",
+      "coral": "Corall clar",
+      "grey": "Gris suau"
+    },
     "Buttons": {
       "Edit": "Editar",
       "Options": "Opcions",
@@ -174,6 +188,10 @@
           "MaxAmount": "Aforament màxim: {{maxAmount}}",
           "CurrentCount": "Assistents actuals: {{currentCount}}"
         }
+      },
+      "UpdateColor": {
+        "Success": "El color de la classe ha sigut actualitzat",
+        "Error": "No s'ha pogut actualitzar el color de classe"
       },
       "Filters": {
         "Title": "Accions de classe",

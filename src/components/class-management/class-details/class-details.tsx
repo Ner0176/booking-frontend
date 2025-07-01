@@ -97,6 +97,7 @@ export const ClassDetails = ({
           {showClassDetailsData && (
             <ClassDetailsData
               classData={classData}
+              refetchClasses={refetchClasses}
               editClassData={handleEditClass}
               isClassCompleted={isClassCompleted(classData)}
             />

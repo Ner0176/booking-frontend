@@ -7,6 +7,20 @@
       "Key": "Confirmar acción",
       "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto."
     },
+    "Colors": {
+      "pink": "Rosa pastel",
+      "peach": "Melocotón",
+      "yellow": "Amarillo pastel",
+      "mint": "Verde menta",
+      "green": "Verde pastel",
+      "turquoise": "Turquesa suave",
+      "white": "Blanco",
+      "blue_lavender": "Azul lavanda",
+      "purple": "Lila pastel",
+      "purple_lavender": "Lavanda rosada",
+      "coral": "Coral claro",
+      "grey": "Gris suave"
+    },
     "Buttons": {
       "Edit": "Editar",
       "Options": "Opciones",
@@ -176,6 +190,10 @@
           "MaxAmount": "Capacidad máxima: {{maxAmount}}",
           "CurrentCount": "Asistentes actuales: {{currentCount}}"
         }
+      },
+      "UpdateColor": {
+        "Success": "El color de la clase ha sido actualizado",
+        "Error": "No se ha podido actualizar el color de clase"
       },
       "Filters": {
         "Title": "Acciones de clase",

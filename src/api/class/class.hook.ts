@@ -6,6 +6,7 @@ import {
   EditClassPayload,
   GetClassesPayload,
   IClass,
+  UpdateClassColor,
 } from "./class.interface";
 import { IClassIds, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
@@ -63,6 +64,28 @@ export function useEditClass(handleSuccess: () => void) {
     },
     onError(error) {
       showToast({ text: error.response.data.message, type: "error" });
+    },
+  });
+}
+
+export function useUpdateColor(handleSuccess: () => void) {
+  const { t } = useTranslation();
+  const basePath = "Classes.ClassDetails.UpdateColor";
+
+  return useMutation<any, any, any>({
+    mutationFn: (payload: UpdateClassColor) => classApi.updateColor(payload),
+    onSuccess() {
+      handleSuccess();
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
+    },
+    onError(error) {
+      showToast({
+        type: "error",
+        text: error.response.data.message ?? t(`${basePath}.Error`),
+      });
     },
   });
 }

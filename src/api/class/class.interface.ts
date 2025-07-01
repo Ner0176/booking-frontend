@@ -11,13 +11,20 @@ export interface CreateClassPayload {
   date: Date;
   end: string;
   start: string;
+  color?: string;
   maxAmount: number;
   recurrencyLimit?: Date;
+}
+
+export interface UpdateClassColor {
+  color: string;
+  recurrentId: string;
 }
 
 export interface EditClassPayload {
   id: string;
   date?: Date;
+  color?: string;
   endTime?: string;
   cancel?: boolean;
   maxAmount?: number;
@@ -37,5 +44,6 @@ export interface IClass {
   maxAmount: number;
   cancelled: boolean;
   currentCount: number;
+  color: string | null;
   recurrentId: string | null;
 }
