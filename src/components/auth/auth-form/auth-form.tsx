@@ -106,7 +106,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
                 }
                 handleErrors("phone", showError);
               }}
-              handleChange={(v) => handleAuthFields("phone", v)}
+              handleChange={(v) => handleAuthFields("phone", v.trim())}
               error={authErrors.phone ? t("Auth.Errors.Phone") : undefined}
             />
             <LanguageSelector />
@@ -118,7 +118,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         title={t("Auth.Fields.Email")}
         placeholder="nombre@ejemplo.com"
         icon={{ name: mdiEmailOutline }}
-        handleChange={(v) => handleAuthFields("email", v)}
+        handleChange={(v) => handleAuthFields("email", v.trim())}
         error={authErrors.email ? t("Auth.Errors.Email") : undefined}
         handleBlur={() => {
           let showError = false;
