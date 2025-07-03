@@ -5,7 +5,8 @@
     "SearchUser": "Buscar usuarios...",
     "DeleteConfirmation": {
       "Key": "Confirmar acción",
-      "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto."
+      "Description": "<strong>Advertencia:</strong> esta acción es <strong>irreversible</strong>. Si desea continuar, escriba <strong>Confirmar acción</strong> en el siguiente campo de texto.",
+      "Error": "Debes escribir exactamente 'Confirmar acción'"
     },
     "Colors": {
       "pink": "Rosa pastel",

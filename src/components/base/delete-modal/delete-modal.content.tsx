@@ -4,12 +4,14 @@ import { ErrorStrongContainer } from "../styled-components";
 
 const BASE_PATH = "Base.DeleteConfirmation";
 export const DeleteModalConfirmation = ({
+  handleBlur,
   showInputError,
   confirmationText,
   setConfirmationText,
 }: Readonly<{
   showInputError: boolean;
   confirmationText: string;
+  handleBlur(v: string): void;
   setConfirmationText(v: string): void;
 }>) => {
   const { t } = useTranslation();
@@ -24,10 +26,14 @@ export const DeleteModalConfirmation = ({
         />
       </span>
       <CustomInputField
+        handleBlur={handleBlur}
         value={confirmationText}
         handleChange={setConfirmationText}
         placeholder={t(`${BASE_PATH}.Key`)}
-        customSelectStyles={{ borderColor: showInputError ? "red" : undefined }}
+        customSelectStyles={{
+          borderColor: showInputError ? "red" : undefined,
+        }}
+        error={showInputError ? t(`${BASE_PATH}.Error`) : undefined}
       />
     </>
   );

@@ -35,13 +35,14 @@ export const DeleteModal = ({
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
   const handleOnDelete = () => {
-    if (showConfirmation) {
-      confirmationText === VALID_CONFIRMATION
-        ? handleDelete()
-        : setShowInputError(true);
-    } else if (!checkValidations || checkValidations()) {
+    if (showConfirmation) handleDelete();
+    else if (!checkValidations || checkValidations()) {
       setShowConfirmation(true);
     }
+  };
+
+  const isValidConfirmation = (confirmation: string) => {
+    return confirmation.trim() === VALID_CONFIRMATION;
   };
 
   const footer = (
@@ -56,7 +57,7 @@ export const DeleteModal = ({
         onClick={handleOnDelete}
         isDisabled={
           isButtonDisabled ||
-          (showConfirmation && confirmationText !== VALID_CONFIRMATION)
+          (showConfirmation && !isValidConfirmation(confirmationText))
         }
       >
         {mainButtonText ?? t("Base.Buttons.Delete")}
@@ -79,8 +80,14 @@ export const DeleteModal = ({
             confirmationText={confirmationText}
             setConfirmationText={(v) => {
               setConfirmationText(v);
-              if (showInputError && v === VALID_CONFIRMATION)
+              if (showInputError && isValidConfirmation(v)) {
                 setShowInputError(false);
+              }
+            }}
+            handleBlur={() => {
+              if (!isValidConfirmation(confirmationText)) {
+                setShowInputError(true);
+              }
             }}
           />
         ) : (

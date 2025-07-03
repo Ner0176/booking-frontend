@@ -5,7 +5,8 @@
     "SearchUser": "Cercar usuaris...",
     "DeleteConfirmation": {
       "Key": "Confirmar acció",
-      "Description": "<strong>Avís:</strong> aquesta acció és <strong>irreversible</strong>. Si vols continuar, escriu <strong>Confirmar acció</strong> en el següent camp de text."
+      "Description": "<strong>Avís:</strong> aquesta acció és <strong>irreversible</strong>. Si vols continuar, escriu <strong>Confirmar acció</strong> en el següent camp de text.",
+      "Error": "Has d'escriure exactament 'Confirmar acció'"
     },
     "Colors": {
       "pink": "Rosa pastel",
