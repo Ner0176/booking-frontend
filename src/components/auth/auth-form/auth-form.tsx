@@ -118,8 +118,8 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         title={t("Auth.Fields.Email")}
         placeholder="nombre@ejemplo.com"
         icon={{ name: mdiEmailOutline }}
-        handleChange={(v) => handleAuthFields("email", v.trim())}
         error={authErrors.email ? t("Auth.Errors.Email") : undefined}
+        handleChange={(v) => handleAuthFields("email", v.trim().toLowerCase())}
         handleBlur={() => {
           let showError = false;
           if (!EmailValidator.validate(authFields.email)) showError = true;
