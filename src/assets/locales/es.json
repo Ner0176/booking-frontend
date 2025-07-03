@@ -366,19 +366,19 @@
     },
     "maxCancellationPerMonth": {
       "Title": "🛑 Límite de cancelaciones mensuales",
-      "Text": "El usuario podrá cancelar <strong>hasta {{total}} clases al mes</strong>. Una vez superado este límite, cualquier cancelación adicional se considerará <strongRed>NO</strongRed> reembolsable ni recuperable."
+      "Text": "El usuario podrá cancelar <strong>hasta {{total}} clases al mes</strong>. Una vez superado este límite, cualquier cancelación adicional se considerará <strongRed>NO</strongRed> recuperable."
     },
     "cancellationRepeat": {
       "Title": "⚠️ Cancelaciones repetidas",
-      "Text": "La misma reserva <strong>no puede ser cancelada más de una vez</strong>. Si se intenta cancelar nuevamente, la cancelación se considerará fuera de plazo y <strongRed>NO</strongRed> tendrá opción de reembolso ni recuperación."
+      "Text": "La misma reserva <strong>no puede ser cancelada más de una vez</strong>. Si se intenta cancelar nuevamente, la cancelación se considerará fuera de plazo y <strongRed>NO</strongRed> tendrá opción de recuperación."
     },
     "minHoursBeforeCancellation": {
       "Title": "⏳ Tiempo límite para cancelar",
-      "Text": "El usuario podrá cancelar una reserva <strong>hasta {{total}} horas antes del inicio de la clase</strong>. Si la cancelación se realiza después de ese plazo, se considerará tardía y se aplicarán las condiciones de <strongRed>NO</strongRed> reembolso ni recuperación."
+      "Text": "El usuario podrá cancelar una reserva <strong>hasta {{total}} horas antes del inicio de la clase</strong>. Si la cancelación se realiza después de ese plazo, se considerará tardía y se aplicarán las condiciones de <strongRed>NO</strongRed> recuperación."
     },
     "maxRecoveryDays": {
       "Title": "🔄 Recuperación de clases",
-      "Text": "Una clase cancelada dentro del plazo establecido podrá reprogramarse o recuperarse <strong>en un período máximo de {{total}} días</strong>. Si no se utiliza dentro de ese plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de reembolso ni recuperación posterior."
+      "Text": "Una clase cancelada dentro del plazo establecido podrá reprogramarse o recuperarse <strong>en un período máximo de {{total}} días</strong>. Si no se utiliza dentro de ese plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de recuperación posterior."
     },
     "specific": {
       "Title": "📌 Casos específicos",

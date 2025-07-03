@@ -364,19 +364,19 @@
     },
     "maxCancellationPerMonth": {
       "Title": "🛑 Límit de cancel·lacions mensuals",
-      "Text": "L'usuari podrà cancel·lar <strong>fins a {{total}} classes al mes</strong>. Un pic superat aquest límit, qualsevol cancel·lació addicional es considerarà <strongRed>NO</strongRed> reemborsable ni recuperable."
+      "Text": "L'usuari podrà cancel·lar <strong>fins a {{total}} classes al mes</strong>. Un pic superat aquest límit, qualsevol cancel·lació addicional es considerarà <strongRed>NO</strongRed> recuperable."
     },
     "cancellationRepeat": {
       "Title": "⚠️ Cancel·lacions repetides",
-      "Text": "La mateixa reserva <strong>no es pot cancel·lar més d'una vegada</strong>. Si s'intenta cancel·lar novament, la cancel·lació es considerarà fora de termini i <strongRed>NO</strongRed> tendrà opció de reemborsament ni recuperació."
+      "Text": "La mateixa reserva <strong>no es pot cancel·lar més d'una vegada</strong>. Si s'intenta cancel·lar novament, la cancel·lació es considerarà fora de termini i <strongRed>NO</strongRed> tendrà opció de recuperació."
     },
     "minHoursBeforeCancellation": {
       "Title": "⏳ Temps límit per cancel·lar",
-      "Text": "L'usuari podrà cancel·lar una reserva <strong>fins a {{total}} hores abans de l'inici de la classe</strong>. Si la cancel·lació es realitza després d'aquest termini, es considerarà tardana i s'aplicaran les condicions de <strongRed>NO</strongRed> reemborsament ni recuperació."
+      "Text": "L'usuari podrà cancel·lar una reserva <strong>fins a {{total}} hores abans de l'inici de la classe</strong>. Si la cancel·lació es realitza després d'aquest termini, es considerarà tardana i <strongRed>NO</strongRed> es podrà recuperar."
     },
     "maxRecoveryDays": {
       "Title": "🔄 Recuperació de classes",
-      "Text": "Una classe cancel·lada dins del termini establert podrà reprogramar-se o recuperar-se <strong>en un període màxim de {{total}} dies</strong>. Si no s'utilitza dins d'aquest termini, es considerarà perduda i <strongRed>NO</strongRed> hi haurà opció de reemborsament ni recuperació posterior."
+      "Text": "Una classe cancel·lada dins del termini establert podrà reprogramar-se o recuperar-se <strong>en un període màxim de {{total}} dies</strong>. Si no s'utilitza dins d'aquest termini, es considerarà perduda i <strongRed>NO</strongRed> hi haurà opció de recuperació posterior."
     },
     "specific": {
       "Title": "📌 Casos específics",
