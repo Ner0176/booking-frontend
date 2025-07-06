@@ -12,6 +12,8 @@ import {
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
+import { useUser } from "../../stores";
+import { useNavigate } from "react-router-dom";
 
 export function useGetBookings(payload: GetBookingPayload) {
   return useQuery<IBooking[]>({
@@ -57,15 +59,23 @@ export function useCreateBookings(handleSuccess: () => void) {
 }
 
 export function useRecoverBooking(handleRefetch: () => void) {
+  const user = useUser();
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { setParams } = useSearchParamsManager([]);
+  const { params, setParams } = useSearchParamsManager(["userId"]);
+
+  const userId = params.get("userId");
 
   return useMutation<any, any, any>({
     mutationFn: (payload: RecoverBookingPayload) =>
       bookingApi.recoverBooking(payload),
     onSuccess() {
       handleRefetch();
-      setParams([{ key: "class" }, { key: "booking" }]);
+
+      if (!!user?.isAdmin && !!userId) {
+        navigate(`/users?userId=${userId}`);
+      } else setParams([{ key: "class" }, { key: "booking" }]);
+
       showToast({
         type: "success",
         text: t("UserBookings.BookClass.Success"),

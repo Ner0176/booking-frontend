@@ -25,6 +25,7 @@ import {
 import { useSearchParamsManager } from "../../hooks";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
+import { useUser } from "../../stores";
 
 const RecoverBookingCard = ({
   cancelledAt,
@@ -89,16 +90,20 @@ const RecoverBookingCard = ({
 };
 
 export const UserBookingCard = ({
+  userId,
   booking,
   handleCancel,
   hasCancellations,
   hideRecoverButton,
 }: Readonly<{
+  userId?: number;
   booking: IUserBooking;
   handleCancel?: () => void;
   hasCancellations?: boolean;
   hideRecoverButton?: boolean;
 }>) => {
+  const user = useUser();
+  const navigate = useNavigate();
   const { setParams } = useSearchParamsManager([]);
 
   const { id, cancelledAt, originalClass, class: currentClass } = booking;
@@ -136,7 +141,9 @@ export const UserBookingCard = ({
               hideRecoverButton={hideRecoverButton}
               cancelledAt={cancelledAt ?? new Date()}
               handleClick={() =>
-                setParams([{ key: "booking", value: `${id}` }])
+                !!user?.isAdmin && userId
+                  ? navigate(`/bookings?booking=${id}&userId=${userId}`)
+                  : setParams([{ key: "booking", value: `${id}` }])
               }
             />
           ) : (

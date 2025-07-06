@@ -1,24 +1,32 @@
 import { useTranslation } from "react-i18next";
 import {
   BookingStatus,
+  IClass,
   IUser,
+  IUserBooking,
   useGetBookingsFromUser,
   useGetUserBookingsStats,
+  useHasAvailableCancellations,
 } from "../../../api";
-import { CardContainer, EmptyData, SwitchSelector } from "../../base";
+import {
+  CardContainer,
+  EmptyData,
+  showToast,
+  SwitchSelector,
+} from "../../base";
 import {
   DeleteUserModal,
   UserInfoField,
   UserSettingsMobile,
 } from "./user-details.content";
 import { useSearchParamsManager } from "../../../hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import emptyHistory from "../../../assets/images/noData/void.svg";
 import { mdiAccountOutline, mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 import Skeleton from "react-loading-skeleton";
 import { format } from "date-fns";
-import { UserBookingCard } from "../../user-bookings/user-bookings.content";
 import { isMobile } from "react-device-detect";
+import { CancelBookingModal, UserBookingCard } from "../../user-bookings";
 
 const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
@@ -38,6 +46,7 @@ export const UserDetails = ({
   ]);
   const actionType = params.get("action");
   const selectedOption = params.get(CLASS_KEY_PARAM);
+  const isCancelling = params.get("action") === "cancel";
   const showFiltersModal = params.get("modal") === "filters" && isMobile;
 
   const userVisual = params.get("visual");
@@ -46,15 +55,22 @@ export const UserDetails = ({
 
   const { id, name, phone, email } = user;
 
+  const [bookingToCancel, setBookingToCancel] = useState<IUserBooking>();
+
+  const { data: hasCancellations, refetch: refetchAvailableCancellations } =
+    useHasAvailableCancellations();
   const { data: userStats, isLoading: isLoadingStats } =
     useGetUserBookingsStats(id);
-  const { data: userBookings, isLoading: isLoadingBookings } =
-    useGetBookingsFromUser({
-      userId: user.id,
-      payload: {
-        status: selectedOption ? (selectedOption as BookingStatus) : undefined,
-      },
-    });
+  const {
+    data: userBookings,
+    refetch: refetchBookings,
+    isLoading: isLoadingBookings,
+  } = useGetBookingsFromUser({
+    userId: user.id,
+    payload: {
+      status: selectedOption ? (selectedOption as BookingStatus) : undefined,
+    },
+  });
 
   useEffect(() => {
     if (!userVisual) {
@@ -83,6 +99,18 @@ export const UserDetails = ({
     return value;
   };
 
+  const handleCancel = (booking: IUserBooking) => {
+    if (!hasCancellations) {
+      showToast({
+        type: "error",
+        text: t("UserBookings.Cancel.Exhausted"),
+      });
+    } else {
+      setBookingToCancel(booking);
+      setParams([{ key: "action", value: "cancel" }]);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col gap-6 sm:gap-0 sm:grid sm:grid-cols-3 sm:justify-items-center size-full">
@@ -103,8 +131,10 @@ export const UserDetails = ({
                     return (
                       <UserBookingCard
                         key={idx}
+                        userId={user.id}
                         booking={booking}
-                        hideRecoverButton
+                        hasCancellations={!!hasCancellations}
+                        handleCancel={() => handleCancel(booking)}
                       />
                     );
                   })
@@ -187,6 +217,24 @@ export const UserDetails = ({
               { key: "action", value: "delete-class" },
             ]);
           }}
+        />
+      )}
+      {isCancelling && bookingToCancel && (
+        <CancelBookingModal
+          bookingId={bookingToCancel.id}
+          handleClose={() => {
+            setBookingToCancel(undefined);
+            setParams([{ key: "action" }]);
+          }}
+          refetch={() => {
+            refetchBookings();
+            refetchAvailableCancellations();
+          }}
+          classData={
+            !!bookingToCancel.class
+              ? bookingToCancel.class
+              : (bookingToCancel.originalClass as IClass)
+          }
         />
       )}
     </>

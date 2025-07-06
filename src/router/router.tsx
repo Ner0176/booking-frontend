@@ -38,10 +38,7 @@ export const AppRouter = () => {
             />
             <Route path="/settings" element={<SettingsDashboard />} />
           </Route>
-
-          <Route element={<ProtectedRoute allowViewTo="user" />}>
-            <Route path="/bookings" element={<UserBookingsDashboard />} />
-          </Route>
+          <Route path="/bookings" element={<UserBookingsDashboard />} />
         </Route>
         <Route path="*" element={<InvalidRoute />} />
       </Routes>

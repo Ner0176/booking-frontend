@@ -50,8 +50,6 @@ export const UserBookingsDashboard = () => {
     },
   });
 
-  console.log("userBookings", userBookings);
-
   const getTitle = () => {
     return t(
       selectedBooking ? "UserBookings.BookClass.Title" : "UserBookings.Title"

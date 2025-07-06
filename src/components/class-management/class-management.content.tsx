@@ -100,12 +100,12 @@ export const ClassCardContent = ({
       </ItemInfoRow>
       {!!user?.isAdmin && !!color && (
         <div
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: color !== "#FFFFFF" ? color : undefined }}
           className="absolute z-20 right-0 top-0 h-full w-12 rounded-tr-xl rounded-br-xl"
         />
       )}
       {!!handleCancelBooking && status === "pending" && (
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-4 right-4 z-30">
           <CustomButton
             type="error"
             color="secondary"
