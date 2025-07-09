@@ -11,7 +11,6 @@ import { mdiMagnify } from "@mdi/js";
 import { stringIncludes } from "../../utils";
 import { isMobile } from "react-device-detect";
 
-//Try new deploy
 export const UsersDashboard = () => {
   const { t } = useTranslation();
   const { params, setParams } = useSearchParamsManager(["userId"]);

@@ -48,7 +48,7 @@ export const DeleteModal = ({
   const footer = (
     <>
       <CustomButton type="error" color="secondary" onClick={handleClose}>
-        {t("Base.Buttons.Cancel")}
+        {t("Base.Buttons.Back")}
       </CustomButton>
       <CustomButton
         type="error"
