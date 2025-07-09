@@ -94,7 +94,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
           />
           <SignUpFieldsContainer>
             <CustomInputField
-              placeholder="976 65 84 34"
+              placeholder="-"
               value={authFields.phone || ""}
               title={t("Auth.Fields.Phone")}
               icon={{ name: mdiPhoneOutline }}
