@@ -3,6 +3,7 @@ import { Modal } from "../modal";
 import { useTranslation } from "react-i18next";
 import { CustomButton } from "../button";
 import { DeleteModalConfirmation } from "./delete-modal.content";
+import { normalizeText } from "../../../utils";
 
 export const DeleteModal = ({
   title,
@@ -42,7 +43,9 @@ export const DeleteModal = ({
   };
 
   const isValidConfirmation = (confirmation: string) => {
-    return confirmation.trim() === VALID_CONFIRMATION;
+    return (
+      normalizeText(confirmation.trim()) === normalizeText(VALID_CONFIRMATION)
+    );
   };
 
   const footer = (
