@@ -30,7 +30,7 @@ export const ClassesManagementDashboard = () => {
   const classId = params.get("class");
 
   const [datesFilter, setDatesFilter] = useState<ClassDatesFilter>({});
-  const [statusFilter, setStatusFilter] = useState<ClassStatusType>("all");
+  const [statusFilter, setStatusFilter] = useState<ClassStatusType>("pending");
 
   const isDatesFilterActive = !!datesFilter.startDate && !!datesFilter.endDate;
 
