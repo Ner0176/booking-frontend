@@ -114,7 +114,8 @@ export function useCancelBooking(handleSuccess: () => void) {
   const basePath = "UserBookings.Cancel";
 
   return useMutation<any, any, any>({
-    mutationFn: (bookingId: number) => bookingApi.cancelBooking(bookingId),
+    mutationFn: (payload: { bookingId: number; userId: number }) =>
+      bookingApi.cancelBooking(payload.bookingId, payload.userId),
     onSuccess() {
       handleSuccess();
       showToast({ text: t(`${basePath}.Success`), type: "success" });

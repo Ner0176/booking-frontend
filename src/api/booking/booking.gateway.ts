@@ -42,7 +42,7 @@ export const bookingApi = {
   editBookings: async (payload: CreateBookingPayload) => {
     await axiosInstance.patch("/booking/edit", payload);
   },
-  cancelBooking: async (bookingId: number) => {
-    await axiosInstance.patch(`/booking/${bookingId}`);
+  cancelBooking: async (bookingId: number, userId: number) => {
+    await axiosInstance.patch(`/booking/${bookingId}`, { userId });
   },
 };

@@ -221,6 +221,7 @@ export const UserDetails = ({
       )}
       {isCancelling && bookingToCancel && (
         <CancelBookingModal
+          userId={id}
           bookingId={bookingToCancel.id}
           handleClose={() => {
             setBookingToCancel(undefined);

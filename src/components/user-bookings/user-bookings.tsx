@@ -131,6 +131,7 @@ export const UserBookingsDashboard = () => {
           {isCancelling && bookingToCancel && (
             <CancelBookingModal
               refetch={handleRefetch}
+              userId={+(user?.id as string)}
               bookingId={bookingToCancel.id}
               handleClose={() => {
                 setBookingToCancel(undefined);

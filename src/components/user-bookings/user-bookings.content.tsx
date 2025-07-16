@@ -158,11 +158,13 @@ export const UserBookingCard = ({
 };
 
 export const CancelBookingModal = ({
+  userId,
   refetch,
   bookingId,
   classData,
   handleClose,
 }: Readonly<{
+  userId: number;
   refetch(): void;
   bookingId: number;
   classData: IClass;
@@ -190,8 +192,8 @@ export const CancelBookingModal = ({
       isDeleting={isLoading}
       handleClose={handleClose}
       title={t("UserBookings.Cancel.Title")}
-      handleDelete={() => cancelBooking(bookingId)}
       mainButtonText={t("UserBookings.Cancel.Title")}
+      handleDelete={() => cancelBooking({ bookingId, userId })}
     >
       <span className="text-xs sm:text-base text-justify sm:text-start">
         <Trans
