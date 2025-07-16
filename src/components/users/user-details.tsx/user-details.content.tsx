@@ -66,10 +66,14 @@ export const DeleteUserModal = ({
 
 export const UserSettingsMobile = ({
   handleClose,
+  selectedVisual,
+  setSelectedVisual,
   handleDeleteClass,
 }: Readonly<{
   handleClose(): void;
+  selectedVisual: string;
   handleDeleteClass(): void;
+  setSelectedVisual: (value: string) => void;
 }>) => {
   const { t } = useTranslation();
   const basePath = "Users.Details.Filters";
@@ -78,7 +82,8 @@ export const UserSettingsMobile = ({
     <Modal title={t(`${basePath}.Title`)} handleClose={handleClose}>
       <div className="flex flex-col gap-3">
         <SwitchSelector
-          keyParam="visual"
+          value={selectedVisual}
+          handleChange={setSelectedVisual}
           customStyles={{ paddingTop: 12, paddingBottom: 12 }}
           options={[
             { key: "history", text: t(`${basePath}.Switch.History`) },

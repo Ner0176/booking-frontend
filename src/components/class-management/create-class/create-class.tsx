@@ -9,7 +9,6 @@ import {
   emptyClassFields,
   IClassIds,
   IClassFields,
-  classOptions,
 } from "./create-class.interface";
 import {
   IUser,
@@ -19,16 +18,18 @@ import {
 } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { CustomButton, Modal, showToast, SwitchSelector } from "../../base";
-import { capitalize } from "../../../utils";
 import { isMobile } from "react-device-detect";
+import { RecurrentOptionType } from "../class-details/class-details.interface";
+import { capitalize } from "../../../utils";
 
 export const CreateClassModal = ({
   refetchClasses,
 }: Readonly<{ refetchClasses(): void }>) => {
   const { t } = useTranslation();
-  const { params, setParams } = useSearchParamsManager(["type"]);
-  const isRecurrent = params.get("type") === "recurrent";
+  const { setParams } = useSearchParamsManager([]);
 
+  const [recurrency, setRecurrency] =
+    useState<RecurrentOptionType>("recurrent");
   const [classId, setClassId] = useState<string>("");
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
@@ -37,12 +38,12 @@ export const CreateClassModal = ({
 
   const handleCloseModal = () => {
     refetchClasses();
-    setParams([{ key: "type" }, { key: "action" }]);
+    setParams([{ key: "action" }]);
   };
 
   const handleClassSuccess = ({ id, recurrentId }: IClassIds) => {
     setShowAddUsers(true);
-    setClassId(isRecurrent ? recurrentId : id);
+    setClassId(recurrency === "recurrent" ? recurrentId : id);
   };
 
   const { data: users } = useGetAllUsers();
@@ -57,10 +58,12 @@ export const CreateClassModal = ({
 
   const isSubmitButtonDisabled = useMemo(() => {
     return Object.values(fields).some((field) => {
-      if (!isRecurrent && field === fields.recurrencyLimit) return false;
+      if (recurrency === "specific" && field === fields.recurrencyLimit) {
+        return false;
+      }
       return !!field.error || !field.value;
     });
-  }, [fields, isRecurrent]);
+  }, [fields, recurrency]);
 
   const handleSubmit = () => {
     const recurrencyDate = fields.recurrencyLimit.value;
@@ -84,13 +87,13 @@ export const CreateClassModal = ({
 
     createBookings({
       classId,
-      isRecurrent,
+      isRecurrent: recurrency === "recurrent",
       userIds: attendeesList.map(({ id }) => id),
     });
   };
 
   const getSwitchOptions = () => {
-    return classOptions.map((option) => ({
+    return ["recurrent", "specific"].map((option) => ({
       key: option,
       text: t(`Classes.CreateClass.${capitalize(option)}.Title`),
     }));
@@ -136,14 +139,17 @@ export const CreateClassModal = ({
           <div className="flex justify-end w-full">
             <div style={{ width: isMobile ? "100%" : undefined }}>
               <SwitchSelector
-                keyParam="type"
+                value={recurrency}
                 options={getSwitchOptions()}
-                handleClick={() => setFields(emptyClassFields)}
+                handleChange={(value) => {
+                  setRecurrency(value as RecurrentOptionType);
+                  setFields(emptyClassFields);
+                }}
               />
             </div>
           </div>
           <div className="flex flex-col gap-2 sm:gap-4 sm:pb-3 overflow-y-auto max-h-[375px] sm:max-h-none">
-            {isRecurrent ? (
+            {recurrency === "recurrent" ? (
               <RecurrentFields fields={fields} setFields={setFields} />
             ) : (
               <OneTimeFields fields={fields} setFields={setFields} />

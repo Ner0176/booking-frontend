@@ -28,7 +28,6 @@ import { format } from "date-fns";
 import { isMobile } from "react-device-detect";
 import { CancelBookingModal, UserBookingCard } from "../../user-bookings";
 
-const CLASS_KEY_PARAM = "classType";
 const CLASS_OPTIONS = ["pending", "completed", "cancelled"];
 
 export const UserDetails = ({
@@ -39,13 +38,13 @@ export const UserDetails = ({
   const basePath = "Users.Details";
 
   const { params, setParams } = useSearchParamsManager([
-    CLASS_KEY_PARAM,
+    "classType",
     "action",
     "modal",
     "visual",
   ]);
   const actionType = params.get("action");
-  const selectedOption = params.get(CLASS_KEY_PARAM);
+  const selectedOption = params.get("classType");
   const isCancelling = params.get("action") === "cancel";
   const showFiltersModal = params.get("modal") === "filters" && isMobile;
 
@@ -80,7 +79,7 @@ export const UserDetails = ({
 
   useEffect(() => {
     if (!selectedOption) {
-      setParams([{ key: CLASS_KEY_PARAM, value: "pending" }]);
+      setParams([{ key: "classType", value: "pending" }]);
     }
   }, [setParams, selectedOption]);
 
@@ -117,8 +116,9 @@ export const UserDetails = ({
         {showUserHistory && (
           <div className="col-span-2 flex flex-col w-full px-4 sm:px-10 mt-4">
             <SwitchSelector
-              keyParam={CLASS_KEY_PARAM}
               options={getSelectorOptions()}
+              value={selectedOption ?? "pending"}
+              handleChange={(value) => setParams([{ key: "classType", value }])}
             />
             {!!selectedOption && (
               <div className="flex flex-col gap-3 overflow-y-auto sm:h-[500px] mt-3">
@@ -210,13 +210,15 @@ export const UserDetails = ({
       )}
       {showFiltersModal && (
         <UserSettingsMobile
-          handleClose={() => setParams([{ key: "modal" }])}
+          selectedVisual={userVisual ?? ""}
           handleDeleteClass={() => {
             setParams([
               { key: "modal" },
               { key: "action", value: "delete-class" },
             ]);
           }}
+          handleClose={() => setParams([{ key: "modal" }])}
+          setSelectedVisual={(value) => setParams([{ key: "visual", value }])}
         />
       )}
       {isCancelling && bookingToCancel && (

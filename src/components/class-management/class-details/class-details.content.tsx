@@ -122,17 +122,21 @@ export const ClassSettingsMobile = ({
   refetch,
   isCancelled,
   handleClose,
+  currentVisual,
   handleEditClass,
   isClassCompleted,
+  setCurrentVisual,
   handleDeleteClass,
 }: Readonly<{
   classId: string;
   refetch(): void;
   handleClose(): void;
   isCancelled: boolean;
+  currentVisual: string;
   handleEditClass(): void;
   isClassCompleted: boolean;
   handleDeleteClass(): void;
+  setCurrentVisual: (v: string) => void;
 }>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.Filters";
@@ -169,11 +173,14 @@ export const ClassSettingsMobile = ({
     );
   };
 
+  console.log(currentVisual);
+
   return (
     <Modal title={t(`${basePath}.Title`)} handleClose={handleClose}>
       <div className="flex flex-col gap-3">
         <SwitchSelector
-          keyParam="visual"
+          value={currentVisual}
+          handleChange={(value) => setCurrentVisual(value)}
           customStyles={{ paddingTop: 12, paddingBottom: 12 }}
           options={[
             { key: "attendees", text: t(`${basePath}.Switch.Attendees`) },

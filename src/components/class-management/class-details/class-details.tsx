@@ -143,6 +143,7 @@ export const ClassDetails = ({
           classId={`${classData.id}`}
           isCancelled={classData.cancelled}
           handleEditClass={handleEditClass}
+          currentVisual={classVisual ?? ""}
           isClassCompleted={isClassCompleted(classData)}
           handleDeleteClass={() =>
             setParams([
@@ -151,6 +152,7 @@ export const ClassDetails = ({
             ])
           }
           handleClose={() => setParams([{ key: "modal" }])}
+          setCurrentVisual={(value) => setParams([{ key: "visual", value }])}
         />
       )}
     </>

@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IClass, IUser, useEditBookings } from "../../../../api";
 import { useTranslation } from "react-i18next";
-import { useSearchParamsManager } from "../../../../hooks";
 import { isMobile } from "react-device-detect";
 import { stringIncludes } from "../../../../utils";
 import {
@@ -14,6 +13,7 @@ import {
   UsersTransferList,
 } from "../../../base";
 import { mdiMagnify } from "@mdi/js";
+import { RecurrentOptionType } from "../class-details.interface";
 
 export const EditListModal = ({
   refetch,
@@ -35,8 +35,6 @@ export const EditListModal = ({
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
 
-  const { params, setParams } = useSearchParamsManager(["type"]);
-
   const { id, maxAmount, recurrentId } = classData;
 
   const SELECT_OPTIONS = [
@@ -45,13 +43,14 @@ export const EditListModal = ({
       text: t(`${basePath}.Options.${isMobile ? "Short." : ""}Recurrent`),
     },
     {
-      key: "oneTime",
-      text: t(`${basePath}.Options.${isMobile ? "Short." : ""}OneTime`),
+      key: "specific",
+      text: t(`${basePath}.Options.${isMobile ? "Short." : ""}Specific`),
     },
   ];
 
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+  const [recurrenceType, setRecurrenceType] = useState<RecurrentOptionType>();
 
   const { mutate: editBookings, isPending: isLoading } =
     useEditBookings(refetch);
@@ -66,10 +65,9 @@ export const EditListModal = ({
   }, [search, usersList]);
 
   useEffect(() => {
-    if (!params.get("type") && !!recurrentId) {
-      setParams([{ key: "type", value: "recurrent" }]);
-    }
-  }, [params, recurrentId, setParams]);
+    if (!!recurrentId && !recurrenceType) setRecurrenceType("recurrent");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recurrentId]);
 
   const handleEditBooking = () => {
     if (attendeesList.length > maxAmount) {
@@ -80,8 +78,7 @@ export const EditListModal = ({
       return;
     }
 
-    const editRecurrently = params.get("type") === "recurrent";
-
+    const editRecurrently = recurrenceType === "recurrent";
     editBookings({
       isRecurrent: editRecurrently,
       userIds: attendeesList.map(({ id }) => id),
@@ -116,12 +113,20 @@ export const EditListModal = ({
             (isMobile ? (
               <CustomSelect
                 options={SELECT_OPTIONS}
-                selectedValue={params.get("type") ?? ""}
-                handleChange={(v) => setParams([{ key: "type", value: v }])}
+                selectedValue={recurrenceType ?? ""}
+                handleChange={(v) =>
+                  setRecurrenceType(v as RecurrentOptionType)
+                }
               />
             ) : (
               <div style={{ width: "100%" }}>
-                <SwitchSelector keyParam="type" options={SELECT_OPTIONS} />
+                <SwitchSelector
+                  options={SELECT_OPTIONS}
+                  value={recurrenceType ?? "recurrence"}
+                  handleChange={(value) =>
+                    setRecurrenceType(value as RecurrentOptionType)
+                  }
+                />
               </div>
             ))}
         </div>

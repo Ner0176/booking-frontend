@@ -1,4 +1,3 @@
-import { useSearchParamsManager } from "../../../hooks";
 import {
   SwitchSelectorBox,
   SwitchSelectorOption,
@@ -7,18 +6,16 @@ import { ISwitchSelectorOption } from "./switch-selector.interface";
 import { CSSProperties } from "react";
 
 export const SwitchSelector = ({
+  value,
   options,
-  keyParam,
-  handleClick,
+  handleChange,
   customStyles,
 }: Readonly<{
-  keyParam: string;
-  handleClick?: () => void;
+  value: string;
   customStyles?: CSSProperties;
   options: ISwitchSelectorOption[];
+  handleChange: (value: string) => void;
 }>) => {
-  const { params, setParams } = useSearchParamsManager([keyParam]);
-
   return (
     <SwitchSelectorBox
       style={{
@@ -29,11 +26,8 @@ export const SwitchSelector = ({
         <SwitchSelectorOption
           key={keyOption}
           style={customStyles}
-          isSelected={params.get(keyParam) === keyOption}
-          onClick={() => {
-            setParams([{ key: keyParam, value: keyOption }]);
-            if (handleClick) handleClick();
-          }}
+          isSelected={value === keyOption}
+          onClick={() => handleChange(keyOption)}
         >
           {text}
         </SwitchSelectorOption>

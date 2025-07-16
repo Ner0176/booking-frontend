@@ -252,10 +252,10 @@
         "Edit": {
           "Options": {
             "Recurrent": "Edició recurrent",
-            "OneTime": "Edició puntual",
+            "Specific": "Edició puntual",
             "Short": {
               "Recurrent": "Recurrent",
-              "OneTime": "Puntual"
+              "Specific": "Puntual"
             }
           },
           "Success": "La llista d'assistents ha estat editada correctament",
@@ -292,7 +292,7 @@
         "Title": "Classe recurrent",
         "Description": "La classe es repetirà fins a la data de fi introduïda"
       },
-      "OneTime": {
+      "Specific": {
         "Title": "Classe puntual",
         "Description": "La classe es crearà únicament per a la data seleccionada"
       },

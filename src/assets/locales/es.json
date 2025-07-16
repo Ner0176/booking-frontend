@@ -254,10 +254,10 @@
         "Edit": {
           "Options": {
             "Recurrent": "Edición recurrente",
-            "OneTime": "Edición puntual",
+            "Specific": "Edición puntual",
             "Short": {
               "Recurrent": "Recurrente",
-              "OneTime": "Puntual"
+              "Specific": "Puntual"
             }
           },
           "Success": "La lista de asistentes ha sido editada correctamente",
@@ -294,7 +294,7 @@
         "Title": "Clase recurrente",
         "Description": "La clase se repetirá hasta la fecha de fin introducida"
       },
-      "OneTime": {
+      "Specific": {
         "Title": "Clase puntual",
         "Description": "La clase se creará únicamente para la fecha seleccionada"
       },
