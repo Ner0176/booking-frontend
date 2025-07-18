@@ -121,7 +121,7 @@ export const UserDetails = ({
               handleChange={(value) => setParams([{ key: "classType", value }])}
             />
             {!!selectedOption && (
-              <div className="flex flex-col gap-3 overflow-y-auto sm:h-[500px] mt-3">
+              <div className="flex flex-col gap-3 overflow-y-auto h-full sm:h-[75vh] mt-3">
                 {isLoadingBookings ? (
                   [...Array(5)].map((_, idx) => (
                     <Skeleton key={idx} className="w-full h-[80px]" />
