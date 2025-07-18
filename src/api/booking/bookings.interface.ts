@@ -18,6 +18,7 @@ export interface GetUserBookingsParams {
 }
 
 export interface RecoverBookingPayload {
+  userId: number;
   classId: number;
   bookingId: number;
 }

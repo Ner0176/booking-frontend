@@ -31,8 +31,13 @@ export const bookingApi = {
     });
     return response.data;
   },
-  recoverBooking: async ({ classId, bookingId }: RecoverBookingPayload) => {
+  recoverBooking: async ({
+    userId,
+    classId,
+    bookingId,
+  }: RecoverBookingPayload) => {
     await axiosInstance.post(`/booking/recover-booking/${bookingId}`, {
+      userId,
       classId,
     });
   },

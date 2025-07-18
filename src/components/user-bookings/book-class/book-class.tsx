@@ -10,6 +10,7 @@ import { addDays } from "date-fns";
 import { FullClassText } from "./book-class.styled";
 import emptyList from "../../../assets/images/noData/lost.svg";
 import { isMobile } from "react-device-detect";
+import { useUser } from "../../../stores";
 
 const BASE_PATH = "UserBookings.BookClass";
 
@@ -17,9 +18,15 @@ export const BookClassDashboard = ({
   handleRefetch,
 }: Readonly<{ handleRefetch(): void }>) => {
   const { t } = useTranslation();
-  const { params, setParams } = useSearchParamsManager(["class", "booking"]);
+  const user = useUser();
+  const { params, setParams } = useSearchParamsManager([
+    "class",
+    "userId",
+    "booking",
+  ]);
   const classId = params.get("class");
   const bookingId = params.get("booking");
+  const userId = params.get("userId");
 
   const [timeFilter, setTimeFilter] = useState<ClassDatesFilter>();
 
@@ -96,6 +103,7 @@ export const BookClassDashboard = ({
           handleRefetch={handleRefetch}
           selectedClass={selectedClass}
           bookingId={+(bookingId as string)}
+          userId={+(userId ?? (user?.id as string))}
           handleClose={() => setParams([{ key: "class" }])}
         />
       )}

@@ -6,11 +6,13 @@ import { BookModalInputWrapper } from "./book-class.styled";
 
 const BASE_PATH = "UserBookings.BookClass";
 export const BookClassModal = ({
+  userId,
   bookingId,
   handleClose,
   handleRefetch,
   selectedClass,
 }: Readonly<{
+  userId: number;
   bookingId: number;
   handleClose(): void;
   selectedClass: IClass;
@@ -32,7 +34,7 @@ export const BookClassModal = ({
       <CustomButton
         isLoading={isLoading}
         onClick={() => {
-          recoverBooking({ bookingId, classId: id });
+          recoverBooking({ userId, bookingId, classId: id });
         }}
       >
         {t(`${BASE_PATH}.Book`)}
