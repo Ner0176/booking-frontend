@@ -134,10 +134,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
           type={showPassword === false ? "password" : "text"}
           handleChange={(v) => handleAuthFields("password", v)}
           handleBlur={() => {
-            let showError = false;
-            if (authFields.password.length < MIN_PSWD_LENGTH) {
-              showError = true;
-            }
+            const showError = authFields.password.length < MIN_PSWD_LENGTH;
             handleErrors("password", showError);
           }}
           icon={{

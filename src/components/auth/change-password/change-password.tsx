@@ -6,6 +6,8 @@ import { FormButton } from "../auth-form/auth-form.styled";
 import { mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
 import { useChangePassword } from "../../../api";
 
+const MIN_PSWD_LENGTH = 8;
+
 export const ChangePassword = () => {
   const { t } = useTranslation();
   const basePath = "Auth.ChangePassword";
@@ -14,6 +16,7 @@ export const ChangePassword = () => {
   const token = url.get("token");
 
   const [password, setPassword] = useState("");
+  const [showError, setShowError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -21,7 +24,7 @@ export const ChangePassword = () => {
   const { mutate: changePassword, isPending: isLoading } = useChangePassword();
 
   const handleSubmit = () => {
-    if (isLoading) return;
+    if (isLoading || showError) return;
 
     if (!password || password !== confirmPassword) {
       showToast({ type: "error", text: t(`${basePath}.EmptyPassword`) });
@@ -46,6 +49,12 @@ export const ChangePassword = () => {
             handleClick: () => setShowPassword((prev) => !prev),
             name: showPassword ? mdiEyeOutline : mdiEyeOffOutline,
           }}
+          error={
+            showError
+              ? t("Auth.Errors.Password", { value: MIN_PSWD_LENGTH })
+              : undefined
+          }
+          handleBlur={() => setShowError(password.length < MIN_PSWD_LENGTH)}
         />
         <CustomInputField
           value={confirmPassword}
