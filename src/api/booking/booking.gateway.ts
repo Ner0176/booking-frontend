@@ -7,12 +7,14 @@ import {
 } from "./bookings.interface";
 
 export const bookingApi = {
-  getBookings: async ({ classId }: GetBookingPayload) => {
+  getClassBookingsUsers: async ({ classId }: GetBookingPayload) => {
     const params = new URLSearchParams();
 
     if (classId) params.append("classId", classId.toString());
 
-    const response = await axiosInstance.get(`/booking/find`, { params });
+    const response = await axiosInstance.get(`/booking/bookings-users`, {
+      params,
+    });
     return response.data;
   },
   getUserBookingStats: async (userId: number) => {

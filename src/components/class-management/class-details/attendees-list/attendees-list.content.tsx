@@ -7,6 +7,7 @@ import {
   CustomButton,
   CustomInputField,
   CustomSelect,
+  EmptyData,
   Modal,
   showToast,
   SwitchSelector,
@@ -14,6 +15,52 @@ import {
 } from "../../../base";
 import { mdiMagnify } from "@mdi/js";
 import { RecurrentOptionType } from "../class-details.interface";
+import Skeleton from "react-loading-skeleton";
+import { useNavigate } from "react-router-dom";
+import { UserCard } from "../../../users";
+import noUsers from "../../../../assets/images/noData/folders.svg";
+
+export const AttendeesListSection = ({
+  title,
+  attList,
+  isLoading,
+}: Readonly<{ title: string; attList: IUser[]; isLoading: boolean }>) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="font-bold text-lg">{title}</span>
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[...Array(6)].map((key) => (
+            <Skeleton
+              key={key}
+              className="w-full h-16"
+              style={{ borderRadius: 16 }}
+            />
+          ))}
+        </div>
+      ) : attList.length ? (
+        <div className="flex flex-wrap gap-3">
+          {attList.map((attendee, idx) => (
+            <UserCard
+              key={idx}
+              user={attendee}
+              handleClick={() => navigate(`/users?userId=${attendee.id}`)}
+            />
+          ))}
+        </div>
+      ) : (
+        <EmptyData
+          textSize={16}
+          image={noUsers}
+          title={t(`Classes.ClassDetails.AttendeesList.Empty`)}
+        />
+      )}
+    </div>
+  );
+};
 
 export const EditListModal = ({
   refetch,

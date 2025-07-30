@@ -4,7 +4,7 @@ import {
   CreateBookingPayload,
   GetBookingPayload,
   GetUserBookingsParams,
-  IBooking,
+  IClassBookingsUsers,
   IUserBooking,
   IUserBookingStats,
   RecoverBookingPayload,
@@ -15,10 +15,10 @@ import { useSearchParamsManager } from "../../hooks";
 import { useUser } from "../../stores";
 import { useNavigate } from "react-router-dom";
 
-export function useGetBookings(payload: GetBookingPayload) {
-  return useQuery<IBooking[]>({
-    queryKey: ["getBookings", payload],
-    queryFn: () => bookingApi.getBookings(payload),
+export function useGetClassBookingsUsers(payload: GetBookingPayload) {
+  return useQuery<IClassBookingsUsers>({
+    queryKey: ["getClassBookingsUsers", payload],
+    queryFn: () => bookingApi.getClassBookingsUsers(payload),
   });
 }
 

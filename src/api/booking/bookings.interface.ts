@@ -24,11 +24,11 @@ export interface RecoverBookingPayload {
 }
 
 export type BookingStatus = "pending" | "cancelled" | "completed";
-export interface IBooking {
-  id: number;
-  user: IUser;
-  classId: number;
-  status: BookingStatus;
+
+export interface IClassBookingsUsers {
+  recoveryBookings: IUser[];
+  cancelledBookings: IUser[];
+  recurrentBookings: IUser[];
 }
 
 export interface IUserBooking {

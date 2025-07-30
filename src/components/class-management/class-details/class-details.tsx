@@ -1,4 +1,9 @@
-import { IClass, IUser, useGetAllUsers, useGetBookings } from "../../../api";
+import {
+  IClass,
+  IUser,
+  useGetAllUsers,
+  useGetClassBookingsUsers,
+} from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
@@ -35,19 +40,19 @@ export const ClassDetails = ({
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
 
   const {
-    data: bookings,
+    data: classBookingsUsers,
     refetch: refetchBookings,
     isLoading: isBookingsLoading,
-  } = useGetBookings({ classId: id });
+  } = useGetClassBookingsUsers({ classId: id });
   const { data: users, isLoading: isUsersLoading } = useGetAllUsers();
 
   const { initUsersList, initAttendeesList } = useMemo(() => {
     let filteredUsers: IUser[] = [];
     let bookingsUsers: IUser[] = [];
 
-    if (users && bookings) {
-      bookingsUsers = bookings.map(({ user }) => user);
-      const bookingsUserIds = new Set(bookings.map(({ user }) => user.id));
+    if (users && classBookingsUsers) {
+      bookingsUsers = classBookingsUsers.recurrentBookings;
+      const bookingsUserIds = new Set(bookingsUsers.map((user) => user.id));
       filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
     }
 
@@ -55,7 +60,7 @@ export const ClassDetails = ({
       initUsersList: filteredUsers,
       initAttendeesList: bookingsUsers,
     };
-  }, [users, bookings]);
+  }, [users, classBookingsUsers]);
 
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
@@ -85,9 +90,9 @@ export const ClassDetails = ({
     <>
       <div className="flex flex-col justify-between w-full">
         <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
-          {showAttendeesList && (
+          {showAttendeesList && !!classBookingsUsers && (
             <ClassAttendeesList
-              attendeesList={attendeesList}
+              attendeesList={classBookingsUsers}
               isLoading={isBookingsLoading || isUsersLoading}
               editAttendeesList={() =>
                 setParams([{ key: "action", value: "edit-attendees" }])
