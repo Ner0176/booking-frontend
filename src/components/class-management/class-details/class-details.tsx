@@ -18,10 +18,13 @@ export const ClassDetails = ({
   refetchClasses,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
   const { params, setParams } = useSearchParamsManager([
+    "type",
     "modal",
     "visual",
     "action",
   ]);
+
+  const isRecurrentEditing = params.get("type") === "recurrent";
 
   const showEditClassView = params.get("action") === "edit-class";
   const showDeleteModal = params.get("action") === "delete-class";
@@ -34,7 +37,7 @@ export const ClassDetails = ({
   const showClassDetailsData =
     classVisual === "all" || classVisual === "details";
 
-  const { id, date, endTime, startTime, recurrentId } = classData;
+  const { id, date, endTime, startTime, recurrent } = classData;
 
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
@@ -50,8 +53,13 @@ export const ClassDetails = ({
     let filteredUsers: IUser[] = [];
     let bookingsUsers: IUser[] = [];
 
-    if (users && classBookingsUsers) {
-      bookingsUsers = classBookingsUsers.recurrentBookings;
+    if (!!users && !!classBookingsUsers) {
+      const { cancelledBookings, recurrentBookings, recoveryBookings } =
+        classBookingsUsers;
+
+      bookingsUsers = isRecurrentEditing
+        ? [...recurrentBookings, ...cancelledBookings]
+        : [...recurrentBookings, ...recoveryBookings];
       const bookingsUserIds = new Set(bookingsUsers.map((user) => user.id));
       filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
     }
@@ -60,7 +68,7 @@ export const ClassDetails = ({
       initUsersList: filteredUsers,
       initAttendeesList: bookingsUsers,
     };
-  }, [users, classBookingsUsers]);
+  }, [users, classBookingsUsers, isRecurrentEditing]);
 
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
@@ -90,7 +98,7 @@ export const ClassDetails = ({
     <>
       <div className="flex flex-col justify-between w-full">
         <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
-          {showAttendeesList && !!classBookingsUsers && (
+          {showAttendeesList && (
             <ClassAttendeesList
               attendeesList={classBookingsUsers}
               isLoading={isBookingsLoading || isUsersLoading}
@@ -136,7 +144,7 @@ export const ClassDetails = ({
       {showDeleteModal && (
         <DeleteClassModal
           id={id}
-          recurrentId={recurrentId}
+          recurrentId={recurrent?.id}
           refetchClasses={refetchClasses}
           handleClose={() => setParams([{ key: "action" }])}
           dateTime={`${getWeekday(date)}  ${startTime}h - ${endTime}h`}

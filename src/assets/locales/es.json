@@ -179,6 +179,11 @@
       "Edit": "Editar asistentes",
       "Details": "Detalles de la clase",
       "RecurrentTitle": "Clase recurrente",
+      "AssistantsType": {
+        "Normal": "Asistentes de esta clase",
+        "Recovery": "Recuperaciones",
+        "Cancellation": "Cancelaciones"
+      },
       "Cards": {
         "Schedule": {
           "Title": "Horarios",

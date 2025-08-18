@@ -18,7 +18,7 @@ export const ClassAttendeesList = ({
 }: Readonly<{
   isLoading: boolean;
   editAttendeesList(): void;
-  attendeesList: IClassBookingsUsers;
+  attendeesList: IClassBookingsUsers | undefined;
 }>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails";
@@ -41,21 +41,25 @@ export const ClassAttendeesList = ({
           </span>
         </EditAttendeesButton>
       </div>
-      <AttendeesListSection
-        title="Asistentes recurrentes"
-        isLoading={isLoading}
-        attList={attendeesList.recurrentBookings}
-      />
-      <AttendeesListSection
-        isLoading={isLoading}
-        title="Asistentes puntuales"
-        attList={attendeesList.recoveryBookings}
-      />
-      <AttendeesListSection
-        isLoading={isLoading}
-        title="Usuarios que han cancelado"
-        attList={attendeesList.cancelledBookings}
-      />
+      {(!!attendeesList || isLoading) && (
+        <div className="flex flex-col gap-5 mb-4">
+          <AttendeesListSection
+            titleKey="Normal"
+            isLoading={isLoading}
+            attList={attendeesList?.recurrentBookings ?? []}
+          />
+          <AttendeesListSection
+            titleKey="Recovery"
+            isLoading={isLoading}
+            attList={attendeesList?.recoveryBookings ?? []}
+          />
+          <AttendeesListSection
+            isLoading={isLoading}
+            titleKey="Cancellation"
+            attList={attendeesList?.cancelledBookings ?? []}
+          />
+        </div>
+      )}
     </AttendeesListWrapper>
   );
 };

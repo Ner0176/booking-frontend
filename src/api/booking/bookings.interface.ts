@@ -6,9 +6,9 @@ export interface GetBookingPayload {
 }
 
 export interface CreateBookingPayload {
-  classId: string;
+  classId?: string;
   userIds: number[];
-  isRecurrent: boolean;
+  recurrentId?: string;
 }
 
 export interface GetUserBookingsParams {

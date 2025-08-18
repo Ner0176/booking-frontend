@@ -32,8 +32,14 @@ export interface EditClassPayload {
 }
 
 export interface DeleteClassPayload {
-  id: string;
+  id: number;
   isRecurrent: boolean;
+}
+
+interface IRecurrent {
+  id: number;
+  recurrency: string;
+  color: string | null;
 }
 
 export interface IClass {
@@ -44,6 +50,5 @@ export interface IClass {
   maxAmount: number;
   cancelled: boolean;
   currentCount: number;
-  color: string | null;
-  recurrentId: string | null;
+  recurrent: IRecurrent | null;
 }

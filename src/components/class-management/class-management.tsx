@@ -49,7 +49,9 @@ export const ClassesManagementDashboard = () => {
     let title = t("Classes.Title");
 
     if (!!classId && selectedClass?.date) {
-      const titleType = !selectedClass.recurrentId ? "Title" : "RecurrentTitle";
+      const titleType = !selectedClass.recurrent?.id
+        ? "Title"
+        : "RecurrentTitle";
       title = t(`Classes.ClassDetails.${titleType}`);
     }
 

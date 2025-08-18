@@ -19,18 +19,24 @@ import Skeleton from "react-loading-skeleton";
 import { useNavigate } from "react-router-dom";
 import { UserCard } from "../../../users";
 import noUsers from "../../../../assets/images/noData/folders.svg";
+import { useSearchParamsManager } from "../../../../hooks";
 
 export const AttendeesListSection = ({
-  title,
   attList,
+  titleKey,
   isLoading,
-}: Readonly<{ title: string; attList: IUser[]; isLoading: boolean }>) => {
-  const { t } = useTranslation();
+}: Readonly<{ titleKey: string; attList: IUser[]; isLoading: boolean }>) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const basePath = "Classes.ClassDetails.AssistantsType";
+
+  if (!attList.length) return null;
 
   return (
-    <div className="flex flex-col gap-3">
-      <span className="font-bold text-lg">{title}</span>
+    <div className="flex flex-col gap-2">
+      <span className="font-bold text-base sm:text-lg">
+        {t(`${basePath}.${titleKey}`)}
+      </span>
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[...Array(6)].map((key) => (
@@ -82,7 +88,12 @@ export const EditListModal = ({
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
 
-  const { id, maxAmount, recurrentId } = classData;
+  const { params, setParams } = useSearchParamsManager(["type"]);
+
+  const recurrenceType = (params.get("type") ??
+    "recurrent") as RecurrentOptionType;
+
+  const { id, maxAmount, recurrent } = classData;
 
   const SELECT_OPTIONS = [
     {
@@ -97,7 +108,6 @@ export const EditListModal = ({
 
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
-  const [recurrenceType, setRecurrenceType] = useState<RecurrentOptionType>();
 
   const { mutate: editBookings, isPending: isLoading } =
     useEditBookings(refetch);
@@ -112,9 +122,13 @@ export const EditListModal = ({
   }, [search, usersList]);
 
   useEffect(() => {
-    if (!!recurrentId && !recurrenceType) setRecurrenceType("recurrent");
+    if (!!recurrent && !recurrenceType) handleChangeRecurrence("recurrent");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recurrentId]);
+  }, [recurrent]);
+
+  const handleChangeRecurrence = (value: RecurrentOptionType | undefined) => {
+    setParams([{ key: "type", value }]);
+  };
 
   const handleEditBooking = () => {
     if (attendeesList.length > maxAmount) {
@@ -129,7 +143,7 @@ export const EditListModal = ({
     editBookings({
       isRecurrent: editRecurrently,
       userIds: attendeesList.map(({ id }) => id),
-      classId: `${editRecurrently ? recurrentId : id}`,
+      classId: `${editRecurrently ? recurrent?.id : id}`,
     });
   };
 
@@ -156,13 +170,13 @@ export const EditListModal = ({
             placeholder={t(`Base.SearchUser`)}
             handleChange={(value) => setSearch(value)}
           />
-          {recurrentId &&
+          {!!recurrent &&
             (isMobile ? (
               <CustomSelect
                 options={SELECT_OPTIONS}
                 selectedValue={recurrenceType ?? ""}
                 handleChange={(v) =>
-                  setRecurrenceType(v as RecurrentOptionType)
+                  handleChangeRecurrence(v as RecurrentOptionType)
                 }
               />
             ) : (
@@ -171,7 +185,7 @@ export const EditListModal = ({
                   options={SELECT_OPTIONS}
                   value={recurrenceType ?? "recurrence"}
                   handleChange={(value) =>
-                    setRecurrenceType(value as RecurrentOptionType)
+                    handleChangeRecurrence(value as RecurrentOptionType)
                   }
                 />
               </div>

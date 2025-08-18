@@ -53,11 +53,11 @@ export const ClassCardContent = ({
 
   const {
     date,
-    color,
     endTime,
     startTime,
     maxAmount,
     cancelled,
+    recurrent,
     currentCount,
   } = data;
 
@@ -98,9 +98,12 @@ export const ClassCardContent = ({
       <ItemInfoRow icon={mdiCalendarOutline}>
         {formatToLongDate(date, user?.language)}
       </ItemInfoRow>
-      {!!user?.isAdmin && !!color && (
+      {!!user?.isAdmin && !!recurrent?.color && (
         <div
-          style={{ backgroundColor: color !== "#FFFFFF" ? color : undefined }}
+          style={{
+            backgroundColor:
+              recurrent.color !== "#FFFFFF" ? recurrent.color : undefined,
+          }}
           className="absolute z-20 right-0 top-0 h-full w-12 rounded-tr-xl rounded-br-xl"
         />
       )}
