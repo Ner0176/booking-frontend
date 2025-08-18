@@ -30,9 +30,9 @@ export const CreateClassModal = ({
 
   const [recurrency, setRecurrency] =
     useState<RecurrentOptionType>("recurrent");
-  const [classId, setClassId] = useState<string>("");
+  const [classId, setClassId] = useState<number>(-1);
   const [usersList, setUsersList] = useState<IUser[]>([]);
-  const [recurrentId, setRecurrentId] = useState<string>("");
+  const [recurrentId, setRecurrentId] = useState<number>(-1);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [showAddUsers, setShowAddUsers] = useState<boolean>(false);
   const [fields, setFields] = useState<IClassFields>(emptyClassFields);

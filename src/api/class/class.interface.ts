@@ -16,11 +16,6 @@ export interface CreateClassPayload {
   recurrencyLimit?: Date;
 }
 
-export interface UpdateClassColor {
-  color: string;
-  recurrentId: string;
-}
-
 export interface EditClassPayload {
   id: string;
   date?: Date;

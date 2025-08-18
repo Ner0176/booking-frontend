@@ -6,12 +6,12 @@ import {
   EditClassPayload,
   GetClassesPayload,
   IClass,
-  UpdateClassColor,
 } from "./class.interface";
 import { IClassIds, RecurrentOptionType, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
 import { capitalize } from "../../utils";
+import { recurrentClassApi } from "../recurrent-class";
 
 export function useGetAllClasses(payload: GetClassesPayload) {
   const { enabled, ...filters } = payload;
@@ -30,14 +30,14 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
     mutationFn: (payload: CreateClassPayload) => classApi.createClass(payload),
     onSuccess(data) {
       let classIds = {
-        id: "",
-        recurrentId: "",
+        id: -1,
+        recurrentId: -1,
       };
 
       if (!!data.length) {
         classIds = {
-          id: `${data[0].id}`,
-          recurrentId: `${data[0].recurrent?.id}` || "",
+          id: data[0].id,
+          recurrentId: data[0].recurrent?.id || -1,
         };
       }
 
@@ -69,28 +69,6 @@ export function useEditClass(handleSuccess: () => void) {
   });
 }
 
-export function useUpdateColor(handleSuccess: () => void) {
-  const { t } = useTranslation();
-  const basePath = "Classes.ClassDetails.UpdateColor";
-
-  return useMutation<any, any, any>({
-    mutationFn: (payload: UpdateClassColor) => classApi.updateColor(payload),
-    onSuccess() {
-      handleSuccess();
-      showToast({
-        type: "success",
-        text: t(`${basePath}.Success`),
-      });
-    },
-    onError(error) {
-      showToast({
-        type: "error",
-        text: error.response.data.message ?? t(`${basePath}.Error`),
-      });
-    },
-  });
-}
-
 export function useDeleteClass(
   refetchClasses: () => void,
   deleteOption?: RecurrentOptionType
@@ -101,8 +79,9 @@ export function useDeleteClass(
 
   return useMutation({
     mutationFn: async ({ id, isRecurrent }: DeleteClassPayload) => {
-      if (isRecurrent) return await classApi.deleteRecurrentClasses(id);
-      else return await classApi.deleteClass(id);
+      if (isRecurrent) {
+        return await recurrentClassApi.deleteRecurrentClasses(id);
+      } else return await classApi.deleteClass(id);
     },
     onSuccess() {
       showToast({

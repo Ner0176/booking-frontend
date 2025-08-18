@@ -3,7 +3,6 @@ import {
   CreateClassPayload,
   EditClassPayload,
   GetClassesPayload,
-  UpdateClassColor,
 } from "./class.interface";
 
 export const classApi = {
@@ -40,15 +39,7 @@ export const classApi = {
   editClass: async ({ id, ...payload }: EditClassPayload) => {
     await axiosInstance.patch(`/class/${id}`, payload);
   },
-  updateColor: async ({ color, recurrentId }: UpdateClassColor) => {
-    await axiosInstance.patch(`/recurrent-class/color/${recurrentId}`, {
-      color,
-    });
-  },
   deleteClass: async (id: number) => {
     await axiosInstance.delete(`/class/${id}`);
-  },
-  deleteRecurrentClasses: async (recurrentId: number) => {
-    await axiosInstance.delete(`/recurrent-class/${recurrentId}`);
   },
 };

@@ -1,11 +1,6 @@
-import {
-  IClass,
-  IUser,
-  useGetAllUsers,
-  useGetClassBookingsUsers,
-} from "../../../api";
+import { IClass, useGetClassBookingsUsers } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { getWeekday } from "../../../utils";
 import { ClassSettingsMobile, DeleteClassModal } from "./class-details.content";
 import { ClassDetailsData, EditClassDetailsModal } from "./class-data";
@@ -24,8 +19,6 @@ export const ClassDetails = ({
     "action",
   ]);
 
-  const isRecurrentEditing = params.get("type") === "recurrent";
-
   const showEditClassView = params.get("action") === "edit-class";
   const showDeleteModal = params.get("action") === "delete-class";
   const showFiltersModal = params.get("modal") === "filters" && isMobile;
@@ -39,45 +32,11 @@ export const ClassDetails = ({
 
   const { id, date, endTime, startTime, recurrent } = classData;
 
-  const [usersList, setUsersList] = useState<IUser[]>([]);
-  const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
-
   const {
     data: classBookingsUsers,
     refetch: refetchBookings,
     isLoading: isBookingsLoading,
   } = useGetClassBookingsUsers({ classId: id });
-  const { data: users, isLoading: isUsersLoading } = useGetAllUsers();
-
-  const { initUsersList, initAttendeesList } = useMemo(() => {
-    let filteredUsers: IUser[] = [];
-    let bookingsUsers: IUser[] = [];
-
-    if (!!users && !!classBookingsUsers) {
-      const { cancelledBookings, recurrentBookings, recoveryBookings } =
-        classBookingsUsers;
-
-      bookingsUsers = isRecurrentEditing
-        ? [...recurrentBookings, ...cancelledBookings]
-        : [...recurrentBookings, ...recoveryBookings];
-      const bookingsUserIds = new Set(bookingsUsers.map((user) => user.id));
-      filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
-    }
-
-    return {
-      initUsersList: filteredUsers,
-      initAttendeesList: bookingsUsers,
-    };
-  }, [users, classBookingsUsers, isRecurrentEditing]);
-
-  const initializeState = useCallback(() => {
-    setUsersList(initUsersList);
-    setAttendeesList(initAttendeesList);
-  }, [initUsersList, initAttendeesList]);
-
-  useEffect(() => {
-    initializeState();
-  }, [initializeState]);
 
   useEffect(() => {
     if (!classVisual) {
@@ -87,7 +46,6 @@ export const ClassDetails = ({
 
   const handleCloseAction = () => {
     setParams([{ key: "type" }, { key: "action" }]);
-    initializeState();
   };
 
   const handleEditClass = () => {
@@ -100,8 +58,8 @@ export const ClassDetails = ({
         <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
           {showAttendeesList && (
             <ClassAttendeesList
+              isLoading={isBookingsLoading}
               attendeesList={classBookingsUsers}
-              isLoading={isBookingsLoading || isUsersLoading}
               editAttendeesList={() =>
                 setParams([{ key: "action", value: "edit-attendees" }])
               }
@@ -117,18 +75,15 @@ export const ClassDetails = ({
           )}
         </div>
       </div>
-      {showEditAttendeesView && (
+      {showEditAttendeesView && !!classBookingsUsers && (
         <EditListModal
           refetch={() => {
             refetchClasses();
             refetchBookings();
           }}
           classData={classData}
-          usersList={usersList}
-          setUsersList={setUsersList}
-          attendeesList={attendeesList}
           handleClose={handleCloseAction}
-          setAttendeesList={setAttendeesList}
+          classAttendees={classBookingsUsers}
         />
       )}
       {showEditClassView && (

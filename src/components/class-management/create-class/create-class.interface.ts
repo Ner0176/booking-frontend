@@ -28,6 +28,6 @@ export interface IRowConfig {
 }
 
 export interface IClassIds {
-  id: string;
-  recurrentId: string;
+  id: number;
+  recurrentId: number;
 }

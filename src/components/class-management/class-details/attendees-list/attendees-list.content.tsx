@@ -1,5 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IClass, IUser, useEditBookings } from "../../../../api";
+import { useEffect, useMemo, useState } from "react";
+import {
+  IClass,
+  IClassBookingsUsers,
+  IUser,
+  useEditBookings,
+  useGetAllUsers,
+  useGetRecurrentUsers,
+} from "../../../../api";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import { stringIncludes } from "../../../../utils";
@@ -71,19 +78,13 @@ export const AttendeesListSection = ({
 export const EditListModal = ({
   refetch,
   classData,
-  usersList,
   handleClose,
-  setUsersList,
-  attendeesList,
-  setAttendeesList,
+  classAttendees,
 }: Readonly<{
   refetch(): void;
   classData: IClass;
-  usersList: IUser[];
   handleClose(): void;
-  attendeesList: IUser[];
-  setUsersList: Dispatch<SetStateAction<IUser[]>>;
-  setAttendeesList: Dispatch<SetStateAction<IUser[]>>;
+  classAttendees: IClassBookingsUsers;
 }>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
@@ -107,10 +108,43 @@ export const EditListModal = ({
   ];
 
   const [search, setSearch] = useState("");
+  const [usersList, setUsersList] = useState<IUser[]>([]);
+  const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
 
+  const { data: users } = useGetAllUsers();
   const { mutate: editBookings, isPending: isLoading } =
     useEditBookings(refetch);
+  const { data: recurrentUsers } = useGetRecurrentUsers({
+    recurrentId: recurrent?.id ?? -1,
+    enabled: recurrenceType === "recurrent" && !!recurrent?.id,
+  });
+
+  const { initUsersList, initAttendeesList } = useMemo(() => {
+    let filteredUsers: IUser[] = [];
+    let bookingsUsers: IUser[] = [];
+
+    if (!!users && !!recurrentUsers && !!classAttendees) {
+      const { recurrentBookings, recoveryBookings } = classAttendees;
+
+      bookingsUsers =
+        recurrenceType === "recurrent"
+          ? recurrentUsers
+          : [...recurrentBookings, ...recoveryBookings];
+      const bookingsUserIds = new Set(bookingsUsers.map((user) => user.id));
+      filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
+    }
+
+    return {
+      initUsersList: filteredUsers,
+      initAttendeesList: bookingsUsers,
+    };
+  }, [users, recurrentUsers, classAttendees, recurrenceType]);
+
+  useEffect(() => {
+    setUsersList(initUsersList);
+    setAttendeesList(initAttendeesList);
+  }, [initAttendeesList, initUsersList]);
 
   useEffect(() => {
     if (!search) setFilteredUsers(usersList);
@@ -141,9 +175,9 @@ export const EditListModal = ({
 
     const editRecurrently = recurrenceType === "recurrent";
     editBookings({
-      isRecurrent: editRecurrently,
       userIds: attendeesList.map(({ id }) => id),
-      classId: `${editRecurrently ? recurrent?.id : id}`,
+      classId: !editRecurrently ? id : undefined,
+      recurrentId: editRecurrently ? recurrent?.id : undefined,
     });
   };
 
