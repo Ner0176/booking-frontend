@@ -32,6 +32,7 @@ export const CreateClassModal = ({
     useState<RecurrentOptionType>("recurrent");
   const [classId, setClassId] = useState<string>("");
   const [usersList, setUsersList] = useState<IUser[]>([]);
+  const [recurrentId, setRecurrentId] = useState<string>("");
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [showAddUsers, setShowAddUsers] = useState<boolean>(false);
   const [fields, setFields] = useState<IClassFields>(emptyClassFields);
@@ -43,7 +44,8 @@ export const CreateClassModal = ({
 
   const handleClassSuccess = ({ id, recurrentId }: IClassIds) => {
     setShowAddUsers(true);
-    setClassId(recurrency === "recurrent" ? recurrentId : id);
+    setClassId(id);
+    setRecurrentId(recurrentId);
   };
 
   const { data: users } = useGetAllUsers();
@@ -85,10 +87,11 @@ export const CreateClassModal = ({
       return;
     }
 
+    const isRecurrent = recurrency === "recurrent";
     createBookings({
-      classId,
-      isRecurrent: recurrency === "recurrent",
       userIds: attendeesList.map(({ id }) => id),
+      classId: !isRecurrent ? classId : undefined,
+      recurrentId: isRecurrent ? recurrentId : undefined,
     });
   };
 
