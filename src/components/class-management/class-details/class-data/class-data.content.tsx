@@ -30,7 +30,7 @@ export const ClassDetailsCard = ({
   const basePath = `Classes.ClassDetails.Cards.${capitalize(type)}`;
 
   const user = useUser();
-  const { date, startTime, endTime, maxAmount, currentCount, recurrentId } =
+  const { date, startTime, endTime, maxAmount, currentCount, recurrent } =
     classData;
 
   const cardDetails = useMemo(() => {
@@ -62,7 +62,7 @@ export const ClassDetailsCard = ({
         },
       ];
 
-      if (!!recurrentId) {
+      if (!!recurrent) {
         details.push({
           icon: mdiCalendarSyncOutline,
           text: t(`${basePath}.Recurrency`, {

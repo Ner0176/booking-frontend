@@ -177,6 +177,11 @@
       "Edit": "Editar assistents",
       "Details": "Detalls de la classe",
       "RecurrentTitle": "Classe recurrent",
+      "AssistantsType": {
+        "Normal": "Assistents d'aquesta classe",
+        "Recovery": "Recuperacions",
+        "Cancellation": "Cancel·lacions"
+      },
       "Cards": {
         "Schedule": {
           "Title": "Horaris",

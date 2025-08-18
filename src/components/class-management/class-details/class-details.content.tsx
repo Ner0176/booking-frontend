@@ -29,8 +29,8 @@ export const DeleteClassModal = ({
   id: number;
   dateTime: string;
   handleClose(): void;
+  recurrentId?: number;
   refetchClasses(): void;
-  recurrentId: string | null;
 }>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.Delete";
@@ -39,14 +39,14 @@ export const DeleteClassModal = ({
 
   const { mutate: deleteClass, isPending: isLoading } = useDeleteClass(
     refetchClasses,
-    selectedOption === "recurrent"
+    selectedOption
   );
 
   const handleDelete = () => {
     const isRecurrent = !!recurrentId && selectedOption === "recurrent";
     deleteClass({
       isRecurrent,
-      id: isRecurrent ? recurrentId : id.toString(),
+      id: isRecurrent ? recurrentId : id,
     });
   };
 

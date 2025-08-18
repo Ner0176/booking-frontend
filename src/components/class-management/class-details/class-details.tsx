@@ -1,4 +1,9 @@
-import { IClass, IUser, useGetAllUsers, useGetBookings } from "../../../api";
+import {
+  IClass,
+  IUser,
+  useGetAllUsers,
+  useGetClassBookingsUsers,
+} from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getWeekday } from "../../../utils";
@@ -13,10 +18,13 @@ export const ClassDetails = ({
   refetchClasses,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
   const { params, setParams } = useSearchParamsManager([
+    "type",
     "modal",
     "visual",
     "action",
   ]);
+
+  const isRecurrentEditing = params.get("type") === "recurrent";
 
   const showEditClassView = params.get("action") === "edit-class";
   const showDeleteModal = params.get("action") === "delete-class";
@@ -29,25 +37,30 @@ export const ClassDetails = ({
   const showClassDetailsData =
     classVisual === "all" || classVisual === "details";
 
-  const { id, date, endTime, startTime, recurrentId } = classData;
+  const { id, date, endTime, startTime, recurrent } = classData;
 
   const [usersList, setUsersList] = useState<IUser[]>([]);
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
 
   const {
-    data: bookings,
+    data: classBookingsUsers,
     refetch: refetchBookings,
     isLoading: isBookingsLoading,
-  } = useGetBookings({ classId: id });
+  } = useGetClassBookingsUsers({ classId: id });
   const { data: users, isLoading: isUsersLoading } = useGetAllUsers();
 
   const { initUsersList, initAttendeesList } = useMemo(() => {
     let filteredUsers: IUser[] = [];
     let bookingsUsers: IUser[] = [];
 
-    if (users && bookings) {
-      bookingsUsers = bookings.map(({ user }) => user);
-      const bookingsUserIds = new Set(bookings.map(({ user }) => user.id));
+    if (!!users && !!classBookingsUsers) {
+      const { cancelledBookings, recurrentBookings, recoveryBookings } =
+        classBookingsUsers;
+
+      bookingsUsers = isRecurrentEditing
+        ? [...recurrentBookings, ...cancelledBookings]
+        : [...recurrentBookings, ...recoveryBookings];
+      const bookingsUserIds = new Set(bookingsUsers.map((user) => user.id));
       filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
     }
 
@@ -55,7 +68,7 @@ export const ClassDetails = ({
       initUsersList: filteredUsers,
       initAttendeesList: bookingsUsers,
     };
-  }, [users, bookings]);
+  }, [users, classBookingsUsers, isRecurrentEditing]);
 
   const initializeState = useCallback(() => {
     setUsersList(initUsersList);
@@ -87,7 +100,7 @@ export const ClassDetails = ({
         <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
           {showAttendeesList && (
             <ClassAttendeesList
-              attendeesList={attendeesList}
+              attendeesList={classBookingsUsers}
               isLoading={isBookingsLoading || isUsersLoading}
               editAttendeesList={() =>
                 setParams([{ key: "action", value: "edit-attendees" }])
@@ -131,7 +144,7 @@ export const ClassDetails = ({
       {showDeleteModal && (
         <DeleteClassModal
           id={id}
-          recurrentId={recurrentId}
+          recurrentId={recurrent?.id}
           refetchClasses={refetchClasses}
           handleClose={() => setParams([{ key: "action" }])}
           dateTime={`${getWeekday(date)}  ${startTime}h - ${endTime}h`}

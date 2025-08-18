@@ -21,6 +21,8 @@ export const ClassDetailsData = ({
 }>) => {
   const { t } = useTranslation();
 
+  const { recurrent } = classData;
+
   const [hasEdited, setHasEdited] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
 
@@ -32,8 +34,8 @@ export const ClassDetailsData = ({
   );
 
   useEffect(() => {
-    setSelectedColor(!classData.color ? "#FFFFFF" : classData.color);
-  }, [classData]);
+    setSelectedColor(!recurrent?.color ? "#FFFFFF" : recurrent.color);
+  }, [recurrent]);
 
   return (
     <ClassDetailsWrapper>
@@ -54,7 +56,7 @@ export const ClassDetailsData = ({
           </div>
           <ClassDetailsCard type="schedule" classData={classData} />
           <ClassDetailsCard type="amount" classData={classData} />
-          {!!classData.recurrentId && (
+          {!!recurrent?.id && (
             <CardContainer style={{ gap: 20 }}>
               <div className="flex flex-row items-center gap-3">
                 <span className="text-xs sm:text-sm font-semibold">Color:</span>
@@ -76,7 +78,7 @@ export const ClassDetailsData = ({
                     color="secondary"
                     onClick={() => {
                       setHasEdited(false);
-                      setSelectedColor(classData.color ?? "white");
+                      setSelectedColor(recurrent?.color ?? "white");
                     }}
                   >
                     {t("Base.Buttons.Cancel")}
@@ -86,7 +88,7 @@ export const ClassDetailsData = ({
                     onClick={() =>
                       updateColor({
                         color: selectedColor,
-                        recurrentId: classData.recurrentId,
+                        recurrentId: recurrent?.id,
                       })
                     }
                   >

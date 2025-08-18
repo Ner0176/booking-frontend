@@ -1,7 +1,6 @@
 import { axiosInstance } from "../axios-instance";
 import {
   CreateClassPayload,
-  DeleteClassPayload,
   EditClassPayload,
   GetClassesPayload,
   UpdateClassColor,
@@ -42,13 +41,14 @@ export const classApi = {
     await axiosInstance.patch(`/class/${id}`, payload);
   },
   updateColor: async ({ color, recurrentId }: UpdateClassColor) => {
-    await axiosInstance.patch(`/class/color/${recurrentId}`, { color });
+    await axiosInstance.patch(`/recurrent-class/color/${recurrentId}`, {
+      color,
+    });
   },
-  deleteClass: async ({ id, isRecurrent }: DeleteClassPayload) => {
-    const params = new URLSearchParams();
-
-    params.append("isRecurrent", `${isRecurrent}`);
-
-    await axiosInstance.delete(`/class/${id}`, { params });
+  deleteClass: async (id: number) => {
+    await axiosInstance.delete(`/class/${id}`);
+  },
+  deleteRecurrentClasses: async (recurrentId: number) => {
+    await axiosInstance.delete(`/recurrent-class/${recurrentId}`);
   },
 };

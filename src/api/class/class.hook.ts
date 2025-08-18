@@ -8,9 +8,10 @@ import {
   IClass,
   UpdateClassColor,
 } from "./class.interface";
-import { IClassIds, showToast } from "../../components";
+import { IClassIds, RecurrentOptionType, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 import { useSearchParamsManager } from "../../hooks";
+import { capitalize } from "../../utils";
 
 export function useGetAllClasses(payload: GetClassesPayload) {
   const { enabled, ...filters } = payload;
@@ -36,7 +37,7 @@ export function useCreateClass(handleSuccess: (value: IClassIds) => void) {
       if (!!data.length) {
         classIds = {
           id: `${data[0].id}`,
-          recurrentId: data[0].recurrentId || "",
+          recurrentId: `${data[0].recurrent?.id}` || "",
         };
       }
 
@@ -92,19 +93,22 @@ export function useUpdateColor(handleSuccess: () => void) {
 
 export function useDeleteClass(
   refetchClasses: () => void,
-  isRecurrent: boolean
+  deleteOption?: RecurrentOptionType
 ) {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.Delete";
   const { setParams } = useSearchParamsManager([]);
 
   return useMutation({
-    mutationFn: (payload: DeleteClassPayload) => classApi.deleteClass(payload),
+    mutationFn: async ({ id, isRecurrent }: DeleteClassPayload) => {
+      if (isRecurrent) return await classApi.deleteRecurrentClasses(id);
+      else return await classApi.deleteClass(id);
+    },
     onSuccess() {
       showToast({
         type: "success",
         text: t(
-          `${basePath}.Success.${isRecurrent ? "Recurrent" : "Specific"}`
+          `${basePath}.Success.${capitalize(deleteOption ?? "Recurrent")}`
         ),
       });
       setParams([{ key: "class" }, { key: "action" }]);
