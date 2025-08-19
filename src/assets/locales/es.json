@@ -308,6 +308,15 @@
       "CreateBookings": {
         "Success": "Los usuarios han sido añadidos a la clase correctamente"
       }
+    },
+    "OverflowModal": {
+      "Title": "Clases con desbordamiento",
+      "Message": "Algunas clases recurrentes no tenían espacio disponible para nuevos usuarios. Los usuarios se asignaron automáticamente a las clases con cupo libre, y las que no tenían espacio aparecen listadas a continuación. Revísalas y ajústalas manualmente.",
+      "Class": "Clase {{date}}",
+      "duration": "<strong>Duración:</strong> {{startTime}}h - {{endTime}}h",
+      "currentCount": "<strong>Asistentes:</strong> {{value}}",
+      "maxAmount": "<strong>Capacidad máxima:</strong> {{value}}",
+      "Users": "Usuarios sin asignar:"
     }
   },
   "Users": {

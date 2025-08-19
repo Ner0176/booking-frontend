@@ -11,7 +11,7 @@ export const ModalContainer = styled.div`
 export const ModalWrapper = styled.div<{ type: ModalType }>`
   ${isMobile
     ? tw`flex flex-col gap-4 py-5 px-4 h-full rounded-t-2xl`
-    : tw`flex flex-col gap-6 shadow-lg rounded-2xl w-1/2`}
+    : tw`flex flex-col gap-6 shadow-lg rounded-2xl w-[85%] lg:w-2/3 xl:w-1/2`}
   ${({ type }) => (type === "default" ? tw`bg-white` : tw`bg-red-50`)}
 `;
 export const ModalHeader = styled.span<{ type: ModalType }>`

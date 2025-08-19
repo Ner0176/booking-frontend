@@ -1,7 +1,12 @@
 import { Trans, useTranslation } from "react-i18next";
 import { Fragment, useState } from "react";
 import { RecurrentOptionType } from "./class-details.interface";
-import { useDeleteClass, useEditClass } from "../../../api";
+import {
+  ClassesWithOverflow,
+  IClass,
+  useDeleteClass,
+  useEditClass,
+} from "../../../api";
 import {
   ActionCard,
   CardContainer,
@@ -18,6 +23,7 @@ import {
   DeleteRecurrentWrapper,
 } from "./class-details.styled";
 import { isMobile } from "react-device-detect";
+import { format } from "date-fns";
 
 export const DeleteClassModal = ({
   id,
@@ -207,6 +213,83 @@ export const ClassSettingsMobile = ({
           )}
           <CustomActionCard action="Delete" handleClick={handleDeleteClass} />
         </CardContainer>
+      </div>
+    </Modal>
+  );
+};
+
+const CLASS_DATA = ["currentCount", "maxAmount"];
+export const OverflowClassesModal = ({
+  data,
+  handleClose,
+}: Readonly<{ data: ClassesWithOverflow[]; handleClose(): void }>) => {
+  const { t } = useTranslation();
+  const basePath = "Classes.OverflowModal";
+
+  return (
+    <Modal handleClose={handleClose} title={t(`${basePath}.Title`)}>
+      <div className="flex flex-col gap-6 sm:gap-8 pb-6 h-full overflow-y-auto">
+        <p className="text-xs sm:text-sm text-justify">
+          {t(`${basePath}.Message`)}
+        </p>
+        <ul className="flex flex-col gap-5">
+          {data.map(({ class: classInstance, users }) => {
+            const { id, date, startTime, endTime, recurrent } = classInstance;
+            return (
+              <div
+                key={id}
+                style={{ backgroundColor: recurrent?.color ?? undefined }}
+                className="rounded-2xl border border-neutral-200 p-4 shadow-sm"
+              >
+                <span className="text-base sm:text-lg font-bold">
+                  {t(`${basePath}.Class`, {
+                    date: format(new Date(date), "dd/MM/yyyy"),
+                    time: `${startTime}h - ${endTime}h`,
+                  })}
+                </span>
+                <div className="mt-2 grid grid-cols-2 gap-4">
+                  <div className="flex flex-col text-xs sm:text-sm gap-1">
+                    {CLASS_DATA.map((value) => (
+                      <span key={value}>
+                        <Trans
+                          i18nKey={`${basePath}.${value}`}
+                          values={{
+                            value: classInstance[value as keyof IClass],
+                          }}
+                          components={{
+                            strong: <span className="font-semibold" />,
+                          }}
+                        />
+                      </span>
+                    ))}
+                    <span>
+                      <Trans
+                        i18nKey={`${basePath}.duration`}
+                        values={{
+                          startTime,
+                          endTime,
+                        }}
+                        components={{
+                          strong: <span className="font-semibold" />,
+                        }}
+                      />
+                    </span>
+                  </div>
+                  <div className="text-xs sm:text-sm">
+                    <span className="font-semibold">
+                      {t(`${basePath}.Users`)}
+                    </span>
+                    <ul className="mt-1 list-disc list-inside">
+                      {users.map((item) => (
+                        <li key={item.id}>{item.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </ul>
       </div>
     </Modal>
   );

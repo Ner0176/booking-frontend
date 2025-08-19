@@ -1,8 +1,16 @@
-import { IClass, useGetClassBookingsUsers } from "../../../api";
+import {
+  ClassesWithOverflow,
+  IClass,
+  useGetClassBookingsUsers,
+} from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getWeekday } from "../../../utils";
-import { ClassSettingsMobile, DeleteClassModal } from "./class-details.content";
+import {
+  ClassSettingsMobile,
+  DeleteClassModal,
+  OverflowClassesModal,
+} from "./class-details.content";
 import { ClassDetailsData, EditClassDetailsModal } from "./class-data";
 import { ClassAttendeesList, EditListModal } from "./attendees-list";
 import { isMobile } from "react-device-detect";
@@ -37,6 +45,10 @@ export const ClassDetails = ({
     refetch: refetchBookings,
     isLoading: isBookingsLoading,
   } = useGetClassBookingsUsers({ classId: id });
+
+  const [classesWithOverflow, setClassesWithOverflow] = useState<
+    ClassesWithOverflow[]
+  >([]);
 
   useEffect(() => {
     if (!classVisual) {
@@ -84,6 +96,7 @@ export const ClassDetails = ({
           classData={classData}
           handleClose={handleCloseAction}
           classAttendees={classBookingsUsers}
+          setClassesWithOverflow={setClassesWithOverflow}
         />
       )}
       {showEditClassView && (
@@ -121,6 +134,12 @@ export const ClassDetails = ({
           }
           handleClose={() => setParams([{ key: "modal" }])}
           setCurrentVisual={(value) => setParams([{ key: "visual", value }])}
+        />
+      )}
+      {classesWithOverflow.length > 0 && (
+        <OverflowClassesModal
+          data={classesWithOverflow}
+          handleClose={() => setClassesWithOverflow([])}
         />
       )}
     </>

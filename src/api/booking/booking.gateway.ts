@@ -47,7 +47,8 @@ export const bookingApi = {
     await axiosInstance.post("/booking/create", payload);
   },
   editBookings: async (payload: CreateBookingPayload) => {
-    await axiosInstance.patch("/booking/edit", payload);
+    const response = await axiosInstance.patch("/booking/edit", payload);
+    return response.data;
   },
   cancelBooking: async (bookingId: number, userId: number) => {
     await axiosInstance.patch(`/booking/${bookingId}`, { userId });

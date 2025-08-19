@@ -31,6 +31,11 @@ export interface IClassBookingsUsers {
   recurrentBookings: IUser[];
 }
 
+export interface ClassesWithOverflow {
+  class: IClass;
+  users: IUser[];
+}
+
 export interface IUserBooking {
   id: number;
   class: IClass | null;

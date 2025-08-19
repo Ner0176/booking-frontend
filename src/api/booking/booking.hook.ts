@@ -2,6 +2,7 @@ import { bookingApi } from "./booking.gateway";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateBookingPayload,
+  ClassesWithOverflow,
   GetBookingPayload,
   GetUserBookingsParams,
   IClassBookingsUsers,
@@ -87,17 +88,17 @@ export function useRecoverBooking(handleRefetch: () => void) {
   });
 }
 
-export function useEditBookings(refetch: () => void) {
+export function useEditBookings(
+  handleSuccess: (data: ClassesWithOverflow[]) => void
+) {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
-  const { setParams } = useSearchParamsManager([]);
 
   return useMutation<any, any, any>({
     mutationFn: (payload: CreateBookingPayload) =>
       bookingApi.editBookings(payload),
-    onSuccess() {
-      refetch();
-      setParams([{ key: "action" }]);
+    onSuccess(data: ClassesWithOverflow[]) {
+      handleSuccess(data);
       showToast({
         type: "success",
         text: t(`${basePath}.Success`),

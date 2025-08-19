@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import {
+  ClassesWithOverflow,
   IClass,
   IClassBookingsUsers,
   IUser,
@@ -80,11 +81,13 @@ export const EditListModal = ({
   classData,
   handleClose,
   classAttendees,
+  setClassesWithOverflow,
 }: Readonly<{
   refetch(): void;
   classData: IClass;
   handleClose(): void;
   classAttendees: IClassBookingsUsers;
+  setClassesWithOverflow: Dispatch<SetStateAction<ClassesWithOverflow[]>>;
 }>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails.AttendeesList.Edit";
@@ -112,9 +115,15 @@ export const EditListModal = ({
   const [attendeesList, setAttendeesList] = useState<IUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
 
+  const handleSuccessEdit = (data: ClassesWithOverflow[]) => {
+    refetch();
+    setClassesWithOverflow(data);
+    setParams([{ key: "action" }]);
+  };
+
   const { data: users } = useGetAllUsers();
   const { mutate: editBookings, isPending: isLoading } =
-    useEditBookings(refetch);
+    useEditBookings(handleSuccessEdit);
   const { data: recurrentUsers } = useGetRecurrentUsers({
     recurrentId: recurrent?.id ?? -1,
     enabled: recurrenceType === "recurrent" && !!recurrent?.id,

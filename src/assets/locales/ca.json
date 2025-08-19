@@ -306,6 +306,15 @@
       "CreateBookings": {
         "Success": "Els usuaris han estat afegits a la classe correctament"
       }
+    },
+    "OverflowModal": {
+      "Title": "Classes amb desbordament",
+      "Message": "Algunes classes recurrents no tenien espai disponible per a nous usuaris. Els usuaris s'han assignat automàticament a les classes amb lloc lliure, i les que no en tenien apareixen a la llista de davall. Revisa-les i ajusta-les manualment.",
+      "Class": "Classe {{date}}",
+      "duration": "<strong>Duració:</strong> {{startTime}}h - {{endTime}}h",
+      "currentCount": "<strong>Assistents:</strong> {{value}}",
+      "maxAmount": "<strong>Capacitat màxima:</strong> {{value}}",
+      "Users": "Usuaris sense assignar:"
     }
   },
   "Users": {
