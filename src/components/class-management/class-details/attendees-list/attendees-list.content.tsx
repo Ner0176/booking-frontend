@@ -130,22 +130,22 @@ export const EditListModal = ({
   });
 
   const { initUsersList, initAttendeesList } = useMemo(() => {
-    let filteredUsers: IUser[] = [];
-    let bookingsUsers: IUser[] = [];
-
-    if (!!users && !!recurrentUsers && !!classAttendees) {
-      const { recurrentBookings, recoveryBookings } = classAttendees;
-
-      bookingsUsers =
-        recurrenceType === "recurrent"
-          ? recurrentUsers
-          : [...recurrentBookings, ...recoveryBookings];
-      const bookingsUserIds = new Set(bookingsUsers.map((user) => user.id));
-      filteredUsers = users.filter(({ id }) => !bookingsUserIds.has(id));
+    if (!users || !classAttendees) {
+      return { initUsersList: [], initAttendeesList: [] };
     }
 
+    const { recurrentBookings = [], recoveryBookings = [] } = classAttendees;
+
+    const bookingsUsers: IUser[] =
+      recurrenceType === "recurrent"
+        ? recurrentUsers ?? []
+        : [...recurrentBookings, ...recoveryBookings];
+
+    const bookedIds = new Set(bookingsUsers.map((u) => u.id));
+    const available = users.filter((u) => !bookedIds.has(u.id));
+
     return {
-      initUsersList: filteredUsers,
+      initUsersList: available,
       initAttendeesList: bookingsUsers,
     };
   }, [users, recurrentUsers, classAttendees, recurrenceType]);
@@ -226,7 +226,7 @@ export const EditListModal = ({
               <div style={{ width: "100%" }}>
                 <SwitchSelector
                   options={SELECT_OPTIONS}
-                  value={recurrenceType ?? "recurrence"}
+                  value={recurrenceType ?? "recurrent"}
                   handleChange={(value) =>
                     handleChangeRecurrence(value as RecurrentOptionType)
                   }
