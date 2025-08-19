@@ -256,7 +256,7 @@
         "Placeholder": "Cercar assistents...",
         "Edit": {
           "Options": {
-            "Recurrent": "Edició recurrent",
+            "Recurrent": "Edició recurrent *",
             "Specific": "Edició puntual",
             "Short": {
               "Recurrent": "Recurrent",
@@ -264,6 +264,7 @@
             }
           },
           "Success": "La llista d'assistents ha estat editada correctament",
+          "WarningMessage": "* Tingues en compte que l’edició recurrent només mostra els assistents habituals de la classe. Els assistents puntuals o els que estiguin recuperant una sessió no apareixeran en aquesta llista.",
           "MaxAmountError": "El nombre de participants supera la capacitat màxima"
         }
       }

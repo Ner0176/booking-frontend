@@ -235,13 +235,20 @@ export const EditListModal = ({
               </div>
             ))}
         </div>
-        <UsersTransferList
-          assignedUsers={attendeesList}
-          availableUsers={filteredUsers}
-          setAvailableUsers={setUsersList}
-          listMaxSpots={classData.maxAmount}
-          setAssignedUsers={setAttendeesList}
-        />
+        <div className="flex flex-col gap-5 h-full -mt-3">
+          {recurrenceType === "recurrent" && (
+            <span className="text-violet-600 text-xs sm:text-sm italic">
+              {t(`${basePath}.WarningMessage`)}
+            </span>
+          )}
+          <UsersTransferList
+            assignedUsers={attendeesList}
+            availableUsers={filteredUsers}
+            setAvailableUsers={setUsersList}
+            listMaxSpots={classData.maxAmount}
+            setAssignedUsers={setAttendeesList}
+          />
+        </div>
       </div>
     </Modal>
   );

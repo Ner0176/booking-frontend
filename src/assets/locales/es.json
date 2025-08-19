@@ -258,7 +258,7 @@
         "Placeholder": "Buscar asistentes...",
         "Edit": {
           "Options": {
-            "Recurrent": "Edición recurrente",
+            "Recurrent": "Edición recurrente *",
             "Specific": "Edición puntual",
             "Short": {
               "Recurrent": "Recurrente",
@@ -266,6 +266,7 @@
             }
           },
           "Success": "La lista de asistentes ha sido editada correctamente",
+          "WarningMessage": "* Ten en cuenta que la edición recurrente solo muestra a los asistentes habituales de la clase. Los asistentes puntuales o los que estén recuperando una sesión no aparecerán en esta lista.",
           "MaxAmountError": "El número de participantes excede la capacidad máxima"
         }
       }
