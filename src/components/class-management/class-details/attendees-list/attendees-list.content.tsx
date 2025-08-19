@@ -94,8 +94,7 @@ export const EditListModal = ({
 
   const { params, setParams } = useSearchParamsManager(["type"]);
 
-  const recurrenceType = (params.get("type") ??
-    "recurrent") as RecurrentOptionType;
+  const recurrenceType = params.get("type") as RecurrentOptionType;
 
   const { id, maxAmount, recurrent } = classData;
 
@@ -134,7 +133,7 @@ export const EditListModal = ({
       return { initUsersList: [], initAttendeesList: [] };
     }
 
-    const { recurrentBookings = [], recoveryBookings = [] } = classAttendees;
+    const { recurrentBookings, recoveryBookings } = classAttendees;
 
     const bookingsUsers: IUser[] =
       recurrenceType === "recurrent"
@@ -165,9 +164,11 @@ export const EditListModal = ({
   }, [search, usersList]);
 
   useEffect(() => {
-    if (!!recurrent && !recurrenceType) handleChangeRecurrence("recurrent");
+    if (!recurrenceType) {
+      handleChangeRecurrence(!!recurrent ? "recurrent" : "specific");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recurrent]);
+  }, [recurrent, recurrenceType]);
 
   const handleChangeRecurrence = (value: RecurrentOptionType | undefined) => {
     setParams([{ key: "type", value }]);
