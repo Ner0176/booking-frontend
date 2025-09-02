@@ -35,8 +35,15 @@ export function useGetBookingsFromUser({
   });
 }
 
-export function useGetUserBookingsStats(userId: number) {
+export function useGetUserBookingsStats({
+  userId,
+  enabled,
+}: {
+  userId: number;
+  enabled: boolean;
+}) {
   return useQuery<IUserBookingStats>({
+    enabled,
     queryKey: ["getUserBookingsStats", userId],
     queryFn: () => bookingApi.getUserBookingStats(userId),
   });

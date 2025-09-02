@@ -59,7 +59,7 @@ export const UserDetails = ({
   const { data: hasCancellations, refetch: refetchAvailableCancellations } =
     useHasAvailableCancellations();
   const { data: userStats, isLoading: isLoadingStats } =
-    useGetUserBookingsStats(id);
+    useGetUserBookingsStats({ userId: id, enabled: true });
   const {
     data: userBookings,
     refetch: refetchBookings,

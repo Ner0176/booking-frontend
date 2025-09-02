@@ -347,7 +347,7 @@
       "Stats": {
         "Title": "Estadísticas",
         "completed": "✅ Clases realizadas: {{amount}}",
-        "cancelled": "❌ Clases canceladas: {{amount}}",
+        "cancelled": "❌ Clases canceladas este mes: {{amount}}",
         "pending": "⏳ Clases pendientes: {{amount}}",
         "firstday": "📅 Primera clase realizada: {{amount}}"
       },
