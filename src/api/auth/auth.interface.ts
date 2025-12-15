@@ -4,6 +4,7 @@ export interface SignUpPayload {
   phone: string;
   password: string;
   language: string;
+  isAdmin?: boolean;
 }
 
 export interface LoginPayload {

@@ -22,9 +22,15 @@ import {
   IAuthErrors,
   IAuthFields,
   initAuthErrors,
+  UserRoleType,
 } from "./auth-form.interface";
 import { useLogin, useSignUp } from "../../../api";
-import { CustomInputField, LanguageSelector, LoadingSpinner } from "../../base";
+import {
+  CustomInputField,
+  CustomSelect,
+  LanguageSelector,
+  LoadingSpinner,
+} from "../../base";
 import { checkPhone } from "../../../utils";
 import { useUser } from "../../../stores";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +43,10 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const showRoleSelect = process.env.NODE_ENV !== "production";
+
   const [formType, setFormType] = useState<FormType>(type);
+  const [userRole, setUserRole] = useState<UserRoleType>("admin");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [authErrors, setAuthErrors] = useState<IAuthErrors>(initAuthErrors);
   const [authFields, setAuthFields] = useState<IAuthFields>(emptyAuthFields);
@@ -63,6 +72,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
       signUp({
         ...authFields,
         language: user?.language || "es",
+        isAdmin: showRoleSelect && userRole === "admin",
       });
     } else {
       login({ email: authFields.email, password: authFields.password });
@@ -79,19 +89,39 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     <AuthDashboard title={t(`Auth.${formType}.Title`)}>
       {formType === "SignUp" && (
         <>
-          <CustomInputField
-            value={authFields.name}
-            icon={{ name: mdiAccountOutline }}
-            title={t("Auth.Fields.Name.Title")}
-            placeholder={t("Auth.Fields.Name.Placeholder")}
-            handleBlur={() => {
-              let showError = false;
-              if (!authFields.name.trim().length) showError = true;
-              handleErrors("name", showError);
+          <SignUpFieldsContainer
+            style={{
+              gridTemplateColumns: `repeat(${
+                showRoleSelect ? 2 : 1
+              }, minmax(0, 1fr))`,
             }}
-            handleChange={(v) => handleAuthFields("name", v)}
-            error={authErrors.name ? t("Auth.Errors.Name") : undefined}
-          />
+          >
+            <CustomInputField
+              value={authFields.name}
+              icon={{ name: mdiAccountOutline }}
+              title={t("Auth.Fields.Name.Title")}
+              placeholder={t("Auth.Fields.Name.Placeholder")}
+              handleBlur={() => {
+                let showError = false;
+                if (!authFields.name.trim().length) showError = true;
+                handleErrors("name", showError);
+              }}
+              handleChange={(v) => handleAuthFields("name", v)}
+              error={authErrors.name ? t("Auth.Errors.Name") : undefined}
+            />
+            {showRoleSelect && (
+              <CustomSelect
+                fullWidth
+                selectedValue={userRole}
+                title={t("Auth.SignUp.Roles.Title")}
+                handleChange={(role) => setUserRole(role as UserRoleType)}
+                options={[
+                  { key: "admin", text: t("Auth.SignUp.Roles.admin") },
+                  { key: "attendee", text: t("Auth.SignUp.Roles.attendee") },
+                ]}
+              />
+            )}
+          </SignUpFieldsContainer>
           <SignUpFieldsContainer>
             <CustomInputField
               placeholder="-"

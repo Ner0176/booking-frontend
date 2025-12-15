@@ -56,7 +56,12 @@
     },
     "SignUp": {
       "Title": "Registrarse",
-      "NoAccount": "¿Ya tienes una cuenta?"
+      "NoAccount": "¿Ya tienes una cuenta?",
+      "Roles": {
+        "Title": "Rol",
+        "admin": "Admin",
+        "attendee": "Alumno"
+      }
     },
     "ForgotPassword": {
       "Title": "Restablece tu contraseña",

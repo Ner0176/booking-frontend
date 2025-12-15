@@ -1,4 +1,5 @@
 export type FormType = "Login" | "SignUp";
+export type UserRoleType = "attendee" | "admin";
 
 export interface IAuthFields {
   name: string;
