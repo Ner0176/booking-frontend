@@ -43,8 +43,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const showRoleSelect = process.env.NODE_ENV !== "production";
-  console.log(process.env.NODE_ENV);
+  const showRoleSelect = process.env.VERCEL_ENV !== "production";
 
   const [formType, setFormType] = useState<FormType>(type);
   const [userRole, setUserRole] = useState<UserRoleType>("admin");
