@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL:
-    process.env.VERCEL_ENV === "development"
+    process.env.REACT_APP_VERCEL_ENV === "development"
       ? "http://localhost:8000"
       : process.env.REACT_APP_BACK_PROD_URL,
   headers: {
