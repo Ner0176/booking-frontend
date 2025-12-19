@@ -19,7 +19,7 @@ export const UsersDashboard = () => {
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
 
-  const { data: usersList, isLoading, refetch } = useGetAllUsers();
+  const { data: usersList, refetch, isLoading } = useGetAllUsers();
 
   useEffect(() => {
     if (usersList) {
@@ -55,36 +55,39 @@ export const UsersDashboard = () => {
             placeholder={t(`Base.SearchUser`)}
             handleChange={(value) => setSearch(value)}
           />
-          <div className="flex flex-wrap w-full gap-4">
-            {isLoading ? (
-              [...Array(10)].map((key) => (
-                <Skeleton
-                  key={key}
-                  style={{
-                    height: 75,
-                    borderRadius: 16,
-                    width: isMobile ? "100%" : 325,
-                  }}
-                />
-              ))
-            ) : filteredUsers.length > 0 ? (
-              filteredUsers.map((item, idx) => (
-                <UserCard
-                  key={idx}
-                  user={item}
-                  handleClick={() =>
-                    setParams([{ key: "userId", value: `${item.id}` }])
-                  }
-                />
-              ))
-            ) : (
-              <EmptyData
-                image={noDataLoading}
-                title={t("Users.NoData")}
-                customStyles={{ paddingTop: 80 }}
+
+          {isLoading ? (
+            [...Array(10)].map((key) => (
+              <Skeleton
+                key={key}
+                style={{
+                  borderRadius: 16,
+                  height: isMobile ? 75 : 90,
+                  width: isMobile ? "100%" : 325,
+                }}
               />
-            )}
-          </div>
+            ))
+          ) : (
+            <div className="flex flex-wrap w-full gap-4">
+              {filteredUsers.length > 0 ? (
+                filteredUsers.map((item, idx) => (
+                  <UserCard
+                    key={idx}
+                    user={item}
+                    handleClick={() =>
+                      setParams([{ key: "userId", value: `${item.id}` }])
+                    }
+                  />
+                ))
+              ) : (
+                <EmptyData
+                  image={noDataLoading}
+                  title={t("Users.NoData")}
+                  customStyles={{ paddingTop: 80 }}
+                />
+              )}
+            </div>
+          )}
         </div>
       )}
     </DashboardSkeleton>

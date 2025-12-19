@@ -94,8 +94,15 @@ export const ClassesManagementDashboard = () => {
         {!!classId && selectedClass ? (
           <ClassDetails classData={selectedClass} refetchClasses={refetch} />
         ) : isLoading ? (
-          [...Array(6)].map((key) => (
-            <Skeleton key={key} className="w-full h-[150px] rounded-2xl" />
+          [...Array(20)].map((key) => (
+            <Skeleton
+              key={key}
+              style={{
+                borderRadius: 16,
+                height: isMobile ? 125 : 150,
+                width: isMobile ? "100%" : 350,
+              }}
+            />
           ))
         ) : !!data && data.length > 0 ? (
           data.map((item, idx) => (
