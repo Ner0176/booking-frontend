@@ -4,11 +4,12 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale/es";
 import { ca } from "date-fns/locale/ca";
+import { enGB } from "date-fns/locale/en-GB";
 import { useTranslation } from "react-i18next";
 import { CustomEvent, CustomToolbar } from "./calendar.content";
 import { IAccount, useGetAllClasses, useGetBookingsFromUser } from "../../api";
 import { CSSProperties, useCallback, useMemo, useState } from "react";
-import { mergeDateTime } from "../../utils";
+import { getLongLngName, mergeDateTime } from "../../utils";
 import { calendarMessageKeys } from "./calendar.interface";
 import { useUser } from "../../stores";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,7 @@ const LOCALIZER = dateFnsLocalizer({
   format,
   parse,
   getDay,
-  locales: { "es-ES": es, "ca-ES": ca },
+  locales: { "es-ES": es, "ca-ES": ca, "en-GB": enGB },
   startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 1 }),
 });
 
@@ -116,12 +117,12 @@ export const CalendarDashboard = () => {
           localizer={LOCALIZER}
           style={{ height: "100%" }}
           dayPropGetter={dayPropGetter}
-          culture={`${i18n.language}-ES`}
           min={new Date(2025, 1, 1, 8, 0)}
           max={new Date(2025, 1, 1, 22, 0)}
           eventPropGetter={eventPropGetter}
           onSelectEvent={handleSelectEvent}
           messages={getCalendarTranslations()}
+          culture={getLongLngName(i18n.language)}
           onView={(view) => setCurrentView(view)}
           onNavigate={(date) => setCurrentDate(date)}
           components={{

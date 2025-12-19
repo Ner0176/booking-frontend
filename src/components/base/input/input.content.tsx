@@ -4,6 +4,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { useUser } from "../../../stores";
 import { es } from "date-fns/locale/es";
 import { ca } from "date-fns/locale/ca";
+import { enGB } from "date-fns/locale/en-GB";
 import { format, isValid, parse } from "date-fns";
 import { useEffect } from "react";
 
@@ -25,6 +26,7 @@ export const CustomMobileInput = ({
   useEffect(() => {
     registerLocale("es", es);
     registerLocale("ca", ca);
+    registerLocale("en", enGB);
   }, []);
 
   return (

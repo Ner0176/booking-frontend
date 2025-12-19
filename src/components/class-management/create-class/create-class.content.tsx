@@ -7,6 +7,7 @@ import { handleCheckField } from "./create-class.utils";
 import { getWeekday, stringIncludes } from "../../../utils";
 import { mdiMagnify } from "@mdi/js";
 import { IUser } from "../../../api";
+import i18n from "../../../i18n";
 
 const FieldRows = ({
   fields,
@@ -120,7 +121,11 @@ export const RecurrentFields = ({
             id: "tooltip-dayOfWeek",
             text: t(`${basePath}.Tooltip.dayOfWeek`),
           }}
-          value={fields.date.value ? getWeekday(fields.date.value) : "-"}
+          value={
+            fields.date.value
+              ? getWeekday(fields.date.value, i18n.language)
+              : "-"
+          }
         />
       </FieldRows>
       <FieldRows

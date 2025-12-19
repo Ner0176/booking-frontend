@@ -1,6 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { IClass, useEditClass } from "../../../../api";
-import { capitalize, formatTime, formatToLongDate } from "../../../../utils";
+import {
+  capitalize,
+  formatTime,
+  formatToLongDate,
+  getLocaleLng,
+} from "../../../../utils";
 import { useUser } from "../../../../stores";
 import { useEffect, useMemo, useState } from "react";
 import { IClassDetailsCard } from "./class-data.interface";
@@ -11,8 +16,6 @@ import {
   mdiCalendarSyncOutline,
   mdiClockOutline,
 } from "@mdi/js";
-import { es } from "date-fns/locale/es";
-import { ca } from "date-fns/locale/ca";
 import { CardContainer, CustomButton, Modal } from "../../../base";
 import Icon from "@mdi/react";
 import { format } from "date-fns";
@@ -68,7 +71,7 @@ export const ClassDetailsCard = ({
           text: t(`${basePath}.Recurrency`, {
             recurrency: capitalize(
               format(new Date(date), "EEEE", {
-                locale: user?.language === "es" ? es : ca,
+                locale: getLocaleLng(user?.language),
               })
             ),
           }),

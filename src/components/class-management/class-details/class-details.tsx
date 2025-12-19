@@ -16,11 +16,13 @@ import { ClassAttendeesList, EditListModal } from "./attendees-list";
 import { isMobile } from "react-device-detect";
 import { isClassCompleted } from "../class-management.utils";
 import { isBefore } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 export const ClassDetails = ({
   classData,
   refetchClasses,
 }: Readonly<{ classData: IClass; refetchClasses(): void }>) => {
+  const { i18n } = useTranslation();
   const { params, setParams } = useSearchParamsManager([
     "type",
     "modal",
@@ -123,7 +125,10 @@ export const ClassDetails = ({
           recurrentId={recurrent?.id}
           refetchClasses={refetchClasses}
           handleClose={() => setParams([{ key: "action" }])}
-          dateTime={`${getWeekday(date)}  ${startTime}h - ${endTime}h`}
+          dateTime={`${getWeekday(
+            date,
+            i18n.language
+          )}  ${startTime}h - ${endTime}h`}
         />
       )}
       {showFiltersModal && (

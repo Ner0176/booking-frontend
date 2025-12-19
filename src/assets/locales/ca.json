@@ -44,7 +44,8 @@
     },
     "Languages": {
       "es": "Castellà",
-      "ca": "Català"
+      "ca": "Català",
+      "en": "Anglès"
     }
   },
   "Auth": {

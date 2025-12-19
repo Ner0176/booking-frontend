@@ -1,0 +1,464 @@
+{
+  "Base": {
+    "EndDate": "End date",
+    "StartDate": "Start date",
+    "SearchUser": "Search users...",
+    "DeleteConfirmation": {
+      "Key": "Confirm action",
+      "Description": "<strong>Warning:</strong> this action is <strong>irreversible</strong>. To continue, type <strong>Confirm action</strong> in the field below.",
+      "Error": "You must type exactly 'Confirm action'"
+    },
+    "Colors": {
+      "pink": "Pastel pink",
+      "peach": "Peach",
+      "yellow": "Pastel yellow",
+      "mint": "Mint green",
+      "green": "Pastel green",
+      "turquoise": "Soft turquoise",
+      "white": "White",
+      "blue_lavender": "Lavender blue",
+      "purple": "Pastel lilac",
+      "purple_lavender": "Pinkish lavender",
+      "coral": "Light coral",
+      "grey": "Soft grey"
+    },
+    "Buttons": {
+      "Edit": "Edit",
+      "Options": "Options",
+      "Skip": "Skip step",
+      "Cancel": "Cancel",
+      "Delete": "Delete",
+      "Back": "Go back",
+      "Discard": "Discard",
+      "Continue": "Continue",
+      "Save": "Save changes",
+      "CreateClass": "Create class"
+    },
+    "DayOfWeek": {
+      "MONDAY": "Monday",
+      "TUESDAY": "Tuesday",
+      "WEDNESDAY": "Wednesday",
+      "THURSDAY": "Thursday",
+      "FRIDAY": "Friday",
+      "SATURDAY": "Saturday",
+      "SUNDAY": "Sunday"
+    },
+    "Languages": {
+      "es": "Spanish",
+      "ca": "Catalan",
+      "en": "English"
+    }
+  },
+  "Auth": {
+    "Login": {
+      "Title": "Login",
+      "NoAccount": "Don't have an account yet?",
+      "ForgotPassword": "Forgot your password?"
+    },
+    "SignUp": {
+      "Title": "Sign up",
+      "NoAccount": "Already have an account?",
+      "Roles": {
+        "Title": "Role",
+        "admin": "Admin",
+        "attendee": "Student"
+      }
+    },
+    "ForgotPassword": {
+      "Title": "Reset your password",
+      "Description": "Enter your email address and we will send instructions to reset your password",
+      "BackToLogin": "Back to login",
+      "Success": "Check the inbox of the provided email",
+      "Error": "An error occurred while trying to reset the password"
+    },
+    "ChangePassword": {
+      "Title": "Change your password",
+      "Button": "Change password",
+      "EmptyPassword": "Passwords do not match",
+      "Success": "Password has been changed successfully",
+      "Error": "An error occurred while trying to change the password"
+    },
+    "Fields": {
+      "Phone": "Phone (optional)",
+      "Password": {
+        "Title": "Password",
+        "Placeholder": "Enter a password..."
+      },
+      "ConfirmPassword": "Confirm password",
+      "Name": {
+        "Title": "Full name",
+        "Placeholder": "Enter your full name..."
+      },
+      "Email": "Email",
+      "Language": "Language"
+    },
+    "Errors": {
+      "Name": "This field is required",
+      "Email": "Enter a valid email",
+      "Phone": "Enter a valid phone number",
+      "Password": "Password must be at least {{value}} characters"
+    },
+    "InvalidRoute": {
+      "Title": "Error 404",
+      "Description": "Page not found"
+    }
+  },
+  "Calendar": {
+    "Title": "My calendar",
+    "Event": {
+      "Title": {
+        "Booking": "My booking: {{startTime}}-{{endTime}}",
+        "Class": "Class: {{startTime}}-{{endTime}}"
+      },
+      "Attendees": "Attendees: {{currentCount}}/{{maxAmount}}"
+    },
+    "Messages": {
+      "allDay": "All day",
+      "previous": "Previous",
+      "next": "Next",
+      "today": "Today",
+      "month": "Month",
+      "week": "Week",
+      "work_week": "Work week",
+      "day": "Day",
+      "agenda": "Agenda",
+      "date": "Date",
+      "time": "Time",
+      "event": "Event",
+      "showMore": "+ See more ({{total}})",
+      "noEventsInRange": "No events in this date range.",
+      "tomorrow": "Tomorrow",
+      "yesterday": "Yesterday",
+      "now": "Now",
+      "back": "Back"
+    }
+  },
+  "Classes": {
+    "Title": "Class management",
+    "NoData": "No classes available with the selected filters",
+    "ClassMaxSpots": "The capacity limit for this class is {{amount}}.",
+    "Filters": {
+      "Status": {
+        "Title": "Status",
+        "Options": {
+          "all": "All",
+          "pending": "Pending",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        }
+      },
+      "Time": {
+        "Title": "Time",
+        "Options": {
+          "all": "All time",
+          "today": "Today",
+          "week": "This week",
+          "month": "This month",
+          "last3Months": "Last 3 months",
+          "last6Months": "Last 6 months",
+          "custom": "Custom"
+        }
+      },
+      "Modal": {
+        "Actions": {
+          "Title": "Actions",
+          "CreateClass": {
+            "Title": "Create",
+            "Description": "Create a single class or a set of recurring classes"
+          }
+        },
+        "Filters": {
+          "Title": "Filters",
+          "Status": {
+            "Title": "Status filter",
+            "Description": "Displays classes according to their status"
+          },
+          "Time": {
+            "Title": "Time filter",
+            "Description": "Displays classes within a specific time range"
+          }
+        }
+      }
+    },
+    "ClassDetails": {
+      "Title": "Single class",
+      "Edit": "Edit attendees",
+      "Details": "Class details",
+      "RecurrentTitle": "Recurring class",
+      "AssistantsType": {
+        "Normal": "Attendees of this class",
+        "Recovery": "Make-up sessions",
+        "Cancellation": "Cancellations"
+      },
+      "Cards": {
+        "Schedule": {
+          "Title": "Schedules",
+          "Date": "Date: {{date}}",
+          "Schedule": "Time: {{schedule}}",
+          "Recurrency": "Recurrence: {{recurrency}}"
+        },
+        "Amount": {
+          "Title": "Capacity",
+          "MaxAmount": "Maximum capacity: {{maxAmount}}",
+          "CurrentCount": "Current attendees: {{currentCount}}"
+        }
+      },
+      "UpdateColor": {
+        "Success": "Class color has been updated",
+        "Error": "Failed to update class color"
+      },
+      "Filters": {
+        "Title": "Class actions",
+        "Switch": {
+          "Attendees": "Attendees list",
+          "Details": "Class data"
+        },
+        "Actions": "Actions",
+        "Edit": {
+          "Title": "Edit",
+          "Button": "Edit class",
+          "Description": "Class attributes can be edited either as a single instance or recurrently"
+        },
+        "Cancel": {
+          "Title": "Cancel",
+          "Button": "Cancel class",
+          "Description": "The class will be cancelled and attendees will have the option to schedule a new session"
+        },
+        "Enable": {
+          "Title": "Enable",
+          "Button": "Enable class",
+          "Description": "The class will be enabled and attendees will regain access to the session"
+        },
+        "Delete": {
+          "Title": "Delete",
+          "Button": "Delete class",
+          "Description": "The class and its bookings will be permanently deleted"
+        }
+      },
+      "Delete": {
+        "Title": "Delete class",
+        "Description": "Note that deleting a class will also delete <strong>all associated bookings</strong>.",
+        "Validation": "You must select an option",
+        "Recurrent": {
+          "Title": "Delete recurring class",
+          "Options": {
+            "Specific": "Delete this class",
+            "Recurrent": "Delete all classes from <NewLine /> {{dateTime}}"
+          },
+          "Description": "This class is part of the recurring class group <strong>{{dateTime}}</strong>. You can choose to delete the entire recurring group or only this specific class."
+        },
+        "Success": {
+          "Specific": "The class has been deleted successfully",
+          "Recurrent": "Recurring classes have been deleted successfully"
+        },
+        "Error": "An error occurred while trying to delete the class"
+      },
+      "Status": {
+        "Cancel": "Cancel class",
+        "Enable": "Enable class",
+        "Success": "Class status has been updated successfully"
+      },
+      "AttendeesList": {
+        "Title": "Attendees list",
+        "Empty": "No participants yet",
+        "Placeholder": "Search attendees...",
+        "Edit": {
+          "Options": {
+            "Recurrent": "Recurring edit *",
+            "Specific": "Single edit",
+            "Short": {
+              "Recurrent": "Recurring",
+              "Specific": "Single"
+            }
+          },
+          "Success": "Attendees list has been updated successfully",
+          "WarningMessage": "* Note that recurring edit only shows regular attendees. Single attendees or those making up sessions will not appear in this list.",
+          "MaxAmountError": "Number of participants exceeds maximum capacity"
+        }
+      }
+    },
+    "CreateClass": {
+      "AddAttendees": "Add participants",
+      "Attendees": "{{currentCount}} / {{maxAmount}} attendees",
+      "Fields": {
+        "date": "Class date",
+        "startDate": "Start date",
+        "recurrencyLimit": "End date",
+        "startTime": "Start time",
+        "endTime": "End time",
+        "maxAmount": "Maximum capacity",
+        "dayOfWeek": "Day of the week",
+        "Tooltip": {
+          "date": "The class will be created from the selected date",
+          "recurrencyLimit": "The class will repeat until the selected end date",
+          "dayOfWeek": "The class will repeat on the selected weekdays"
+        },
+        "Errors": {
+          "startDate": "Start date must be before end date",
+          "recurrencyLimit": "End date must be after start date",
+          "startTime": "Start time must be before end time",
+          "endTime": "End time must be after start time",
+          "maxAmount": "Capacity must be at least 1",
+          "emptyField": "This field is required"
+        }
+      },
+      "Recurrent": {
+        "Title": "Recurring class",
+        "Description": "The class will repeat until the specified end date"
+      },
+      "Specific": {
+        "Title": "Single class",
+        "Description": "The class will be created only for the selected date"
+      },
+      "Success": "The class has been created successfully",
+      "SubmitError": "Please fill in all fields correctly",
+      "CreateBookings": {
+        "Success": "Users have been added to the class successfully"
+      }
+    },
+    "OverflowModal": {
+      "Title": "Overflow classes",
+      "Message": "Some recurring classes had no space available for new users. Users were automatically assigned to classes with available spots, and the ones without space are listed below. Please review and adjust manually.",
+      "Class": "Class {{date}}",
+      "duration": "<strong>Duration:</strong> {{startTime}}h - {{endTime}}h",
+      "currentCount": "<strong>Attendees:</strong> {{value}}",
+      "maxAmount": "<strong>Maximum capacity:</strong> {{value}}",
+      "Users": "Unassigned users:"
+    }
+  },
+  "Users": {
+    "Title": "Users",
+    "View": "View profile",
+    "NoData": "No users found with the selected filters",
+    "Details": {
+      "Title": "User details",
+      "Delete": {
+        "Title": "Delete user",
+        "Success": "User deleted successfully",
+        "Error": "An error occurred while trying to delete the user",
+        "Description": "This action <strong>will delete</strong> the user <strong>{{name}}</strong> from the platform. All their data, including bookings, will be permanently <strong>removed.</strong>"
+      },
+      "Information": "User information",
+      "Data": "Personal data",
+      "SwitchOptions": {
+        "pending": "Pending",
+        "cancelled": "Cancelled",
+        "completed": "Completed"
+      },
+      "Empty": {
+        "pending": "This user has no pending classes",
+        "completed": "This user has not completed any classes yet",
+        "cancelled": "This user has not cancelled any classes"
+      },
+      "Stats": {
+        "Title": "Statistics",
+        "completed": "✅ Completed classes: {{amount}}",
+        "cancelled": "❌ Classes cancelled this month: {{amount}}",
+        "pending": "⏳ Pending classes: {{amount}}",
+        "firstday": "📅 First class completed: {{amount}}"
+      },
+      "Filters": {
+        "Title": "User actions",
+        "Switch": {
+          "History": "Class history",
+          "Details": "User data"
+        },
+        "Delete": {
+          "Title": "Delete user",
+          "Description": "This user and all their bookings will be removed from the platform",
+          "Button": "Delete permanently"
+        }
+      }
+    }
+  },
+  "Profile": {
+    "Title": "My profile",
+    "Edit": {
+      "Button": "Edit profile",
+      "Success": "Your profile has been updated successfully"
+    },
+    "NoData": "No data associated with your profile was found"
+  },
+  "Policies": {
+    "Title": "Cancellation policies",
+    "Error": "An error occurred while trying to retrieve the cancellation policies",
+    "maxAdvanceTime": {
+      "Title": "📅 Maximum advance booking time",
+      "Text": "Users may book their sessions with a <strong>maximum advance of {{total}} days</strong>. Bookings that exceed this limit will <strongRed>NOT</strongRed> be accepted to ensure proper planning and class availability."
+    },
+    "maxCancellationPerMonth": {
+      "Title": "🛑 Monthly cancellation limit",
+      "Text": "Users may cancel <strong>up to {{total}} classes per month</strong>. Once this limit is exceeded, any additional cancellation will be considered <strongRed>NOT</strongRed> recoverable."
+    },
+    "cancellationRepeat": {
+      "Title": "⚠️ Repeated cancellations",
+      "Text": "The same booking <strong>cannot be cancelled more than once</strong>. If a cancellation is attempted again, it will be considered late and there will be <strongRed>NO</strongRed> recovery option."
+    },
+    "minHoursBeforeCancellation": {
+      "Title": "⏳ Cancellation deadline",
+      "Text": "Users may cancel a booking <strong>up to {{total}} hours before the class starts</strong>. If the cancellation is made after this deadline, it will be considered late and <strongRed>NO</strongRed> recovery conditions will apply."
+    },
+    "maxRecoveryDays": {
+      "Title": "🔄 Class recovery",
+      "Text": "A class cancelled within the allowed timeframe may be rescheduled or recovered <strong>within a maximum period of {{total}} days</strong>. If it is not used within that period, it will be considered lost and there will be <strongRed>NO</strongRed> option for later recovery."
+    },
+    "specific": {
+      "Title": "📌 Specific cases",
+      "Text": "For special or exceptional situations, it is recommended to contact the instructor directly to evaluate possible solutions or recovery alternatives."
+    }
+  },
+  "UserBookings": {
+    "Title": "My bookings",
+    "NoData": "No bookings found with the selected filters",
+    "LostClass": "MISSED CLASS",
+    "RecoverClass": "Recover class",
+    "CancelledAt": "Cancellation date: {{date}}",
+    "RecoveryLimit": "Recover before: {{date}}",
+    "BookClass": {
+      "Title": "Recover class",
+      "Book": "Book class",
+      "EmptyList": "No classes available in the next {{days}} days",
+      "AlreadyFull": {
+        "Button": "Full class",
+        "Message": "The class is full"
+      },
+      "Fields": {
+        "Date": "Date",
+        "FreeSpots": "Available spots",
+        "Start": "Start time",
+        "End": "End time"
+      },
+      "Success": "Class booked successfully"
+    },
+    "Cancel": {
+      "Title": "Cancel booking",
+      "Success": "Booking cancelled successfully",
+      "Exhausted": "You have no more cancellations available this month",
+      "Description": "By cancelling your booking for the class on {{date}}, you will <strong>lose your spot</strong>, which may be taken by someone else. <newLine /><newLine /> Before proceeding, make sure to read and understand the <strongLink>cancellation policies.</strongLink>"
+    }
+  },
+  "Settings": {
+    "Title": "General settings",
+    "Cancelation": {
+      "Title": "Class cancellation",
+      "MaxAdvanceTime": "Maximum booking advance (days)",
+      "MaxCancelations": "Maximum cancellations (per month)",
+      "Anticipation": "Minimum notice (hours)",
+      "MaxRecovery": "Maximum recovery period (days)",
+      "Success": "Cancellation settings updated successfully",
+      "Error": "An error occurred while trying to update the cancellation settings"
+    }
+  },
+  "Sidebar": {
+    "Options": {
+      "Calendar": "Calendar",
+      "Management": "Class management",
+      "Bookings": "Bookings",
+      "Users": "Users",
+      "Profile": "My profile",
+      "SignOut": "Sign out",
+      "Settings": "Settings",
+      "Policies": "Policies"
+    }
+  }
+}

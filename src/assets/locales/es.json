@@ -45,7 +45,8 @@
     },
     "Languages": {
       "es": "Castellano",
-      "ca": "Catalán"
+      "ca": "Catalán",
+      "en": "Inglés"
     }
   },
   "Auth": {

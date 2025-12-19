@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { CustomSelect } from "../select";
 import { useUpdateUser } from "../../../stores";
 
-const CURRENT_LANGUAGES = ["es", "ca"];
+const CURRENT_LANGUAGES = ["es", "ca", "en"];
 export const LanguageSelector = ({
   handleChange,
   selectedValue,
