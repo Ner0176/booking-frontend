@@ -4,8 +4,8 @@ import {
   useGetClassBookingsUsers,
 } from "../../../api";
 import { useSearchParamsManager } from "../../../hooks";
-import { useEffect, useState } from "react";
-import { getWeekday } from "../../../utils";
+import { useEffect, useMemo, useState } from "react";
+import { getWeekday, mergeDateTime } from "../../../utils";
 import {
   ClassSettingsMobile,
   DeleteClassModal,
@@ -15,6 +15,7 @@ import { ClassDetailsData, EditClassDetailsModal } from "./class-data";
 import { ClassAttendeesList, EditListModal } from "./attendees-list";
 import { isMobile } from "react-device-detect";
 import { isClassCompleted } from "../class-management.utils";
+import { isBefore } from "date-fns";
 
 export const ClassDetails = ({
   classData,
@@ -64,6 +65,12 @@ export const ClassDetails = ({
     setParams([{ key: "modal" }, { key: "action", value: "edit-class" }]);
   };
 
+  const showEditButton = useMemo(() => {
+    const now = new Date();
+    const formattedDate = mergeDateTime(date, endTime);
+    return isBefore(now, formattedDate);
+  }, [date, endTime]);
+
   return (
     <>
       <div className="flex flex-col justify-between w-full">
@@ -71,6 +78,7 @@ export const ClassDetails = ({
           {showAttendeesList && (
             <ClassAttendeesList
               isLoading={isBookingsLoading}
+              showEditButton={showEditButton}
               attendeesList={classBookingsUsers}
               editAttendeesList={() =>
                 setParams([{ key: "action", value: "edit-attendees" }])

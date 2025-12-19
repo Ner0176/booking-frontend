@@ -14,9 +14,11 @@ import { AttendeesListSection } from "./attendees-list.content";
 export const ClassAttendeesList = ({
   isLoading,
   attendeesList,
+  showEditButton,
   editAttendeesList,
 }: Readonly<{
   isLoading: boolean;
+  showEditButton: boolean;
   editAttendeesList(): void;
   attendeesList: IClassBookingsUsers | undefined;
 }>) => {
@@ -34,12 +36,17 @@ export const ClassAttendeesList = ({
           handleChange={(value) => setSearch(value)}
           placeholder={t(`${basePath}.AttendeesList.Placeholder`)}
         />
-        <EditAttendeesButton onClick={editAttendeesList}>
-          <Icon className="size-3 sm:size-3.5 mt-0.5" path={mdiPencilOutline} />
-          <span className="text-xs sm:text-sm font-semibold">
-            {t(`${isMobile ? "Base.Buttons" : basePath}.Edit`)}
-          </span>
-        </EditAttendeesButton>
+        {showEditButton && (
+          <EditAttendeesButton onClick={editAttendeesList}>
+            <Icon
+              path={mdiPencilOutline}
+              className="size-3 sm:size-3.5 mt-0.5"
+            />
+            <span className="text-xs sm:text-sm font-semibold">
+              {t(`${isMobile ? "Base.Buttons" : basePath}.Edit`)}
+            </span>
+          </EditAttendeesButton>
+        )}
       </div>
       {(!!attendeesList || isLoading) && (
         <div className="flex flex-col gap-5 mb-4">
