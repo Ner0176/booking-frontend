@@ -28,10 +28,12 @@ import { isMobile } from "react-device-detect";
 import { useUser } from "../../stores";
 
 const RecoverBookingCard = ({
+  classDate,
   cancelledAt,
   handleClick,
   hideRecoverButton,
 }: Readonly<{
+  classDate: Date;
   cancelledAt: Date;
   handleClick(): void;
   hideRecoverButton?: boolean;
@@ -44,14 +46,14 @@ const RecoverBookingCard = ({
   const { data: configs } = useGetClassConfigs();
 
   useEffect(() => {
-    if (!!cancelledAt && !!configs) {
-      const start = new Date(cancelledAt);
+    if (!!configs) {
+      const start = new Date(classDate);
       const end = addDays(start, configs.maxRecoveryDays);
 
       setCanRecover(isBefore(new Date(), end));
       setMaxRecoveryDay(format(end, "dd/MM/yyyy"));
     }
-  }, [configs, cancelledAt]);
+  }, [configs, classDate]);
 
   return (
     <>
@@ -140,6 +142,7 @@ export const UserBookingCard = ({
             <RecoverBookingCard
               hideRecoverButton={hideRecoverButton}
               cancelledAt={cancelledAt ?? new Date()}
+              classDate={originalClass?.date ?? new Date()}
               handleClick={() =>
                 !!user?.isAdmin && userId
                   ? navigate(`/bookings?booking=${id}&userId=${userId}`)

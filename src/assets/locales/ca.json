@@ -398,7 +398,7 @@
     },
     "maxRecoveryDays": {
       "Title": "🔄 Recuperació de classes",
-      "Text": "Una classe cancel·lada dins del termini establert podrà reprogramar-se o recuperar-se <strong>en un període màxim de {{total}} dies</strong>. Si no s'utilitza dins d'aquest termini, es considerarà perduda i <strongRed>NO</strongRed> hi haurà opció de recuperació posterior."
+      "Text": "Una classe cancel·lada dins el termini establert es podrà reprogramar o recuperar <strong>en un període màxim de {{total}} dies a partir del dia de la classe cancel·lada</strong>. Si no s’utilitza dins aquest termini, es considerarà perduda i <strongRed>NO</strongRed> hi haurà opció de recuperació posterior."
     },
     "specific": {
       "Title": "📌 Casos específics",

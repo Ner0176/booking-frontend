@@ -400,7 +400,7 @@
     },
     "maxRecoveryDays": {
       "Title": "🔄 Class recovery",
-      "Text": "A class cancelled within the allowed timeframe may be rescheduled or recovered <strong>within a maximum period of {{total}} days</strong>. If it is not used within that period, it will be considered lost and there will be <strongRed>NO</strongRed> option for later recovery."
+      "Text": "A class canceled within the established period may be rescheduled or recovered <strong>within a maximum period of {{total}} days from the day of the canceled class</strong>. If it is not used within this period, it will be considered forfeited and there will be <strongRed>NO</strongRed> option for later recovery."
     },
     "specific": {
       "Title": "📌 Specific cases",

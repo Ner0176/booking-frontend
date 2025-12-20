@@ -400,7 +400,7 @@
     },
     "maxRecoveryDays": {
       "Title": "🔄 Recuperación de clases",
-      "Text": "Una clase cancelada dentro del plazo establecido podrá reprogramarse o recuperarse <strong>en un período máximo de {{total}} días</strong>. Si no se utiliza dentro de ese plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de recuperación posterior."
+      "Text": "Una clase cancelada dentro del plazo establecido podrá reprogramarse o recuperarse <strong>en un período máximo de {{total}} días a partir del día de la clase cancelada</strong>. Si no se utiliza dentro de ese plazo, se considerará perdida y <strongRed>NO</strongRed> habrá opción de recuperación posterior."
     },
     "specific": {
       "Title": "📌 Casos específicos",
