@@ -63,6 +63,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     alert(input.value);
 
     if (!!input.value && !authFields.email) {
+      input.focus();
       handleAuthFields("email", input.value);
     }
   }, [authFields.email]);
