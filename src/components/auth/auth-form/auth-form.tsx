@@ -5,7 +5,7 @@ import {
   mdiEyeOutline,
   mdiPhoneOutline,
 } from "@mdi/js";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   FormButton,
   SeparatorContainer,
@@ -42,7 +42,6 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const user = useUser();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const ref = useRef<HTMLInputElement>(null);
 
   const showRoleSelect = process.env.REACT_APP_VERCEL_ENV !== "production";
 
@@ -55,19 +54,6 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const { mutate: login, isPending: isLoadingLogin } = useLogin();
   const { mutate: signUp, isPending: isLoadingSignUp } = useSignUp();
   const isLoading = isLoadingLogin || isLoadingSignUp;
-
-  useEffect(() => {
-    const input = ref.current;
-    if (!input || !!authFields.email) return;
-    if (!!input.value) handleAuthFields("email", input.value);
-  }, [authFields.email]);
-
-  useEffect(() => {
-    const input = ref.current;
-    if (!!input && !!authErrors.email) {
-      input.blur();
-    }
-  }, [authErrors.email]);
 
   const handleAuthFields = (field: string, value: string) => {
     setAuthFields((prev) => {
@@ -98,6 +84,8 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     setAuthErrors(initAuthErrors);
     setAuthFields(emptyAuthFields);
   };
+
+  alert(authFields.email);
 
   return (
     <AuthDashboard title={t(`Auth.${formType}.Title`)}>
@@ -158,7 +146,6 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         </>
       )}
       <CustomInputField
-        ref={ref}
         value={authFields.email}
         title={t("Auth.Fields.Email")}
         placeholder="nombre@ejemplo.com"
