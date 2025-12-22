@@ -58,11 +58,11 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
 
   useEffect(() => {
     const input = ref.current;
-    if (!input) return;
+    if (!input || !!authFields.email) return;
 
     alert(input.value);
 
-    if (!!input.value && !authFields.email) {
+    if (!!input.value) {
       input.focus();
       handleAuthFields("email", input.value);
     }
