@@ -1,4 +1,4 @@
-import { CSSProperties, HTMLInputTypeAttribute, RefObject } from "react";
+import { CSSProperties, forwardRef, HTMLInputTypeAttribute } from "react";
 import { InfoTooltip, ITooltipContent } from "../info-tooltip";
 import {
   CustomInput,
@@ -12,21 +12,7 @@ import { ErrorMessage } from "../styled-components";
 import { isMobile } from "react-device-detect";
 import { CustomMobileInput } from "./input.content";
 
-export const CustomInputField = ({
-  ref,
-  type,
-  icon,
-  error,
-  value,
-  title,
-  tooltip,
-  isDisabled,
-  handleBlur,
-  placeholder,
-  handleChange,
-  customSelectStyles,
-  customContainerStyles,
-}: Readonly<{
+interface ICustomInputField {
   title?: string;
   value: string;
   error?: string;
@@ -35,65 +21,83 @@ export const CustomInputField = ({
   isDisabled?: boolean;
   tooltip?: ITooltipContent;
   type?: HTMLInputTypeAttribute;
-  ref?: RefObject<HTMLInputElement>;
   customSelectStyles?: CSSProperties;
   handleBlur?: (value: string) => void;
   customContainerStyles?: CSSProperties;
   handleChange?: (value: string) => void;
-}>) => {
-  const isTimeInput = type === "time";
-  const showMobileInput = isMobile && (isTimeInput || type === "date");
+}
 
-  return (
-    <InputFieldContainer style={customContainerStyles}>
-      {!!title && (
-        <InputTitleContainer>
-          <InputFieldTitle>{title}</InputFieldTitle>
-          {!!tooltip && <InfoTooltip content={tooltip} />}
-        </InputTitleContainer>
-      )}
-      {showMobileInput ? (
-        <CustomMobileInput
-          value={value}
-          isTime={isTimeInput}
-          handleChange={handleChange}
-        />
-      ) : (
-        <CustomInputContainer
-          hasIcon={!!icon}
-          isBlocked={!!isDisabled}
-          style={customSelectStyles}
-        >
-          {!!icon && (
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              onClick={icon.handleClick}
-              className="size-4 sm:size-5 mt-0.5 text-neutral-500"
-              style={{ cursor: !!icon.handleClick ? "pointer" : "auto" }}
-            >
-              <path d={icon.name} />
-            </svg>
-          )}
-          <CustomInput
-            ref={ref}
-            type={type}
+export const CustomInputField = forwardRef<HTMLInputElement, ICustomInputField>(
+  (
+    {
+      type,
+      icon,
+      error,
+      value,
+      title,
+      tooltip,
+      isDisabled,
+      handleBlur,
+      placeholder,
+      handleChange,
+      customSelectStyles,
+      customContainerStyles,
+    },
+    ref
+  ) => {
+    const isTimeInput = type === "time";
+    const showMobileInput = isMobile && (isTimeInput || type === "date");
+
+    return (
+      <InputFieldContainer style={customContainerStyles}>
+        {!!title && (
+          <InputTitleContainer>
+            <InputFieldTitle>{title}</InputFieldTitle>
+            {!!tooltip && <InfoTooltip content={tooltip} />}
+          </InputTitleContainer>
+        )}
+
+        {showMobileInput ? (
+          <CustomMobileInput
             value={value}
-            hasIcon={!!icon}
-            disabled={isDisabled}
-            isBlocked={!!isDisabled}
-            placeholder={placeholder}
-            style={customSelectStyles}
-            onBlur={(e) => {
-              if (handleBlur) handleBlur(e.target.value);
-            }}
-            onChange={(e) => {
-              if (handleChange) handleChange(e.target.value);
-            }}
+            isTime={isTimeInput}
+            handleChange={handleChange}
           />
-        </CustomInputContainer>
-      )}
-      {!!error && <ErrorMessage>{error}</ErrorMessage>}
-    </InputFieldContainer>
-  );
-};
+        ) : (
+          <CustomInputContainer
+            hasIcon={!!icon}
+            isBlocked={!!isDisabled}
+            style={customSelectStyles}
+          >
+            {!!icon && (
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                onClick={icon.handleClick}
+                className="size-4 sm:size-5 mt-0.5 text-neutral-500"
+                style={{ cursor: !!icon.handleClick ? "pointer" : "auto" }}
+              >
+                <path d={icon.name} />
+              </svg>
+            )}
+
+            <CustomInput
+              ref={ref}
+              type={type}
+              value={value}
+              hasIcon={!!icon}
+              disabled={isDisabled}
+              isBlocked={!!isDisabled}
+              placeholder={placeholder}
+              style={customSelectStyles}
+              onBlur={(e) => handleBlur?.(e.target.value)}
+              onChange={(e) => handleChange?.(e.target.value)}
+            />
+          </CustomInputContainer>
+        )}
+
+        {!!error && <ErrorMessage>{error}</ErrorMessage>}
+      </InputFieldContainer>
+    );
+  }
+);
