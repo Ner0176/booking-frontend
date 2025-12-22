@@ -5,7 +5,7 @@ import {
   mdiEyeOutline,
   mdiPhoneOutline,
 } from "@mdi/js";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FormButton,
   SeparatorContainer,
@@ -42,6 +42,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const user = useUser();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const ref = useRef<HTMLInputElement>(null);
 
   const showRoleSelect = process.env.REACT_APP_VERCEL_ENV !== "production";
 
@@ -54,6 +55,15 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   const { mutate: login, isPending: isLoadingLogin } = useLogin();
   const { mutate: signUp, isPending: isLoadingSignUp } = useSignUp();
   const isLoading = isLoadingLogin || isLoadingSignUp;
+
+  useEffect(() => {
+    const input = ref.current;
+    if (!input) return;
+
+    if (!!input.value && !authFields.email) {
+      handleAuthFields("email", input.value);
+    }
+  }, [authFields.email]);
 
   const handleAuthFields = (field: string, value: string) => {
     setAuthFields((prev) => {
@@ -144,13 +154,11 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         </>
       )}
       <CustomInputField
+        ref={ref}
         value={authFields.email}
         title={t("Auth.Fields.Email")}
         placeholder="nombre@ejemplo.com"
         icon={{ name: mdiEmailOutline }}
-        handleAnimationStart={(v) =>
-          handleAuthFields("email", v.trim().toLowerCase())
-        }
         error={authErrors.email ? t("Auth.Errors.Email") : undefined}
         handleChange={(v) => handleAuthFields("email", v.trim().toLowerCase())}
         handleBlur={() => {

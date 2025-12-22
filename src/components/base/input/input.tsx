@@ -1,4 +1,4 @@
-import { CSSProperties, HTMLInputTypeAttribute } from "react";
+import { CSSProperties, HTMLInputTypeAttribute, RefObject } from "react";
 import { InfoTooltip, ITooltipContent } from "../info-tooltip";
 import {
   CustomInput,
@@ -13,6 +13,7 @@ import { isMobile } from "react-device-detect";
 import { CustomMobileInput } from "./input.content";
 
 export const CustomInputField = ({
+  ref,
   type,
   icon,
   error,
@@ -24,7 +25,6 @@ export const CustomInputField = ({
   placeholder,
   handleChange,
   customSelectStyles,
-  handleAnimationStart,
   customContainerStyles,
 }: Readonly<{
   title?: string;
@@ -35,11 +35,11 @@ export const CustomInputField = ({
   isDisabled?: boolean;
   tooltip?: ITooltipContent;
   type?: HTMLInputTypeAttribute;
+  ref?: RefObject<HTMLInputElement>;
   customSelectStyles?: CSSProperties;
   handleBlur?: (value: string) => void;
   customContainerStyles?: CSSProperties;
   handleChange?: (value: string) => void;
-  handleAnimationStart?: (value: string) => void;
 }>) => {
   const isTimeInput = type === "time";
   const showMobileInput = isMobile && (isTimeInput || type === "date");
@@ -76,6 +76,7 @@ export const CustomInputField = ({
             </svg>
           )}
           <CustomInput
+            ref={ref}
             type={type}
             value={value}
             hasIcon={!!icon}
@@ -88,10 +89,6 @@ export const CustomInputField = ({
             }}
             onChange={(e) => {
               if (handleChange) handleChange(e.target.value);
-            }}
-            onAnimationStart={(e) => {
-              if (handleAnimationStart)
-                handleAnimationStart((e.target as HTMLInputElement).value);
             }}
           />
         </CustomInputContainer>
