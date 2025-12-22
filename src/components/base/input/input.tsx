@@ -82,10 +82,11 @@ export const CustomInputField = ({
             placeholder={placeholder}
             style={customSelectStyles}
             onBlur={(e) => {
+              alert("Desde dentro :" + e.currentTarget.value);
               if (handleBlur) handleBlur(e.target.value);
             }}
-            onInput={(e) => {
-              if (handleChange) handleChange(e.currentTarget.value);
+            onChange={(e) => {
+              if (handleChange) handleChange(e.target.value);
             }}
           />
         </CustomInputContainer>

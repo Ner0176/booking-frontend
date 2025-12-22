@@ -152,6 +152,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         handleChange={(v) => handleAuthFields("email", v.trim().toLowerCase())}
         handleBlur={() => {
           let showError = false;
+          alert("Desde fuera: " + authFields.email);
           if (!EmailValidator.validate(authFields.email)) showError = true;
           handleErrors("email", showError);
         }}
