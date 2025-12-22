@@ -84,8 +84,8 @@ export const CustomInputField = ({
             onBlur={(e) => {
               if (handleBlur) handleBlur(e.target.value);
             }}
-            onChange={(e) => {
-              if (handleChange) handleChange(e.target.value);
+            onInput={(e) => {
+              if (handleChange) handleChange(e.currentTarget.value);
             }}
           />
         </CustomInputContainer>
