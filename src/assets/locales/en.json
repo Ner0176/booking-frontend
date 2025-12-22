@@ -96,7 +96,11 @@
       "Name": "This field is required",
       "Email": "Enter a valid email",
       "Phone": "Enter a valid phone number",
-      "Password": "Password must be at least {{value}} characters"
+      "Password": "Password must be at least {{value}} characters",
+      "EmptyName": "Enter your name",
+      "EmptyEmail": "Enter your email",
+      "EmptyPassword": "Enter your password",
+      "FieldError": "Make sure the entered data has no errors"
     },
     "InvalidRoute": {
       "Title": "Error 404",

@@ -75,7 +75,6 @@ export const CustomInputField = ({
           )}
           <CustomInput
             type={type}
-            autoComplete="email"
             value={value}
             hasIcon={!!icon}
             disabled={isDisabled}

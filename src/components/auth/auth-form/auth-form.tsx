@@ -30,6 +30,7 @@ import {
   CustomSelect,
   LanguageSelector,
   LoadingSpinner,
+  showToast,
 } from "../../base";
 import { checkPhone } from "../../../utils";
 import { useUser } from "../../../stores";
@@ -68,6 +69,8 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
   };
 
   const handleSubmit = () => {
+    if (isLoading || !validateFields()) return;
+
     if (formType === "SignUp") {
       signUp({
         ...authFields,
@@ -80,12 +83,35 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
     setAuthFields(emptyAuthFields);
   };
 
+  const validateFields = () => {
+    const basePath = "Auth.Errors";
+
+    const fieldError =
+      authErrors.email ||
+      authErrors.phone ||
+      authErrors.password ||
+      authErrors.name;
+
+    const { name, email, password } = authFields;
+    const errors = [
+      fieldError && t(`${basePath}.FieldError`),
+      formType === "SignUp" && !name && t(`${basePath}.EmptyName`),
+      !email && t(`${basePath}.EmptyEmail`),
+      !password && t(`${basePath}.EmptyPassword`),
+    ].filter(Boolean);
+
+    if (errors.length > 0) {
+      showToast({ type: "error", text: errors[0] as string });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleResetFields = () => {
     setAuthErrors(initAuthErrors);
     setAuthFields(emptyAuthFields);
   };
-
-  alert(authFields.email);
 
   return (
     <AuthDashboard title={t(`Auth.${formType}.Title`)}>
@@ -154,7 +180,8 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         handleChange={(v) => handleAuthFields("email", v.trim().toLowerCase())}
         handleBlur={() => {
           let showError = false;
-          if (!EmailValidator.validate(authFields.email)) showError = true;
+          const { email } = authFields;
+          if (!!email && !EmailValidator.validate(email)) showError = true;
           handleErrors("email", showError);
         }}
       />
@@ -166,7 +193,8 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
           type={showPassword === false ? "password" : "text"}
           handleChange={(v) => handleAuthFields("password", v)}
           handleBlur={() => {
-            const showError = authFields.password.length < MIN_PSWD_LENGTH;
+            const pwdLength = authFields.password.length;
+            const showError = pwdLength > 0 && pwdLength < MIN_PSWD_LENGTH;
             handleErrors("password", showError);
           }}
           icon={{
@@ -183,14 +211,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
           {t("Auth.Login.ForgotPassword")}
         </ForgotPasswordText>
       </div>
-      <FormButton
-        onClick={() => {
-          const { email, phone, password, name } = authErrors;
-          if (!isLoading && !email && !phone && !password && !name) {
-            handleSubmit();
-          }
-        }}
-      >
+      <FormButton onClick={handleSubmit}>
         {isLoading ? <LoadingSpinner /> : t(`Auth.${formType}.Title`)}
       </FormButton>
       <div className="relative">

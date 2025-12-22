@@ -94,9 +94,13 @@
     },
     "Errors": {
       "Name": "Este campo es obligatorio",
-      "Email": "Introduzca un email válido",
-      "Phone": "Introduzca un número de teléfono válido",
-      "Password": "La contraseña debe tener mínimo {{value}} caracteres"
+      "Email": "Introduce un email válido",
+      "Phone": "Introduce un número de teléfono válido",
+      "Password": "La contraseña debe tener mínimo {{value}} caracteres",
+      "EmptyName": "Introduce tu nombre",
+      "EmptyEmail": "Introduce tu correo electrónico",
+      "EmptyPassword": "Introduce tu contraseña",
+      "FieldError": "Asegúrate de que los datos introducidos no tengan errores"
     },
     "InvalidRoute": {
       "Title": "Error 404",

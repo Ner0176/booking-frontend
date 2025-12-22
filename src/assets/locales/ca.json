@@ -94,7 +94,11 @@
       "Name": "Aquest camp és obligatori",
       "Email": "Introdueix un correu electrònic vàlid",
       "Phone": "Introdueix un número de telèfon vàlid",
-      "Password": "La contrasenya ha de tenir un mínim de {{value}} caràcters"
+      "Password": "La contrasenya ha de tenir un mínim de {{value}} caràcters",
+      "EmptyName": "Introdueix el teu nom",
+      "EmptyEmail": "Introdueix el teu correu electrònic",
+      "EmptyPassword": "Introdueix la teva contrasenya",
+      "FieldError": "Assegura't que les dades introduïdes no tenguin errors"
     },
     "InvalidRoute": {
       "Title": "Error 404",
