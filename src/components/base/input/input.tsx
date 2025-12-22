@@ -24,6 +24,7 @@ export const CustomInputField = ({
   placeholder,
   handleChange,
   customSelectStyles,
+  handleAnimationStart,
   customContainerStyles,
 }: Readonly<{
   title?: string;
@@ -38,6 +39,7 @@ export const CustomInputField = ({
   handleBlur?: (value: string) => void;
   customContainerStyles?: CSSProperties;
   handleChange?: (value: string) => void;
+  handleAnimationStart?: (value: string) => void;
 }>) => {
   const isTimeInput = type === "time";
   const showMobileInput = isMobile && (isTimeInput || type === "date");
@@ -74,9 +76,6 @@ export const CustomInputField = ({
             </svg>
           )}
           <CustomInput
-            id="email"
-            name="email"
-            autoComplete="email"
             type={type}
             value={value}
             hasIcon={!!icon}
@@ -89,6 +88,10 @@ export const CustomInputField = ({
             }}
             onChange={(e) => {
               if (handleChange) handleChange(e.target.value);
+            }}
+            onAnimationStart={(e) => {
+              if (handleAnimationStart)
+                handleAnimationStart((e.target as HTMLInputElement).value);
             }}
           />
         </CustomInputContainer>

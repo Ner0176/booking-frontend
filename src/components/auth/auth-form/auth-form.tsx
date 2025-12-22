@@ -144,11 +144,13 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         </>
       )}
       <CustomInputField
-        type="email"
         value={authFields.email}
         title={t("Auth.Fields.Email")}
         placeholder="nombre@ejemplo.com"
         icon={{ name: mdiEmailOutline }}
+        handleAnimationStart={(v) =>
+          handleAuthFields("email", v.trim().toLowerCase())
+        }
         error={authErrors.email ? t("Auth.Errors.Email") : undefined}
         handleChange={(v) => handleAuthFields("email", v.trim().toLowerCase())}
         handleBlur={() => {
