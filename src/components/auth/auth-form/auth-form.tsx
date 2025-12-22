@@ -144,6 +144,7 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         </>
       )}
       <CustomInputField
+        type="email"
         value={authFields.email}
         title={t("Auth.Fields.Email")}
         placeholder="nombre@ejemplo.com"
@@ -152,7 +153,6 @@ export const AuthForm = ({ type }: Readonly<{ type: FormType }>) => {
         handleChange={(v) => handleAuthFields("email", v.trim().toLowerCase())}
         handleBlur={() => {
           let showError = false;
-          alert("Desde fuera: " + authFields.email);
           if (!EmailValidator.validate(authFields.email)) showError = true;
           handleErrors("email", showError);
         }}

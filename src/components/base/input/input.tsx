@@ -74,6 +74,9 @@ export const CustomInputField = ({
             </svg>
           )}
           <CustomInput
+            id="email"
+            name="email"
+            autoComplete="email"
             type={type}
             value={value}
             hasIcon={!!icon}
@@ -82,7 +85,6 @@ export const CustomInputField = ({
             placeholder={placeholder}
             style={customSelectStyles}
             onBlur={(e) => {
-              alert("Desde dentro :" + e.currentTarget.value);
               if (handleBlur) handleBlur(e.target.value);
             }}
             onChange={(e) => {
