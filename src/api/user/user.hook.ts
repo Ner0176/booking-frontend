@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { userApi } from "./user.gateway";
-import { IUser, UpdateUserPayload } from "./user.interface";
+import {
+  GetAllUsersPayload,
+  IPaginatedUsers,
+  IUser,
+  UpdateUserPayload,
+} from "./user.interface";
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 
@@ -11,10 +16,10 @@ export function useFindMe() {
   });
 }
 
-export function useGetAllUsers() {
-  return useQuery<IUser[]>({
-    queryKey: ["getAllUsers"],
-    queryFn: () => userApi.getAllUsers(),
+export function useGetAllUsers(payload: GetAllUsersPayload) {
+  return useQuery<IPaginatedUsers>({
+    queryKey: ["getAllUsers", payload],
+    queryFn: () => userApi.getAllUsers(payload),
   });
 }
 

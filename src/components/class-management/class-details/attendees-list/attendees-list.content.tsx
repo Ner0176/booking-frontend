@@ -120,7 +120,7 @@ export const EditListModal = ({
     setParams([{ key: "action" }]);
   };
 
-  const { data: users } = useGetAllUsers();
+  const { data: users } = useGetAllUsers({});
   const { mutate: editBookings, isPending: isLoading } =
     useEditBookings(handleSuccessEdit);
   const { data: recurrentUsers } = useGetRecurrentUsers({
@@ -129,7 +129,7 @@ export const EditListModal = ({
   });
 
   const { initUsersList, initAttendeesList } = useMemo(() => {
-    if (!users || !classAttendees) {
+    if (!users?.data || !classAttendees) {
       return { initUsersList: [], initAttendeesList: [] };
     }
 
@@ -141,7 +141,7 @@ export const EditListModal = ({
         : [...recurrentBookings, ...recoveryBookings];
 
     const bookedIds = new Set(bookingsUsers.map((u) => u.id));
-    const available = users.filter((u) => !bookedIds.has(u.id));
+    const available = users.data.filter((u) => !bookedIds.has(u.id));
 
     return {
       initUsersList: available,

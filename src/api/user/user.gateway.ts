@@ -1,13 +1,22 @@
 import { axiosInstance } from "../axios-instance";
-import { UpdateUserPayload } from "./user.interface";
+import { GetAllUsersPayload, UpdateUserPayload } from "./user.interface";
 
 export const userApi = {
   findMe: async () => {
     const response = await axiosInstance.get("/user/findMe");
     return response.data;
   },
-  getAllUsers: async () => {
-    const response = await axiosInstance.get("/user/all");
+  getAllUsers: async ({ page, limit, search }: GetAllUsersPayload) => {
+    const params = new URLSearchParams();
+
+    if (!!search) params.append("search", search);
+
+    if (!!limit && !!page) {
+      params.append("page", page.toString());
+      params.append("limit", limit.toString());
+    }
+
+    const response = await axiosInstance.get("/user/all", { params });
     return response.data;
   },
   hasAvailableCancellations: async () => {

@@ -5,10 +5,9 @@ import { useSearchParamsManager } from "../../hooks";
 import { UserDetails } from "./user-details.tsx";
 import { UserCard, UserHeaderButtons } from "./users.content";
 import Skeleton from "react-loading-skeleton";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import noDataLoading from "../../assets/images/noData/ovni.svg";
 import { mdiMagnify } from "@mdi/js";
-import { stringIncludes } from "../../utils";
 import { isMobile } from "react-device-detect";
 
 export const UsersDashboard = () => {
@@ -16,27 +15,52 @@ export const UsersDashboard = () => {
   const { params, setParams } = useSearchParamsManager(["userId"]);
   const userId = params.get("userId");
 
-  const [search, setSearch] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+  const observerRef = useRef<HTMLDivElement>(null);
 
-  const { data: usersList, refetch, isLoading } = useGetAllUsers();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [loadedUsers, setLoadedUsers] = useState<IUser[]>([]);
+
+  const {
+    refetch,
+    isLoading,
+    data: paginatedUsers,
+  } = useGetAllUsers({ page, search, limit: 20 });
 
   useEffect(() => {
-    if (usersList) {
-      if (!search) setFilteredUsers(usersList);
-      else {
-        setFilteredUsers(
-          usersList.filter((user) => stringIncludes(user.name, search))
-        );
+    if (!observerRef.current || isLoading) return;
+
+    const hasMoreItems =
+      paginatedUsers?.totalPages && page < paginatedUsers.totalPages;
+
+    if (!hasMoreItems) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setPage((prev) => prev + 1);
       }
+    });
+
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [page, isLoading, paginatedUsers]);
+
+  useEffect(() => {
+    if (!!paginatedUsers?.data) {
+      setLoadedUsers((prev) => {
+        if (page === 1) return paginatedUsers.data;
+
+        return [...prev, ...paginatedUsers.data];
+      });
     }
-  }, [search, usersList]);
+  }, [page, paginatedUsers]);
 
   const selectedUser = useMemo(() => {
-    if (userId && usersList) {
-      return usersList.find((user) => `${user.id}` === userId);
+    if (userId) {
+      return loadedUsers.find((user) => `${user.id}` === userId);
     }
-  }, [userId, usersList]);
+  }, [userId, loadedUsers]);
 
   return (
     <DashboardSkeleton
@@ -53,41 +77,42 @@ export const UsersDashboard = () => {
             value={search}
             icon={{ name: mdiMagnify }}
             placeholder={t(`Base.SearchUser`)}
-            handleChange={(value) => setSearch(value)}
+            handleChange={(value) => {
+              setPage(1);
+              setSearch(value);
+            }}
           />
-
-          {isLoading ? (
-            [...Array(10)].map((key) => (
-              <Skeleton
-                key={key}
-                style={{
-                  borderRadius: 16,
-                  height: isMobile ? 75 : 90,
-                  width: isMobile ? "100%" : 325,
-                }}
+          <div className="flex flex-wrap w-full gap-4">
+            {!isLoading && !loadedUsers.length ? (
+              <EmptyData
+                image={noDataLoading}
+                title={t("Users.NoData")}
+                customStyles={{ paddingTop: 80 }}
               />
-            ))
-          ) : (
-            <div className="flex flex-wrap w-full gap-4">
-              {filteredUsers.length > 0 ? (
-                filteredUsers.map((item, idx) => (
-                  <UserCard
-                    key={idx}
-                    user={item}
-                    handleClick={() =>
-                      setParams([{ key: "userId", value: `${item.id}` }])
-                    }
-                  />
-                ))
-              ) : (
-                <EmptyData
-                  image={noDataLoading}
-                  title={t("Users.NoData")}
-                  customStyles={{ paddingTop: 80 }}
+            ) : (
+              loadedUsers.map((item) => (
+                <UserCard
+                  user={item}
+                  key={item.id}
+                  handleClick={() =>
+                    setParams([{ key: "userId", value: `${item.id}` }])
+                  }
                 />
-              )}
-            </div>
-          )}
+              ))
+            )}
+            {isLoading &&
+              [...Array(10)].map((_, idx) => (
+                <Skeleton
+                  key={idx}
+                  style={{
+                    borderRadius: 16,
+                    height: isMobile ? 75 : 90,
+                    width: isMobile ? "100%" : 325,
+                  }}
+                />
+              ))}
+            <div ref={observerRef} />
+          </div>
         </div>
       )}
     </DashboardSkeleton>

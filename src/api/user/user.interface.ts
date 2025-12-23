@@ -6,8 +6,22 @@ export interface IUser {
   phone: string | null;
 }
 
+export interface IPaginatedUsers {
+  data: IUser[];
+  page?: number;
+  limit?: number;
+  totalItems: number;
+  totalPages?: number;
+}
+
 export interface UpdateUserPayload {
   name?: string;
   phone?: string;
   language?: string;
+}
+
+export interface GetAllUsersPayload {
+  page?: number;
+  limit?: number;
+  search?: string;
 }

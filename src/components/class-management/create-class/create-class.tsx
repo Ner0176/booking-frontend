@@ -48,14 +48,14 @@ export const CreateClassModal = ({
     setRecurrentId(recurrentId);
   };
 
-  const { data: users } = useGetAllUsers();
+  const { data: users } = useGetAllUsers({});
   const { mutate: createClass, isPending: isCreatingClass } =
     useCreateClass(handleClassSuccess);
   const { mutate: createBookings, isPending: isCreatingBookings } =
     useCreateBookings(handleCloseModal);
 
   useEffect(() => {
-    if (users) setUsersList(users);
+    if (!!users?.data) setUsersList(users.data);
   }, [users]);
 
   const isSubmitButtonDisabled = useMemo(() => {
