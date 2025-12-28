@@ -6,6 +6,7 @@ import {
   EditClassPayload,
   GetClassesPayload,
   IClass,
+  IPaginatedClasses,
 } from "./class.interface";
 import { IClassIds, RecurrentOptionType, showToast } from "../../components";
 import { useTranslation } from "react-i18next";
@@ -16,7 +17,7 @@ import { recurrentClassApi } from "../recurrent-class";
 export function useGetAllClasses(payload: GetClassesPayload) {
   const { enabled, ...filters } = payload;
 
-  return useQuery<IClass[], Error>({
+  return useQuery<IPaginatedClasses, Error>({
     queryKey: ["getAllClasses", filters],
     queryFn: () => classApi.getAllClasses(filters),
     enabled: enabled === undefined ? true : enabled,

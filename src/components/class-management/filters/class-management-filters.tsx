@@ -42,7 +42,8 @@ export const ClassesListFilters = ({
   useEffect(() => {
     const addFilter = timeFilter !== "custom" && timeFilter !== "all";
     setDatesFilter(addFilter ? getDatesFromTimeFilter(timeFilter) : {});
-  }, [timeFilter, setDatesFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeFilter]);
 
   const getSelectOptions = (type: "Status" | "Time") => {
     const optionsList = type === "Time" ? CLASS_TIME_FILTERS : CLASS_STATUS;

@@ -7,6 +7,8 @@ import {
 
 export const classApi = {
   getAllClasses: async ({
+    page,
+    limit,
     timeFilter,
     statusFilter,
     excludeUserBookings,
@@ -27,6 +29,11 @@ export const classApi = {
 
     if (!!excludeUserBookings) {
       params.append("excludeUserBookings", `${excludeUserBookings}`);
+    }
+
+    if (!!page && !!limit) {
+      params.append("page", `${page}`);
+      params.append("limit", `${limit}`);
     }
 
     const response = await axiosInstance.get("/class/all", { params });

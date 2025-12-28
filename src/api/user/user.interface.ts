@@ -6,12 +6,16 @@ export interface IUser {
   phone: string | null;
 }
 
-export interface IPaginatedUsers {
-  data: IUser[];
+export interface IMetadata {
   page?: number;
   limit?: number;
   totalItems: number;
   totalPages?: number;
+}
+
+export interface IPaginatedUsers {
+  data: IUser[];
+  metadata: IMetadata;
 }
 
 export interface UpdateUserPayload {

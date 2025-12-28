@@ -30,8 +30,8 @@ export const UsersDashboard = () => {
   useEffect(() => {
     if (!observerRef.current || isLoading) return;
 
-    const hasMoreItems =
-      paginatedUsers?.totalPages && page < paginatedUsers.totalPages;
+    const metadata = paginatedUsers?.metadata;
+    const hasMoreItems = !!metadata?.totalPages && page < metadata.totalPages;
 
     if (!hasMoreItems) return;
 

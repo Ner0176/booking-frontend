@@ -49,8 +49,8 @@ export const BookClassDashboard = ({
   }, [classConfigs]);
 
   const selectedClass = useMemo(() => {
-    if (!!bookingId && !!classId && classesList) {
-      return classesList.find((item) => item.id === +classId);
+    if (!!bookingId && !!classId && !!classesList) {
+      return classesList.data.find((item) => item.id === +classId);
     }
   }, [classId, bookingId, classesList]);
 
@@ -67,8 +67,8 @@ export const BookClassDashboard = ({
 
   return (
     <>
-      {classesList && classesList?.length > 0 ? (
-        classesList.map((classInstance, idx) => {
+      {!!classesList && classesList.data.length > 0 ? (
+        classesList.data.map((classInstance, idx) => {
           const { currentCount, maxAmount } = classInstance;
           const isFull = currentCount === maxAmount;
           return (

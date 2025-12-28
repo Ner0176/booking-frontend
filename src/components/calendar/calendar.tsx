@@ -40,7 +40,7 @@ export const CalendarDashboard = () => {
   });
 
   const events = useMemo(() => {
-    if (allClasses && allClasses.length) {
+    if (!!allClasses && allClasses.data.length > 0) {
       const bookings = !isAdmin && userBookings ? userBookings : [];
 
       const bookingsSet = new Set(
@@ -49,7 +49,7 @@ export const CalendarDashboard = () => {
           .filter(Boolean)
       );
 
-      const classesToEvent = allClasses.map((booking) => {
+      const classesToEvent = allClasses.data.map((booking) => {
         const { id, date, startTime, endTime } = booking;
         return {
           allDay: false,

@@ -1,6 +1,9 @@
 import { ClassDatesFilter, ClassStatusType } from "../../components";
+import { IMetadata } from "../user";
 
 export interface GetClassesPayload {
+  page?: number;
+  limit?: number;
   enabled?: boolean;
   excludeUserBookings?: boolean;
   timeFilter?: ClassDatesFilter;
@@ -46,4 +49,9 @@ export interface IClass {
   cancelled: boolean;
   currentCount: number;
   recurrent: IRecurrent | null;
+}
+
+export interface IPaginatedClasses {
+  data: IClass[];
+  metadata: IMetadata;
 }
