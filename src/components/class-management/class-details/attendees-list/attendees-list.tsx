@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CustomInputField } from "../../../base";
+import { CustomInputField, EmptyData } from "../../../base";
 import {
   AttendeesListWrapper,
   EditAttendeesButton,
@@ -10,6 +10,7 @@ import Icon from "@mdi/react";
 import { isMobile } from "react-device-detect";
 import { IClassBookingsUsers } from "../../../../api";
 import { AttendeesListSection } from "./attendees-list.content";
+import NoAttendees from "../../../../assets/images/noData/ovni.svg";
 
 export const ClassAttendeesList = ({
   isLoading,
@@ -24,6 +25,11 @@ export const ClassAttendeesList = ({
 }>) => {
   const { t } = useTranslation();
   const basePath = "Classes.ClassDetails";
+  const hasAttendees =
+    !!attendeesList &&
+    (!!attendeesList.recurrentBookings.length ||
+      !!attendeesList.cancelledBookings.length ||
+      !!attendeesList.recoveryBookings.length);
 
   const [search, setSearch] = useState("");
 
@@ -48,7 +54,7 @@ export const ClassAttendeesList = ({
           </EditAttendeesButton>
         )}
       </div>
-      {(!!attendeesList || isLoading) && (
+      {hasAttendees || isLoading ? (
         <div className="flex flex-col gap-5 mb-4">
           <AttendeesListSection
             titleKey="Normal"
@@ -64,6 +70,13 @@ export const ClassAttendeesList = ({
             isLoading={isLoading}
             titleKey="Cancellation"
             attList={attendeesList?.cancelledBookings ?? []}
+          />
+        </div>
+      ) : (
+        <div className="mt-6">
+          <EmptyData
+            image={NoAttendees}
+            title={t(`${basePath}.AttendeesList.Empty`)}
           />
         </div>
       )}
