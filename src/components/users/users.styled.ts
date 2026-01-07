@@ -7,10 +7,4 @@ export const UserCardContainer = styled.div(
 export const UserCardTitle = styled.span(
   tw`text-xs sm:text-sm text-neutral-800 font-semibold`
 );
-export const UserCardSubtitle = styled.span(
-  tw`text-[10px] sm:text-xs text-neutral-500 italic`
-);
-export const UserCardButton = styled.button<{ isHover: boolean }>`
-  ${tw`flex flex-row gap-1 border border-neutral-200 rounded-full px-2 py-1`}
-  ${({ isHover }) => isHover && tw`bg-purple-100 text-violet-600`}
-`;
+export const UserCardSubtitle = styled.span(tw`text-[10px] sm:text-xs italic`);

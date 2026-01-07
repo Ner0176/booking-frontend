@@ -146,7 +146,7 @@ export const ClassesManagementDashboard = () => {
             loadedClasses.map((item, idx) => (
               <CMCardContainer
                 key={idx}
-                className="last:mb-6 hover:shadow-lg"
+                className="last:mb-6 hover:shadow-md shadow-sm"
                 onClick={() =>
                   setParams([{ key: "class", value: `${item.id}` }])
                 }

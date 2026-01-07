@@ -1,17 +1,19 @@
-import { mdiArrowRight, mdiTrashCanOutline, mdiTuneVariant } from "@mdi/js";
+import {
+  mdiEmailOutline,
+  mdiPhoneOutline,
+  mdiTrashCanOutline,
+  mdiTuneVariant,
+} from "@mdi/js";
 import { HeaderButton } from "../base";
 import { useSearchParamsManager } from "../../hooks";
 import { IUser } from "../../api";
 import Icon from "@mdi/react";
-import { useState } from "react";
 import {
-  UserCardButton,
   UserCardContainer,
   UserCardSubtitle,
   UserCardTitle,
 } from "./users.styled";
 import { isMobile } from "react-device-detect";
-import { useTranslation } from "react-i18next";
 
 export const UserHeaderButtons = ({
   isUserDetail,
@@ -40,35 +42,36 @@ export const UserHeaderButtons = ({
   ) : null;
 };
 
+const SubtitleField = ({
+  text,
+  icon,
+}: Readonly<{ text: string | null; icon: string }>) => {
+  return (
+    <div className="flex flex-row items-center gap-1 text-neutral-500">
+      <Icon path={icon} className="size-3.5 mt-0.5" />
+      <UserCardSubtitle>{!text ? "-" : text}</UserCardSubtitle>
+    </div>
+  );
+};
+
 export const UserCard = ({
   user,
   handleClick,
 }: Readonly<{ user: IUser; handleClick(): void }>) => {
-  const { t } = useTranslation();
-
   const { name, email, phone } = user;
-
-  const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <UserCardContainer
       onClick={handleClick}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      className="shadow-sm hover:shadow-md"
     >
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1.5">
         <UserCardTitle>{name}</UserCardTitle>
-        <div className="flex flex-col">
-          <UserCardSubtitle>{`${phone}`}</UserCardSubtitle>
-          <UserCardSubtitle>{`${email}`}</UserCardSubtitle>
+        <div className="flex flex-col gap-0.5">
+          <SubtitleField icon={mdiPhoneOutline} text={phone} />
+          <SubtitleField icon={mdiEmailOutline} text={email} />
         </div>
       </div>
-      <UserCardButton isHover={isHover}>
-        <span className="text-[10px] sm:text-xs whitespace-nowrap">
-          {t("Users.View")}
-        </span>
-        <Icon className="size-3 sm:size-3.5" path={mdiArrowRight} />
-      </UserCardButton>
     </UserCardContainer>
   );
 };
