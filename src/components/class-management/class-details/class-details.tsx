@@ -75,8 +75,8 @@ export const ClassDetails = ({
 
   return (
     <>
-      <div className="flex flex-col justify-between w-full">
-        <div className="flex flex-col sm:grid sm:grid-cols-3 w-full h-full">
+      <div className="flex flex-col justify-between size-full ">
+        <div className="flex flex-col sm:grid sm:grid-cols-3 size-full">
           {showAttendeesList && (
             <ClassAttendeesList
               isLoading={isBookingsLoading}
