@@ -1,6 +1,7 @@
 export * from "./auth";
 export * from "./base";
 export * from "./users";
+export * from "./content";
 export * from "./profile";
 export * from "./calendar";
 export * from "./settings";

@@ -462,5 +462,20 @@
       "Settings": "Configuració",
       "Policies": "Polítiques"
     }
+  },
+  "Content": {
+    "Title": "Gestor de continguts",
+    "Connect": "Connectar amb YouTube",
+    "Columns": {
+      "Video": "Vídeo",
+      "Date": "Data",
+      "Privacy": "Visibilitat",
+      "Access": "Usuaris amb accés"
+    },
+    "Privacy": {
+      "private": "Privat",
+      "public": "Públic",
+      "unlisted": "Ocult"
+    }
   }
 }

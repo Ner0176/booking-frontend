@@ -464,5 +464,20 @@
       "Settings": "Settings",
       "Policies": "Policies"
     }
+  },
+  "Content": {
+    "Title": "Content manager",
+    "Connect": "Connect to YouTube",
+    "Columns": {
+      "Video": "Video",
+      "Date": "Date",
+      "Privacy": "Visibility",
+      "Access": "Users with access"
+    },
+    "Privacy": {
+      "private": "Private",
+      "public": "Public",
+      "unlisted": "Hidden"
+    }
   }
 }

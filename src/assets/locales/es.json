@@ -464,5 +464,20 @@
       "Settings": "Ajustes",
       "Policies": "Políticas"
     }
+  },
+  "Content": {
+    "Title": "Gestor de contenido",
+    "Connect": "Conectar con YouTube",
+    "Columns": {
+      "Video": "Vídeo",
+      "Date": "Fecha",
+      "Privacy": "Visibilidad",
+      "Access": "Usuarios con acceso"
+    },
+    "Privacy": {
+      "private": "Privado",
+      "public": "Público",
+      "unlisted": "Oculto"
+    }
   }
 }

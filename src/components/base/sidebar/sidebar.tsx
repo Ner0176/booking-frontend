@@ -18,6 +18,7 @@ import {
   mdiExitToApp,
   mdiInformationOutline,
   mdiTableCog,
+  mdiVideoOutline,
 } from "@mdi/js";
 import { PropsWithChildren, useState } from "react";
 import { SidebarOptions } from "./sidebar.content";
@@ -29,21 +30,10 @@ const TOP_SIDEBAR_ITEMS: ISidebarItem[] = [
     text: "calendar",
     icon: mdiCalendar,
   },
-  {
-    view: "admin",
-    icon: mdiTableCog,
-    text: "management",
-  },
-  {
-    view: "user",
-    text: "bookings",
-    icon: mdiBookmarkOutline,
-  },
-  {
-    text: "users",
-    view: "admin",
-    icon: mdiAccountGroupOutline,
-  },
+  { view: "admin", icon: mdiTableCog, text: "management" },
+  { view: "user", text: "bookings", icon: mdiBookmarkOutline },
+  { text: "content", icon: mdiVideoOutline },
+  { text: "users", view: "admin", icon: mdiAccountGroupOutline },
 ];
 
 const BOTTOM_SIDEBAR_ITEMS: ISidebarItem[] = [

@@ -2,6 +2,7 @@ import {
   AuthForm,
   ChangePassword,
   ClassesManagementDashboard,
+  ContentDashboard,
   ForgotPassword,
   PoliciesDashboard,
   ProfileDashboard,
@@ -39,6 +40,7 @@ export const AppRouter = () => {
             <Route path="/settings" element={<SettingsDashboard />} />
           </Route>
           <Route path="/bookings" element={<UserBookingsDashboard />} />
+          <Route path="/content" element={<ContentDashboard />} />
         </Route>
         <Route path="*" element={<InvalidRoute />} />
       </Routes>
